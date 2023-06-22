@@ -22,7 +22,7 @@ Matrix4 Matrix4::Identity(Matrix4 matrix)
 	{
 		for (int j = 0; j < 4; j++)
 		{
-			if (j = i)
+			if (j == i)
 			{
 				matrix.m[j][i] = 1;
 			}
