@@ -60,7 +60,7 @@ Matrix4 Matrix4::ScalarProduct(Matrix4 matrix, Vector3 scalar)
 // 行列同士の掛け算
 Matrix4 Matrix4::Matrix4Product(Matrix4 matrix, Matrix4 matrix2)
 {
-	Matrix4 matResult;
+	Matrix4 matResult = {};
 	for (int i = 0; i < 4; i++)
 	{
 		for (int j = 0; j < 4; j++)
@@ -174,9 +174,9 @@ Matrix4 Matrix4::Inverse(const Matrix4 m)
 {
 	// i = 行  j = 列  k = 対角成分が存在する列
 
-	Matrix4 mat;
-	Matrix4 result;
-	Matrix4 identityMatrix;
+	Matrix4 mat = {};
+	Matrix4 result = {};
+	Matrix4 identityMatrix = {};
 
 	mat = m;
 
@@ -184,7 +184,7 @@ Matrix4 Matrix4::Inverse(const Matrix4 m)
 	identityMatrix = Matrix4::Identity();
 
 	// 掃き出し用 右側にでた4*4が結果になる 右側に単位行列を代入
-	float sweep[4][8];
+	float sweep[4][8] = {};
 
 	// 行列の左側に元の行列
 	for (int i = 0; i < 4; i++) 
@@ -354,7 +354,7 @@ const Matrix4 operator*(const Matrix4& m1, const Matrix4& m2)
 
 const Vector3 operator*(const Vector3& v, const Matrix4& m)
 {
-	Matrix4 result;
+	Matrix4 result = {};
 
 	return result.Transform(v, m);
 }
