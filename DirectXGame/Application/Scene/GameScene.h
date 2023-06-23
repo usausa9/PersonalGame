@@ -27,6 +27,8 @@ private:
 	// Object3D
 	
 	// FBX
+	FBXModel* boneTestModel = nullptr;
+	FBXObject3D* boneTestObject = nullptr;
 
 	// ƒJƒƒ‰
 	Camera* camera = new Camera;
