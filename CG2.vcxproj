@@ -179,6 +179,7 @@
     <ClInclude Include="DirectXGame\Engine\3D\OBJ\Object3d.h" />
     <ClInclude Include="DirectXGame\Engine\3D\OBJ\OBJModel.h" />
     <ClInclude Include="DirectXGame\Application\Game\Player\Player.h" />
+    <ClInclude Include="DirectXGame\Application\Game\Player\PlayerBullet.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\shaders\Basic.hlsli" />
@@ -266,6 +267,7 @@
     <ClCompile Include="DirectXGame\Engine\3D\OBJ\Object3d.cpp" />
     <ClCompile Include="DirectXGame\Engine\3D\OBJ\OBJModel.cpp" />
     <ClCompile Include="DirectXGame\Application\Game\Player\Player.cpp" />
+    <ClCompile Include="DirectXGame\Application\Game\Player\PlayerBullet.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="External\DirectXTex\DirectXTex_Desktop_2022_Win10.vcxproj">

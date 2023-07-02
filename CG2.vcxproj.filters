@@ -174,6 +174,9 @@
     <ClInclude Include="DirectXGame\Application\Game\Player\Player.h">
       <Filter>2.ヘッダー ファイル</Filter>
     </ClInclude>
+    <ClInclude Include="DirectXGame\Application\Game\Player\PlayerBullet.h">
+      <Filter>2.ヘッダー ファイル</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\shaders\Basic.hlsli">
@@ -286,6 +289,9 @@
       <Filter>1.ソース ファイル\Engine\3D\OBJ</Filter>
     </ClCompile>
     <ClCompile Include="DirectXGame\Application\Game\Player\Player.cpp">
+      <Filter>1.ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="DirectXGame\Application\Game\Player\PlayerBullet.cpp">
       <Filter>1.ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>

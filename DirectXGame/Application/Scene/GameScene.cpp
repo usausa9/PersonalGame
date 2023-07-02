@@ -24,12 +24,17 @@ void GameScene::Initialize()
 
 	// OBJ読み込み
 	vicviper = OBJModel::LoadFromOBJ("vicviper");
+	ico = OBJModel::LoadFromOBJ("ICO");
 
 	// Object3D Init
-	playerObj.position = { 25,13,0 };
+	playerObj.position = { 0, 0, 0 };
 	playerObj.scale = { 0.05f, 0.05f, 0.05f };
-	playerObj.rotation = { -18 * (UsaMath::u_PI / 180), 180 * (UsaMath::u_PI / 180), 0 };
+	playerObj.rotation = { -9 * (UsaMath::u_PI / 180), 180 * (UsaMath::u_PI / 180), 0 };
 	playerObj.InitializeObject3D();
+
+	playerBulletObj.position = { -100.0f, 0, 0 };
+	playerBulletObj.InitializeObject3D();
+	playerBulletObj.objModel = &ico;
 
 	// objとObject3Dの紐付け
 	player = make_unique<Player>();
@@ -57,7 +62,7 @@ void GameScene::Update()
 	player.get()->Update(playerObj);
 
 	playerObj.UpdateObject3D();
-
+	playerBulletObj.UpdateObject3D();
 
 	if (Key::Down(DIK_D) && Key::Down(DIK_A))
 	{
@@ -84,6 +89,22 @@ void GameScene::Update()
 	else if (Key::Down(DIK_S) && playerObj.position.y >= -13.0f)
 	{
 		playerObj.position += { 0, -velocity * 9 / 14, 0 };
+	}
+
+	if (Key::Trigger(DIK_SPACE))
+	{
+		bulletLive = true;
+		playerBulletObj.position = playerObj.position + Vector3{0, 0.6f, -5.9f};
+	}
+
+	if (bulletLive == true)
+	{
+		playerBulletObj.position -= { 0, 0, 1.3f };
+	}
+
+	if (playerBulletObj.position.z < -50.0f)
+	{
+		bulletLive = false;
 	}
 
 	if (Key::Down(DIK_LEFT))
@@ -114,6 +135,12 @@ void GameScene::Draw3D()
 
 	// 3Dオブジェ描画
 	playerObj.DrawObject3D();
+
+	if (bulletLive == true)
+	{
+		playerBulletObj.DrawObject3D();
+	}
+
 }
 
 void GameScene::DrawParticle()

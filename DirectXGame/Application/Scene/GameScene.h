@@ -26,10 +26,13 @@ private:
 
 	// OBJƒ‚ƒfƒ‹
 	OBJModel vicviper;
+	OBJModel ico;
 
 	// Object3D
 	Object3D playerObj;
+	Object3D playerBulletObj;
 
+	bool bulletLive = false;
 	// FBX
 
 	// ƒJƒƒ‰
