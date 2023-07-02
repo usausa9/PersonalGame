@@ -121,7 +121,7 @@
       <PreprocessorDefinitions>_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <TreatWarningAsError>true</TreatWarningAsError>
-      <AdditionalIncludeDirectories>$(ProjectDir)DirectXGame\Application\Base;$(ProjectDir)DirectXGame\Application\Scene;$(ProjectDir)DirectXGame\Engine\2D;$(ProjectDir)DirectXGame\Engine\2D_3D;$(ProjectDir)DirectXGame\Engine\3D;$(ProjectDir)DirectXGame\Engine\Audio;$(ProjectDir)DirectXGame\Engine\Base;$(ProjectDir)DirectXGame\Engine\Base\Math;$(ProjectDir)DirectXGame\Engine\IO;$(ProjectDir)DirectXGame\Engine;$(ProjectDir)DirectXGame\Application;$(ProjectDir)DirectXGame\Engine\3D\FBX;$(ProjectDir)DirectXGame\Engine\3D\OBJ;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)DirectXGame\Application\Game;$(ProjectDir)DirectXGame\Application\Game\Player;$(ProjectDir)DirectXGame\Application\Base;$(ProjectDir)DirectXGame\Application\Scene;$(ProjectDir)DirectXGame\Engine\2D;$(ProjectDir)DirectXGame\Engine\2D_3D;$(ProjectDir)DirectXGame\Engine\3D;$(ProjectDir)DirectXGame\Engine\Audio;$(ProjectDir)DirectXGame\Engine\Base;$(ProjectDir)DirectXGame\Engine\Base\Math;$(ProjectDir)DirectXGame\Engine\IO;$(ProjectDir)DirectXGame\Engine;$(ProjectDir)DirectXGame\Application;$(ProjectDir)DirectXGame\Engine\3D\FBX;$(ProjectDir)DirectXGame\Engine\3D\OBJ;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -167,8 +167,6 @@
     <ClInclude Include="DirectXGame\Engine\Base\Math\Matrix4.h" />
     <ClInclude Include="DirectXGame\Engine\3D\FBX\FBXModel.h" />
     <ClInclude Include="DirectXGame\Application\Base\MyGame.h" />
-    <ClInclude Include="DirectXGame\Engine\3D\OBJ\Object3D.h" />
-    <ClInclude Include="DirectXGame\Engine\3D\OBJ\OBJModel.h" />
     <ClInclude Include="DirectXGame\Engine\2D_3D\ParticleManager.h" />
     <ClInclude Include="DirectXGame\Engine\2D\Sprite.h" />
     <ClInclude Include="DirectXGame\Engine\2D\SpriteManager.h" />
@@ -178,6 +176,9 @@
     <ClInclude Include="DirectXGame\Engine\Base\Math\Vector3.h" />
     <ClInclude Include="DirectXGame\Engine\Base\Math\Vector4.h" />
     <ClInclude Include="DirectXGame\Engine\Base\WinAPI.h" />
+    <ClInclude Include="DirectXGame\Engine\3D\OBJ\Object3d.h" />
+    <ClInclude Include="DirectXGame\Engine\3D\OBJ\OBJModel.h" />
+    <ClInclude Include="DirectXGame\Application\Game\Player\Player.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\shaders\Basic.hlsli" />
@@ -254,8 +255,6 @@
     <ClCompile Include="DirectXGame\main.cpp" />
     <ClCompile Include="DirectXGame\Engine\Base\Math\Matrix4.cpp" />
     <ClCompile Include="DirectXGame\Application\Base\MyGame.cpp" />
-    <ClCompile Include="DirectXGame\Engine\3D\OBJ\Object3d.cpp" />
-    <ClCompile Include="DirectXGame\Engine\3D\OBJ\OBJModel.cpp" />
     <ClCompile Include="DirectXGame\Engine\2D_3D\ParticleManager.cpp" />
     <ClCompile Include="DirectXGame\Engine\2D\Sprite.cpp" />
     <ClCompile Include="DirectXGame\Engine\2D\SpriteManager.cpp" />
@@ -264,6 +263,9 @@
     <ClCompile Include="DirectXGame\Engine\Base\Math\Vector3.cpp" />
     <ClCompile Include="DirectXGame\Engine\Base\Math\Vector4.cpp" />
     <ClCompile Include="DirectXGame\Engine\Base\WinAPI.cpp" />
+    <ClCompile Include="DirectXGame\Engine\3D\OBJ\Object3d.cpp" />
+    <ClCompile Include="DirectXGame\Engine\3D\OBJ\OBJModel.cpp" />
+    <ClCompile Include="DirectXGame\Application\Game\Player\Player.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="External\DirectXTex\DirectXTex_Desktop_2022_Win10.vcxproj">

@@ -4,6 +4,8 @@
 #include "Sprite.h"
 #include "DirectXBase.h"
 
+#include "Player.h"
+
 #include "FBXObject3D.h"
 #include "Object3D.h"
 #include "Camera.h"
@@ -23,15 +25,20 @@ private:
 	// パーティクル
 
 	// OBJモデル
+	OBJModel vicviper;
 
 	// Object3D
-	
+	Object3D playerObj;
+
 	// FBX
-	FBXModel* boneTestModel = nullptr;
-	FBXObject3D* boneTestObject = nullptr;
 
 	// カメラ
 	Camera* camera = new Camera;
+
+	unique_ptr<Player> player = nullptr;
+	
+
+	float velocity = 0.7f;
 
 public:
 	// 初期化

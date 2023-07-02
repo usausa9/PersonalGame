@@ -141,12 +141,6 @@
     <ClInclude Include="DirectXGame\Engine\3D\FBX\FBXObject3D.h">
       <Filter>2.ヘッダー ファイル\Engine\3D\FBX</Filter>
     </ClInclude>
-    <ClInclude Include="DirectXGame\Engine\3D\OBJ\Object3D.h">
-      <Filter>2.ヘッダー ファイル\Engine\3D\OBJ</Filter>
-    </ClInclude>
-    <ClInclude Include="DirectXGame\Engine\3D\OBJ\OBJModel.h">
-      <Filter>2.ヘッダー ファイル\Engine\3D\OBJ</Filter>
-    </ClInclude>
     <ClInclude Include="DirectXGame\Engine\2D_3D\TextureManager.h">
       <Filter>2.ヘッダー ファイル\Engine\2D/3D</Filter>
     </ClInclude>
@@ -165,11 +159,20 @@
     <ClInclude Include="DirectXGame\Engine\Base\Common.h">
       <Filter>2.ヘッダー ファイル\Engine\Base</Filter>
     </ClInclude>
-    <ClInclude Include="DirectXGame\Application\Base\MyGame.h">
-      <Filter>2.ヘッダー ファイル\Engine\Scene</Filter>
-    </ClInclude>
     <ClInclude Include="DirectXGame\Application\Scene\GameScene.h">
       <Filter>1.ソース ファイル\Application\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="DirectXGame\Application\Base\MyGame.h">
+      <Filter>1.ソース ファイル\Application\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="DirectXGame\Engine\3D\OBJ\Object3d.h">
+      <Filter>2.ヘッダー ファイル\Engine\3D\OBJ</Filter>
+    </ClInclude>
+    <ClInclude Include="DirectXGame\Engine\3D\OBJ\OBJModel.h">
+      <Filter>2.ヘッダー ファイル\Engine\3D\OBJ</Filter>
+    </ClInclude>
+    <ClInclude Include="DirectXGame\Application\Game\Player\Player.h">
+      <Filter>2.ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -255,17 +258,8 @@
     <ClCompile Include="DirectXGame\Engine\Base\WinAPI.cpp">
       <Filter>1.ソース ファイル\Engine\Base</Filter>
     </ClCompile>
-    <ClCompile Include="DirectXGame\Application\Base\MyGame.cpp">
-      <Filter>1.ソース ファイル\Engine\Scene</Filter>
-    </ClCompile>
     <ClCompile Include="DirectXGame\Engine\2D\SpriteManager.cpp">
       <Filter>1.ソース ファイル\Engine\2D</Filter>
-    </ClCompile>
-    <ClCompile Include="DirectXGame\Engine\3D\OBJ\Object3d.cpp">
-      <Filter>1.ソース ファイル\Engine\3D\OBJ</Filter>
-    </ClCompile>
-    <ClCompile Include="DirectXGame\Engine\3D\OBJ\OBJModel.cpp">
-      <Filter>1.ソース ファイル\Engine\3D\OBJ</Filter>
     </ClCompile>
     <ClCompile Include="DirectXGame\Engine\2D_3D\CollisionPrimitive.cpp">
       <Filter>1.ソース ファイル\Engine\2D/3D</Filter>
@@ -281,6 +275,18 @@
     </ClCompile>
     <ClCompile Include="DirectXGame\Engine\2D_3D\TextureManager.cpp">
       <Filter>1.ソース ファイル\Engine\2D/3D</Filter>
+    </ClCompile>
+    <ClCompile Include="DirectXGame\Application\Base\MyGame.cpp">
+      <Filter>1.ソース ファイル\Application\Base</Filter>
+    </ClCompile>
+    <ClCompile Include="DirectXGame\Engine\3D\OBJ\Object3d.cpp">
+      <Filter>1.ソース ファイル\Engine\3D\OBJ</Filter>
+    </ClCompile>
+    <ClCompile Include="DirectXGame\Engine\3D\OBJ\OBJModel.cpp">
+      <Filter>1.ソース ファイル\Engine\3D\OBJ</Filter>
+    </ClCompile>
+    <ClCompile Include="DirectXGame\Application\Game\Player\Player.cpp">
+      <Filter>1.ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

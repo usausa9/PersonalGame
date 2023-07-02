@@ -23,120 +23,78 @@ void GameScene::Initialize()
 	ParticleManager::CreatePipeline();
 
 	// OBJ読み込み
+	vicviper = OBJModel::LoadFromOBJ("vicviper");
 
 	// Object3D Init
+	playerObj.position = { 0,0,0 };
+	playerObj.scale = { 0.05f, 0.05f, 0.05f };
+	playerObj.rotation = { -18 * (UsaMath::u_PI / 180), 180 * (UsaMath::u_PI / 180), 0 };
+	playerObj.InitializeObject3D();
 
 	// objとObject3Dの紐付け
+	player = make_unique<Player>();
+	playerObj.objModel = &vicviper;
 
 	// FBXモデル関連
 	// モデル名を指定してFBXファイル読み込み
-	boneTestModel = FBXLoader::GetInstance()->LoadModelFromFile("boneTest");
-
-	boneTestObject = new FBXObject3D;
-	boneTestObject->Initialize();
-	boneTestObject->SetModel(boneTestModel);
 
 	// カメラ初期化
 	camera->Initialize();
 
-	camera->target = { 0,2.5f,0 };
-	camera->position = { 0,0,8.0f };
-	boneTestObject->SetRotation({ 0,90,0 });
+	camera->target = { 0,0,0 };
+	camera->position = { 0,0,20.0f };
 }
 
 void GameScene::Finalize()
 {
-	//delete object1;
-	//delete model1;
 	delete camera;
-	delete boneTestObject;
 }
 
 void GameScene::Update()
 {
 	// DIrectX毎フレーム処理(更新処理) ここから
-	//ico.UpdateObject3D();
-	//cube.UpdateObject3D();
 
-	// パーティクル
-	//for (int i = 0; i < 15; i++)
-	//{
-	//	const float rnd_pos = 10.0f;
-	//	Float3 pos{};
-	//	pos.x = (float)rand() / RAND_MAX * rnd_pos - rnd_pos / 2.0f - 10.f;
-	//	pos.y = (float)rand() / RAND_MAX * rnd_pos - rnd_pos / 2.0f;
-	//	pos.z = (float)rand() / RAND_MAX * rnd_pos - rnd_pos / 2.0f;
+	player.get()->Update(playerObj);
 
-	//	const float rnd_vel = 0.1f;
-	//	Float3 vel{};
-	//	vel.x = (float)rand() / RAND_MAX * rnd_vel - rnd_vel / 2.0f;
-	//	vel.y = (float)rand() / RAND_MAX * rnd_vel - rnd_vel / 2.0f;
-	//	vel.z = (float)rand() / RAND_MAX * rnd_vel - rnd_vel / 2.0f;
+	playerObj.UpdateObject3D();
 
-	//	Float3 acc{};
-	//	const float rnd_acc = 0.1f;
-	//	// acc.y = -(float)rand() / RAND_MAX * rnd_acc;
+	/*if (Key::Down(DIK_D))
+	{
+		playerObj.position += { -velocity, 0, 0 };
+	}
+	else if (Key::Down(DIK_A))
+	{
+		playerObj.position += { velocity, 0, 0 };
+	}
 
-	//	thunderParticle.Add(40, pos, vel, acc, 1.5f, 0.0f);
-	//}
+	if (Key::Down(DIK_W))
+	{
+		playerObj.position += { 0, velocity * 9 / 14, 0 };
+	}
+	else if (Key::Down(DIK_S))
+	{
+		playerObj.position += { 0, -velocity * 9 / 14, 0 };
+	}*/
 
-	//for (int i = 0; i < 15; i++)
-	//{
-	//	const float rnd_pos = 10.0f;
-	//	Float3 pos{};
-	//	pos.x = (float)rand() / RAND_MAX * rnd_pos - rnd_pos / 2.0f + 10.f;
-	//	pos.y = (float)rand() / RAND_MAX * rnd_pos - rnd_pos / 2.0f;
-	//	pos.z = (float)rand() / RAND_MAX * rnd_pos - rnd_pos / 2.0f;
-
-	//	const float rnd_vel = 0.1f;
-	//	Float3 vel{};
-	//	vel.x = (float)rand() / RAND_MAX * rnd_vel - rnd_vel / 2.0f;
-	//	vel.y = (float)rand() / RAND_MAX * rnd_vel - rnd_vel / 2.0f;
-	//	vel.z = (float)rand() / RAND_MAX * rnd_vel - rnd_vel / 2.0f;
-
-	//	Float3 acc{};
-	//	const float rnd_acc = 0.1f;
-	//	// acc.y = -(float)rand() / RAND_MAX * rnd_acc;
-
-	//	circleParticle.Add(60, pos, vel, acc, 1.5f, 0.0f);
-	//}
-
-	//sprite->position = { 130,130 };
-	//sprite->Update();
-
-	//sprite2->position = { 1050,190 };
-	//sprite2->Update();
-
-	if (Key::Down(DIK_A) || Key::Down(DIK_LEFT))
+	if (Key::Down(DIK_LEFT))
 	{
 		camera->position.x -= 0.5f;
 	}
-	else if (Key::Down(DIK_D) || Key::Down(DIK_RIGHT))
+	else if (Key::Down(DIK_RIGHT))
 	{
 		camera->position.x += 0.5f;
 	}
 
-	if (Key::Down(DIK_S) || Key::Down(DIK_DOWN))
+	if (Key::Down(DIK_DOWN))
 	{
 		camera->position.y -= 0.5f;
 	}
-	else if (Key::Down(DIK_W) || Key::Down(DIK_UP))
+	else if (Key::Down(DIK_UP))
 	{
 		camera->position.y += 0.5f;
 	}
 	
-	//object1->Update();
-
-	if (Key::Down(DIK_SPACE))
-	{
-		boneTestObject->PlayAnimation();
-	}
-	
-	boneTestObject->Update();
-	
 	camera->Update();
-	//thunderParticle.UpdateParticle();
-	//circleParticle.UpdateParticle();
 }
 
 void GameScene::Draw3D()
@@ -145,11 +103,7 @@ void GameScene::Draw3D()
 	camera->Set();
 
 	// 3Dオブジェ描画
-	//ico.DrawObject3D();
-	//cube.DrawObject3D();
-
-	//object1->Draw();
-	boneTestObject->Draw();
+	playerObj.DrawObject3D();
 }
 
 void GameScene::DrawParticle()
@@ -158,12 +112,8 @@ void GameScene::DrawParticle()
 	camera->Set();
 
 	// パーティクルオブジェ描画
-	//circleParticle.DrawParticle(circleTex);
-	//thunderParticle.DrawParticle(thunderTex);
 }
 
 void GameScene::Draw2D()
 {
-	//sprite->Draw();
-	//sprite2->Draw();
 }
