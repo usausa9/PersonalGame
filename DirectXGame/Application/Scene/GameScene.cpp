@@ -26,7 +26,7 @@ void GameScene::Initialize()
 	vicviper = OBJModel::LoadFromOBJ("vicviper");
 
 	// Object3D Init
-	playerObj.position = { 0,0,0 };
+	playerObj.position = { 25,13,0 };
 	playerObj.scale = { 0.05f, 0.05f, 0.05f };
 	playerObj.rotation = { -18 * (UsaMath::u_PI / 180), 180 * (UsaMath::u_PI / 180), 0 };
 	playerObj.InitializeObject3D();
@@ -58,23 +58,33 @@ void GameScene::Update()
 
 	playerObj.UpdateObject3D();
 
-	/*if (Key::Down(DIK_D))
+
+	if (Key::Down(DIK_D) && Key::Down(DIK_A))
+	{
+
+	}
+	else if (Key::Down(DIK_D) && playerObj.position.x >= -25.0f)
 	{
 		playerObj.position += { -velocity, 0, 0 };
 	}
-	else if (Key::Down(DIK_A))
+	else if (Key::Down(DIK_A) && playerObj.position.x <= 25.0f)
 	{
 		playerObj.position += { velocity, 0, 0 };
 	}
 
-	if (Key::Down(DIK_W))
+
+	if (Key::Down(DIK_W) && Key::Down(DIK_S))
+	{
+
+	}
+	else if (Key::Down(DIK_W) && playerObj.position.y <= 13.0f)
 	{
 		playerObj.position += { 0, velocity * 9 / 14, 0 };
 	}
-	else if (Key::Down(DIK_S))
+	else if (Key::Down(DIK_S) && playerObj.position.y >= -13.0f)
 	{
 		playerObj.position += { 0, -velocity * 9 / 14, 0 };
-	}*/
+	}
 
 	if (Key::Down(DIK_LEFT))
 	{
