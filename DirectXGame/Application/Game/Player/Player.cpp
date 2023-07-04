@@ -2,6 +2,11 @@
 
 using namespace Input;
 
+void Player::Initialize()
+{
+	playerModel = OBJModel::LoadFromOBJ("vicviper");
+}
+
 void Player::Update(Object3D player)
 {
 	player.position += Move();

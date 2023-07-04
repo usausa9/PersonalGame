@@ -28,8 +28,8 @@ void GameScene::Initialize()
 
 	// Object3D Init
 	playerObj.position = { 0, 0, 0 };
-	playerObj.scale = { 0.05f, 0.05f, 0.05f };
-	playerObj.rotation = { -9 * (UsaMath::u_PI / 180), 180 * (UsaMath::u_PI / 180), 0 };
+	playerObj.scale = { 1, 1, 1 };
+	playerObj.rotation = { 20 * (UsaMath::u_PI / 180), 0, 0};
 	playerObj.InitializeObject3D();
 
 	playerBulletObj.position = { -100.0f, 0, 0 };
