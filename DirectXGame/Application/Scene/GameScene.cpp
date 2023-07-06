@@ -38,6 +38,7 @@ void GameScene::Initialize()
 
 	// objとObject3Dの紐付け
 	player = make_unique<Player>();
+	player.get()->Initialize();
 	playerObj.objModel = &vicviper;
 
 	// FBXモデル関連
@@ -59,7 +60,7 @@ void GameScene::Update()
 {
 	// DIrectX毎フレーム処理(更新処理) ここから
 
-	player.get()->Update(playerObj);
+	player.get()->Update();
 
 	playerObj.UpdateObject3D();
 	playerBulletObj.UpdateObject3D();
@@ -134,7 +135,8 @@ void GameScene::Draw3D()
 	camera->Set();
 
 	// 3Dオブジェ描画
-	playerObj.DrawObject3D();
+	//playerObj.DrawObject3D();
+	player.get()->Draw();
 
 	if (bulletLive == true)
 	{

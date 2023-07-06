@@ -7,16 +7,16 @@ class Player
 {
 public:
 	void Initialize();
-	void Update(Object3D player);
+	void Update();
 	void Draw();
 
 private:
-	Vector3 Move();
+	void Move();
 
 private:
 	// ÉÇÉfÉãì«Ç›çûÇ›
 	OBJModel playerModel;
-	Object3D player;
+	Object3D playerObj;
 
 	Vector3 position = { 0,0,0 };
 	Vector3 move = { 0,0,0 };
