@@ -23,23 +23,14 @@ void GameScene::Initialize()
 	ParticleManager::CreatePipeline();
 
 	// OBJ読み込み
-	vicviper = OBJModel::LoadFromOBJ("vicviper");
-	ico = OBJModel::LoadFromOBJ("ICO");
 
 	// Object3D Init
-	playerObj.position = { 0, 0, 0 };
-	playerObj.scale = { 1, 1, 1 };
-	playerObj.rotation = { 20 * (UsaMath::u_PI / 180), 0, 0};
-	playerObj.InitializeObject3D();
-
-	playerBulletObj.position = { -100.0f, 0, 0 };
-	playerBulletObj.InitializeObject3D();
-	playerBulletObj.objModel = &ico;
 
 	// objとObject3Dの紐付け
+
+	// プレイヤー初期化
 	player = make_unique<Player>();
 	player.get()->Initialize();
-	playerObj.objModel = &vicviper;
 
 	// FBXモデル関連
 	// モデル名を指定してFBXファイル読み込み
@@ -48,7 +39,7 @@ void GameScene::Initialize()
 	camera->Initialize();
 
 	camera->target = { 0,0,0 };
-	camera->position = { 0,0,20.0f };
+	camera->position = { 0,0,-20.0f };
 }
 
 void GameScene::Finalize()
@@ -62,51 +53,6 @@ void GameScene::Update()
 
 	player.get()->Update();
 
-	playerObj.UpdateObject3D();
-	playerBulletObj.UpdateObject3D();
-
-	if (Key::Down(DIK_D) && Key::Down(DIK_A))
-	{
-
-	}
-	else if (Key::Down(DIK_D) && playerObj.position.x >= -25.0f)
-	{
-		playerObj.position += { -velocity, 0, 0 };
-	}
-	else if (Key::Down(DIK_A) && playerObj.position.x <= 25.0f)
-	{
-		playerObj.position += { velocity, 0, 0 };
-	}
-
-
-	if (Key::Down(DIK_W) && Key::Down(DIK_S))
-	{
-
-	}
-	else if (Key::Down(DIK_W) && playerObj.position.y <= 13.0f)
-	{
-		playerObj.position += { 0, velocity * 9 / 14, 0 };
-	}
-	else if (Key::Down(DIK_S) && playerObj.position.y >= -13.0f)
-	{
-		playerObj.position += { 0, -velocity * 9 / 14, 0 };
-	}
-
-	if (Key::Trigger(DIK_SPACE))
-	{
-		bulletLive = true;
-		playerBulletObj.position = playerObj.position + Vector3{0, 0.6f, -5.9f};
-	}
-
-	if (bulletLive == true)
-	{
-		playerBulletObj.position -= { 0, 0, 1.3f };
-	}
-
-	if (playerBulletObj.position.z < -50.0f)
-	{
-		bulletLive = false;
-	}
 
 	if (Key::Down(DIK_LEFT))
 	{
@@ -137,12 +83,6 @@ void GameScene::Draw3D()
 	// 3Dオブジェ描画
 	//playerObj.DrawObject3D();
 	player.get()->Draw();
-
-	if (bulletLive == true)
-	{
-		playerBulletObj.DrawObject3D();
-	}
-
 }
 
 void GameScene::DrawParticle()

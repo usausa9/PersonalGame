@@ -20,5 +20,5 @@ private:
 
 	Vector3 position = { 0,0,0 };
 	Vector3 move = { 0,0,0 };
-	float Velocity = 0.5f;
+	float Velocity = 0.65f;
 };

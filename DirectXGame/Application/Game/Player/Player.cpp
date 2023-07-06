@@ -9,8 +9,10 @@ void Player::Initialize()
 
 	playerObj.position = { 0, 0, 0 };
 	playerObj.scale = { 1, 1, 1 };
-	playerObj.rotation = { 20 * (UsaMath::u_PI / 180), 0, 0 };
+	playerObj.rotation = { -20 * (UsaMath::u_PI / 180), 0, 0 };
 	playerObj.InitializeObject3D();
+
+	playerObj.objModel = &playerModel;
 }
 
 // çXêV
@@ -37,7 +39,7 @@ void Player::Move()
 
 	move += { 
 		(Key::Down(DIK_D) - Key::Down(DIK_A)) * Velocity, 
-		(Key::Down(DIK_S) - Key::Down(DIK_W)) * Velocity,
+		(Key::Down(DIK_W) - Key::Down(DIK_S)) * Velocity * 9 / 13,
 		0 };
 	
 	playerObj.position += move;

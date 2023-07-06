@@ -25,23 +25,15 @@ private:
 	// パーティクル
 
 	// OBJモデル
-	OBJModel vicviper;
-	OBJModel ico;
 
 	// Object3D
-	Object3D playerObj;
-	Object3D playerBulletObj;
 
-	bool bulletLive = false;
 	// FBX
 
 	// カメラ
 	Camera* camera = new Camera;
 
 	unique_ptr<Player> player = nullptr;
-	
-
-	float velocity = 0.7f;
 
 public:
 	// 初期化

@@ -13,6 +13,4 @@ public:
 private: 
 	OBJModel ico;
 	Object3D bulletObj;
-
 };
-
