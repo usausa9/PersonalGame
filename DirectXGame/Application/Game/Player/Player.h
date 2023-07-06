@@ -20,5 +20,9 @@ private:
 
 	Vector3 position = { 0,0,0 };
 	Vector3 move = { 0,0,0 };
-	float Velocity = 0.65f;
+	const float Velocity = 0.65f;
+	const float kYMove = 0.7f;
+
+	// ”ÍˆÍ§ŒÀ—p
+	const Vector3 kMoveLimit = { 25.f, 13.f, 1.0f };
 };

@@ -39,8 +39,14 @@ void Player::Move()
 
 	move += { 
 		(Key::Down(DIK_D) - Key::Down(DIK_A)) * Velocity, 
-		(Key::Down(DIK_W) - Key::Down(DIK_S)) * Velocity * 9 / 13,
+		(Key::Down(DIK_W) - Key::Down(DIK_S)) * Velocity * kYMove,
 		0 };
 	
 	playerObj.position += move;
+
+	// îÕàÕêßå¿
+	playerObj.position.x = max(playerObj.position.x, -kMoveLimit.x);
+	playerObj.position.y = max(playerObj.position.y, -kMoveLimit.y);
+	playerObj.position.x = min(playerObj.position.x, +kMoveLimit.x);
+	playerObj.position.y = min(playerObj.position.y, +kMoveLimit.y);
 }
