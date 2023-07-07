@@ -8,7 +8,7 @@ Matrix4 SpriteManager::SpriteProjection;
 
 void SpriteManager::Init()
 {
-	HRESULT result;
+	HRESULT result = S_FALSE;
 
 	SpriteManager::SpriteProjection = Matrix4
 	{

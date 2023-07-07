@@ -39,7 +39,7 @@ void MyGame::Initialize()
 #pragma endregion
 
 #pragma region •`‰æ‰Šú‰»ˆ—
-	HRESULT result;
+	HRESULT result = S_FALSE;
 	{
 		// ƒq[ƒvİ’è
 		D3D12_HEAP_PROPERTIES cbHeapProp{};

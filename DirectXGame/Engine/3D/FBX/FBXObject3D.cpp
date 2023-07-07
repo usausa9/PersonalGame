@@ -15,7 +15,7 @@ void FBXObject3D::Initialize()
 	// 1フレーム分の時間を60FPSで設定
 	frameTime.SetTime(0,0,0,1,0, FbxTime::EMode::eFrames60);
 
-	HRESULT result;
+	HRESULT result = S_FALSE;
 	// ヒープ設定/リソース設定
 	D3D12_HEAP_PROPERTIES heapProp{};
 	heapProp.Type = D3D12_HEAP_TYPE_UPLOAD;
@@ -255,7 +255,7 @@ void FBXObject3D::Update()
 	// カメラ座標
 	const Float3& cameraPos = camera->GetEye();
 
-	HRESULT result;
+	HRESULT result = S_FALSE;
 	// 定数バッファへデータ転送
 	ConstBufferDataTransform* constMap = nullptr;
 	result = constBuffTransform->Map(0, nullptr, (void**)&constMap);

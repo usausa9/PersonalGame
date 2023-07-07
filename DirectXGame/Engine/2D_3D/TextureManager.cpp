@@ -10,7 +10,7 @@ TextureData TextureManager::textureData[maxTextureNum] = {};
 
 void TextureManager::Init()
 {
-	HRESULT result;
+	HRESULT result = S_FALSE;
 
 	srvIndex = 0;
 
@@ -36,7 +36,7 @@ void TextureManager::Init()
 
 TextureIndex TextureManager::Load(std::wstring filepath)
 {
-	HRESULT result;
+	HRESULT result = S_FALSE;
 
 	if (srvIndex >= maxTextureNum)
 	{

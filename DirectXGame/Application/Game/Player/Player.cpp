@@ -6,9 +6,7 @@ using namespace Input;
 void Player::Initialize()
 {
 	playerModel = OBJModel::LoadFromOBJ("vicviper");
-
-	playerObj.position = { 0, 0, 0 };
-	playerObj.scale = { 1, 1, 1 };
+	
 	playerObj.rotation = { -20 * (UsaMath::u_PI / 180), 0, 0 };
 	playerObj.InitializeObject3D();
 
@@ -32,7 +30,7 @@ void Player::Draw()
 	playerObj.DrawObject3D();
 }
 
-// ˆÚ“®
+// “ü—Íó‚¯•t‚¯ + ˆÚ“®
 void Player::Move()
 {
 	move = { 0,0,0 };
@@ -49,4 +47,14 @@ void Player::Move()
 	playerObj.position.y = max(playerObj.position.y, -kMoveLimit.y);
 	playerObj.position.x = min(playerObj.position.x, +kMoveLimit.x);
 	playerObj.position.y = min(playerObj.position.y, +kMoveLimit.y);
+}
+
+void Player::Shot()
+{
+	if (Key::Trigger(DIK_SPACE))
+	{
+		// ©‹@’e‚ğ¶¬A‰Šú‰»
+		unique_ptr<PlayerBullet> newBullet = make_unique<PlayerBullet>();
+		//newBullet.get()->Initialize(bullet.get().bulletModel)
+	}
 }

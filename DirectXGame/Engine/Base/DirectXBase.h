@@ -15,7 +15,7 @@
 class DirectXBase
 {
 private:
-	HRESULT result;
+	HRESULT result = S_FALSE;
 
 	template <class T> using ComPtr = Microsoft::WRL::ComPtr<T>;
 

@@ -1,6 +1,7 @@
 #pragma once
 #include "OBJModel.h"
 #include "Object3d.h"
+
 class PlayerBullet
 {
 public:
@@ -11,6 +12,6 @@ public:
 	void Draw();
 
 private: 
-	OBJModel ico;
+	OBJModel bulletModel;
 	Object3D bulletObj;
 };
