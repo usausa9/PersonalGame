@@ -1,6 +1,5 @@
 #include "FBXObject3D.h"
 
-ID3D12Device* FBXObject3D::device = nullptr;
 Camera* FBXObject3D::camera = nullptr;
 
 using namespace Microsoft::WRL;
@@ -29,7 +28,7 @@ void FBXObject3D::Initialize()
 	resDesc.Layout = D3D12_TEXTURE_LAYOUT_ROW_MAJOR;
 
 	// 定数バッファの生成
-	result = device->CreateCommittedResource(
+	result = DirectXBase::Get()->device->CreateCommittedResource(
 		&heapProp,
 		D3D12_HEAP_FLAG_NONE,
 		&resDesc,
@@ -41,7 +40,7 @@ void FBXObject3D::Initialize()
 	resDesc.Width = (sizeof(ConstBufferDataSkin) + 0xff) & ~0xff;	// 256バイトアラインメント
 
 	// 定数バッファの生成 (スキン)
-	result = device->CreateCommittedResource(
+	result = DirectXBase::Get()->device->CreateCommittedResource(
 		&heapProp,
 		D3D12_HEAP_FLAG_NONE,
 		&resDesc,
@@ -57,7 +56,7 @@ void FBXObject3D::CreateGraphicsPipeline()
 	ComPtr<ID3DBlob> psBlob;	// ピクセルシェーダオブジェクト
 	ComPtr<ID3DBlob> errorBlob;	// エラーオブジェクト
 
-	assert(device);
+	assert(DirectXBase::Get()->device);
 	// 頂点シェーダの読み込みとコンパイル
 	result = D3DCompileFromFile(
 		L"Resources/shaders/FBXVS.hlsl",	// シェーダファイル名
@@ -204,13 +203,13 @@ void FBXObject3D::CreateGraphicsPipeline()
 	// バージョン自動判定のシリアライズ
 	result = D3DX12SerializeVersionedRootSignature(&rootSignatureDesc, D3D_ROOT_SIGNATURE_VERSION_1_0, &rootSigBlob, &errorBlob);
 	// ルートシグネチャの生成
-	result = device->CreateRootSignature(0, rootSigBlob->GetBufferPointer(), rootSigBlob->GetBufferSize(), IID_PPV_ARGS(rootSigunature.ReleaseAndGetAddressOf()));
+	result = DirectXBase::Get()->device->CreateRootSignature(0, rootSigBlob->GetBufferPointer(), rootSigBlob->GetBufferSize(), IID_PPV_ARGS(rootSigunature.ReleaseAndGetAddressOf()));
 	if (FAILED(result)) { assert(0); }
 
 	gpipeline.pRootSignature = rootSigunature.Get();
 
 	// グラフィックスパイプラインの生成
-	result = device->CreateGraphicsPipelineState(&gpipeline, IID_PPV_ARGS(pipelineState.ReleaseAndGetAddressOf()));
+	result = DirectXBase::Get()->device->CreateGraphicsPipelineState(&gpipeline, IID_PPV_ARGS(pipelineState.ReleaseAndGetAddressOf()));
 	if (FAILED(result)) { assert(0); }
 }
 
