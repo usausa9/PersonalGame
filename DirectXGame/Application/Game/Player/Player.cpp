@@ -6,6 +6,10 @@ using namespace Input;
 void Player::Initialize()
 {
 	playerModel = OBJModel::LoadFromOBJ("vicviper");
+	bulletModel = OBJModel::LoadFromOBJ("ICO");
+
+	bullet->Initialize(&bulletModel, playerObj.position);
+	bullet->bulletObj.objModel = &bulletModel;
 	
 	playerObj.rotation = { -20 * (UsaMath::u_PI / 180), 0, 0 };
 	playerObj.InitializeObject3D();
@@ -19,6 +23,13 @@ void Player::Update()
 	// 入力からの移動処理
 	Move();
 
+	// 弾発射処理 / 更新
+	Shot();
+	if (bullet) 
+	{
+		bullet->Update();
+	}
+
 	// 行列更新 必ず呼び出す
 	playerObj.UpdateObject3D();
 }
@@ -28,6 +39,12 @@ void Player::Draw()
 {
 	// オブジェ描画
 	playerObj.DrawObject3D();
+
+	// 弾描画
+	if (bullet)
+	{
+		bullet->Draw();
+	}
 }
 
 // 入力受け付け + 移動
@@ -54,7 +71,10 @@ void Player::Shot()
 	if (Key::Trigger(DIK_SPACE))
 	{
 		// 自機弾を生成、初期化
-		unique_ptr<PlayerBullet> newBullet = make_unique<PlayerBullet>();
-		//newBullet.get()->Initialize(bullet.get().bulletModel)
+		PlayerBullet* newBullet = new PlayerBullet();
+		newBullet->Initialize(&bulletModel, playerObj.position);
+
+		// 弾を登録
+		bullet = newBullet;
 	}
 }

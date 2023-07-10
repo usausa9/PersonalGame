@@ -11,7 +11,7 @@ public:
 
 	void Draw();
 
-private: 
 	OBJModel bulletModel;
 	Object3D bulletObj;
+	
 };

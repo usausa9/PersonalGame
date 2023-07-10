@@ -22,7 +22,7 @@ void MyGame::Initialize()
 #pragma region Šî”ÕƒVƒXƒeƒ€‚Ì‰Šú‰»
 	
 	window.Init();
-	window.CreateWindowObj(L"UsaEngine", 1280, 720);
+	window.CreateWindowObj(L"ShooTAR", 1280, 720);
 	window.Show();
 
 	// DirectX‰Šú‰»

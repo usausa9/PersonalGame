@@ -25,10 +25,11 @@ private:
 
 private:
 	// é©ã@íe
-	unique_ptr<PlayerBullet> bullet = nullptr;
+	PlayerBullet* bullet = nullptr;
 
 	// ÉÇÉfÉãì«Ç›çûÇ›
 	OBJModel playerModel;
+	OBJModel bulletModel;
 	Object3D playerObj;
 
 	Vector3 position = { 0,0,0 };
