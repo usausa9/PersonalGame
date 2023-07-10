@@ -2,10 +2,12 @@
 
 void PlayerBullet::Initialize(OBJModel* model, const Vector3& pos)
 {
-	bulletModel = OBJModel::LoadFromOBJ("ICO");
-	
+	// 行列更新,位置更新
+	bulletObj.position = pos;
 	bulletObj.InitializeObject3D();
-	bulletObj.objModel = &bulletModel;
+
+	// モデル紐づけ(仮引数で貰ってくる)
+	bulletObj.objModel = model;
 }
 
 void PlayerBullet::Update()

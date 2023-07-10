@@ -4,6 +4,8 @@
 #include "Object3d.h"
 #include "PlayerBullet.h"
 
+#include <list>
+
 class Player
 {
 public:
@@ -25,9 +27,13 @@ private:
 
 private:
 	// é©ã@íe
-	unique_ptr<PlayerBullet> bullet = nullptr;
+	//PlayerBullet* bullet = nullptr;
+	//shared_ptr<PlayerBullet> bullet = nullptr;
+
+	std::list<unique_ptr<PlayerBullet>> bullets = {};
 
 	// ÉÇÉfÉãì«Ç›çûÇ›
+	OBJModel bulletModel;
 	OBJModel playerModel;
 	Object3D playerObj;
 

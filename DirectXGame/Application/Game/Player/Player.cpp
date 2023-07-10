@@ -5,6 +5,7 @@ using namespace Input;
 // 初期化
 void Player::Initialize()
 {
+	bulletModel = OBJModel::LoadFromOBJ("ICO");
 	playerModel = OBJModel::LoadFromOBJ("vicviper");
 	
 	playerObj.rotation = { -20 * (UsaMath::u_PI / 180), 0, 0 };
@@ -19,6 +20,13 @@ void Player::Update()
 	// 入力からの移動処理
 	Move();
 
+	// 弾発射	 + 更新
+	Shot();
+	for (unique_ptr<PlayerBullet>& bullet : bullets)
+	{
+		bullet->Update();
+	}
+
 	// 行列更新 必ず呼び出す
 	playerObj.UpdateObject3D();
 }
@@ -28,6 +36,12 @@ void Player::Draw()
 {
 	// オブジェ描画
 	playerObj.DrawObject3D();
+
+	// 弾描画
+	for (unique_ptr<PlayerBullet>& bullet : bullets)
+	{
+		bullet->Draw();
+	}
 }
 
 // 入力受け付け + 移動
@@ -54,7 +68,13 @@ void Player::Shot()
 	if (Key::Trigger(DIK_SPACE))
 	{
 		// 自機弾を生成、初期化
-		unique_ptr<PlayerBullet> newBullet = make_unique<PlayerBullet>();
-		//newBullet.get()->Initialize(bullet.get().bulletModel)
+		//PlayerBullet* newBullet = new PlayerBullet();
+		//newBullet->Initialize(&bulletModel, playerObj.position);
+
+		//shared_ptr<PlayerBullet> newBullet = make_shared<PlayerBullet>();
+		//newBullet.get()->Initialize(&bulletModel, playerObj.position);
+
+		bullets.push_back(std::move(make_unique<PlayerBullet>()));
+		bullets.back()->Initialize(&bulletModel, playerObj.position);
 	}
 }
