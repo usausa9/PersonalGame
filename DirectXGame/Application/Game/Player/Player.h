@@ -49,6 +49,9 @@ private: // 自機弾のメンバ変数
 	// 自機弾のモデル
 	OBJModel bulletModel;
 
+	// 自機弾の自機からみたローカル発射位置
+	const Vector3 delayPos = { 0, 2.6f, 7.1f };
+
 	// 自機弾のスピード
 	const float kBulletSpeed = 1.0f;
 };

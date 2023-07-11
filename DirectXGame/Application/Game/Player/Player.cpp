@@ -60,7 +60,13 @@ void Player::Move()
 		(Key::Down(DIK_D) - Key::Down(DIK_A)) * velocity, 
 		(Key::Down(DIK_W) - Key::Down(DIK_S)) * velocity * kYMove,
 		0 };
-	
+
+	// GamePadでの移動
+	move += {
+		Pad::GetLStick().x * velocity,
+		Pad::GetLStick().y * velocity * kYMove,
+		0 };
+
 	// 移動量の加算
 	playerObj.position += move;
 
@@ -74,7 +80,7 @@ void Player::Move()
 void Player::Shot()
 {
 	// スペースキーのトリガー入力を受け付けた場合
-	if (Key::Trigger(DIK_SPACE))
+	if (Key::Trigger(DIK_SPACE) || Pad::Trigger(Button::A))
 	{
 		// 自機弾の毎フレーム移動
 		Vector3 velocity(0, 0, kBulletSpeed);
@@ -84,6 +90,6 @@ void Player::Shot()
 		
 		// 自機弾を生成、初期化
 		bullets.push_back(std::move(make_unique<PlayerBullet>()));
-		bullets.back()->Initialize(&bulletModel, playerObj.position, velocity);
+		bullets.back()->Initialize(&bulletModel, playerObj.position + delayPos, velocity);
 	}
 }
