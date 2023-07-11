@@ -5,13 +5,18 @@ using namespace Input;
 // 初期化
 void Player::Initialize()
 {
-	bulletModel = OBJModel::LoadFromOBJ("ICO");
+	// 自機モデル読み込み
 	playerModel = OBJModel::LoadFromOBJ("vicviper");
 	
+	// 自機の行列初期化
 	playerObj.rotation = { -20 * (UsaMath::u_PI / 180), 0, 0 };
 	playerObj.InitializeObject3D();
 
+	// 自機モデルと自機オブジェクトを紐づけ
 	playerObj.objModel = &playerModel;
+
+	// 自機弾モデル読み込み
+	bulletModel = OBJModel::LoadFromOBJ("ICO");
 }
 
 // 更新
@@ -20,15 +25,15 @@ void Player::Update()
 	// 入力からの移動処理
 	Move();
 
-	// 弾発射	 + 更新
+	// 行列更新 必ず呼び出す
+	playerObj.UpdateObject3D();
+
+	// 弾発射 + 更新
 	Shot();
 	for (unique_ptr<PlayerBullet>& bullet : bullets)
 	{
 		bullet->Update();
 	}
-
-	// 行列更新 必ず呼び出す
-	playerObj.UpdateObject3D();
 }
 
 // 描画
@@ -47,13 +52,16 @@ void Player::Draw()
 // 入力受け付け + 移動
 void Player::Move()
 {
+	// 移動量の初期化
 	move = { 0,0,0 };
 
+	// WASD入力での移動
 	move += { 
-		(Key::Down(DIK_D) - Key::Down(DIK_A)) * Velocity, 
-		(Key::Down(DIK_W) - Key::Down(DIK_S)) * Velocity * kYMove,
+		(Key::Down(DIK_D) - Key::Down(DIK_A)) * velocity, 
+		(Key::Down(DIK_W) - Key::Down(DIK_S)) * velocity * kYMove,
 		0 };
 	
+	// 移動量の加算
 	playerObj.position += move;
 
 	// 範囲制限
@@ -65,16 +73,17 @@ void Player::Move()
 
 void Player::Shot()
 {
+	// スペースキーのトリガー入力を受け付けた場合
 	if (Key::Trigger(DIK_SPACE))
 	{
+		// 自機弾の毎フレーム移動
+		Vector3 velocity(0, 0, kBulletSpeed);
+
+		// 速度ベクトルを自機の向きに合わせて回転
+		velocity = velocity * playerObj.matWorld;
+		
 		// 自機弾を生成、初期化
-		//PlayerBullet* newBullet = new PlayerBullet();
-		//newBullet->Initialize(&bulletModel, playerObj.position);
-
-		//shared_ptr<PlayerBullet> newBullet = make_shared<PlayerBullet>();
-		//newBullet.get()->Initialize(&bulletModel, playerObj.position);
-
 		bullets.push_back(std::move(make_unique<PlayerBullet>()));
-		bullets.back()->Initialize(&bulletModel, playerObj.position);
+		bullets.back()->Initialize(&bulletModel, playerObj.position, velocity);
 	}
 }
