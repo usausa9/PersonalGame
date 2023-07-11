@@ -85,7 +85,7 @@ void Player::Move()
 
 void Player::Shot()
 {
-	// スペースキーのトリガー入力を受け付けた場合
+	// スペースキー or PadのAボタン のトリガー入力を受け付けた場合
 	if (Key::Trigger(DIK_SPACE) || Pad::Trigger(Button::A))
 	{
 		// 自機弾の毎フレーム移動
