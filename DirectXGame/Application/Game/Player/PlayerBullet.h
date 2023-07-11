@@ -19,9 +19,23 @@ public:
 	void Draw();
 
 private: 
+	// 自機弾のオブジェクト
 	Object3D bulletObj;
 
 	// 自機弾の毎フレーム移動量
 	Vector3 velocity = {};
+
+	// 寿命<frame>
+	static const int32_t kLifeTime = 60 * 5;	// 5秒
+	
+	// 消滅タイマー
+	int32_t deathTimer = kLifeTime;
+
+	// 消滅フラグ
+	bool isDead = false;
+
+public:
+	// 外部参照用のGetter
+	bool IsDead() const { return isDead; }
 
 };

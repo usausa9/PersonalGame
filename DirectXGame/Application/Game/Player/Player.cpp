@@ -22,6 +22,12 @@ void Player::Initialize()
 // 更新
 void Player::Update()
 {
+	// 消滅フラグが立った弾を削除
+	bullets.remove_if([](unique_ptr<PlayerBullet>& bullet)
+	{
+		return bullet->IsDead();
+	});
+
 	// 入力からの移動処理
 	Move();
 

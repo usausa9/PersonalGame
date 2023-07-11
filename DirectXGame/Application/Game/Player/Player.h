@@ -53,5 +53,5 @@ private: // 自機弾のメンバ変数
 	const Vector3 delayPos = { 0, 2.6f, 7.1f };
 
 	// 自機弾のスピード
-	const float kBulletSpeed = 1.0f;
+	const float kBulletSpeed = 0.4f;
 };

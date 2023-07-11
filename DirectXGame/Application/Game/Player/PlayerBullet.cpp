@@ -15,6 +15,12 @@ void PlayerBullet::Initialize(OBJModel* model, const Vector3& pos, const Vector3
 
 void PlayerBullet::Update()
 {
+	// éûä‘åoâﬂÇ≈è¡ñ≈
+	if (--deathTimer <= 0)
+	{
+		isDead = true;
+	}
+
 	// à⁄ìÆó Ç©ÇÁç¿ïWÇà⁄ìÆ
 	bulletObj.position += velocity;
 
