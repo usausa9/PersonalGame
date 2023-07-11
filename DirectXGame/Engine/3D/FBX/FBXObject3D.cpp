@@ -252,7 +252,7 @@ void FBXObject3D::Update()
 	// モデルのメッシュトランスフォーム
 	const Matrix4& modelTransform = model->GetModelTransform();
 	// カメラ座標
-	const Float3& cameraPos = camera->GetEye();
+	const Vector3& cameraPos = camera->GetEye();
 
 	HRESULT result = S_FALSE;
 	// 定数バッファへデータ転送

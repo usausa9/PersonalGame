@@ -23,7 +23,7 @@ public:	// サブクラス
 	{
 		Matrix4 viewProjection;	// ビュープロジェクション行列
 		Matrix4 worldTransform;	// ワールド行列
-		Float3  cameraPosition;	// カメラ座標
+		Vector3 cameraPosition;	// カメラ座標
 	};
 
 	// 定数バッファ用データ構造体 (スキニング)

@@ -7,7 +7,7 @@ struct CameraConstBufferData
 	Matrix4 view; 
 	Matrix4 projection;
 	Matrix4 billboard;
-	Float3 position;
+	Vector3 position;
 };
 
 class Camera
@@ -24,15 +24,15 @@ public:
 
 	// アフィン変換情報
 	// Float3 rotation = { 0,0,0 };
-	Float3 target = { 0,0,0 };
-	Float3 position = { 0,0,-20 };
+	Vector3 target = { 0,0,0 };
+	Vector3 position = { 0,0,-20 };
 
 	// 3D用の射影変換
 	Matrix4 matProjection = Matrix4::Identity();
 
 	// ビュー変換行列
 	Matrix4 matView = matView.Identity();
-	Float3 up = { 0,1,0 };
+	Vector3 up = { 0,1,0 };
 	
 	// ビルボード行列
 	Matrix4 matBillboard = Matrix4::Identity();
@@ -50,5 +50,5 @@ public:
 	Matrix4 GetViewProjection()const { return matView * matProjection; }
 	
 	// カメラ座標取得
-	Float3 GetEye()const { return position; }
+	Vector3 GetEye()const { return position; }
 };
