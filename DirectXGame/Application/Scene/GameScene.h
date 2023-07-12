@@ -6,9 +6,11 @@
 
 #include "Player.h"
 
-#include "FBXObject3D.h"
 #include "Object3D.h"
+#include "FBXObject3D.h"
+
 #include "Camera.h"
+#include "RailCamera.h"
 
 #include "OBJModel.h"
 #include "FBXModel.h"
@@ -18,21 +20,11 @@
 class GameScene
 {
 private:
-	// テクスチャ
-
-	// スプライト
-
-	// パーティクル
-
-	// OBJモデル
-
-	// Object3D
-
-	// FBX
-
 	// カメラ
 	Camera* camera = new Camera;
+	RailCamera* railCamera = new RailCamera;
 
+	// プレイヤー
 	unique_ptr<Player> player = nullptr;
 
 public:

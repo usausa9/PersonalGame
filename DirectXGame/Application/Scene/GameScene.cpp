@@ -32,8 +32,8 @@ void GameScene::Initialize()
 	player = make_unique<Player>();
 	player.get()->Initialize();
 
-	// FBXモデル関連
-	// モデル名を指定してFBXファイル読み込み
+	// レールカメラ初期化
+	//railCamera->Initialize(ca);
 
 	// カメラ初期化
 	camera->Initialize();
@@ -45,15 +45,15 @@ void GameScene::Initialize()
 void GameScene::Finalize()
 {
 	delete camera;
+	delete railCamera;
 }
 
 void GameScene::Update()
 {
 	// DIrectX毎フレーム処理(更新処理) ここから
-
 	player.get()->Update();
 
-
+	// アローキーでカメラ移動
 	if (Key::Down(DIK_LEFT))
 	{
 		camera->position.x -= 0.5f;
