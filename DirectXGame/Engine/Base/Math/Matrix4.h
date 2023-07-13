@@ -31,7 +31,7 @@ public:
 	Matrix4 Translate(const Vector3& t);
 
 	// 座標変換（ベクトルと行列の掛け算）
-	Vector3 Transform(const Vector3& v, const Matrix4& m);
+	static Vector3 Transform(const Vector3& v, const Matrix4& m);
 
 	// 逆行列生成
 	static Matrix4 Inverse(const Matrix4 m);

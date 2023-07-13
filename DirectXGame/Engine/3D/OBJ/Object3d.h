@@ -23,6 +23,8 @@ public:
 	Vector3 rotation = { 0,0,0 };
 	Vector3 position = { 0,0,0 };
 
+	Vector3 GetWorldPosition() const { return { matWorld.m[3][0], matWorld.m[3][1], matWorld.m[3][2] }; }
+
 	// ƒ[ƒ‹ƒh•ÏŠ·s—ñ
 	Matrix4 matWorld = Matrix4::Identity();
 

@@ -28,50 +28,58 @@ void GameScene::Initialize()
 
 	// objとObject3Dの紐付け
 
+	camera = new Camera;
+	camera->Initialize();
+
 	// プレイヤー初期化
 	player = make_unique<Player>();
 	player.get()->Initialize();
-
+	
+	railCamera = new RailCamera();
 	// レールカメラ初期化
-	//railCamera->Initialize(ca);
-
+	railCamera->Initialize({0, 0, -20.0f}, {0, 0, 0});
+	
 	// カメラ初期化
-	camera->Initialize();
+	//camera = railCamera->GetCamera();
 
-	camera->target = { 0,0,0 };
-	camera->position = { 0,0,-20.0f };
+	/*camera->target = { 0,0,0 };
+	camera->position = { 0,0,-20.0f };*/
 }
 
 void GameScene::Finalize()
 {
-	delete camera;
+	//delete camera;
 	delete railCamera;
 }
 
 void GameScene::Update()
 {
 	// DIrectX毎フレーム処理(更新処理) ここから
-	player.get()->Update();
+	railCamera->Update();
 
-	// アローキーでカメラ移動
-	if (Key::Down(DIK_LEFT))
-	{
-		camera->position.x -= 0.5f;
-	}
-	else if (Key::Down(DIK_RIGHT))
-	{
-		camera->position.x += 0.5f;
-	}
+	player->SetParent(railCamera->GetObject3d());
+	player->Update();
 
-	if (Key::Down(DIK_DOWN))
-	{
-		camera->position.y -= 0.5f;
-	}
-	else if (Key::Down(DIK_UP))
-	{
-		camera->position.y += 0.5f;
-	}
+	//// アローキーでカメラ移動
+	//if (Key::Down(DIK_LEFT))
+	//{
+	//	camera->position.x -= 0.5f;
+	//}
+	//else if (Key::Down(DIK_RIGHT))
+	//{
+	//	camera->position.x += 0.5f;
+	//}
+
+	//if (Key::Down(DIK_DOWN))
+	//{
+	//	camera->position.y -= 0.5f;
+	//}
+	//else if (Key::Down(DIK_UP))
+	//{
+	//	camera->position.y += 0.5f;
+	//}
 	
+	camera = railCamera->GetCamera();
 	camera->Update();
 }
 
@@ -81,7 +89,6 @@ void GameScene::Draw3D()
 	camera->Set();
 
 	// 3Dオブジェ描画
-	//playerObj.DrawObject3D();
 	player.get()->Draw();
 }
 

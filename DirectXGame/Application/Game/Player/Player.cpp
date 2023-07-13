@@ -10,6 +10,7 @@ void Player::Initialize()
 	
 	// 自機の行列初期化
 	playerObj.rotation = { -20 * (UsaMath::u_PI / 180), 0, 0 };
+	playerObj.position = { 0, 0, 20 };
 	playerObj.InitializeObject3D();
 
 	// 自機モデルと自機オブジェクトを紐づけ
@@ -91,11 +92,15 @@ void Player::Shot()
 		// 自機弾の毎フレーム移動
 		Vector3 velocity(0, 0, kBulletSpeed);
 
+		// 自機弾の自機からみたローカル発射位置
+		Vector3 delayPos = { 0, 0.2f, 7.1f };
+
 		// 速度ベクトルを自機の向きに合わせて回転
 		velocity = velocity * playerObj.matWorld;
+		delayPos = delayPos * playerObj.matWorld;
 		
 		// 自機弾を生成、初期化
 		bullets.push_back(std::move(make_unique<PlayerBullet>()));
-		bullets.back()->Initialize(&bulletModel, playerObj.position + delayPos, velocity);
+		bullets.back()->Initialize(&bulletModel, playerObj.GetWorldPosition() + delayPos, velocity);
 	}
 }

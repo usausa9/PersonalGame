@@ -33,6 +33,9 @@ public:
 	// ビュー変換行列
 	Matrix4 matView = matView.Identity();
 	Vector3 up = { 0,1,0 };
+
+	float nearZ = 0.1f;
+	float farZ = 1000.0f;
 	
 	// ビルボード行列
 	Matrix4 matBillboard = Matrix4::Identity();
@@ -40,10 +43,12 @@ public:
 public:
 	// カメラ初期化
 	void Initialize();
+	void Initialize(Vector3 position, Vector3 target, Vector3 up = {0, 1, 0});
 
 	// カメラ更新処理
 	void Update();
 
+	// カメラセット
 	void Set();
 
 	// ビュープロジェクション

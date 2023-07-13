@@ -18,6 +18,9 @@ public:	// メンバ関数
 	// 描画処理
 	void Draw();
 
+	// 親子付けのセッター
+	void SetParent(Object3D* object) { playerObj.parent = object; }
+
 private: // メンバ関数
 	// 入力受け付け + 移動
 	void Move();
@@ -48,10 +51,7 @@ private: // 自機弾のメンバ変数
 
 	// 自機弾のモデル
 	OBJModel bulletModel;
-
-	// 自機弾の自機からみたローカル発射位置
-	const Vector3 delayPos = { 0, 2.6f, 7.1f };
-
+	
 	// 自機弾のスピード
-	const float kBulletSpeed = 0.4f;
+	const float kBulletSpeed = 0.0f;
 };

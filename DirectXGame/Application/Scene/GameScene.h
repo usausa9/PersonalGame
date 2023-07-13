@@ -21,8 +21,8 @@ class GameScene
 {
 private:
 	// カメラ
-	Camera* camera = new Camera;
-	RailCamera* railCamera = new RailCamera;
+	Camera* camera = nullptr;
+	RailCamera* railCamera = nullptr;
 
 	// プレイヤー
 	unique_ptr<Player> player = nullptr;

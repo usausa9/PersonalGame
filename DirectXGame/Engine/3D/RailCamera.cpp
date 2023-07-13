@@ -23,13 +23,36 @@ void RailCamera::Initialize(const Vector3& pos, const Vector3& rot)
 void RailCamera::Update()
 {
 	// ワールド行列の座標の数値を加算
-	worldTransform->position += { 0,1,5 };
+	worldTransform->position += { 0,0,0.15f };
 
 	// ワールド行列の回転の数値を加算
-	worldTransform->rotation += { 0.05f, 0.05f, 0.05f };
+	worldTransform->rotation += { 0, 0, 0 };
 	
 	// ワールド行列の行列再計算
 	worldTransform->UpdateObject3D();
 
-	//camera->position = worldTransform->position;
+	// レールカメラには常にワールド座標を代入
+	camera->position = {
+		worldTransform->matWorld.m[3][0],
+		worldTransform->matWorld.m[3][1],
+		worldTransform->matWorld.m[3][2]};
+
+	// ワールド前方ベクトル
+	Vector3 forward = {0, 0, 1};
+
+	// レールカメラの回転を反映
+	forward = Matrix4::Transform(forward, worldTransform->matWorld);
+	
+	// 視点+前方ベクトルで注視点
+	camera->target = camera->position + forward;
+	
+	// 上方向ベクトル
+	Vector3 up = {0, 1, 0};
+	
+	// カメラの上方向をforwardと同様に変換
+	camera->up = Matrix4::Transform(up, worldTransform->matWorld);
+	
+	// カメラ更新
+	camera->Update();
+
 }
