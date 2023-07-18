@@ -35,7 +35,7 @@ public:
 	Vector3 up = { 0,1,0 };
 
 	float nearZ = 0.1f;
-	float farZ = 1000.0f;
+	float farZ = 1500.0f;
 	
 	// ビルボード行列
 	Matrix4 matBillboard = Matrix4::Identity();

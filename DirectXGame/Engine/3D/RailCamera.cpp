@@ -1,4 +1,7 @@
 #include "RailCamera.h"
+#include "Input.h"
+
+using namespace Input;
 
 RailCamera::~RailCamera()
 {
@@ -18,12 +21,32 @@ void RailCamera::Initialize(const Vector3& pos, const Vector3& rot)
 
 	// ビュー行列の初期化
 	camera->Initialize();
+
+	Vector3 start{ 0,0,-0 };
+	Vector3 p1{ -10,20,-30 };
+	Vector3 p2{ 10,-20,30 };
+	Vector3 end{ 30,0,-50 };
+
+	std::vector<Vector3> points{ start,p1,p2,end };
+
+	spline.SetPositions(points);
+
 }
 
 void RailCamera::Update()
 {
+	if (Key::Trigger(DIK_O)) 
+	{
+		spline.MoveStart(300.0f, true);
+	}
+
+	// 曲線のアップデート
+	spline.Update();
+
 	// ワールド行列の座標の数値を加算
-	worldTransform->position += { 0,0,0.15f };
+	// スプライン曲線に沿って移動
+	worldTransform->position = spline.GetNowPosition();
+	//worldTransform->position += { 0,0,0.15f };
 
 	// ワールド行列の回転の数値を加算
 	worldTransform->rotation += { 0, 0, 0 };

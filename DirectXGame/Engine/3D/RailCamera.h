@@ -3,6 +3,8 @@
 #include "Object3D.h"
 #include "Common.h"
 
+#include "SplineCurve.h"
+
 class RailCamera
 {
 public:	// メンバ関数
@@ -27,5 +29,8 @@ private: // メンバ変数
 
 	// カメラ
 	Camera* camera = nullptr;
+
+	// カメラ用スプライン曲線
+	SplineCurve spline;
 };
 

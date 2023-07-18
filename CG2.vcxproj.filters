@@ -186,6 +186,9 @@
     <ClInclude Include="DirectXGame\Application\Game\Skydome\Skydome.h">
       <Filter>2.ヘッダー ファイル</Filter>
     </ClInclude>
+    <ClInclude Include="DirectXGame\Engine\Base\TimeData.h">
+      <Filter>2.ヘッダー ファイル</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\shaders\Basic.hlsli">
@@ -310,6 +313,9 @@
       <Filter>1.ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="DirectXGame\Application\Game\Skydome\Skydome.cpp">
+      <Filter>1.ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="DirectXGame\Engine\Base\TimeData.cpp">
       <Filter>1.ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
