@@ -28,6 +28,7 @@ void GameScene::Initialize()
 
 	// objとObject3Dの紐付け
 
+	// カメラ初期化
 	camera = new Camera;
 	camera->Initialize();
 
@@ -35,15 +36,13 @@ void GameScene::Initialize()
 	player = make_unique<Player>();
 	player.get()->Initialize();
 	
-	railCamera = new RailCamera();
 	// レールカメラ初期化
+	railCamera = new RailCamera();
 	railCamera->Initialize({0, 0, -20.0f}, {0, 0, 0});
-	
-	// カメラ初期化
-	//camera = railCamera->GetCamera();
 
-	/*camera->target = { 0,0,0 };
-	camera->position = { 0,0,-20.0f };*/
+	// 天球初期化
+	skydome = make_unique<Skydome>();
+	skydome.get()->Initialize();
 }
 
 void GameScene::Finalize()
@@ -57,8 +56,12 @@ void GameScene::Update()
 	// DIrectX毎フレーム処理(更新処理) ここから
 	railCamera->Update();
 
+	// プレイヤーの更新
 	player->SetParent(railCamera->GetObject3d());
 	player->Update();
+
+	// 
+	skydome->Update();
 
 	//// アローキーでカメラ移動
 	//if (Key::Down(DIK_LEFT))
@@ -79,6 +82,7 @@ void GameScene::Update()
 	//	camera->position.y += 0.5f;
 	//}
 	
+	// カメラをレールカメラのものへ
 	camera = railCamera->GetCamera();
 	camera->Update();
 }
@@ -88,7 +92,10 @@ void GameScene::Draw3D()
 	// カメラセット
 	camera->Set();
 
-	// 3Dオブジェ描画
+	// 天球描画
+	skydome->Draw();
+
+	// プレイヤー描画
 	player.get()->Draw();
 }
 

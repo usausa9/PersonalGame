@@ -1,0 +1,21 @@
+#pragma once
+#include "Object3d.h"
+
+class Skydome
+{
+public:
+	// 初期化
+	void Initialize();
+
+	// 
+	void Update();
+
+	// 描画
+	void Draw();
+
+private:
+	// 天球モデル, 天球オブジェクト
+	OBJModel skydomeModel;
+	Object3D skydomeObj;
+};
+

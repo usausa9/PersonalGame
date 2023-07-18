@@ -53,5 +53,5 @@ private: // 自機弾のメンバ変数
 	OBJModel bulletModel;
 	
 	// 自機弾のスピード
-	const float kBulletSpeed = 0.0f;
+	const float kBulletSpeed = 0.7f;
 };

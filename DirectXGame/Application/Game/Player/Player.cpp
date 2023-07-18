@@ -9,7 +9,7 @@ void Player::Initialize()
 	playerModel = OBJModel::LoadFromOBJ("vicviper");
 	
 	// é©ã@ÇÃçsóÒèâä˙âª
-	playerObj.rotation = { -20 * (UsaMath::u_PI / 180), 0, 0 };
+	playerObj.rotation = { -7 * (UsaMath::u_PI / 180), 0, 0 };
 	playerObj.position = { 0, 0, 20 };
 	playerObj.InitializeObject3D();
 

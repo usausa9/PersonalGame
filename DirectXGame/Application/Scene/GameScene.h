@@ -15,6 +15,8 @@
 #include "OBJModel.h"
 #include "FBXModel.h"
 
+#include "Skydome.h"
+
 #include "FbxLoader.h"
 
 class GameScene
@@ -26,6 +28,7 @@ private:
 
 	// ƒvƒŒƒCƒ„[
 	unique_ptr<Player> player = nullptr;
+	unique_ptr<Skydome> skydome = nullptr;
 
 public:
 	// ‰Šú‰»
