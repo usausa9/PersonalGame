@@ -1,16 +1,22 @@
 #include "PlayerBullet.h"
+#include "SphereCollider.h"
 
 void PlayerBullet::Initialize(OBJModel* model, const Vector3& pos, const Vector3& vel)
 {
 	// モデル紐づけ(仮引数で貰ってくる)
-	bulletObj.objModel = model;
+	objModel = model;
 
 	// 行列更新,位置更新
-	bulletObj.position = pos;
-	bulletObj.InitializeObject3D();
+	position = pos;
+	InitializeObject3D();
 
 	// 引数で移動量を受け取る
 	velocity = vel;
+
+	// コライダーの追加
+	float radius = 0.6f;
+	// 半径分だけ足元から浮いた座標を球の中心にする
+	SetCollider(new SphereCollider(Vector3({ 0, radius, 0 }), radius));
 }
 
 void PlayerBullet::Update()
@@ -22,14 +28,19 @@ void PlayerBullet::Update()
 	}
 
 	// 移動量から座標を移動
-	bulletObj.position += velocity;
+	position += velocity;
 
 	// 行列更新
-	bulletObj.UpdateObject3D();
+	UpdateObject3D();
 }
 
 void PlayerBullet::Draw()
 {
 	// オブジェクト描画
-	bulletObj.DrawObject3D();
+	DrawObject3D();
+}
+
+void PlayerBullet::OnCollision(const CollisionInfo& info)
+{
+	
 }

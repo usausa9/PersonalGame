@@ -1,8 +1,8 @@
 #pragma once
 #include "OBJModel.h"
-#include "Object3d.h"
+#include "Object3D.h"
 
-class PlayerBullet
+class PlayerBullet : public Object3D
 {
 public:
 	/// <summary>
@@ -18,10 +18,13 @@ public:
 	// 描画処理
 	void Draw();
 
-private: 
-	// 自機弾のオブジェクト
-	Object3D bulletObj;
+	/// <summary>
+	/// 衝突時のコールバック関数
+	/// </summary>
+	/// <param name="info">衝突情報</param>
+	void OnCollision(const CollisionInfo& info) override;
 
+private: 
 	// 自機弾の毎フレーム移動量
 	Vector3 velocity = {};
 
