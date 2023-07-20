@@ -1,6 +1,16 @@
 #include "Object3D.h"
 
 #include "DirectXBase.h"
+#include "BaseCollider.h"
+Object3D::~Object3D()
+{
+	if (collider)
+	{
+		// 衝突マネージャから登録解除
+		CollisionManager::GetInstance()->RemoveCollider(collider);
+		delete collider;
+	}
+}
 
 void Object3D::InitializeObject3D()
 {
@@ -33,6 +43,9 @@ void Object3D::InitializeObject3D()
 	// 定数バッファのマッピング
 	result = constBuffTransform->Map(0, nullptr, (void**)&constMapTransform);
 	assert(SUCCEEDED(result));
+
+	// クラス名の文字列を取得
+	name = typeid(*this).name();
 }
 
 // 3Dオブジェクト更新処理
@@ -63,6 +76,12 @@ void Object3D::UpdateObject3D()
 
 	// 定数バッファへデータ転送
 	constMapTransform->mat = matWorld;
+
+	// 当たり判定更新
+	if (collider)
+	{
+		collider->Update();
+	}
 }
 
 void Object3D::DrawObject3D()
@@ -72,4 +91,16 @@ void Object3D::DrawObject3D()
 	
 	// 描画！
 	objModel->Draw();
+}
+
+void Object3D::SetCollider(BaseCollider* collider)
+{
+	collider->SetObject(this);
+	this->collider = collider;
+
+	// 衝突マネージャに登録
+	CollisionManager::GetInstance()->AddCollider(collider);
+
+	// コライダーを更新
+	collider->Update();
 }

@@ -14,10 +14,10 @@ public:
 	Vector3(float x, float y, float z);	// x,y成分を指定しての生成
 
 	// メンバ関数
-	float Length() const;				// ノルム(長さ)を求める
-	Vector3& Normalize();				// 正規化
-	float Dot(const Vector3& v) const;	// 内積を求める
-	Vector3 Cross(const Vector3& v) const;// 外積を求める
+	float Length() const;					// ノルム(長さ)を求める
+	Vector3& Normalize();					// 正規化
+	float Dot(const Vector3& v) const;		// 内積を求める
+	Vector3 Cross(const Vector3& v) const;	// 外積を求める
 
 	// 単項演算子オーバーロード
 	Vector3 operator+() const;

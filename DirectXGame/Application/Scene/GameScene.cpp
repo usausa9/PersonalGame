@@ -1,4 +1,5 @@
 #include "GameScene.h"
+#include "CollisionManager.h"
 
 #include "FBXObject3D.h"
 
@@ -14,6 +15,11 @@ void GameScene::Initialize()
 	FBXObject3D::SetCommandList(DirectXBase::Get()->commandList.Get());
 	// グラフィックスパイプライン生成
 	FBXObject3D::CreateGraphicsPipeline();
+
+	// 当たり判定
+	collisionManager = CollisionManager::GetInstance();
+
+	
 	
 	// テクスチャ読み込み
 
@@ -32,13 +38,17 @@ void GameScene::Initialize()
 	camera = new Camera;
 	camera->Initialize();
 
+	// レールカメラ初期化
+	railCamera = new RailCamera();
+	railCamera->Initialize({ 0, 0, -20.0f }, { 0, 0, 0 });
+
 	// プレイヤー初期化
 	player = make_unique<Player>();
 	player.get()->Initialize();
 	
-	// レールカメラ初期化
-	railCamera = new RailCamera();
-	railCamera->Initialize({0, 0, -20.0f}, {0, 0, 0});
+	// エネミー初期化
+	enemy = make_unique<Enemy>();
+	enemy.get()->Initialize();
 
 	// 天球初期化
 	skydome = make_unique<Skydome>();
@@ -47,7 +57,6 @@ void GameScene::Initialize()
 
 void GameScene::Finalize()
 {
-	//delete camera;
 	delete railCamera;
 }
 
@@ -60,31 +69,18 @@ void GameScene::Update()
 	player->SetParent(railCamera->GetObject3d());
 	player->Update();
 
-	// 
+	// エネミーの更新
+	enemy->Update();
+
+	// 天球の行列更新
 	skydome->Update();
-
-	//// アローキーでカメラ移動
-	//if (Key::Down(DIK_LEFT))
-	//{
-	//	camera->position.x -= 0.5f;
-	//}
-	//else if (Key::Down(DIK_RIGHT))
-	//{
-	//	camera->position.x += 0.5f;
-	//}
-
-	//if (Key::Down(DIK_DOWN))
-	//{
-	//	camera->position.y -= 0.5f;
-	//}
-	//else if (Key::Down(DIK_UP))
-	//{
-	//	camera->position.y += 0.5f;
-	//}
 	
 	// カメラをレールカメラのものへ
 	camera = railCamera->GetCamera();
 	camera->Update();
+
+	// 全ての衝突をチェック (更新の最後)
+	collisionManager->CheckAllCollisions();
 }
 
 void GameScene::Draw3D()
@@ -96,7 +92,10 @@ void GameScene::Draw3D()
 	skydome->Draw();
 
 	// プレイヤー描画
-	player.get()->Draw();
+	player->Draw();
+
+	// 敵描画
+	enemy->Draw();
 }
 
 void GameScene::DrawParticle()

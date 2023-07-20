@@ -121,7 +121,7 @@
       <PreprocessorDefinitions>_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <TreatWarningAsError>true</TreatWarningAsError>
-      <AdditionalIncludeDirectories>$(ProjectDir)DirectXGame\Application\Game\Enemy;$(ProjectDir)DirectXGame\Application\Game\Skydome;$(ProjectDir)DirectXGame\Application\Game;$(ProjectDir)DirectXGame\Application\Game\Player;$(ProjectDir)DirectXGame\Application\Base;$(ProjectDir)DirectXGame\Application\Scene;$(ProjectDir)DirectXGame\Engine\2D;$(ProjectDir)DirectXGame\Engine\2D_3D;$(ProjectDir)DirectXGame\Engine\3D;$(ProjectDir)DirectXGame\Engine\Audio;$(ProjectDir)DirectXGame\Engine\Base;$(ProjectDir)DirectXGame\Engine\Base\Math;$(ProjectDir)DirectXGame\Engine\IO;$(ProjectDir)DirectXGame\Engine;$(ProjectDir)DirectXGame\Application;$(ProjectDir)DirectXGame\Engine\3D\FBX;$(ProjectDir)DirectXGame\Engine\3D\OBJ;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)DirectXGame\Application\Game\Enemy;$(ProjectDir)DirectXGame\Application\Game\Skydome;$(ProjectDir)DirectXGame\Application\Game;$(ProjectDir)DirectXGame\Application\Game\Player;$(ProjectDir)DirectXGame\Application\Base;$(ProjectDir)DirectXGame\Application\Scene;$(ProjectDir)DirectXGame\Engine\2D;$(ProjectDir)DirectXGame\Engine\2D_3D;$(ProjectDir)DirectXGame\Engine\3D;$(ProjectDir)DirectXGame\Engine\Audio;$(ProjectDir)DirectXGame\Engine\Base\Collision;$(ProjectDir)DirectXGame\Engine\Base;$(ProjectDir)DirectXGame\Engine\Base\Math;$(ProjectDir)DirectXGame\Engine\IO;$(ProjectDir)DirectXGame\Engine;$(ProjectDir)DirectXGame\Application;$(ProjectDir)DirectXGame\Engine\3D\FBX;$(ProjectDir)DirectXGame\Engine\3D\OBJ;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -140,7 +140,7 @@
       <ConformanceMode>true</ConformanceMode>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <TreatWarningAsError>true</TreatWarningAsError>
-      <AdditionalIncludeDirectories>$(ProjectDir)DirectXGame\Application\Game\Enemy;$(ProjectDir)DirectXGame\Application\Game\Skydome;$(ProjectDir)DirectXGame\Application\Game;$(ProjectDir)DirectXGame\Application\Game\Player;$(ProjectDir)DirectXGame\Application\Base;$(ProjectDir)DirectXGame\Application\Scene;$(ProjectDir)DirectXGame\Engine\2D;$(ProjectDir)DirectXGame\Engine\2D_3D;$(ProjectDir)DirectXGame\Engine\3D;$(ProjectDir)DirectXGame\Engine\Audio;$(ProjectDir)DirectXGame\Engine\Base;$(ProjectDir)DirectXGame\Engine\Base\Math;$(ProjectDir)DirectXGame\Engine\IO;$(ProjectDir)DirectXGame\Engine;$(ProjectDir)DirectXGame\Application;$(ProjectDir)DirectXGame\Engine\3D\FBX;$(ProjectDir)DirectXGame\Engine\3D\OBJ;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)DirectXGame\Application\Game\Enemy;$(ProjectDir)DirectXGame\Application\Game\Skydome;$(ProjectDir)DirectXGame\Application\Game;$(ProjectDir)DirectXGame\Application\Game\Player;$(ProjectDir)DirectXGame\Application\Base;$(ProjectDir)DirectXGame\Application\Scene;$(ProjectDir)DirectXGame\Engine\2D;$(ProjectDir)DirectXGame\Engine\2D_3D;$(ProjectDir)DirectXGame\Engine\3D;$(ProjectDir)DirectXGame\Engine\Audio;$(ProjectDir)DirectXGame\Engine\Base\Collision;$(ProjectDir)DirectXGame\Engine\Base;$(ProjectDir)DirectXGame\Engine\Base\Math;$(ProjectDir)DirectXGame\Engine\IO;$(ProjectDir)DirectXGame\Engine;$(ProjectDir)DirectXGame\Application;$(ProjectDir)DirectXGame\Engine\3D\FBX;$(ProjectDir)DirectXGame\Engine\3D\OBJ;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -152,9 +152,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="DirectXGame\Engine\Base\Collision\CollisionPrimitive.h" />
+    <ClInclude Include="DirectXGame\Engine\Base\Collision\CollisionManager.h" />
     <ClInclude Include="DirectXGame\Engine\3D\Camera.h" />
-    <ClInclude Include="DirectXGame\Engine\2D_3D\Collision.h" />
-    <ClInclude Include="DirectXGame\Engine\2D_3D\CollisionPrimitive.h" />
+    <ClInclude Include="DirectXGame\Engine\Base\Collision\Collision.h" />
+    <ClInclude Include="DirectXGame\Engine\Base\Collision\BaseCollider.h" />
+    <ClInclude Include="DirectXGame\Engine\Base\Collision\CollisionInfo.h" />
+    <ClInclude Include="DirectXGame\Engine\Base\Collision\CollisionTypes.h" />
     <ClInclude Include="DirectXGame\Engine\Base\Common.h" />
     <ClInclude Include="DirectXGame\Engine\Base\DirectXBase.h" />
     <ClInclude Include="DirectXGame\Engine\3D\FBX\FBXLoader.h" />
@@ -185,6 +189,7 @@
     <ClInclude Include="DirectXGame\Application\Game\Skydome\Skydome.h" />
     <ClInclude Include="DirectXGame\Engine\Base\TimeData.h" />
     <ClInclude Include="DirectXGame\Application\Game\Enemy\Enemy.h" />
+    <ClInclude Include="DirectXGame\Engine\Base\Collision\SphereCollider.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\shaders\Basic.hlsli" />
@@ -249,9 +254,10 @@
     </FxCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="DirectXGame\Engine\Base\Collision\CollisionPrimitive.cpp" />
+    <ClCompile Include="DirectXGame\Engine\Base\Collision\CollisionManager.cpp" />
     <ClCompile Include="DirectXGame\Engine\3D\Camera.cpp" />
-    <ClCompile Include="DirectXGame\Engine\2D_3D\Collision.cpp" />
-    <ClCompile Include="DirectXGame\Engine\2D_3D\CollisionPrimitive.cpp" />
+    <ClCompile Include="DirectXGame\Engine\Base\Collision\Collision.cpp" />
     <ClCompile Include="DirectXGame\Engine\Base\DirectXBase.cpp" />
     <ClCompile Include="DirectXGame\Engine\3D\FBX\FBXLoader.cpp" />
     <ClCompile Include="DirectXGame\Engine\3D\FBX\FBXModel.cpp" />
@@ -278,6 +284,7 @@
     <ClCompile Include="DirectXGame\Application\Game\Skydome\Skydome.cpp" />
     <ClCompile Include="DirectXGame\Engine\Base\TimeData.cpp" />
     <ClCompile Include="DirectXGame\Application\Game\Enemy\Enemy.cpp" />
+    <ClCompile Include="DirectXGame\Engine\Base\Collision\SphereCollider.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="External\DirectXTex\DirectXTex_Desktop_2022_Win10.vcxproj">

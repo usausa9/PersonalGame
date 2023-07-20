@@ -147,10 +147,7 @@
     <ClInclude Include="DirectXGame\Engine\2D_3D\ParticleManager.h">
       <Filter>2.ヘッダー ファイル\Engine\2D/3D</Filter>
     </ClInclude>
-    <ClInclude Include="DirectXGame\Engine\2D_3D\Collision.h">
-      <Filter>2.ヘッダー ファイル\Engine\2D/3D</Filter>
-    </ClInclude>
-    <ClInclude Include="DirectXGame\Engine\2D_3D\CollisionPrimitive.h">
+    <ClInclude Include="DirectXGame\Engine\Base\Collision\Collision.h">
       <Filter>2.ヘッダー ファイル\Engine\2D/3D</Filter>
     </ClInclude>
     <ClInclude Include="DirectXGame\Engine\IO\Input.h">
@@ -190,6 +187,24 @@
       <Filter>2.ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="DirectXGame\Application\Game\Enemy\Enemy.h">
+      <Filter>2.ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="DirectXGame\Engine\Base\Collision\CollisionTypes.h">
+      <Filter>2.ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="DirectXGame\Engine\Base\Collision\BaseCollider.h">
+      <Filter>2.ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="DirectXGame\Engine\Base\Collision\CollisionInfo.h">
+      <Filter>2.ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="DirectXGame\Engine\Base\Collision\SphereCollider.h">
+      <Filter>2.ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="DirectXGame\Engine\Base\Collision\CollisionManager.h">
+      <Filter>2.ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="DirectXGame\Engine\Base\Collision\CollisionPrimitive.h">
       <Filter>2.ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>
@@ -279,10 +294,7 @@
     <ClCompile Include="DirectXGame\Engine\2D\SpriteManager.cpp">
       <Filter>1.ソース ファイル\Engine\2D</Filter>
     </ClCompile>
-    <ClCompile Include="DirectXGame\Engine\2D_3D\CollisionPrimitive.cpp">
-      <Filter>1.ソース ファイル\Engine\2D/3D</Filter>
-    </ClCompile>
-    <ClCompile Include="DirectXGame\Engine\2D_3D\Collision.cpp">
+    <ClCompile Include="DirectXGame\Engine\Base\Collision\Collision.cpp">
       <Filter>1.ソース ファイル\Engine\2D/3D</Filter>
     </ClCompile>
     <ClCompile Include="DirectXGame\Engine\2D_3D\ParticleManager.cpp">
@@ -322,6 +334,15 @@
       <Filter>1.ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="DirectXGame\Application\Game\Enemy\Enemy.cpp">
+      <Filter>1.ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="DirectXGame\Engine\Base\Collision\SphereCollider.cpp">
+      <Filter>1.ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="DirectXGame\Engine\Base\Collision\CollisionManager.cpp">
+      <Filter>1.ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="DirectXGame\Engine\Base\Collision\CollisionPrimitive.cpp">
       <Filter>1.ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>

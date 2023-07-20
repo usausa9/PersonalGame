@@ -1,12 +1,11 @@
 #pragma once
 #include "UsaMath.h"
 #include "Input.h"
-#include "Object3d.h"
 #include "PlayerBullet.h"
 
 #include <list>
 
-class Enemy
+class Enemy : public Object3D
 {
 public:	// メンバ関数
 	// 初期化処理
@@ -21,6 +20,12 @@ public:	// メンバ関数
 	// 親子付けのセッター
 	// void SetParent(Object3D* object) { enemyObj.parent = object; }
 
+	/// <summary>
+	/// 衝突時のコールバック関数
+	/// </summary>
+	/// <param name="info">衝突情報</param>
+	void OnCollision(const CollisionInfo& info) override;
+
 private: // メンバ関数
 	// 入力受け付け + 移動
 	void Move();
@@ -28,7 +33,6 @@ private: // メンバ関数
 private: // 自機のメンバ変数
 	// 自機モデル, 自機オブジェクト
 	OBJModel enemyModel;
-	Object3D enemyObj;
 
 	// 自機の移動用
 	Vector3 move = { 0,0,0 };

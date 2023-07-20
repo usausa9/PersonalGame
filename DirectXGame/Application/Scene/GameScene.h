@@ -5,6 +5,7 @@
 #include "DirectXBase.h"
 
 #include "Player.h"
+#include "Enemy.h"
 
 #include "Object3D.h"
 #include "FBXObject3D.h"
@@ -19,15 +20,23 @@
 
 #include "FbxLoader.h"
 
+class CollisionManager;
+
 class GameScene
 {
 private:
+	// 衝突マネージャ
+	CollisionManager* collisionManager = nullptr;
+	
 	// カメラ
 	Camera* camera = nullptr;
 	RailCamera* railCamera = nullptr;
 
-	// プレイヤー
+	// プレイヤー,敵
 	unique_ptr<Player> player = nullptr;
+	unique_ptr<Enemy> enemy = nullptr;
+
+	// 天球
 	unique_ptr<Skydome> skydome = nullptr;
 
 public:

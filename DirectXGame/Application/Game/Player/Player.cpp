@@ -1,4 +1,5 @@
 #include "Player.h"
+#include "SphereCollider.h"
 
 using namespace Input;
 
@@ -9,12 +10,17 @@ void Player::Initialize()
 	playerModel = OBJModel::LoadFromOBJ("vicviper");
 	
 	// 自機の行列初期化
-	playerObj.rotation = { -7 * (UsaMath::u_PI / 180), 0, 0 };
-	playerObj.position = { 0, 0, 20 };
-	playerObj.InitializeObject3D();
+	rotation = { -7 * (UsaMath::u_PI / 180), 0, 0 };
+	position = { 0, 0, 20 };
+	InitializeObject3D();
 
 	// 自機モデルと自機オブジェクトを紐づけ
-	playerObj.objModel = &playerModel;
+	objModel = &playerModel;
+
+	// コライダーの追加
+	float radius = 0.6f;
+	// 半径分だけ足元から浮いた座標を球の中心にする
+	SetCollider(new SphereCollider(Vector3({ 0, radius, 0 }),radius));
 
 	// 自機弾モデル読み込み
 	bulletModel = OBJModel::LoadFromOBJ("ICO");
@@ -33,7 +39,7 @@ void Player::Update()
 	Move();
 
 	// 行列更新 必ず呼び出す
-	playerObj.UpdateObject3D();
+	UpdateObject3D();
 
 	// 弾発射 + 更新
 	Shot();
@@ -47,13 +53,18 @@ void Player::Update()
 void Player::Draw()
 {
 	// オブジェ描画
-	playerObj.DrawObject3D();
+	DrawObject3D();
 
 	// 弾描画
 	for (unique_ptr<PlayerBullet>& bullet : bullets)
 	{
 		bullet->Draw();
 	}
+}
+
+void Player::OnCollision(const CollisionInfo& info)
+{
+
 }
 
 // 入力受け付け + 移動
@@ -75,13 +86,13 @@ void Player::Move()
 		0 };
 
 	// 移動量の加算
-	playerObj.position += move;
+	position += move;
 
 	// 範囲制限
-	playerObj.position.x = max(playerObj.position.x, -kMoveLimit.x);
-	playerObj.position.y = max(playerObj.position.y, -kMoveLimit.y);
-	playerObj.position.x = min(playerObj.position.x, +kMoveLimit.x);
-	playerObj.position.y = min(playerObj.position.y, +kMoveLimit.y);
+	position.x = max(position.x, -kMoveLimit.x);
+	position.y = max(position.y, -kMoveLimit.y);
+	position.x = min(position.x, +kMoveLimit.x);
+	position.y = min(position.y, +kMoveLimit.y);
 }
 
 void Player::Shot()
@@ -96,11 +107,11 @@ void Player::Shot()
 		Vector3 delayPos = { 0, 0.2f, 7.1f };
 
 		// 速度ベクトルを自機の向きに合わせて回転
-		velocity = velocity * playerObj.matWorld;
-		delayPos = delayPos * playerObj.matWorld;
+		velocity = velocity * matWorld;
+		delayPos = delayPos * matWorld;
 		
 		// 自機弾を生成、初期化
 		bullets.push_back(std::move(make_unique<PlayerBullet>()));
-		bullets.back()->Initialize(&bulletModel, playerObj.GetWorldPosition() + delayPos, velocity);
+		bullets.back()->Initialize(&bulletModel, GetWorldPosition() + delayPos, velocity);
 	}
 }

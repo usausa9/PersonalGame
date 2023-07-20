@@ -1,7 +1,12 @@
 #pragma once
 #include "Common.h"
-#include "Vector3.h"
+#include "UsaMath.h"
 #include "OBJModel.h"
+
+#include "CollisionInfo.h"
+#include"CollisionManager.h"
+
+class BaseCollider;
 
 // 定数バッファ用データ構造体 (3D変換行列)
 struct Object3DConstBufferDataTransform
@@ -11,7 +16,7 @@ struct Object3DConstBufferDataTransform
 
 class Object3D
 {
-public:
+public: // メンバ変数
 	// 定数バッファ (行列用)
 	ID3D12Resource* constBuffTransform = nullptr;
 
@@ -31,16 +36,46 @@ public:
 	// 親オブジェクトへのポインタ
 	Object3D* parent = nullptr;
 
+	// モデルのポインタ
 	OBJModel* objModel = nullptr;
 
+	// クラス名 (デバッグ用)
+	const char* name = nullptr;
+
+	// コライダー
+	BaseCollider* collider = nullptr;
+
 public:
+	// コンストラクタ
+	Object3D() = default;
+
+	// デストラクタ
+	virtual ~Object3D();
+
 	// 3Dオブジェクト初期化
-	void InitializeObject3D();
+	virtual void InitializeObject3D();
 
 	// 3Dオブジェクト更新処理
-	void UpdateObject3D();
+	virtual void UpdateObject3D();
 
 	// 3Dオブジェクト描画処理
-	void DrawObject3D();
-};
+	virtual void DrawObject3D();
 
+	/// <summary>
+	/// ワールド行列の取得
+	/// </summary>
+	/// <returns>ワールド行列</returns>
+	const Matrix4& GetMatWorld() { return matWorld; }
+
+	/// <summary>
+	/// コライダーのセット
+	/// </summary>
+	/// <param name="collider">コライダー</param>
+	void SetCollider(BaseCollider* collider);
+
+	/// <summary>
+	/// 衝突時コールバック関数
+	/// </summary>
+	/// <param name="info">衝突情報</param>
+	virtual void OnCollision(const CollisionInfo& info) {}
+};
