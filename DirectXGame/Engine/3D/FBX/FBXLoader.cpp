@@ -4,7 +4,7 @@
 /// 静的メンバ変数の実体
 /// </summary>
 const string FBXLoader::baseDirectory = "Resources/Models/FBX/";
-const string FBXLoader::defaultTextureFilename = "white1x1.png";
+const string FBXLoader::defaultTextureFilename = "Resources/Sprites/white1x1.png";
 
 string FBXLoader::ExtractFileName(const string& path)
 {

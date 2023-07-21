@@ -1,6 +1,17 @@
 #include "Object3D.h"
 
 #include "DirectXBase.h"
+#include "BaseCollider.h"
+
+Object3D::~Object3D()
+{
+	if (collider)
+	{
+		// Õ“Ëƒ}ƒl[ƒWƒƒ‚©‚ç“o˜^‰ðœ
+		CollisionManager::GetInstance()->RemoveCollider(collider);
+		delete collider;
+	}
+}
 
 void Object3D::InitializeObject3D()
 {

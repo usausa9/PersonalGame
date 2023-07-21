@@ -180,6 +180,13 @@
     <ClInclude Include="DirectXGame\Engine\3D\OBJ\OBJModel.h" />
     <ClInclude Include="DirectXGame\Application\Game\Player\Player.h" />
     <ClInclude Include="DirectXGame\Application\Game\Player\PlayerBullet.h" />
+    <ClInclude Include="DirectXGame\Engine\Base\Math\SplineCurve.h" />
+    <ClInclude Include="DirectXGame\Engine\3D\RailCamera.h" />
+    <ClInclude Include="DirectXGame\Application\Game\Skydome\Skydome.h" />
+    <ClInclude Include="DirectXGame\Engine\Base\TimeData.h" />
+    <ClInclude Include="DirectXGame\Application\Game\Enemy\Enemy.h" />
+    <ClInclude Include="DirectXGame\Engine\Base\Collision\SphereCollider.h" />
+    <ClInclude Include="DirectXGame\Application\Game\Player\PlayerReticle.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\shaders\Basic.hlsli" />
@@ -268,6 +275,13 @@
     <ClCompile Include="DirectXGame\Engine\3D\OBJ\OBJModel.cpp" />
     <ClCompile Include="DirectXGame\Application\Game\Player\Player.cpp" />
     <ClCompile Include="DirectXGame\Application\Game\Player\PlayerBullet.cpp" />
+    <ClCompile Include="DirectXGame\Engine\Base\Math\SplineCurve.cpp" />
+    <ClCompile Include="DirectXGame\Engine\3D\RailCamera.cpp" />
+    <ClCompile Include="DirectXGame\Application\Game\Skydome\Skydome.cpp" />
+    <ClCompile Include="DirectXGame\Engine\Base\TimeData.cpp" />
+    <ClCompile Include="DirectXGame\Application\Game\Enemy\Enemy.cpp" />
+    <ClCompile Include="DirectXGame\Engine\Base\Collision\SphereCollider.cpp" />
+    <ClCompile Include="DirectXGame\Application\Game\Player\PlayerReticle.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="External\DirectXTex\DirectXTex_Desktop_2022_Win10.vcxproj">

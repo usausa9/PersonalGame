@@ -93,6 +93,8 @@ void GameScene::DrawParticle()
 	// パーティクルオブジェ描画
 }
 
+// 前景スプライト
 void GameScene::Draw2D()
 {
+	player->DrawUI();
 }

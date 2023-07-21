@@ -177,6 +177,42 @@
     <ClInclude Include="DirectXGame\Application\Game\Player\PlayerBullet.h">
       <Filter>2.ヘッダー ファイル</Filter>
     </ClInclude>
+    <ClInclude Include="DirectXGame\Engine\Base\Math\SplineCurve.h">
+      <Filter>2.ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="DirectXGame\Engine\3D\RailCamera.h">
+      <Filter>2.ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="DirectXGame\Application\Game\Skydome\Skydome.h">
+      <Filter>2.ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="DirectXGame\Engine\Base\TimeData.h">
+      <Filter>2.ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="DirectXGame\Application\Game\Enemy\Enemy.h">
+      <Filter>2.ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="DirectXGame\Engine\Base\Collision\CollisionTypes.h">
+      <Filter>2.ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="DirectXGame\Engine\Base\Collision\BaseCollider.h">
+      <Filter>2.ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="DirectXGame\Engine\Base\Collision\CollisionInfo.h">
+      <Filter>2.ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="DirectXGame\Engine\Base\Collision\SphereCollider.h">
+      <Filter>2.ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="DirectXGame\Engine\Base\Collision\CollisionManager.h">
+      <Filter>2.ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="DirectXGame\Engine\Base\Collision\CollisionPrimitive.h">
+      <Filter>2.ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="DirectXGame\Application\Game\Player\PlayerReticle.h">
+      <Filter>2.ヘッダー ファイル</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\shaders\Basic.hlsli">
@@ -292,6 +328,33 @@
       <Filter>1.ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="DirectXGame\Application\Game\Player\PlayerBullet.cpp">
+      <Filter>1.ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="DirectXGame\Engine\Base\Math\SplineCurve.cpp">
+      <Filter>1.ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="DirectXGame\Engine\3D\RailCamera.cpp">
+      <Filter>1.ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="DirectXGame\Application\Game\Skydome\Skydome.cpp">
+      <Filter>1.ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="DirectXGame\Engine\Base\TimeData.cpp">
+      <Filter>1.ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="DirectXGame\Application\Game\Enemy\Enemy.cpp">
+      <Filter>1.ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="DirectXGame\Engine\Base\Collision\SphereCollider.cpp">
+      <Filter>1.ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="DirectXGame\Engine\Base\Collision\CollisionManager.cpp">
+      <Filter>1.ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="DirectXGame\Engine\Base\Collision\CollisionPrimitive.cpp">
+      <Filter>1.ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="DirectXGame\Application\Game\Player\PlayerReticle.cpp">
       <Filter>1.ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
