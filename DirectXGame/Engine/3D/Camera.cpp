@@ -2,6 +2,8 @@
 #include "WinAPI.h"
 #include "DirectXBase.h"
 
+Camera* Camera::CurrentCamera = nullptr;
+
 Camera::~Camera()
 {
 	constBuffCamera->Unmap(0, nullptr);	// メモリリークは罪
@@ -9,6 +11,8 @@ Camera::~Camera()
 
 void Camera::Initialize()
 {
+	SetCurrentCamera(this);
+
 	// 射影変換行列
 	matProjection = matProjection.CreateProjectionMat(
 		UsaMath::DegreesToRadians(90.0f),	// 上下画角90度
@@ -49,6 +53,8 @@ void Camera::Initialize()
 
 void Camera::Initialize(Vector3 _position, Vector3 _target, Vector3 _up)
 {
+	SetCurrentCamera(this);
+
 	// ベクトルをもらってくる
 	position = _position;
 	target = _target;
@@ -114,4 +120,14 @@ void Camera::Set()
 {
 	// 定数バッファビューをセット [カメラ]
 	DirectXBase::Get()->commandList->SetGraphicsRootConstantBufferView(3, constBuffCamera->GetGPUVirtualAddress());
+}
+
+void Camera::SetCurrentCamera(Camera* current)
+{
+	CurrentCamera = current;
+}
+
+Camera* Camera::GetCurrentCamera()
+{
+	return CurrentCamera;
 }

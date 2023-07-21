@@ -1,13 +1,20 @@
 #include "Player.h"
 #include "SphereCollider.h"
+#include "WinAPI.h"
 
 using namespace Input;
 
 // 初期化
-void Player::Initialize()
+void Player::Initialize(Camera* camera)
 {
 	// 自機モデル読み込み
 	playerModel = OBJModel::LoadFromOBJ("vicviper");
+	reticleModel = OBJModel::LoadFromOBJ("ICO");
+
+	// レティクルスプライト割り当て
+	reticleTex = TextureManager::Load(L"Resources/Sprites/reticle.png");
+	reticleSp = make_unique<Sprite>(reticleTex);
+	reticleSp->position = reticlePos;
 	
 	// 自機の行列初期化
 	rotation = { -7 * (UsaMath::u_PI / 180), 0, 0 };
@@ -16,6 +23,9 @@ void Player::Initialize()
 
 	// 自機モデルと自機オブジェクトを紐づけ
 	objModel = &playerModel;
+	reticleObj.objModel = &reticleModel;
+	reticleObj.position = { 0, 0, 50 };
+	reticleObj.InitializeObject3D();
 
 	// コライダーの追加
 	float radius = 0.6f;
@@ -41,6 +51,9 @@ void Player::Update()
 	// 行列更新 必ず呼び出す
 	UpdateObject3D();
 
+	// レティクルの更新
+	reticleUpdate();
+
 	// 弾発射 + 更新
 	Shot();
 	for (unique_ptr<PlayerBullet>& bullet : bullets)
@@ -65,6 +78,76 @@ void Player::Draw()
 void Player::OnCollision(const CollisionInfo& info)
 {
 
+}
+
+void Player::reticleUpdate()
+{
+	// ビューポート行列
+	Matrix4 matViewPort;
+	matViewPort.Identity();
+	/*matViewPort.m[0][0] =   WinAPI::Get()->width  / 2.0f;
+	matViewPort.m[1][1] = -(WinAPI::Get()->height / 2.0f);
+	matViewPort.m[3][0] =   WinAPI::Get()->width  / 2.0f;
+	matViewPort.m[3][1] =   WinAPI::Get()->height / 2.0f;*/
+
+	// カメラ行列との合成
+	Matrix4 matViewProjectionViewPort = 
+		Camera::GetCurrentCamera()->GetViewProjection() * matViewPort;
+
+	// 画面上のレティクル座標を動かす
+	Vector2 reticleMoveVel = { 0, 0 };
+	float reticleSpd = 4.0f;
+
+	if (Key::Down(DIK_LEFT))
+	{
+		reticleMoveVel.x = -reticleSpd;
+	}
+	else if (Key::Down(DIK_RIGHT))
+	{
+		reticleMoveVel.x = reticleSpd;
+	}
+
+	if (Key::Down(DIK_UP))
+	{
+		reticleMoveVel.y = -reticleSpd;
+	}
+	else if (Key::Down(DIK_DOWN))
+	{
+		reticleMoveVel.y = reticleSpd;
+	}
+
+	reticlePos += reticleMoveVel;
+
+	// 座標をスプライトにセット
+	reticleSp->position = reticlePos;
+
+	// 合成行列の生成
+	Matrix4 matInverseVBV = matViewProjectionViewPort;
+	matInverseVBV = Matrix4::Inverse(matInverseVBV);
+
+	// スクリーン座標
+	Vector3 posNear = { reticlePos.x, reticlePos.y, 0 };
+	Vector3 posFar = { reticlePos.x, reticlePos.y, 1 };
+
+	// スクリーン座標系からワールド座標系へ
+	posNear = Matrix4::TransformDivW(posNear, matInverseVBV);
+	posFar = Matrix4::TransformDivW(posFar, matInverseVBV);
+
+	// レイの方向
+	Vector3 direction = posFar - posNear;
+	direction.Normalize();
+
+	// カメラからレティクルの距離
+	const float distanceReticle = 100.0f;
+	reticleObj.position = posNear + direction * distanceReticle;
+
+	reticleObj.UpdateObject3D();
+	reticleSp->Update();
+}
+
+void Player::DrawUI()
+{
+	reticleSp->Draw();
 }
 
 // 入力受け付け + 移動
@@ -101,7 +184,10 @@ void Player::Shot()
 	if (Key::Trigger(DIK_SPACE) || Pad::Trigger(Button::A))
 	{
 		// 自機弾の毎フレーム移動
-		Vector3 velocity(0, 0, kBulletSpeed);
+		Vector3 velocity = { 0, 0, 0 };
+		velocity = reticleObj.GetWorldPosition() - Object3D::GetWorldPosition();
+		velocity.Normalize();
+		velocity *= kBulletSpeed;
 
 		// 自機弾の自機からみたローカル発射位置
 		Vector3 delayPos = { 0, 0.2f, 7.1f };

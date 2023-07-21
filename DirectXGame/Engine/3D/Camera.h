@@ -40,6 +40,13 @@ public:
 	// ビルボード行列
 	Matrix4 matBillboard = Matrix4::Identity();
 
+	// 今使用しているカメラからのポインタ、カメラへのポインタ
+	static Camera* CurrentCamera;
+
+	static void SetCurrentCamera(Camera* current);
+
+	static Camera* GetCurrentCamera();
+
 public:
 	// カメラ初期化
 	void Initialize();

@@ -268,7 +268,7 @@ void OBJModel::LoadFromOBJInternal(const std::string& modelName)
 
 	// OBJÇ©ÇÁÇÃÉfÅ[É^ì«Ç›çûÇ›
 	const string fileName = modelName + ".obj";
-	const string directoryPath = "Resources/Models/OBJ/" + modelName + "/";
+	const string directoryPath = "Resources/Models/OBJModel/" + modelName + "/";
 
 	file.open(directoryPath + fileName); //"Resources/Models/ICO/ICO.obj"
 

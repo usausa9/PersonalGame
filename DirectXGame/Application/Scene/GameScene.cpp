@@ -44,7 +44,7 @@ void GameScene::Initialize()
 
 	// プレイヤー初期化
 	player = make_unique<Player>();
-	player.get()->Initialize();
+	player.get()->Initialize(camera);
 	
 	// エネミー初期化
 	enemy = make_unique<Enemy>();
@@ -108,4 +108,5 @@ void GameScene::DrawParticle()
 
 void GameScene::Draw2D()
 {
+	player->DrawUI();
 }

@@ -2,9 +2,10 @@
 #include "Common.h"
 #include "UsaMath.h"
 #include "OBJModel.h"
+#include "Camera.h"
 
 #include "CollisionInfo.h"
-#include"CollisionManager.h"
+#include "CollisionManager.h"
 
 class BaseCollider;
 
@@ -17,6 +18,9 @@ struct Object3DConstBufferDataTransform
 class Object3D
 {
 public: // メンバ変数
+	// カメラ
+	static Camera* camera;
+
 	// 定数バッファ (行列用)
 	ID3D12Resource* constBuffTransform = nullptr;
 

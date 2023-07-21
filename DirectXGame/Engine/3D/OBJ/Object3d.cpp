@@ -2,6 +2,9 @@
 
 #include "DirectXBase.h"
 #include "BaseCollider.h"
+
+Camera* Object3D::camera = nullptr;
+
 Object3D::~Object3D()
 {
 	if (collider)
