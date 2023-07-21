@@ -85,10 +85,10 @@ void Player::reticleUpdate()
 	// ビューポート行列
 	Matrix4 matViewPort;
 	matViewPort.Identity();
-	matViewPort.m[0][0] =   WinAPI::Get()->width  / 2.0f;
+	/*matViewPort.m[0][0] =   WinAPI::Get()->width  / 2.0f;
 	matViewPort.m[1][1] = -(WinAPI::Get()->height / 2.0f);
 	matViewPort.m[3][0] =   WinAPI::Get()->width  / 2.0f;
-	matViewPort.m[3][1] =   WinAPI::Get()->height / 2.0f;
+	matViewPort.m[3][1] =   WinAPI::Get()->height / 2.0f;*/
 
 	// カメラ行列との合成
 	Matrix4 matViewProjectionViewPort = 
