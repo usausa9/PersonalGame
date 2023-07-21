@@ -64,7 +64,7 @@ private: // 自機のメンバ変数
 
 private: // 自機弾のメンバ変数
 	// レティクルの座標データ
-	Vector2 reticlePos = { 0, 0 };
+	Vector2 reticlePos = { 640, 360 };
 
 	// 自機弾のリスト
 	std::list<unique_ptr<PlayerBullet>> bullets = {};
