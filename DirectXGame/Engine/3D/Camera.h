@@ -31,7 +31,7 @@ public:
 	Matrix4 matProjection = Matrix4::Identity();
 
 	// ƒrƒ…[•ÏŠ·s—ñ
-	Matrix4 matView = matView.Identity();
+	Matrix4 matView = Matrix4::Identity();
 	Vector3 up = { 0,1,0 };
 
 	float nearZ = 0.1f;

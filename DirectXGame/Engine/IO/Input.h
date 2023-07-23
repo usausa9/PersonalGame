@@ -1,11 +1,12 @@
 #pragma once
-#include <dinput.h>
-#include <Windows.h>
-#include <Xinput.h>
 
 #ifndef DIRECTINPUT_VERSION
 #define DIRECTINPUT_VERSION 0x0800
 #endif
+
+#include <dinput.h>
+#include <Windows.h>
+#include <Xinput.h>
 
 #pragma comment(lib, "xinput.lib")
 #pragma comment(lib, "dinput8.lib")

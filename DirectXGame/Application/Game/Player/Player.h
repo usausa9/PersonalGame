@@ -9,6 +9,9 @@
 
 class Player : public Object3D
 {
+private:
+	const float distanceReticle = 40.0f;
+
 public:	// ƒƒ“ƒoŠÖ”
 	// ‰Šú‰»ˆ—
 	void Initialize(Camera* camera);

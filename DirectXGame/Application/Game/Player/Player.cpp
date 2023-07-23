@@ -17,7 +17,7 @@ void Player::Initialize(Camera* camera)
 	reticleSp->position = reticlePos;
 	
 	// 自機の行列初期化
-	rotation = { -7 * (UsaMath::u_PI / 180), 0, 0 };
+	rotation = { 0, 0, 0 };
 	position = { 0, 0, 20 };
 	InitializeObject3D();
 
@@ -83,8 +83,7 @@ void Player::OnCollision(const CollisionInfo& info)
 void Player::reticleUpdate()
 {
 	// ビューポート行列
-	Matrix4 matViewPort;
-	matViewPort.Identity();
+	Matrix4 matViewPort = Matrix4::Identity(); 
 	matViewPort.m[0][0] =   WinAPI::Get()->width  / 2.0f;
 	matViewPort.m[1][1] = -(WinAPI::Get()->height / 2.0f);
 	matViewPort.m[3][0] =   WinAPI::Get()->width  / 2.0f;
@@ -138,7 +137,6 @@ void Player::reticleUpdate()
 	direction.Normalize();
 
 	// カメラからレティクルの距離
-	const float distanceReticle = 100.0f;
 	reticleObj.position = posNear + direction * distanceReticle;
 
 	reticleObj.UpdateObject3D();
