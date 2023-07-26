@@ -1,6 +1,12 @@
 #include "DirectXBase.h"
 #include "WinAPI.h"
 
+DirectXBase* DirectXBase::GetInstance()
+{
+	static DirectXBase instance;
+	return &instance;
+}
+
 void DirectXBase::Init()
 {
 	// FPSŒÅ’è‰Šú‰»

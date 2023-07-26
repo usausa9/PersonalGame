@@ -12,6 +12,8 @@
 
 #include "GameScene.h"
 
+#include "ImGuiManager.h"
+
 #include <Windows.h>
 #include <cmath>
 
@@ -26,6 +28,7 @@ private:
 	template <class T> using ComPtr = Microsoft::WRL::ComPtr<T>;
 
 public:	// ƒƒ“ƒoŠÖ”
+
 
 	// ‰Šú‰»
 	void Initialize();
@@ -64,5 +67,11 @@ private: // ƒƒ“ƒo•Ï”
 
 	// WindowsAPI‰Šú‰»
 	WinAPI& window = *WinAPI::Get();
+
+	// DirectX‰Šú‰»
+	//DirectXBase& directXBase = *DirectXBase::Get();
+
+	// ImGui
+	unique_ptr<ImGuiManager> imGui = nullptr;
 };
 

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -192,7 +192,7 @@
     <ClInclude Include="DirectXGame\Engine\Base\TimeData.h" />
     <ClInclude Include="DirectXGame\Application\Game\Enemy\Enemy.h" />
     <ClInclude Include="DirectXGame\Engine\Base\Collision\SphereCollider.h" />
-    <ClInclude Include="ImGuiManager.h" />
+    <ClInclude Include="DirectXGame\Engine\Base\ImGuiManager.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\shaders\Basic.hlsli" />
@@ -288,7 +288,7 @@
     <ClCompile Include="DirectXGame\Engine\Base\TimeData.cpp" />
     <ClCompile Include="DirectXGame\Application\Game\Enemy\Enemy.cpp" />
     <ClCompile Include="DirectXGame\Engine\Base\Collision\SphereCollider.cpp" />
-    <ClCompile Include="ImGuiManager.cpp" />
+    <ClCompile Include="DirectXGame\Engine\Base\ImGuiManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="External\DirectXTex\DirectXTex_Desktop_2022_Win10.vcxproj">

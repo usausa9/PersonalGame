@@ -41,9 +41,14 @@ public:
 	ComPtr<IDXGISwapChain4> swapChain = nullptr; // スワップチェーン
 	ComPtr<ID3D12DescriptorHeap> rtvHeap = nullptr; // レンダーターゲットビュー
 
-	ComPtr<IDXGIFactory7> dxgiFactory = nullptr; // 統合
+	ComPtr<IDXGIFactory7> dxgiFactory = nullptr; // 統合]
 
+	ID3D12Device* GetDevice() const { return device.Get(); }
+	size_t GetBackBufferCount() const { return backBuffers.size(); }
 public:
+	// シングルトンインスタンスを取得
+	static DirectXBase* GetInstance();
+
 	// 初期化
 	void Init();
 

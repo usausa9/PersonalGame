@@ -36,6 +36,9 @@ void MyGame::Initialize()
 	spriteManager = make_unique<SpriteManager>();
 	spriteManager->Init();
 
+	// ImGui‚Ì¶¬‰Šú‰»
+	imGui->Initialize();
+
 #pragma endregion
 
 #pragma region •`‰æ‰Šú‰»ˆ—

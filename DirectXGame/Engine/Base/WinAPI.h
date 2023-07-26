@@ -19,6 +19,9 @@ public:
 	MSG msg = {};
 
 public:
+	// シングルトンインスタンス
+	static WinAPI* GetInstance();
+
 	// ウィンドウプロシージャ
 	static LRESULT WindowProc(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam);
 
@@ -36,6 +39,9 @@ public:
 
 	// ウィンドウ表示
 	void Show();
+
+	// ウィンドウオブジェくト取得
+	HWND GetHwnd() const { return hwnd; }
 
 public:
 	// ゲッター

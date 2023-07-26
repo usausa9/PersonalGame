@@ -2,6 +2,12 @@
 
 #pragma comment(lib, "winmm.lib")
 
+WinAPI* WinAPI::GetInstance()
+{
+	static WinAPI instance;
+	return &instance;
+}
+
 LRESULT WinAPI::WindowProc(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam)
 {
 	// メッセージに応じてゲーム固有の処理を行う

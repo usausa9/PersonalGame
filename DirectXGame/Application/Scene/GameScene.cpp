@@ -3,6 +3,8 @@
 
 #include "FBXObject3D.h"
 
+#include "ImGuiManager.h"
+
 using namespace Input;
 
 void GameScene::Initialize()
@@ -19,8 +21,6 @@ void GameScene::Initialize()
 	// 当たり判定
 	collisionManager = CollisionManager::GetInstance();
 
-	
-	
 	// テクスチャ読み込み
 
 	// スプライト・テクスチャ紐づけ
