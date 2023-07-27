@@ -64,6 +64,12 @@ public:
 	void PostDraw();
 
 private:
+	// シングルトンなのでプライベートに記述
+	DirectXBase();
+	~DirectXBase();
+	DirectXBase(const DirectXBase&);
+	DirectXBase& operator=(const DirectXBase&);
+
 	// FPS固定初期化
 	void InitializeFixFPS();
 

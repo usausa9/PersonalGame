@@ -326,6 +326,10 @@ void DirectXBase::PostDraw()
 #pragma endregion
 }
 
+DirectXBase::DirectXBase() {}
+
+DirectXBase::~DirectXBase() {}
+
 void DirectXBase::InitializeFixFPS()
 {
 	// Œ»İŠÔ‚ğ‹L˜^‚·‚é
@@ -358,10 +362,5 @@ void DirectXBase::UpdateFixFPS()
 	// Œ»İ‚ÌŠÔ‚ğÄ‹L˜^‚·‚é
 	reference_ = std::chrono::steady_clock::now();
 }
-
-//DirectXBase* DirectXBase::GetInstance()
-//{
-//	return currentDirectX;
-//}
 
 DirectXBase* DirectXBase::currentDirectX = nullptr;

@@ -115,4 +115,8 @@ void WinAPI::Show()
 	ShowWindow(hwnd, SW_SHOW);
 }
 
+WinAPI::WinAPI() {}
+
+WinAPI::~WinAPI() {}
+
 WinAPI* WinAPI::currentWindow;

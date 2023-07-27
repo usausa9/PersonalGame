@@ -48,4 +48,11 @@ public:
 
 public:
 	static WinAPI* currentWindow;
+
+private:
+	// シングルトンなのでプライベートに記述
+	WinAPI();
+	~WinAPI();
+	WinAPI(const WinAPI&);
+	WinAPI& operator=(const WinAPI&);
 };
