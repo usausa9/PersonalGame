@@ -3,8 +3,6 @@
 #include <imgui_impl_win32.h>
 #include <imgui_impl_dx12.h>
 
-
-
 ImGuiManager* ImGuiManager::GetInstance()
 {
 	static ImGuiManager instance;
@@ -42,4 +40,39 @@ void ImGuiManager::Initialize()
 	ImGuiIO& io = ImGui::GetIO();
 	// 標準フォントを追加
 	io.Fonts->AddFontDefault();
+}
+
+void ImGuiManager::Finalize()
+{
+	// 後始末
+	ImGui_ImplDX12_Shutdown();
+	ImGui_ImplWin32_Shutdown();
+	ImGui::DestroyContext();
+
+	// ヒープ解法
+	srvHeap_.Reset();
+}
+
+void ImGuiManager::Begin()
+{
+	// ImGuiフレーム開始
+	ImGui_ImplDX12_NewFrame();
+	ImGui_ImplWin32_NewFrame();
+	ImGui::NewFrame();
+}
+
+void ImGuiManager::End()
+{
+	// 描画前準備
+	ImGui::Render();
+}
+
+void ImGuiManager::Draw()
+{
+	// デスクリプタヒープの配列をセットするコマンド
+	ID3D12DescriptorHeap* ppHeaps[] = {srvHeap_.Get()};
+	DirectXBase::GetInstance()->GetCommandList()->SetDescriptorHeaps(_countof(ppHeaps), ppHeaps);
+	
+	// 描画コマンドを発行
+	ImGui_ImplDX12_RenderDrawData(ImGui::GetDrawData(), DirectXBase::GetInstance()->GetCommandList());
 }

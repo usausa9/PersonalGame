@@ -12,8 +12,8 @@ void SpriteManager::Init()
 
 	SpriteManager::SpriteProjection = Matrix4
 	{
-		2.f / WinAPI::Get()->width, 0, 0, 0,
-		0, -2.f / WinAPI::Get()->height, 0, 0,
+		2.f / WinAPI::GetInstance()->width, 0, 0, 0,
+		0, -2.f / WinAPI::GetInstance()->height, 0, 0,
 		0, 0, 1, 0,
 		-1, 1, 0, 1
 	};
@@ -201,19 +201,19 @@ void SpriteManager::Init()
 	ComPtr<ID3DBlob> rootSigBlob = nullptr;
 	result = D3D12SerializeRootSignature(&rootSignatureDesc, D3D_ROOT_SIGNATURE_VERSION_1_0, &rootSigBlob, &errorBlob);
 	assert(SUCCEEDED(result));
-	result = DirectXBase::Get()->device->CreateRootSignature(0, rootSigBlob->GetBufferPointer(), rootSigBlob->GetBufferSize(), IID_PPV_ARGS(&rootSignature));
+	result = DirectXBase::GetInstance()->device->CreateRootSignature(0, rootSigBlob->GetBufferPointer(), rootSigBlob->GetBufferSize(), IID_PPV_ARGS(&rootSignature));
 	assert(SUCCEEDED(result));
 
 	// パイプラインにルートシグネチャをセット
 	pipelineDesc.pRootSignature = rootSignature.Get();
 
-	result = DirectXBase::Get()->device->CreateGraphicsPipelineState(&pipelineDesc, IID_PPV_ARGS(&pipelineState));
+	result = DirectXBase::GetInstance()->device->CreateGraphicsPipelineState(&pipelineDesc, IID_PPV_ARGS(&pipelineState));
 	assert(SUCCEEDED(result));
 }
 
 void SpriteManager::PreDraw()
 {
-	ID3D12GraphicsCommandList* commandList = DirectXBase::Get()->commandList.Get();
+	ID3D12GraphicsCommandList* commandList = DirectXBase::GetInstance()->commandList.Get();
 	
 	// パイプラインステートとルートシグネチャの設定コマンド
 	commandList->SetPipelineState(pipelineState.Get());

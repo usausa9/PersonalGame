@@ -207,7 +207,7 @@
     <ClInclude Include="DirectXGame\Engine\Base\Collision\CollisionPrimitive.h">
       <Filter>2.ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="ImGuiManager.h">
+    <ClInclude Include="DirectXGame\Engine\2D\ImGuiManager.h">
       <Filter>2.ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>
@@ -348,7 +348,7 @@
     <ClCompile Include="DirectXGame\Engine\Base\Collision\CollisionPrimitive.cpp">
       <Filter>1.ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="ImGuiManager.cpp">
+    <ClCompile Include="DirectXGame\Engine\2D\ImGuiManager.cpp">
       <Filter>1.ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>

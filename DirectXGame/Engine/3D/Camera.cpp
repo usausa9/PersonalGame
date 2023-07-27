@@ -16,7 +16,7 @@ void Camera::Initialize()
 	// 射影変換行列
 	matProjection = matProjection.CreateProjectionMat(
 		UsaMath::DegreesToRadians(90.0f),	// 上下画角90度
-		(float)WinAPI::Get()->width / WinAPI::Get()->height,
+		(float)WinAPI::GetInstance()->width / WinAPI::GetInstance()->height,
 		nearZ, farZ
 	);
 
@@ -37,7 +37,7 @@ void Camera::Initialize()
 	cbResourceDesc.Layout = D3D12_TEXTURE_LAYOUT_ROW_MAJOR;
 
 	// 定数バッファの生成
-	result = DirectXBase::Get()->device->CreateCommittedResource(
+	result = DirectXBase::GetInstance()->device->CreateCommittedResource(
 		&cbHeapProp,	// ヒープ設定
 		D3D12_HEAP_FLAG_NONE,
 		&cbResourceDesc,// リソース設定
@@ -63,7 +63,7 @@ void Camera::Initialize(Vector3 _position, Vector3 _target, Vector3 _up)
 	// 射影変換行列
 	matProjection = matProjection.CreateProjectionMat(
 		UsaMath::DegreesToRadians(90.0f),	// 上下画角90度
-		(float)WinAPI::Get()->width / WinAPI::Get()->height,
+		(float)WinAPI::GetInstance()->width / WinAPI::GetInstance()->height,
 		nearZ, farZ
 	);
 
@@ -84,7 +84,7 @@ void Camera::Initialize(Vector3 _position, Vector3 _target, Vector3 _up)
 	cbResourceDesc.Layout = D3D12_TEXTURE_LAYOUT_ROW_MAJOR;
 
 	// 定数バッファの生成
-	result = DirectXBase::Get()->device->CreateCommittedResource(
+	result = DirectXBase::GetInstance()->device->CreateCommittedResource(
 		&cbHeapProp,	// ヒープ設定
 		D3D12_HEAP_FLAG_NONE,
 		&cbResourceDesc,// リソース設定
@@ -119,7 +119,7 @@ void Camera::Update()
 void Camera::Set()
 {
 	// 定数バッファビューをセット [カメラ]
-	DirectXBase::Get()->commandList->SetGraphicsRootConstantBufferView(3, constBuffCamera->GetGPUVirtualAddress());
+	DirectXBase::GetInstance()->commandList->SetGraphicsRootConstantBufferView(3, constBuffCamera->GetGPUVirtualAddress());
 }
 
 void Camera::SetCurrentCamera(Camera* current)

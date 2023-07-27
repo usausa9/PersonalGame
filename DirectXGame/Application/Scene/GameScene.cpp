@@ -10,11 +10,11 @@ using namespace Input;
 void GameScene::Initialize()
 {
 	// デバイスをセット
-	FBXObject3D::SetDevice(DirectXBase::Get()->device.Get());
+	FBXObject3D::SetDevice(DirectXBase::GetInstance()->device.Get());
 	// カメラをセット
 	FBXObject3D::SetCamera(camera);
 	// コマンドリスト初期化
-	FBXObject3D::SetCommandList(DirectXBase::Get()->commandList.Get());
+	FBXObject3D::SetCommandList(DirectXBase::GetInstance()->commandList.Get());
 	// グラフィックスパイプライン生成
 	FBXObject3D::CreateGraphicsPipeline();
 

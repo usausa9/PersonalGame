@@ -17,6 +17,20 @@ public:	// メンバ関数
 	/// </summary>
 	void Initialize();
 
+	/// <summary>
+	/// 終了処理
+	/// </summary>
+	void Finalize();
+
+	// ImGui受付開始
+	void Begin();
+
+	// ImGui受付終了
+	void End();
+
+	// 描画
+	void Draw();
+
 private: // メンバ変数
 
 	// SRV用デスクリプタヒープ

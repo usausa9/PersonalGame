@@ -28,8 +28,6 @@ private:
 	template <class T> using ComPtr = Microsoft::WRL::ComPtr<T>;
 
 public:	// ƒƒ“ƒoŠÖ”
-
-
 	// ‰Šú‰»
 	void Initialize();
 
@@ -66,10 +64,13 @@ private: // ƒƒ“ƒo•Ï”
 	ComPtr<ID3D12RootSignature> rootSignature = nullptr;
 
 	// WindowsAPI‰Šú‰»
-	WinAPI& window = *WinAPI::Get();
+	WinAPI& window = *WinAPI::GetInstance();
+
+	//WinAPI* window = nullptr;
+	//DirectXBase* dxBase = nullptr;
 
 	// DirectX‰Šú‰»
-	//DirectXBase& directXBase = *DirectXBase::Get();
+	//DirectXBase& directXBase = *DirectXBase::GetInstance();
 
 	// ImGui
 	unique_ptr<ImGuiManager> imGui = nullptr;

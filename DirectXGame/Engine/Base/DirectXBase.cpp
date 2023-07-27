@@ -3,8 +3,12 @@
 
 DirectXBase* DirectXBase::GetInstance()
 {
-	static DirectXBase instance;
-	return &instance;
+	if (currentDirectX == nullptr)
+	{
+		currentDirectX = new DirectXBase;
+	}
+
+	return currentDirectX;
 }
 
 void DirectXBase::Init()
@@ -13,7 +17,7 @@ void DirectXBase::Init()
 	InitializeFixFPS();
 
 	// WinAPIへのゲッター
-	WinAPI* window = WinAPI::Get();
+	WinAPI* window = WinAPI::GetInstance();
 
 	// DXGIファクトリーの生成
 	result = CreateDXGIFactory(IID_PPV_ARGS(&dxgiFactory));
@@ -210,6 +214,12 @@ void DirectXBase::Init()
 	// DirectX初期化処理 ここまで
 }
 
+void DirectXBase::Finalize()
+{
+	delete currentDirectX;
+	currentDirectX = nullptr;
+}
+
 void DirectXBase::PreDraw()
 {
 	// バックバッファの番号を取得(2つなので0番か1番)
@@ -242,7 +252,7 @@ void DirectXBase::PreDraw()
 	commandList->ClearDepthStencilView(dsvHandle, D3D12_CLEAR_FLAG_DEPTH, 1.0f, 0, 0, nullptr);
 
 	// WinAPIへのゲッター
-	WinAPI* window = WinAPI::Get();
+	WinAPI* window = WinAPI::GetInstance();
 
 	// 4.描画コマンドここから
 	// ビューポート設定コマンド
@@ -349,10 +359,9 @@ void DirectXBase::UpdateFixFPS()
 	reference_ = std::chrono::steady_clock::now();
 }
 
-DirectXBase* DirectXBase::Get()
-{
-	return &currentDirectX;
-}
+//DirectXBase* DirectXBase::GetInstance()
+//{
+//	return currentDirectX;
+//}
 
-DirectXBase DirectXBase::currentDirectX;
-
+DirectXBase* DirectXBase::currentDirectX = nullptr;

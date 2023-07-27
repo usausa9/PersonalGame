@@ -124,7 +124,7 @@ void OBJModel::CreateBuffers()
 	resDesc.Layout = D3D12_TEXTURE_LAYOUT_ROW_MAJOR;
 
 	// 頂点バッファの生成
-	result = DirectXBase::Get()->device->CreateCommittedResource(
+	result = DirectXBase::GetInstance()->device->CreateCommittedResource(
 		&heapProp, // ヒープ設定
 		D3D12_HEAP_FLAG_NONE,
 		&resDesc, // リソース設定
@@ -172,7 +172,7 @@ void OBJModel::CreateBuffers()
 	resDesc.Layout = D3D12_TEXTURE_LAYOUT_ROW_MAJOR;
 
 	// インデックスバッファの生成
-	result = DirectXBase::Get()->device->CreateCommittedResource(
+	result = DirectXBase::GetInstance()->device->CreateCommittedResource(
 		&heapProp, // ヒープ設定
 		D3D12_HEAP_FLAG_NONE,
 		&resDesc, // リソース設定
@@ -217,7 +217,7 @@ void OBJModel::CreateBuffers()
 	cbResourceDesc.Layout = D3D12_TEXTURE_LAYOUT_ROW_MAJOR;
 
 	// 定数バッファの生成
-	result = DirectXBase::Get()->device->CreateCommittedResource(
+	result = DirectXBase::GetInstance()->device->CreateCommittedResource(
 		&cbHeapProp,	// ヒープ設定
 		D3D12_HEAP_FLAG_NONE,
 		&cbResourceDesc,// リソース設定
@@ -245,20 +245,20 @@ void OBJModel::CreateBuffers()
 void OBJModel::Draw()
 {
 	// 頂点バッファビューの設定
-	DirectXBase::Get()->commandList->IASetVertexBuffers(0, 1, &vbView);
-	DirectXBase::Get()->commandList->IASetIndexBuffer(&ibView);
+	DirectXBase::GetInstance()->commandList->IASetVertexBuffers(0, 1, &vbView);
+	DirectXBase::GetInstance()->commandList->IASetIndexBuffer(&ibView);
 
 	// 定数バッファビューをセット（マテリアル）
-	DirectXBase::Get()->commandList->SetGraphicsRootConstantBufferView(0, constBuffMaterial->GetGPUVirtualAddress());
+	DirectXBase::GetInstance()->commandList->SetGraphicsRootConstantBufferView(0, constBuffMaterial->GetGPUVirtualAddress());
 
 	// シェーダリソースビューをセット
-	DirectXBase::Get()->commandList->
+	DirectXBase::GetInstance()->commandList->
 		SetGraphicsRootDescriptorTable
 		(1, TextureManager::GetData(material.index)->gpuHandle);
 
 
 	// 描画コマンド
-	DirectXBase::Get()->commandList->
+	DirectXBase::GetInstance()->commandList->
 		DrawIndexedInstanced((UINT)indices.size(), 1, 0, 0, 0);
 }
 

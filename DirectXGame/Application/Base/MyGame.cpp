@@ -1,5 +1,7 @@
 #include "MyGame.h"
 
+#include <imgui.h>
+
 using namespace Input;
 
 // 定数バッファ用データ構造体 (3D変換行列)
@@ -26,7 +28,7 @@ void MyGame::Initialize()
 	window.Show();
 
 	// DirectX初期化
-	DirectXBase::Get()->Init();
+	DirectXBase::GetInstance()->Init();
 
 	// DirectInputの初期化
 	Key::Init(window.w.hInstance, window.hwnd);
@@ -37,7 +39,7 @@ void MyGame::Initialize()
 	spriteManager->Init();
 
 	// ImGuiの生成初期化
-	imGui->Initialize();
+	ImGuiManager::GetInstance()->Initialize();
 
 #pragma endregion
 
@@ -239,7 +241,7 @@ void MyGame::Initialize()
 	ComPtr<ID3DBlob> rootSigBlob = nullptr;
 	result = D3D12SerializeRootSignature(&rootSignatureDesc, D3D_ROOT_SIGNATURE_VERSION_1_0, &rootSigBlob, &errorBlob);
 	assert(SUCCEEDED(result));
-	result = DirectXBase::Get()->device->CreateRootSignature(0, rootSigBlob->GetBufferPointer(), rootSigBlob->GetBufferSize(), IID_PPV_ARGS(&rootSignature));
+	result = DirectXBase::GetInstance()->device->CreateRootSignature(0, rootSigBlob->GetBufferPointer(), rootSigBlob->GetBufferSize(), IID_PPV_ARGS(&rootSignature));
 	assert(SUCCEEDED(result));
 	// rootSigBlob->Release();
 
@@ -254,11 +256,11 @@ void MyGame::Initialize()
 
 	// パイプランステートの生成
 	
-	result = DirectXBase::Get()->device->CreateGraphicsPipelineState(&pipelineDesc, IID_PPV_ARGS(&pipelineState));
+	result = DirectXBase::GetInstance()->device->CreateGraphicsPipelineState(&pipelineDesc, IID_PPV_ARGS(&pipelineState));
 	assert(SUCCEEDED(result));
 
 	TextureManager::Init();
-	FBXLoader::GetInstance()->Initialize(DirectXBase::Get()->device.Get());
+	FBXLoader::GetInstance()->Initialize(DirectXBase::GetInstance()->device.Get());
 
 	scene.Initialize();
 }
@@ -268,11 +270,15 @@ void MyGame::Finalize()
 	FBXLoader::GetInstance()->Finalize();
 	TextureManager::Release();
 
+	DirectXBase::Finalize();
+
 	scene.Finalize();
 }
 
 void MyGame::Update()
 {
+	ImGuiManager::GetInstance()->Begin();
+	ImGui::ShowDemoWindow();
 #pragma region 基盤システムの更新
 	if (window.ProcessMessage() == true)
 	{
@@ -285,45 +291,46 @@ void MyGame::Update()
 #pragma endregion
 
 	scene.Update();
+	ImGuiManager::GetInstance()->End();
 }
 
 void MyGame::PreDraw()
 {
 	// パイプラインステートとルートシグネチャの設定コマンド
-	DirectXBase::Get()->commandList->SetPipelineState(pipelineState.Get());
-	DirectXBase::Get()->commandList->SetGraphicsRootSignature(rootSignature.Get());
+	DirectXBase::GetInstance()->commandList->SetPipelineState(pipelineState.Get());
+	DirectXBase::GetInstance()->commandList->SetGraphicsRootSignature(rootSignature.Get());
 
 	// プリミティブ形状の設定コマンド
 	//commandList->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_POINTLIST);	 // 点のリスト
 	//commandList->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_LINELIST);		 // 線のリスト
 	//commandList->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_LINESTRIP);	 // 線のストリップ
-	DirectXBase::Get()->commandList->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);	 // 三角形のリスト
+	DirectXBase::GetInstance()->commandList->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);	 // 三角形のリスト
 	//commandList->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP); // 三角形のストリップ
 
 	// SRVヒープの設定コマンド
-	DirectXBase::Get()->commandList->SetDescriptorHeaps(1, TextureManager::srvHeap.GetAddressOf());
+	DirectXBase::GetInstance()->commandList->SetDescriptorHeaps(1, TextureManager::srvHeap.GetAddressOf());
 
-	//DirectXBase::Get()->commandList->SetGraphicsRootDescriptorTable(1, TextureManager::GetData(reimuTex)->gpuHandle);
+	//DirectXBase::GetInstance()->commandList->SetGraphicsRootDescriptorTable(1, TextureManager::GetData(reimuTex)->gpuHandle);
 
 	// DirectX 描画前処理
-	DirectXBase::Get()->PreDraw();
+	DirectXBase::GetInstance()->PreDraw();
 }
 
 void MyGame::PreDrawParticle()
 {
 	// パイプラインステートとルートシグネチャの設定コマンド
-	DirectXBase::Get()->commandList->SetPipelineState(ParticleManager::pipelineState.Get());
-	DirectXBase::Get()->commandList->SetGraphicsRootSignature(ParticleManager::rootSignature.Get());
+	DirectXBase::GetInstance()->commandList->SetPipelineState(ParticleManager::pipelineState.Get());
+	DirectXBase::GetInstance()->commandList->SetGraphicsRootSignature(ParticleManager::rootSignature.Get());
 
 	// プリミティブ形状の設定コマンド
-	DirectXBase::Get()->commandList->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_POINTLIST);		 // 点のリスト
-	//DirectXBase::Get()->commandList->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_LINELIST);		 // 線のリスト
-	//DirectXBase::Get()->commandList->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_LINESTRIP);	 // 線のストリップ
-	//DirectXBase::Get()->commandList->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);	 // 三角形のリスト
-	//DirectXBase::Get()->commandList->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP); // 三角形のストリップ
+	DirectXBase::GetInstance()->commandList->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_POINTLIST);		 // 点のリスト
+	//DirectXBase::GetInstance()->commandList->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_LINELIST);		 // 線のリスト
+	//DirectXBase::GetInstance()->commandList->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_LINESTRIP);	 // 線のストリップ
+	//DirectXBase::GetInstance()->commandList->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);	 // 三角形のリスト
+	//DirectXBase::GetInstance()->commandList->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP); // 三角形のストリップ
 
 	// SRVヒープの設定コマンド
-	DirectXBase::Get()->commandList->SetDescriptorHeaps(1, TextureManager::srvHeap.GetAddressOf());
+	DirectXBase::GetInstance()->commandList->SetDescriptorHeaps(1, TextureManager::srvHeap.GetAddressOf());
 }
 
 void MyGame::Draw()
@@ -342,6 +349,9 @@ void MyGame::Draw()
 	spriteManager->PreDraw();
 	scene.Draw2D();
 
+	// ImGui 描画
+	ImGuiManager::GetInstance()->Draw();
+
 	// 描画後処理
 	PostDraw();
 }
@@ -349,5 +359,5 @@ void MyGame::Draw()
 void MyGame::PostDraw()
 {
 	// DirectX 描画後処理
-	DirectXBase::Get()->PostDraw();
+	DirectXBase::GetInstance()->PostDraw();
 }

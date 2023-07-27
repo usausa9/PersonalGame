@@ -20,7 +20,7 @@ void TextureManager::Init()
 	srvHeapDesc.NumDescriptors = maxTextureNum;
 
 	// 設定をもとにSRV用デスクリプタヒープを生成
-	result = DirectXBase::Get()->device->CreateDescriptorHeap(&srvHeapDesc, IID_PPV_ARGS(&srvHeap));
+	result = DirectXBase::GetInstance()->device->CreateDescriptorHeap(&srvHeapDesc, IID_PPV_ARGS(&srvHeap));
 	assert(SUCCEEDED(result));
 
 	for (auto& buff : texBuff)
@@ -84,7 +84,7 @@ TextureIndex TextureManager::Load(std::wstring filepath)
 #pragma region テクスチャバッファ
 
 	// テクスチャバッファの生成
-	result = DirectXBase::Get()->device->CreateCommittedResource(
+	result = DirectXBase::GetInstance()->device->CreateCommittedResource(
 		&textureHeapProp,
 		D3D12_HEAP_FLAG_NONE,
 		&textureResourceDesc,
@@ -114,7 +114,7 @@ TextureIndex TextureManager::Load(std::wstring filepath)
 	D3D12_CPU_DESCRIPTOR_HANDLE srvHandle = srvHeap->GetCPUDescriptorHandleForHeapStart();
 
 	srvHandle.ptr += 
-		DirectXBase::Get()->device->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV) * srvIndex;
+		DirectXBase::GetInstance()->device->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV) * srvIndex;
 
 	// シェーダーリソースビュー設定
 	D3D12_SHADER_RESOURCE_VIEW_DESC srvDesc{};		// 設定構造体
@@ -124,13 +124,13 @@ TextureIndex TextureManager::Load(std::wstring filepath)
 	srvDesc.Texture2D.MipLevels = textureResourceDesc.MipLevels;
 
 	// ハンドルの指す位置にシェーダーリソースビュー作成
-	DirectXBase::Get()->device->CreateShaderResourceView(texBuff[srvIndex].Get(), &srvDesc, srvHandle);
+	DirectXBase::GetInstance()->device->CreateShaderResourceView(texBuff[srvIndex].Get(), &srvDesc, srvHandle);
 
 	// GPU用
 	D3D12_GPU_DESCRIPTOR_HANDLE gpuSrvHandle = srvHeap->GetGPUDescriptorHandleForHeapStart();
 
 	gpuSrvHandle.ptr +=
-		DirectXBase::Get()->device->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV) * srvIndex;
+		DirectXBase::GetInstance()->device->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV) * srvIndex;
 
 	textureData[srvIndex].cpuHandle = srvHandle;
 	textureData[srvIndex].gpuHandle = gpuSrvHandle;

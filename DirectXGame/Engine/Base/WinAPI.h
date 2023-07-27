@@ -28,6 +28,9 @@ public:
 	// Windowクラスの設定
 	void Init();
 
+	// 終了処理
+	static void Finalize();
+
 	// 更新処理
 	bool ProcessMessage();
 
@@ -44,9 +47,5 @@ public:
 	HWND GetHwnd() const { return hwnd; }
 
 public:
-	// ゲッター
-	static WinAPI* Get();
-
-private:
-	static WinAPI currentWindow;
+	static WinAPI* currentWindow;
 };

@@ -43,7 +43,9 @@ public:
 
 	ComPtr<IDXGIFactory7> dxgiFactory = nullptr; // 統合]
 
-	ID3D12Device* GetDevice() const { return device.Get(); }
+	inline ID3D12Device* GetDevice() const { return device.Get(); }
+	inline ID3D12GraphicsCommandList* GetCommandList()const { return commandList.Get(); }
+
 	size_t GetBackBufferCount() const { return backBuffers.size(); }
 public:
 	// シングルトンインスタンスを取得
@@ -51,6 +53,9 @@ public:
 
 	// 初期化
 	void Init();
+
+	// 終了処理
+	static void Finalize();
 
 	// 描画前処理
 	void PreDraw();
@@ -67,8 +72,6 @@ private:
 
 public:
 	// ゲッター
-	static DirectXBase* Get();
-
-private:
-	static DirectXBase currentDirectX;
+	/*static DirectXBase* Get();*/
+	static DirectXBase* currentDirectX;
 };

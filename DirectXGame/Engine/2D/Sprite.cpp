@@ -64,7 +64,7 @@ void Sprite::Init()
 	resDesc.Layout = D3D12_TEXTURE_LAYOUT_ROW_MAJOR;
 
 	// 頂点バッファの生成
-	pResult = DirectXBase::Get()->device->CreateCommittedResource(
+	pResult = DirectXBase::GetInstance()->device->CreateCommittedResource(
 		&heapProp, // ヒープ設定
 		D3D12_HEAP_FLAG_NONE,
 		&resDesc, // リソース設定
@@ -113,7 +113,7 @@ void Sprite::Init()
 	HRESULT vResult;
 
 	// 定数バッファの生成
-	vResult = DirectXBase::Get()->device->CreateCommittedResource(
+	vResult = DirectXBase::GetInstance()->device->CreateCommittedResource(
 		&cbHeapProp,	// ヒープ設定
 		D3D12_HEAP_FLAG_NONE,
 		&cbResourceDesc,// リソース設定
@@ -151,7 +151,7 @@ void Sprite::Update()
 
 void Sprite::Draw()
 {
-	ID3D12GraphicsCommandList* commandList = DirectXBase::Get()->commandList.Get();
+	ID3D12GraphicsCommandList* commandList = DirectXBase::GetInstance()->commandList.Get();
 
 	// 頂点バッファビューの設定コマンド
 	commandList->IASetVertexBuffers(0, 1, &vbView);

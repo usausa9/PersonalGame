@@ -1,15 +1,27 @@
 ﻿#include "WinAPI.h"
+#include <imgui_impl_win32.h>
 
 #pragma comment(lib, "winmm.lib")
 
+extern IMGUI_IMPL_API LRESULT ImGui_ImplWin32_WndProcHandler(HWND hwnd, uint32_t msg, WPARAM wParam, LPARAM lParam);
+
 WinAPI* WinAPI::GetInstance()
 {
-	static WinAPI instance;
-	return &instance;
+	if (currentWindow == nullptr)
+	{
+		currentWindow = new WinAPI;
+	}
+	return currentWindow;
 }
 
 LRESULT WinAPI::WindowProc(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam)
 {
+	// ImGui用ウィドウプロシージャ呼び出し
+	if (ImGui_ImplWin32_WndProcHandler(hwnd, msg, wparam, lparam))
+	{
+		return true;
+	}
+
 	// メッセージに応じてゲーム固有の処理を行う
 	switch (msg)
 	{
@@ -38,6 +50,12 @@ void WinAPI::Init()
 
 	// ウィンドウクラスをOSに登録する
 	RegisterClassExW(&w);
+}
+
+void WinAPI::Finalize()
+{
+	delete currentWindow;
+	currentWindow = nullptr;
 }
 
 bool WinAPI::ProcessMessage()
@@ -97,9 +115,4 @@ void WinAPI::Show()
 	ShowWindow(hwnd, SW_SHOW);
 }
 
-WinAPI* WinAPI::Get()
-{
-	return &currentWindow;
-}
-
-WinAPI WinAPI::currentWindow;
+WinAPI* WinAPI::currentWindow;

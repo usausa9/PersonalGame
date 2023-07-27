@@ -235,7 +235,7 @@ void ParticleManager::CreatePipeline()
 	ComPtr<ID3DBlob> rootSigBlob = nullptr;
 	result = D3D12SerializeRootSignature(&rootSignatureDesc, D3D_ROOT_SIGNATURE_VERSION_1_0, &rootSigBlob, &errorBlob);
 	assert(SUCCEEDED(result));
-	result = DirectXBase::Get()->device->CreateRootSignature(0, rootSigBlob->GetBufferPointer(), rootSigBlob->GetBufferSize(), IID_PPV_ARGS(&rootSignature));
+	result = DirectXBase::GetInstance()->device->CreateRootSignature(0, rootSigBlob->GetBufferPointer(), rootSigBlob->GetBufferSize(), IID_PPV_ARGS(&rootSignature));
 	assert(SUCCEEDED(result));
 	// rootSigBlob->Release();
 
@@ -249,7 +249,7 @@ void ParticleManager::CreatePipeline()
 	pipelineDesc.DSVFormat = DXGI_FORMAT_D32_FLOAT;		// 深度値フォーマット
 
 	// パイプランステートの生成
-	result = DirectXBase::Get()->device->CreateGraphicsPipelineState(&pipelineDesc, IID_PPV_ARGS(&pipelineState));
+	result = DirectXBase::GetInstance()->device->CreateGraphicsPipelineState(&pipelineDesc, IID_PPV_ARGS(&pipelineState));
 	assert(SUCCEEDED(result));
 }
 
@@ -274,7 +274,7 @@ void ParticleManager::InitializeParticle()
 		resdesc.Layout = D3D12_TEXTURE_LAYOUT_ROW_MAJOR;
 
 		// 定数バッファの生成
-		result = DirectXBase::Get()->device->CreateCommittedResource(
+		result = DirectXBase::GetInstance()->device->CreateCommittedResource(
 			&heapProp,
 			D3D12_HEAP_FLAG_NONE,
 			&resdesc,
@@ -306,7 +306,7 @@ void ParticleManager::InitializeParticle()
 	resdesc.Layout = D3D12_TEXTURE_LAYOUT_ROW_MAJOR;
 
 	// 頂点バッファの生成
-	DirectXBase::Get()->device->CreateCommittedResource(
+	DirectXBase::GetInstance()->device->CreateCommittedResource(
 		&heapprop,
 		D3D12_HEAP_FLAG_NONE,
 		&resdesc,
@@ -372,18 +372,18 @@ void ParticleManager::UpdateParticle()
 void ParticleManager::DrawParticle(TextureIndex index)
 {
 	// 頂点バッファビューの設定
-	DirectXBase::Get()->commandList->IASetVertexBuffers(0, 1, &vbView);
+	DirectXBase::GetInstance()->commandList->IASetVertexBuffers(0, 1, &vbView);
 
 	// 定数バッファビュー(CBV)の設定コマンド
-	DirectXBase::Get()->commandList->SetGraphicsRootConstantBufferView(2, constBuffTransform->GetGPUVirtualAddress());
+	DirectXBase::GetInstance()->commandList->SetGraphicsRootConstantBufferView(2, constBuffTransform->GetGPUVirtualAddress());
 
 	// シェーダリソースビューをセット
-	DirectXBase::Get()->commandList->
+	DirectXBase::GetInstance()->commandList->
 		SetGraphicsRootDescriptorTable
 		(1, TextureManager::GetData(index)->gpuHandle);
 
 	// 描画コマンド
-	DirectXBase::Get()->commandList->
+	DirectXBase::GetInstance()->commandList->
 		DrawInstanced((UINT)activeCount, 1, 0, 0);
 }
 

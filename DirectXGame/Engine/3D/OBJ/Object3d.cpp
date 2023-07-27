@@ -34,7 +34,7 @@ void Object3D::InitializeObject3D()
 	resdesc.Layout = D3D12_TEXTURE_LAYOUT_ROW_MAJOR;
 
 	// 定数バッファの生成
-	result = DirectXBase::Get()->device->CreateCommittedResource(
+	result = DirectXBase::GetInstance()->device->CreateCommittedResource(
 		&heapProp,
 		D3D12_HEAP_FLAG_NONE,
 		&resdesc,
@@ -90,7 +90,7 @@ void Object3D::UpdateObject3D()
 void Object3D::DrawObject3D()
 {
 	// 定数バッファビュー(CBV)の設定コマンド
-	DirectXBase::Get()->commandList->SetGraphicsRootConstantBufferView(2, constBuffTransform->GetGPUVirtualAddress());
+	DirectXBase::GetInstance()->commandList->SetGraphicsRootConstantBufferView(2, constBuffTransform->GetGPUVirtualAddress());
 	
 	// 描画！
 	objModel->Draw();

@@ -192,7 +192,7 @@
     <ClInclude Include="DirectXGame\Engine\Base\TimeData.h" />
     <ClInclude Include="DirectXGame\Application\Game\Enemy\Enemy.h" />
     <ClInclude Include="DirectXGame\Engine\Base\Collision\SphereCollider.h" />
-    <ClInclude Include="DirectXGame\Engine\Base\ImGuiManager.h" />
+    <ClInclude Include="DirectXGame\Engine\2D\ImGuiManager.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\shaders\Basic.hlsli" />
@@ -288,7 +288,7 @@
     <ClCompile Include="DirectXGame\Engine\Base\TimeData.cpp" />
     <ClCompile Include="DirectXGame\Application\Game\Enemy\Enemy.cpp" />
     <ClCompile Include="DirectXGame\Engine\Base\Collision\SphereCollider.cpp" />
-    <ClCompile Include="DirectXGame\Engine\Base\ImGuiManager.cpp" />
+    <ClCompile Include="DirectXGame\Engine\2D\ImGuiManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="External\DirectXTex\DirectXTex_Desktop_2022_Win10.vcxproj">
