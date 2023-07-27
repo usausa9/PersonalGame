@@ -1,5 +1,6 @@
 #include "PlayerBullet.h"
 #include "SphereCollider.h"
+#include "CollisionAttribute.h"
 
 void PlayerBullet::Initialize(OBJModel* model, const Vector3& pos, const Vector3& vel)
 {
@@ -17,6 +18,7 @@ void PlayerBullet::Initialize(OBJModel* model, const Vector3& pos, const Vector3
 	float radius = 0.6f;
 	// ”¼Œa•ª‚¾‚¯‘«Œ³‚©‚ç•‚‚¢‚½À•W‚ð‹…‚Ì’†S‚É‚·‚é
 	SetCollider(new SphereCollider(Vector3({ 0, radius, 0 }), radius));
+	collider->SetAttribute(COLLISION_ATTR_ALLIES);
 }
 
 void PlayerBullet::Update()

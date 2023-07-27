@@ -1,6 +1,7 @@
 #include "Player.h"
 #include "SphereCollider.h"
 #include "WinAPI.h"
+#include "CollisionAttribute.h"
 
 using namespace Input;
 
@@ -31,6 +32,7 @@ void Player::Initialize(Camera* camera)
 	float radius = 0.6f;
 	// 半径分だけ足元から浮いた座標を球の中心にする
 	SetCollider(new SphereCollider(Vector3({ 0, radius, 0 }),radius));
+	collider->SetAttribute(COLLISION_ATTR_ALLIES);
 
 	// 自機弾モデル読み込み
 	bulletModel = OBJModel::LoadFromOBJ("ICO");

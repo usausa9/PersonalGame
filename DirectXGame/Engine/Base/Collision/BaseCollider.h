@@ -10,6 +10,9 @@
 class BaseCollider
 {
 public:
+	friend class CollisionManager;
+
+public:
 	BaseCollider() = default;
 	virtual ~BaseCollider() = default;
 
@@ -34,13 +37,21 @@ public:
 	/// 衝突時コールバック関数
 	/// </summary>
 	/// <param name="info">衝突情報</param>
-	inline void OnCollision(const CollisionInfo& info) {
+	inline void OnCollision(const CollisionInfo& info) 
+	{
 		object3d->OnCollision(info);
 	}
+
+	inline void SetAttribute(unsigned short attribute) { this->attribute = attribute; }
+	inline void AddAttribute(unsigned short attribute) { this->attribute |= attribute; }
+	inline void RemoveAttribute(unsigned short attribute) { this->attribute &= !attribute; }
 
 protected:
 	Object3D* object3d = nullptr;
 	// 形状タイプ
 	CollisionShapeType shapeType = SHAPE_UNKNOWN;
+
+	// 当たり判定属性
+	unsigned short attribute = 0b1111111111111111;
 };
 

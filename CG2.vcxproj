@@ -154,6 +154,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="DirectXGame\Engine\Base\Collision\CollisionAttribute.h" />
     <ClInclude Include="DirectXGame\Engine\Base\Collision\CollisionPrimitive.h" />
     <ClInclude Include="DirectXGame\Engine\Base\Collision\CollisionManager.h" />
     <ClInclude Include="DirectXGame\Engine\3D\Camera.h" />
