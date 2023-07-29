@@ -9,7 +9,7 @@ void Enemy::Initialize()
 
 	// 自機の行列初期化
 	rotation = { 0, 0, 0 };
-	position = { 0, 0, 50 };
+	position = { 0, 0, 40 };
 	InitializeObject3D();
 
 	// 自機モデルと自機オブジェクトを紐づけ

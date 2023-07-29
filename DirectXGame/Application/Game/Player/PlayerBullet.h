@@ -1,6 +1,7 @@
 #pragma once
 #include "OBJModel.h"
 #include "Object3D.h"
+#include "Sprite.h"
 
 class PlayerBullet : public Object3D
 {
@@ -37,8 +38,12 @@ private:
 	// 消滅フラグ
 	bool isDead = false;
 
+	// デバッグ用
+	static bool isDrawSp;
+
 public:
 	// 外部参照用のGetter
 	bool IsDead() const { return isDead; }
-
+	
+	bool IsDrawSP() const { return isDrawSp; }
 };

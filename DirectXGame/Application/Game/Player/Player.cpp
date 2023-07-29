@@ -16,6 +16,10 @@ void Player::Initialize(Camera* camera)
 	reticleTex = TextureManager::Load(L"Resources/Sprites/reticle.png");
 	reticleSp = make_unique<Sprite>(reticleTex);
 	reticleSp->position = reticlePos;
+
+	aTex = TextureManager::Load(L"Resources/Sprites/texture.png");
+	aSp = make_unique<Sprite>(aTex);
+	aSp->position = {100,100};
 	
 	// 自機の行列初期化
 	rotation = { 0, 0, 0 };
@@ -148,6 +152,15 @@ void Player::reticleUpdate()
 void Player::DrawUI()
 {
 	reticleSp->Draw();
+	
+	// 弾描画
+	for (unique_ptr<PlayerBullet>& bullet : bullets)
+	{
+		if (bullet->IsDrawSP())
+		{
+			aSp->Draw();
+		};
+	}
 }
 
 // 入力受け付け + 移動
@@ -190,7 +203,8 @@ void Player::Shot()
 		velocity *= kBulletSpeed;
 
 		// 自機弾の自機からみたローカル発射位置
-		Vector3 delayPos = { 0, 0.2f, 7.1f };
+		Vector3 delayPos = { 0, 0.f, 0.f };
+		//Vector3 delayPos = { 0, 0.2f, 7.1f };
 
 		// 速度ベクトルを自機の向きに合わせて回転
 		velocity = velocity * matWorld;

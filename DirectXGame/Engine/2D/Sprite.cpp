@@ -4,8 +4,6 @@
 
 #include "WinAPI.h"
 
-
-
 // 頂点データ構造体
 struct Vertex
 {

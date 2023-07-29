@@ -27,11 +27,11 @@ void CollisionManager::CheckAllCollisions()
 			BaseCollider* colA = *itA;
 			BaseCollider* colB = *itB;
 
-			//// 属性が同じならスキップ
-			//if (colA->attribute == colB->attribute) 
-			//{
-			//	continue;
-			//}
+			// 属性が同じならスキップ
+			if (colA->attribute == colB->attribute) 
+			{
+				continue;
+			}
 
 			// 0ともに球
 			if (colA->GetShapeType() == COLLISIONSHAPE_SPHERE &&

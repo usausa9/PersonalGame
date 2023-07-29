@@ -2,6 +2,8 @@
 #include "SphereCollider.h"
 #include "CollisionAttribute.h"
 
+bool PlayerBullet::isDrawSp = false;
+
 void PlayerBullet::Initialize(OBJModel* model, const Vector3& pos, const Vector3& vel)
 {
 	// ƒ‚ƒfƒ‹•R‚Ã‚¯(‰¼ˆø”‚Å–á‚Á‚Ä‚­‚é)
@@ -23,6 +25,8 @@ void PlayerBullet::Initialize(OBJModel* model, const Vector3& pos, const Vector3
 
 void PlayerBullet::Update()
 {
+	isDrawSp = false;
+	
 	// ŠÔŒo‰ß‚ÅÁ–Å
 	if (--deathTimer <= 0)
 	{
@@ -44,5 +48,5 @@ void PlayerBullet::Draw()
 
 void PlayerBullet::OnCollision(const CollisionInfo& info)
 {
-	
+	isDrawSp = true;
 }

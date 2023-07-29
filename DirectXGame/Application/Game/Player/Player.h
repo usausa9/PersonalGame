@@ -53,6 +53,9 @@ private: // 自機のメンバ変数
 	TextureIndex reticleTex;
 	unique_ptr<Sprite> reticleSp = nullptr;
 
+	TextureIndex aTex;
+	unique_ptr<Sprite> aSp = nullptr;
+
 	// 自機の移動用
 	Vector3 move = { 0,0,0 };
 
