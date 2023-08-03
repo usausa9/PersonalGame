@@ -33,6 +33,9 @@ void Player::Initialize(Camera* camera)
 	reticleObj.position = { 0, 0, 50 };
 	reticleObj.InitializeObject3D();
 
+	// プレイヤー状態の初期化
+	state.Initialize();
+
 	// コライダーの追加
 	float radius = 0.6f;
 	// 半径分だけ足元から浮いた座標を球の中心にする
@@ -46,6 +49,9 @@ void Player::Initialize(Camera* camera)
 // 更新
 void Player::Update()
 {
+	// プレイヤー状態の更新
+	state.Update();
+
 	// 消滅フラグが立った弾を削除
 	bullets.remove_if([](unique_ptr<PlayerBullet>& bullet)
 	{
@@ -173,7 +179,7 @@ void Player::DrawUI()
 {
 	reticleSp->Draw();
 	
-	// 弾描画
+	// 判定時描画
 	for (unique_ptr<PlayerBullet>& bullet : bullets)
 	{
 		if (bullet->IsDrawSP())
@@ -181,6 +187,9 @@ void Player::DrawUI()
 			aSp->Draw();
 		};
 	}
+
+	// 自機状態の描画
+	state.DrawUI();
 }
 
 // 入力受け付け + 移動

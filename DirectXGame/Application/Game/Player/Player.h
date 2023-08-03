@@ -5,6 +5,7 @@
 #include "Sprite.h"
 #include "Camera.h"
 #include "TimeData.h"
+#include "PlayerState.h"
 
 #include <list>
 
@@ -56,6 +57,8 @@ private: // 自機のメンバ変数
 
 	TextureIndex aTex;
 	unique_ptr<Sprite> aSp = nullptr;
+
+	PlayerState state;
 
 	// 自機の移動用
 	Vector3 move = { 0,0,0 };

@@ -16,6 +16,7 @@ using namespace std;
 #include <cassert>
 #include <vector>
 #include <string>
+#include <array>
 #include <list>
 #include <forward_list>
 
