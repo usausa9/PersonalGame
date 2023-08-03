@@ -25,7 +25,7 @@ void Enemy::Initialize()
 void Enemy::Update()
 {
 	// 移動処理
-	//Move();
+	Move();
 
 	// 行列更新 必ず呼び出す
 	UpdateObject3D();
@@ -47,7 +47,7 @@ void Enemy::OnCollision(const CollisionInfo& info)
 void Enemy::Move()
 {
 	// 移動量の初期化
-	move = { 0,0,0 };
+	move = { 1.5f,0,0 };
 
 
 	// 移動量の加算

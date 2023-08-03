@@ -177,7 +177,7 @@
     <ClInclude Include="DirectXGame\Engine\Base\Math\SplineCurve.h">
       <Filter>2.ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="DirectXGame\Engine\3D\RailCamera.h">
+    <ClInclude Include="DirectXGame\Application\Game\RailCamera.h">
       <Filter>2.ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="DirectXGame\Application\Game\Skydome\Skydome.h">
@@ -211,6 +211,9 @@
       <Filter>2.ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="DirectXGame\Engine\Base\Collision\CollisionAttribute.h">
+      <Filter>2.ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="DirectXGame\Application\Scene\TitleScene.h">
       <Filter>2.ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>
@@ -330,7 +333,7 @@
     <ClCompile Include="DirectXGame\Engine\Base\Math\SplineCurve.cpp">
       <Filter>1.ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="DirectXGame\Engine\3D\RailCamera.cpp">
+    <ClCompile Include="DirectXGame\Application\Game\RailCamera.cpp">
       <Filter>1.ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="DirectXGame\Application\Game\Skydome\Skydome.cpp">
@@ -352,6 +355,9 @@
       <Filter>1.ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="DirectXGame\Engine\2D\ImGuiManager.cpp">
+      <Filter>1.ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="DirectXGame\Application\Scene\TitleScene.cpp">
       <Filter>1.ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>

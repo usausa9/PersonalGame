@@ -17,13 +17,14 @@ void Player::Initialize(Camera* camera)
 	reticleSp = make_unique<Sprite>(reticleTex);
 	reticleSp->position = reticlePos;
 
+	// 当たり判定デバッグ用スプライト
 	aTex = TextureManager::Load(L"Resources/Sprites/texture.png");
 	aSp = make_unique<Sprite>(aTex);
 	aSp->position = {100,100};
 	
 	// 自機の行列初期化
 	rotation = { 0, 0, 0 };
-	position = { 0, 0, 20 };
+	position = { 0, 0, 22 };
 	InitializeObject3D();
 
 	// 自機モデルと自機オブジェクトを紐づけ
@@ -66,6 +67,7 @@ void Player::Update()
 	{
 		bullet->Update();
 	}
+
 }
 
 // 描画
@@ -73,6 +75,7 @@ void Player::Draw()
 {
 	// オブジェ描画
 	DrawObject3D();
+	reticleObj.DrawObject3D();
 
 	// 弾描画
 	for (unique_ptr<PlayerBullet>& bullet : bullets)
@@ -98,30 +101,47 @@ void Player::reticleUpdate()
 	// カメラ行列との合成
 	Matrix4 matViewProjectionViewPort = 
 		Camera::GetCurrentCamera()->GetViewProjection() * matViewPort;
-
+	
 	// 画面上のレティクル座標を動かす
 	Vector2 reticleMoveVel = { 0, 0 };
-	float reticleSpd = 4.0f;
+	
+	if (Key::Down(DIK_A) && Key::Down(DIK_D))
+	{
 
-	if (Key::Down(DIK_LEFT))
+	}
+	else if (Key::Down(DIK_A))
 	{
 		reticleMoveVel.x = -reticleSpd;
 	}
-	else if (Key::Down(DIK_RIGHT))
+	else if (Key::Down(DIK_D))
 	{
 		reticleMoveVel.x = reticleSpd;
 	}
 
-	if (Key::Down(DIK_UP))
+	if (Key::Down(DIK_W) && Key::Down(DIK_S))
 	{
-		reticleMoveVel.y = -reticleSpd;
+
 	}
-	else if (Key::Down(DIK_DOWN))
+	else if (Key::Down(DIK_W))
 	{
-		reticleMoveVel.y = reticleSpd;
+		reticleMoveVel.y = -reticleSpd * kYMoveReticle;
+	}
+	else if (Key::Down(DIK_S))
+	{
+		reticleMoveVel.y = reticleSpd * kYMoveReticle;
 	}
 
 	reticlePos += reticleMoveVel;
+
+	// レティクル座標の移動制限
+	Vector2 reticlePosMin = { reticleRadius, reticleRadius * 0.6f };
+	Vector2 reticlePosMax = { WinAPI::GetInstance()->width  - reticleRadius,
+							  WinAPI::GetInstance()->height - reticleRadius * 0.6f };
+	
+	reticlePos.x = max(reticlePos.x, reticlePosMin.x);
+	reticlePos.y = max(reticlePos.y, reticlePosMin.y);
+	reticlePos.x = min(reticlePos.x, reticlePosMax.x);
+	reticlePos.y = min(reticlePos.y, reticlePosMax.y);
 
 	// 座標をスプライトにセット
 	reticleSp->position = reticlePos;
@@ -175,6 +195,11 @@ void Player::Move()
 		(Key::Down(DIK_W) - Key::Down(DIK_S)) * velocity * kYMove,
 		0 };
 
+	/*rev = {
+		(Key::Down(DIK_S) - Key::Down(DIK_W)) * rotateRev,
+		0,
+		((Key::Down(DIK_A) - Key::Down(DIK_D)) * rotateRev) * kYRotate };*/
+
 	// GamePadでの移動
 	move += {
 		Pad::GetLStick().x * velocity,
@@ -183,12 +208,19 @@ void Player::Move()
 
 	// 移動量の加算
 	position += move;
+	/*rotation += rev;*/
 
 	// 範囲制限
 	position.x = max(position.x, -kMoveLimit.x);
 	position.y = max(position.y, -kMoveLimit.y);
 	position.x = min(position.x, +kMoveLimit.x);
 	position.y = min(position.y, +kMoveLimit.y);
+
+	// 範囲制限
+	rotation.x = max(rotation.x, -kRevLimit.x);
+	rotation.z = max(rotation.z, -kRevLimit.z);
+	rotation.x = min(rotation.x, +kRevLimit.x);
+	rotation.z = min(rotation.z, +kRevLimit.z);
 }
 
 void Player::Shot()
@@ -196,22 +228,39 @@ void Player::Shot()
 	// スペースキー or PadのAボタン のトリガー入力を受け付けた場合
 	if (Key::Trigger(DIK_SPACE) || Pad::Trigger(Button::A))
 	{
-		// 自機弾の毎フレーム移動
-		Vector3 velocity = { 0, 0, 0 };
-		velocity = reticleObj.GetWorldPosition() - Object3D::GetWorldPosition();
-		velocity.Normalize();
-		velocity *= kBulletSpeed;
-
-		// 自機弾の自機からみたローカル発射位置
-		Vector3 delayPos = { 0, 0.f, 0.f };
-		//Vector3 delayPos = { 0, 0.2f, 7.1f };
-
-		// 速度ベクトルを自機の向きに合わせて回転
-		velocity = velocity * matWorld;
-		delayPos = delayPos * matWorld;
-		
-		// 自機弾を生成、初期化
-		bullets.push_back(std::move(make_unique<PlayerBullet>()));
-		bullets.back()->Initialize(&bulletModel, GetWorldPosition() + delayPos, velocity);
+		shotTimeData.Start(shotInterval);
 	}
+
+	// スペースキー or PadのAボタン の押下入力を受け付けた場合
+	if (Key::Down(DIK_SPACE) || Pad::Down(Button::A))
+	{
+		// ショットのタイマーがインターバルと等しくなったときにもう一度タイマーを動かす (押下しているので)
+		if ((shotTimeData.GetTime()) == shotInterval)
+		{
+			shotTimeData.Start(shotInterval);
+		}
+
+		if (shotTimeData.GetTime() == shotDelay)
+		{
+			// 自機弾の毎フレーム移動
+			Vector3 velocity = { 0, 0, 0 };
+			velocity = reticleObj.GetWorldPosition() - Object3D::GetWorldPosition();
+			velocity.Normalize();
+			velocity *= kBulletSpeed;
+
+			// 自機弾の自機からみたローカル発射位置
+			Vector3 delayPos = { 0, 0.2f, 7.1f };
+
+			// 速度ベクトルを自機の向きに合わせて回転
+			velocity = Matrix4::Transform(velocity, matWorld);
+			//velocity = velocity * matWorld;
+			delayPos = delayPos * matWorld;
+	
+			// 自機弾を生成、初期化
+			bullets.push_back(std::move(make_unique<PlayerBullet>()));
+			bullets.back()->Initialize(&bulletModel, GetWorldPosition() + delayPos, velocity);
+		}
+	}
+	// Timerのアップデート
+	shotTimeData.Update();
 }

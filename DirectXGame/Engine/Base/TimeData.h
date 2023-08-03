@@ -26,6 +26,9 @@ public:
 	// 更新処理
 	void Update();
 
+	// 現在時間のゲッター
+	float GetTime() { return nowTime; }
+
 	// レートのゲッター
 	float GetTimeRate() { return timeRate; }
 };

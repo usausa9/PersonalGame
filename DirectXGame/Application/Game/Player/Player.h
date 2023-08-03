@@ -4,6 +4,7 @@
 #include "PlayerBullet.h"
 #include "Sprite.h"
 #include "Camera.h"
+#include "TimeData.h"
 
 #include <list>
 
@@ -58,15 +59,26 @@ private: // 自機のメンバ変数
 
 	// 自機の移動用
 	Vector3 move = { 0,0,0 };
+	Vector3 rev = { 0,0,0 };
 
 	// 自機の移動スピード 
 	const float velocity = 0.65f;
-
 	// 自機のXに対してのYスピード
 	const float kYMove = 0.7f;
-
 	// 自機の移動範囲制限用
-	const Vector2 kMoveLimit = { 25.f, 13.f };
+	const Vector2 kMoveLimit = { 32.f, 17.f };
+
+	// 自機の回転量 
+	const float rotateRev = 0.03f;
+	// 自機Y回転量
+	const float kYRotate = 0.85f;
+	// 自機の回転範囲制限用
+	const Vector3 kRevLimit = { 0.3f, 0.f, 0.3f };	
+
+	// レティクル関連
+	float reticleSpd = 6.0f;
+	const float kYMoveReticle = 0.7f;
+	const float reticleRadius = 340.f;
 
 private: // 自機弾のメンバ変数
 	// レティクルの座標データ
@@ -79,5 +91,10 @@ private: // 自機弾のメンバ変数
 	OBJModel bulletModel;
 	
 	// 自機弾のスピード
-	const float kBulletSpeed = 0.7f;
+	const float kBulletSpeed = 2.2f;
+
+	// 弾発射の間隔用
+	TimeData shotTimeData = {};
+	const float shotDelay = 1.f;
+	const float shotInterval = 12.f;
 };
