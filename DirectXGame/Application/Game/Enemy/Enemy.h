@@ -2,6 +2,7 @@
 #include "UsaMath.h"
 #include "Input.h"
 #include "PlayerBullet.h"
+#include "TimeData.h"
 
 #include <list>
 
@@ -31,6 +32,8 @@ private: // メンバ関数
 	void Move();
 
 private: // 自機のメンバ変数
+	//TimeData tData = {};
+
 	// 自機モデル, 自機オブジェクト
 	OBJModel enemyModel;
 

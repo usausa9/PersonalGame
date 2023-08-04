@@ -10,6 +10,7 @@
 
 #include "FbxLoader.h"
 
+#include "TitleScene.h"
 #include "GameScene.h"
 
 #include "ImGuiManager.h"
@@ -19,10 +20,19 @@
 
 #include <DirectXTex.h>
 
+
 class MyGame
 {
+	enum class Scene : uint8_t
+	{
+		TITLE,
+		GAME,
+	};
+
 public:
-	GameScene scene;
+	Scene currentScene = Scene::GAME;
+	TitleScene titleScene;
+	GameScene gameScene;
 
 private:
 	template <class T> using ComPtr = Microsoft::WRL::ComPtr<T>;
@@ -33,6 +43,9 @@ public:	// メンバ関数
 
 	// 終了
 	void Finalize();
+
+	// シーン切り替え
+	void ChangeScene();
 
 	// 毎フレーム更新
 	void Update();
