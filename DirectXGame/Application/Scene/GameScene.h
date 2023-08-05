@@ -34,7 +34,8 @@ private:
 
 	// ƒvƒŒƒCƒ„[,“G
 	unique_ptr<Player> player = nullptr;
-	unique_ptr<Enemy> enemy = nullptr;
+	//unique_ptr<Enemy> enemy = nullptr;
+	std::list<std::unique_ptr<Enemy>> enemys;
 
 	// “V‹…
 	unique_ptr<Skydome> skydome = nullptr;
@@ -57,4 +58,7 @@ public:
 
 	// 2D•`‰æ
 	void Draw2D();
+
+	// “G
+	void EnemySpawn();
 };

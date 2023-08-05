@@ -1,38 +1,17 @@
 #include "GameScene.h"
 #include "CollisionManager.h"
 
-#include "FBXObject3D.h"
-
 #include "ImGuiManager.h"
 
 using namespace Input;
 
 void GameScene::Initialize()
 {
-	// デバイスをセット
-	FBXObject3D::SetDevice(DirectXBase::GetInstance()->device.Get());
-	// カメラをセット
-	FBXObject3D::SetCamera(camera);
-	// コマンドリスト初期化
-	FBXObject3D::SetCommandList(DirectXBase::GetInstance()->commandList.Get());
-	// グラフィックスパイプライン生成
-	FBXObject3D::CreateGraphicsPipeline();
-
 	// 当たり判定
 	collisionManager = CollisionManager::GetInstance();
 
-	// テクスチャ読み込み
-
-	// スプライト・テクスチャ紐づけ
-
 	// パーティクル用のパイプライン・Init
 	ParticleManager::CreatePipeline();
-
-	// OBJ読み込み
-
-	// Object3D Init
-
-	// objとObject3Dの紐付け
 
 	// カメラ初期化
 	camera = new Camera;
@@ -45,10 +24,6 @@ void GameScene::Initialize()
 	// プレイヤー初期化
 	player = make_unique<Player>();
 	player.get()->Initialize(camera);
-	
-	// エネミー初期化
-	enemy = make_unique<Enemy>();
-	enemy.get()->Initialize();
 
 	// 天球初期化
 	skydome = make_unique<Skydome>();
@@ -70,7 +45,26 @@ void GameScene::Update()
 	player->Update();
 
 	// エネミーの更新
-	enemy->Update();
+	for (std::unique_ptr<Enemy>& enemy : enemys) 
+	{
+		enemy->Update(railCamera->GetObject3d()->matWorld, player->GetWorldPosition());
+	}
+
+	// 死んでる敵を消す
+	enemys.remove_if([](std::unique_ptr<Enemy>& enemy) 
+	{
+		if (!enemy->IsAlive()) 
+		{
+			return true;
+		}
+
+		return false; 
+	});
+
+	if (Key::Trigger(DIK_Q)) 
+	{
+		EnemySpawn();
+	}
 
 	// 天球の行列更新
 	skydome->Update();
@@ -95,7 +89,10 @@ void GameScene::Draw3D()
 	player->Draw();
 
 	// 敵描画
-	enemy->Draw();
+	for (std::unique_ptr<Enemy>& enemy : enemys) 
+	{
+		enemy->Draw();
+	}
 }
 
 void GameScene::DrawParticle()
@@ -109,4 +106,25 @@ void GameScene::DrawParticle()
 void GameScene::Draw2D()
 {
 	player->DrawUI();
+}
+
+void GameScene::EnemySpawn()
+{
+	float z = 40.0f;
+
+	Vector3 start { -10,0,z };
+	Vector3 p1 =  { 0,5,z };
+	Vector3 p2 =  { -5,0,z };
+	Vector3 p3 =  { 5,0,z };
+	Vector3 end = { 10,0,z };
+
+	std::vector<Vector3> enemyMovePoints = { start,p1,p2,p3,end };
+
+	// 敵の生成と初期化
+	std::unique_ptr<Enemy> newEnemy = std::make_unique<Enemy>();
+	newEnemy->Initialize(enemyMovePoints);
+	newEnemy->Spawn();
+
+	// リストに登録
+	enemys.push_back(std::move(newEnemy));
 }

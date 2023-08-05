@@ -261,9 +261,8 @@ void MyGame::Initialize()
 
 	TextureManager::Init();
 	FBXLoader::GetInstance()->Initialize(DirectXBase::GetInstance()->device.Get());
-
 	
-	if (currentScene == Scene::TITLE) titleScene.Initialize();
+	//if (currentScene == Scene::TITLE) titleScene.Initialize();
 	if (currentScene == Scene::GAME)  gameScene .Initialize();
 }
 
@@ -274,7 +273,7 @@ void MyGame::Finalize()
 
 	DirectXBase::Finalize();
 
-	if (currentScene == Scene::TITLE) titleScene.Finalize();
+	//if (currentScene == Scene::TITLE) titleScene.Finalize();
 	if (currentScene == Scene::GAME)  gameScene .Finalize();
 
 }
@@ -306,7 +305,7 @@ void MyGame::Update()
 	Pad::Update();
 #pragma endregion
 
-	if (currentScene == Scene::TITLE) titleScene.Update();
+//	if (currentScene == Scene::TITLE) titleScene.Update();
 	if (currentScene == Scene::GAME)  gameScene .Update();
 
 	ImGuiManager::GetInstance()->End();
@@ -357,17 +356,17 @@ void MyGame::Draw()
 	PreDraw();
 
 	// 3D•`‰æ
-	if (currentScene == Scene::TITLE) titleScene.Draw3D();
+	//if (currentScene == Scene::TITLE) titleScene.Draw3D();
 	if (currentScene == Scene::GAME)  gameScene .Draw3D();
 
 	// ƒp[ƒeƒBƒNƒ‹•`‰æ‘Oˆ— + •`‰æˆ—
 	PreDrawParticle();
-	if (currentScene == Scene::TITLE) titleScene.DrawParticle();
+	//if (currentScene == Scene::TITLE) titleScene.DrawParticle();
 	if (currentScene == Scene::GAME)  gameScene .DrawParticle();
 
 	// 2D•`‰æ
 	spriteManager->PreDraw();
-	if (currentScene == Scene::TITLE) titleScene.Draw2D();
+	//if (currentScene == Scene::TITLE) titleScene.Draw2D();
 	if (currentScene == Scene::GAME)  gameScene .Draw2D();
 
 	// ImGui •`‰æ
