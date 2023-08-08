@@ -129,12 +129,13 @@
     <ClInclude Include="DirectXGame\Engine\Base\Math\SplineCurve.h" />
     <ClInclude Include="DirectXGame\Application\Game\RailCamera.h" />
     <ClInclude Include="DirectXGame\Application\Game\Skydome\Skydome.h" />
-    <ClInclude Include="DirectXGame\Engine\Base\TimeData.h" />
+    <ClInclude Include="DirectXGame\Engine\Base\Math\TimeData.h" />
     <ClInclude Include="DirectXGame\Application\Game\Enemy\Enemy.h" />
     <ClInclude Include="DirectXGame\Engine\Base\Collision\SphereCollider.h" />
     <ClInclude Include="DirectXGame\Engine\2D\ImGuiManager.h" />
     <ClInclude Include="DirectXGame\Application\Scene\TitleScene.h" />
     <ClInclude Include="DirectXGame\Application\Game\Player\PlayerState.h" />
+    <ClInclude Include="DirectXGame\Engine\Base\UsaFramework.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\shaders\Basic.hlsli" />
@@ -227,12 +228,13 @@
     <ClCompile Include="DirectXGame\Engine\Base\Math\SplineCurve.cpp" />
     <ClCompile Include="DirectXGame\Application\Game\RailCamera.cpp" />
     <ClCompile Include="DirectXGame\Application\Game\Skydome\Skydome.cpp" />
-    <ClCompile Include="DirectXGame\Engine\Base\TimeData.cpp" />
+    <ClCompile Include="DirectXGame\Engine\Base\Math\TimeData.cpp" />
     <ClCompile Include="DirectXGame\Application\Game\Enemy\Enemy.cpp" />
     <ClCompile Include="DirectXGame\Engine\Base\Collision\SphereCollider.cpp" />
     <ClCompile Include="DirectXGame\Engine\2D\ImGuiManager.cpp" />
     <ClCompile Include="DirectXGame\Application\Scene\TitleScene.cpp" />
     <ClCompile Include="DirectXGame\Application\Game\Player\PlayerState.cpp" />
+    <ClCompile Include="DirectXGame\Engine\Base\UsaFramework.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="External\DirectXTex\DirectXTex_Desktop_2022_Win10.vcxproj">

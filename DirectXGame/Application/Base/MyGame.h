@@ -10,7 +10,6 @@
 
 #include "FbxLoader.h"
 
-#include "TitleScene.h"
 #include "GameScene.h"
 
 #include "ImGuiManager.h"
@@ -20,18 +19,9 @@
 
 #include <DirectXTex.h>
 
-
 class MyGame
 {
-	enum class Scene : uint8_t
-	{
-		TITLE,
-		GAME,
-	};
-
 public:
-	Scene currentScene = Scene::GAME;
-	TitleScene titleScene;
 	GameScene gameScene;
 
 private:

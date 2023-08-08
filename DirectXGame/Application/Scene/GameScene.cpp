@@ -110,13 +110,13 @@ void GameScene::Draw2D()
 
 void GameScene::EnemySpawn()
 {
+	// スプライン制御点
 	float z = 40.0f;
-
-	Vector3 start { -10,0,z };
-	Vector3 p1 =  { 0,5,z };
-	Vector3 p2 =  { -5,0,z };
-	Vector3 p3 =  { 5,0,z };
-	Vector3 end = { 10,0,z };
+	Vector3 start { 0,0,z };
+	Vector3 p1 =  { 5,5,z };
+	Vector3 p2 =  { -5,-5,z };
+	Vector3 p3 =  { 5,5,z };
+	Vector3 end = { -10,-10,z };
 
 	std::vector<Vector3> enemyMovePoints = { start,p1,p2,p3,end };
 

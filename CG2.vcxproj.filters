@@ -183,7 +183,7 @@
     <ClInclude Include="DirectXGame\Application\Game\Skydome\Skydome.h">
       <Filter>2.ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="DirectXGame\Engine\Base\TimeData.h">
+    <ClInclude Include="DirectXGame\Engine\Base\Math\TimeData.h">
       <Filter>2.ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="DirectXGame\Application\Game\Enemy\Enemy.h">
@@ -217,6 +217,9 @@
       <Filter>2.ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="DirectXGame\Application\Game\Player\PlayerState.h">
+      <Filter>2.ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="DirectXGame\Engine\Base\UsaFramework.h">
       <Filter>2.ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>
@@ -342,7 +345,7 @@
     <ClCompile Include="DirectXGame\Application\Game\Skydome\Skydome.cpp">
       <Filter>1.ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="DirectXGame\Engine\Base\TimeData.cpp">
+    <ClCompile Include="DirectXGame\Engine\Base\Math\TimeData.cpp">
       <Filter>1.ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="DirectXGame\Application\Game\Enemy\Enemy.cpp">
@@ -364,6 +367,9 @@
       <Filter>1.ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="DirectXGame\Application\Game\Player\PlayerState.cpp">
+      <Filter>1.ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="DirectXGame\Engine\Base\UsaFramework.cpp">
       <Filter>1.ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
