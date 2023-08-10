@@ -110,7 +110,10 @@ void Player::reticleUpdate()
 	
 	// 画面上のレティクル座標を動かす
 	Vector2 reticleMoveVel = { 0, 0 };
-	
+
+	// 自機の速さとレティクルのスピード調整
+	reticleSpd = kReticleSpd * velocity;
+
 	if (Key::Down(DIK_A) && Key::Down(DIK_D))
 	{
 
@@ -197,6 +200,9 @@ void Player::Move()
 {
 	// 移動量の初期化
 	move = { 0,0,0 };
+
+	// 強化に応じてスピード変化
+	velocity = formerlySpeed + speedUpRate * state.SpeedUpNum();
 
 	// WASD入力での移動
 	move += { 

@@ -65,7 +65,10 @@ private: // 自機のメンバ変数
 	Vector3 rev = { 0,0,0 };
 
 	// 自機の移動スピード 
-	const float velocity = 0.65f;
+	float velocity = 0.5f;
+	const float formerlySpeed = 0.5f;
+	const float speedUpRate = 0.06f;
+
 	// 自機のXに対してのYスピード
 	const float kYMove = 0.7f;
 	// 自機の移動範囲制限用
@@ -82,6 +85,9 @@ private: // 自機のメンバ変数
 	float reticleSpd = 6.0f;
 	const float kYMoveReticle = 0.7f;
 	const float reticleRadius = 340.f;
+
+	float kReticleSpd = 6.0f / 0.65f;
+
 
 private: // 自機弾のメンバ変数
 	// レティクルの座標データ
