@@ -41,6 +41,13 @@ public:
 	// 描画処理
 	void DrawUI();
 
+	// 強化状況を取得
+	uint8_t SpeedUpNum() const { return powerUpStatus[0]; }
+	uint8_t ExpandNum()  const { return powerUpStatus[1]; }
+	uint8_t LaserNum()   const { return powerUpStatus[2]; }
+	uint8_t OptionNum()  const { return powerUpStatus[3]; }
+	uint8_t BarrierNum() const { return powerUpStatus[4]; }
+
 private:
 	// パワーアップアイテム関連
 	array<uint8_t, 5> powerUpSelect = { 0, 0, 0, 0, 0 };	// 現在の選択等描画用
@@ -49,8 +56,13 @@ private:
 
 	bool isPowerUpAble = false;
 	
+	const uint8_t maxSpeedUpNum = 5;
+	const uint8_t maxExpandNum = 1;
+	const uint8_t maxLaserNum = 1;
+	const uint8_t maxOptionNum = 2;
+	const uint8_t maxBarrierNum = 1;
 
-private:	// 描画用
+private:// 描画用
 	// テクスチャ関連
 	static const uint8_t powerUpNum = 5;
 	static const uint8_t texNum = 12;

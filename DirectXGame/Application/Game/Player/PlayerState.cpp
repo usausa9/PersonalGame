@@ -88,60 +88,196 @@ void PlayerState::Initialize()
 
 void PlayerState::Update()
 {	
-	if (Key::Trigger(DIK_1))
+	if (nowSelect == uint8_t(State::SPEEDUP))
 	{
-		if (powerUpSelect[uint8_t(State::SPEEDUP)] != uint8_t(SelectState::USEDSELECT))
+		if (powerUpSelect[uint8_t(State::SPEEDUP)] == uint8_t(SelectState::NONE))
 		{
-			powerUpSelect[uint8_t(State::SPEEDUP)]++;
+			powerUpSelect[uint8_t(State::SPEEDUP)] = uint8_t(SelectState::SELECT);
 		}
-		else
+		else if (powerUpSelect[uint8_t(State::SPEEDUP)] == uint8_t(SelectState::USED))
+		{
+			powerUpSelect[uint8_t(State::SPEEDUP)] = uint8_t(SelectState::USEDSELECT);
+		}
+	}
+	else if (nowSelect == uint8_t(State::EXPAND))
+	{
+		if (powerUpSelect[uint8_t(State::EXPAND)] == uint8_t(SelectState::NONE))
+		{
+			powerUpSelect[uint8_t(State::EXPAND)] = uint8_t(SelectState::SELECT);
+		}
+		else if (powerUpSelect[uint8_t(State::EXPAND)] == uint8_t(SelectState::USED))
+		{
+			powerUpSelect[uint8_t(State::EXPAND)] = uint8_t(SelectState::USEDSELECT);
+		}
+
+		if (powerUpSelect[uint8_t(State::SPEEDUP)] == uint8_t(SelectState::SELECT))
 		{
 			powerUpSelect[uint8_t(State::SPEEDUP)] = uint8_t(SelectState::NONE);
 		}
-		
-	}
-	if (Key::Trigger(DIK_2))
-	{
-		if (powerUpSelect[uint8_t(State::EXPAND)] != uint8_t(SelectState::USEDSELECT))
+		else if (powerUpSelect[uint8_t(State::SPEEDUP)] == uint8_t(SelectState::USEDSELECT))
 		{
-			powerUpSelect[uint8_t(State::EXPAND)]++;
+			powerUpSelect[uint8_t(State::SPEEDUP)] = uint8_t(SelectState::USED);
 		}
-		else
+	}
+	else if (nowSelect == uint8_t(State::LASER))
+	{
+		if (powerUpSelect[uint8_t(State::LASER)] == uint8_t(SelectState::NONE))
+		{
+			powerUpSelect[uint8_t(State::LASER)] = uint8_t(SelectState::SELECT);
+		}
+		else if (powerUpSelect[uint8_t(State::LASER)] == uint8_t(SelectState::USED))
+		{
+			powerUpSelect[uint8_t(State::LASER)] = uint8_t(SelectState::USEDSELECT);
+		}
+
+		if (powerUpSelect[uint8_t(State::EXPAND)] == uint8_t(SelectState::SELECT))
 		{
 			powerUpSelect[uint8_t(State::EXPAND)] = uint8_t(SelectState::NONE);
 		}
-	}
-	if (Key::Trigger(DIK_3))
-	{
-		if (powerUpSelect[uint8_t(State::LASER)] != uint8_t(SelectState::USEDSELECT))
+		else if (powerUpSelect[uint8_t(State::EXPAND)] == uint8_t(SelectState::USEDSELECT))
 		{
-			powerUpSelect[uint8_t(State::LASER)]++;
+			powerUpSelect[uint8_t(State::EXPAND)] = uint8_t(SelectState::USED);
 		}
-		else
+	}
+	else if (nowSelect == uint8_t(State::OPTION))
+	{
+		if (powerUpSelect[uint8_t(State::OPTION)] == uint8_t(SelectState::NONE))
+		{
+			powerUpSelect[uint8_t(State::OPTION)] = uint8_t(SelectState::SELECT);
+		}
+		else if (powerUpSelect[uint8_t(State::OPTION)] == uint8_t(SelectState::USED))
+		{
+			powerUpSelect[uint8_t(State::OPTION)] = uint8_t(SelectState::USEDSELECT);
+		}
+
+		if (powerUpSelect[uint8_t(State::LASER)] == uint8_t(SelectState::SELECT))
 		{
 			powerUpSelect[uint8_t(State::LASER)] = uint8_t(SelectState::NONE);
 		}
-	}
-	if (Key::Trigger(DIK_4))
-	{
-		if (powerUpSelect[uint8_t(State::OPTION)] != uint8_t(SelectState::USEDSELECT))
+		else if (powerUpSelect[uint8_t(State::LASER)] == uint8_t(SelectState::USEDSELECT))
 		{
-			powerUpSelect[uint8_t(State::OPTION)]++;
+			powerUpSelect[uint8_t(State::LASER)] = uint8_t(SelectState::USED);
 		}
-		else
+	}
+	else if (nowSelect == uint8_t(State::BARRIER))
+	{
+		if (powerUpSelect[uint8_t(State::BARRIER)] == uint8_t(SelectState::NONE))
+		{
+			powerUpSelect[uint8_t(State::BARRIER)] = uint8_t(SelectState::SELECT);
+		}
+		else if (powerUpSelect[uint8_t(State::BARRIER)] == uint8_t(SelectState::USED))
+		{
+			powerUpSelect[uint8_t(State::BARRIER)] = uint8_t(SelectState::USEDSELECT);
+		}
+
+		if (powerUpSelect[uint8_t(State::OPTION)] == uint8_t(SelectState::SELECT))
 		{
 			powerUpSelect[uint8_t(State::OPTION)] = uint8_t(SelectState::NONE);
 		}
-	}
-	if (Key::Trigger(DIK_5))
-	{
-		if (powerUpSelect[uint8_t(State::BARRIER)] != uint8_t(SelectState::USEDSELECT))
+		else if (powerUpSelect[uint8_t(State::OPTION)] == uint8_t(SelectState::USEDSELECT))
 		{
-			powerUpSelect[uint8_t(State::BARRIER)]++;
+			powerUpSelect[uint8_t(State::OPTION)] = uint8_t(SelectState::USED);
+		}
+	}
+	else 
+	{
+		if (powerUpSelect[uint8_t(State::BARRIER)] == uint8_t(SelectState::SELECT))
+		{
+			powerUpSelect[uint8_t(State::BARRIER)] = uint8_t(SelectState::NONE);
+		}
+		else if (powerUpSelect[uint8_t(State::BARRIER)] == uint8_t(SelectState::USEDSELECT))
+		{
+			powerUpSelect[uint8_t(State::BARRIER)] = uint8_t(SelectState::USED);
+		}
+	}
+
+	if (Key::Trigger(DIK_9))
+	{
+		if (powerUpSelect[uint8_t(State::SPEEDUP)] == uint8_t(SelectState::SELECT))
+		{
+			powerUpStatus[0]++;
+			nowSelect = uint8_t(State::_NONE);
+
+			if (powerUpStatus[0] == maxSpeedUpNum)
+			{
+				powerUpSelect[uint8_t(State::SPEEDUP)] = uint8_t(SelectState::USED);
+			}
+			else
+			{
+				powerUpSelect[uint8_t(State::SPEEDUP)] = uint8_t(SelectState::NONE);
+			}
+		}
+
+		if (powerUpSelect[uint8_t(State::EXPAND)] == uint8_t(SelectState::SELECT))
+		{
+			powerUpStatus[1]++;
+			nowSelect = uint8_t(State::_NONE);
+			
+			if (powerUpStatus[1] == maxExpandNum)
+			{
+				powerUpSelect[uint8_t(State::EXPAND)] = uint8_t(SelectState::USED);
+			}
+			else
+			{
+				powerUpSelect[uint8_t(State::EXPAND)] = uint8_t(SelectState::NONE);
+			}
+		}
+
+		if (powerUpSelect[uint8_t(State::LASER)] == uint8_t(SelectState::SELECT))
+		{
+			powerUpStatus[2]++;
+			nowSelect = uint8_t(State::_NONE);
+
+			if (powerUpStatus[2] == maxLaserNum)
+			{
+				powerUpSelect[uint8_t(State::LASER)] = uint8_t(SelectState::USED);
+			}
+			else
+			{
+				powerUpSelect[uint8_t(State::LASER)] = uint8_t(SelectState::NONE);
+			}
+		}
+
+		if (powerUpSelect[uint8_t(State::OPTION)] == uint8_t(SelectState::SELECT))
+		{
+			powerUpStatus[3]++;
+			nowSelect = uint8_t(State::_NONE);
+
+			if (powerUpStatus[3] == maxOptionNum)
+			{
+				powerUpSelect[uint8_t(State::OPTION)] = uint8_t(SelectState::USED);
+			}
+			else
+			{
+				powerUpSelect[uint8_t(State::OPTION)] = uint8_t(SelectState::NONE);
+			}
+		}
+
+		if (powerUpSelect[uint8_t(State::BARRIER)] == uint8_t(SelectState::SELECT))
+		{
+			powerUpStatus[4]++;
+			nowSelect = uint8_t(State::_NONE);
+
+			if (powerUpStatus[4] == maxBarrierNum)
+			{
+				powerUpSelect[uint8_t(State::BARRIER)] = uint8_t(SelectState::USED);
+			}
+			else
+			{
+				powerUpSelect[uint8_t(State::BARRIER)] = uint8_t(SelectState::NONE);
+			}
+		}
+	}
+
+	if (Key::Trigger(DIK_0))
+	{
+		if (nowSelect == uint8_t(State::_NONE))
+		{
+			nowSelect = uint8_t(State::SPEEDUP);
 		}
 		else
 		{
-			powerUpSelect[uint8_t(State::BARRIER)] = uint8_t(SelectState::NONE);
+			nowSelect++;
 		}
 	}
 

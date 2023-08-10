@@ -8,6 +8,7 @@
 #include "ParticleManager.h"
 #include "SpriteManager.h"
 
+#include "UsaFramework.h"
 #include "FbxLoader.h"
 
 #include "GameScene.h"
@@ -19,7 +20,7 @@
 
 #include <DirectXTex.h>
 
-class MyGame
+class MyGame /*: public UsaFramework*/
 {
 public:
 	GameScene gameScene;
@@ -33,9 +34,6 @@ public:	// メンバ関数
 
 	// 終了
 	void Finalize();
-
-	// シーン切り替え
-	void ChangeScene();
 
 	// 毎フレーム更新
 	void Update();
@@ -61,19 +59,13 @@ private: // メンバ変数
 
 	// 終了フラグ
 	bool endRequest_ = false;
-
+	// パイプラインステート
 	ComPtr<ID3D12PipelineState> pipelineState = nullptr;
 	// ルートシグネチャ
 	ComPtr<ID3D12RootSignature> rootSignature = nullptr;
 
 	// WindowsAPI初期化
 	WinAPI& window = *WinAPI::GetInstance();
-
-	//WinAPI* window = nullptr;
-	//DirectXBase* dxBase = nullptr;
-
-	// DirectX初期化
-	//DirectXBase& directXBase = *DirectXBase::GetInstance();
 
 	// ImGui
 	unique_ptr<ImGuiManager> imGui = nullptr;
