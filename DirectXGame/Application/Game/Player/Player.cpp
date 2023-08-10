@@ -111,6 +111,15 @@ void Player::reticleUpdate()
 	// 画面上のレティクル座標を動かす
 	Vector2 reticleMoveVel = { 0, 0 };
 
+	if (state.ExpandNum() == false)
+	{
+		reticleSp->scale = { 0.9f, 0.9f };
+	}
+	else
+	{
+		reticleSp->scale = { 1.1f, 1.1f };
+	}
+
 	// 自機の速さとレティクルのスピード調整
 	reticleSpd = kReticleSpd * velocity;
 
@@ -143,9 +152,9 @@ void Player::reticleUpdate()
 	reticlePos += reticleMoveVel;
 
 	// レティクル座標の移動制限
-	Vector2 reticlePosMin = { reticleRadius, reticleRadius * 0.6f };
-	Vector2 reticlePosMax = { WinAPI::GetInstance()->width  - reticleRadius,
-							  WinAPI::GetInstance()->height - reticleRadius * 0.6f };
+	Vector2 reticlePosMin = { reticleMoveLimit, reticleMoveLimit * 0.6f };
+	Vector2 reticlePosMax = { WinAPI::GetInstance()->width  - reticleMoveLimit,
+							  WinAPI::GetInstance()->height - reticleMoveLimit * 0.6f };
 	
 	reticlePos.x = max(reticlePos.x, reticlePosMin.x);
 	reticlePos.y = max(reticlePos.y, reticlePosMin.y);
@@ -180,6 +189,7 @@ void Player::reticleUpdate()
 
 void Player::DrawUI()
 {
+	
 	reticleSp->Draw();
 	
 	// 判定時描画
@@ -202,7 +212,7 @@ void Player::Move()
 	move = { 0,0,0 };
 
 	// 強化に応じてスピード変化
-	velocity = formerlySpeed + speedUpRate * state.SpeedUpNum();
+	velocity = formerlySpeed + (speedUpRate * state.SpeedUpNum());
 
 	// WASD入力での移動
 	move += { 

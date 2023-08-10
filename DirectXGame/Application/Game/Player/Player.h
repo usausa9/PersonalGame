@@ -84,7 +84,7 @@ private: // 自機のメンバ変数
 	// レティクル関連
 	float reticleSpd = 6.0f;
 	const float kYMoveReticle = 0.7f;
-	const float reticleRadius = 340.f;
+	const float reticleMoveLimit = 340.f;
 
 	float kReticleSpd = 6.0f / 0.65f;
 
