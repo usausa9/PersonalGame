@@ -136,6 +136,7 @@
     <ClInclude Include="DirectXGame\Application\Scene\TitleScene.h" />
     <ClInclude Include="DirectXGame\Application\Game\Player\PlayerState.h" />
     <ClInclude Include="DirectXGame\Engine\Base\UsaFramework.h" />
+    <ClInclude Include="DirectXGame\Application\Game\Player\PowerUpItem.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\shaders\Basic.hlsli" />
@@ -235,6 +236,7 @@
     <ClCompile Include="DirectXGame\Application\Scene\TitleScene.cpp" />
     <ClCompile Include="DirectXGame\Application\Game\Player\PlayerState.cpp" />
     <ClCompile Include="DirectXGame\Engine\Base\UsaFramework.cpp" />
+    <ClCompile Include="DirectXGame\Application\Game\Player\PowerUpItem.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="External\DirectXTex\DirectXTex_Desktop_2022_Win10.vcxproj">

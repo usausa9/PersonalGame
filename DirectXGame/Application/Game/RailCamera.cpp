@@ -24,10 +24,10 @@ void RailCamera::Initialize(const Vector3& pos, const Vector3& rot)
 
 
 	// スプライン曲線の制御点
-	Vector3 start{ 0,0,-0 };
-	Vector3 p1{ -10,20,-30 };
-	Vector3 p2{ 10,-20,30 };
-	Vector3 end{ 30,0,-50 };
+	Vector3 start{ 0,0,0 };
+	Vector3 p1{ 0,2,250 };
+	Vector3 p2{ 0,4,500 };
+	Vector3 end{ 0,6,750 };
 
 	std::vector<Vector3> points{ start,p1,p2,end };
 
@@ -39,7 +39,7 @@ void RailCamera::Update()
 	// スプライン曲線によって動かす
 	if (Key::Trigger(DIK_O)) 
 	{
-		spline.MoveStart(300.0f, true);
+		spline.MoveStart(6000.0f, true);
 	}
 
 	// 曲線のアップデート

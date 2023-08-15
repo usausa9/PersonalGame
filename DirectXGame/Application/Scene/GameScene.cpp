@@ -37,7 +37,7 @@ void GameScene::Finalize()
 
 void GameScene::Update()
 {
-	// DIrectX毎フレーム処理(更新処理) ここから
+	// DirectX毎フレーム処理(更新処理) ここから
 	railCamera->Update();
 
 	// プレイヤーの更新
@@ -47,7 +47,7 @@ void GameScene::Update()
 	// エネミーの更新
 	for (std::unique_ptr<Enemy>& enemy : enemys) 
 	{
-		enemy->Update(railCamera->GetObject3d()->matWorld, player->GetWorldPosition());
+		enemy->Update(railCamera->GetObject3d()->matWorld);
 	}
 
 	// 死んでる敵を消す

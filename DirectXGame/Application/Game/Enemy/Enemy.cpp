@@ -27,7 +27,7 @@ void Enemy::Initialize(std::vector<Vector3>& points)
 }
 
 // 更新
-void Enemy::Update(const Matrix4& cameraMatrix, const Vector3& playerWorldPosition)
+void Enemy::Update(const Matrix4& cameraMatrix)
 {
 	// 敵の軌道更新
 	trajectory.Update();
@@ -35,9 +35,6 @@ void Enemy::Update(const Matrix4& cameraMatrix, const Vector3& playerWorldPositi
 	// 座標をカメラ基準に
 	Vector3 cameraPos = { cameraMatrix.m[3][0],cameraMatrix.m[3][1], cameraMatrix.m[3][2] };
 	position = Matrix4::Transform(trajectory.GetNowPosition(), cameraMatrix) + cameraPos;
-
-	// 移動処理
-	Move();
 
 	// 行列更新 必ず呼び出す
 	UpdateObject3D();
@@ -64,17 +61,7 @@ void Enemy::Spawn()
 void Enemy::OnCollision(const CollisionInfo& info)
 {
 	// 衝突判定により消滅
-	//isAlive = false;
-}
+	isAlive = false;
 
-// 入力受け付け + 移動
-void Enemy::Move()
-{
-	// 移動量の初期化
-	move = { 1.5f,0,0 };
-
-
-	// 移動量の加算
-	position += move;
-
+	
 }

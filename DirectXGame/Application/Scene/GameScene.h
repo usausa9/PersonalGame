@@ -7,6 +7,8 @@
 #include "Player.h"
 #include "Enemy.h"
 
+#include "PowerUpItem.h"
+
 #include "Object3D.h"
 #include "FBXObject3D.h"
 
@@ -34,7 +36,6 @@ private:
 
 	// プレイヤー,敵
 	unique_ptr<Player> player = nullptr;
-	//unique_ptr<Enemy> enemy = nullptr;
 	std::list<std::unique_ptr<Enemy>> enemys;
 
 	// 天球
