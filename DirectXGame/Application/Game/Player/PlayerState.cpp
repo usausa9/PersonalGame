@@ -1,4 +1,5 @@
 #include "PlayerState.h"
+#include "Enemy.h"
 
 using namespace Input;
 
@@ -82,8 +83,6 @@ void PlayerState::Initialize()
 	}
 
 	nowSelect = uint8_t(State::_NONE);
-
-	isPowerUpAble = false;
 }
 
 void PlayerState::Update()
@@ -191,7 +190,7 @@ void PlayerState::Update()
 		}
 	}
 
-	if (Key::Trigger(DIK_9))
+	if (Key::Trigger(DIK_0))
 	{
 		if (powerUpSelect[uint8_t(State::SPEEDUP)] == uint8_t(SelectState::SELECT))
 		{
@@ -269,7 +268,7 @@ void PlayerState::Update()
 		}
 	}
 
-	if (Key::Trigger(DIK_0))
+	if (Enemy::IsOnCol() == true)
 	{
 		if (nowSelect == uint8_t(State::_NONE))
 		{
@@ -279,11 +278,6 @@ void PlayerState::Update()
 		{
 			nowSelect++;
 		}
-	}
-
-	if (Key::Trigger(DIK_M))
-	{
-		isPowerUpAble = true;
 	}
 
 	// ÉTÉCÉYê›íË

@@ -53,8 +53,6 @@ private:
 	array<uint8_t, 5> powerUpSelect = { 0, 0, 0, 0, 0 };	// 現在の選択等描画用
 	array<uint8_t, 5> powerUpStatus = { 0, 0, 0, 0, 0 };	// プレイヤーの強化状態
 	uint8_t nowSelect = uint8_t(State::_NONE);
-
-	bool isPowerUpAble = false;
 	
 	const uint8_t maxSpeedUpNum = 5;
 	const uint8_t maxExpandNum = 1;
@@ -77,5 +75,4 @@ private:// 描画用
 	const float scaleTexUI = 1.5f;
 	const Vector2 spriteBase = { 337, 667 };
 	static const uint8_t spriteSize = 150;
-
 };

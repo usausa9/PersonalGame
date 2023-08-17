@@ -7,8 +7,6 @@
 #include "Player.h"
 #include "Enemy.h"
 
-#include "PowerUpItem.h"
-
 #include "Object3D.h"
 #include "FBXObject3D.h"
 

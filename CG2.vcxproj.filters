@@ -222,9 +222,6 @@
     <ClInclude Include="DirectXGame\Engine\Base\UsaFramework.h">
       <Filter>2.ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="DirectXGame\Application\Game\Player\PowerUpItem.h">
-      <Filter>2.ヘッダー ファイル</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\shaders\Basic.hlsli">
@@ -373,9 +370,6 @@
       <Filter>1.ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="DirectXGame\Engine\Base\UsaFramework.cpp">
-      <Filter>1.ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="DirectXGame\Application\Game\Player\PowerUpItem.cpp">
       <Filter>1.ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>

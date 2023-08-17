@@ -5,8 +5,6 @@
 #include "TimeData.h"
 #include "SplineCurve.h"
 
-#include "PowerUpItem.h"
-
 #include <list>
 
 class Enemy : public Object3D
@@ -33,8 +31,11 @@ public:	// メンバ関数
 	// 敵の生存状況を取得
 	bool IsAlive()const { return isAlive; }
 
-private: // 自機のメンバ変数
-	// 自機モデル, 自機オブジェクト
+	// 当たり判定状況を取得
+	static bool IsOnCol() { return isOnCol; }
+
+private: // 敵機のメンバ変数
+	// 敵機モデル, 敵機オブジェクト
 	OBJModel enemyModel;
 
 	// 敵の軌道
@@ -42,5 +43,6 @@ private: // 自機のメンバ変数
 
 	// 生存フラグ
 	bool isAlive = true;
-
+	// 当たり判定フラグ
+	static bool isOnCol;
 };

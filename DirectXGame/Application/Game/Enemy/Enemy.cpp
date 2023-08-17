@@ -2,6 +2,8 @@
 #include "SphereCollider.h"
 #include "CollisionAttribute.h"
 
+bool Enemy::isOnCol = false;
+
 // 初期化
 void Enemy::Initialize(std::vector<Vector3>& points)
 {
@@ -29,6 +31,9 @@ void Enemy::Initialize(std::vector<Vector3>& points)
 // 更新
 void Enemy::Update(const Matrix4& cameraMatrix)
 {
+	// 当たり判定を一時的にfalseへ
+	isOnCol = false;
+
 	// 敵の軌道更新
 	trajectory.Update();
 
@@ -60,8 +65,9 @@ void Enemy::Spawn()
 
 void Enemy::OnCollision(const CollisionInfo& info)
 {
+	// 判定をtrueに
+	isOnCol = true;
+
 	// 衝突判定により消滅
 	isAlive = false;
-
-	
 }
