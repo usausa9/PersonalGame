@@ -29,20 +29,20 @@ public:	// メンバ関数
 	void OnCollision(const CollisionInfo& info) override;
 
 	// 敵の生存状況を取得
-	bool IsAlive()const { return isAlive; }
+	bool IsAlive()const { return isAlive_; }
 
 	// 当たり判定状況を取得
-	static bool IsOnCol() { return isOnCol; }
+	static bool IsOnCol() { return isOnCol_; }
 
 private: // 敵機のメンバ変数
 	// 敵機モデル, 敵機オブジェクト
-	OBJModel enemyModel;
+	OBJModel enemyModel_;
 
 	// 敵の軌道
-	SplineCurve trajectory = {};
+	SplineCurve trajectory_ = {};
 
 	// 生存フラグ
-	bool isAlive = true;
+	bool isAlive_ = true;
 	// 当たり判定フラグ
-	static bool isOnCol;
+	static bool isOnCol_;
 };

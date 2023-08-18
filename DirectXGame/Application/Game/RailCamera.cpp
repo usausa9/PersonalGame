@@ -5,23 +5,22 @@ using namespace Input;
 
 RailCamera::~RailCamera()
 {
-	delete worldTransform;
-	delete camera;
+	delete worldTransform_;
+	delete camera_;
 }
 
 void RailCamera::Initialize(const Vector3& pos, const Vector3& rot)
 {
-	worldTransform = new Object3D();
-	camera = new Camera();
+	worldTransform_ = new Object3D();
+	camera_ = new Camera();
 
 	// ワールド行列の初期設定
-	worldTransform->InitializeObject3D();
-	worldTransform->position = pos;
-	worldTransform->rotation = rot;
+	worldTransform_->InitializeObject3D();
+	worldTransform_->position_ = pos;
+	worldTransform_->rotation_ = rot;
 
 	// ビュー行列の初期化
-	camera->Initialize();
-
+	camera_->Initialize();
 
 	// スプライン曲線の制御点
 	Vector3 start{ 0,0,0 };
@@ -31,7 +30,7 @@ void RailCamera::Initialize(const Vector3& pos, const Vector3& rot)
 
 	std::vector<Vector3> points{ start,p1,p2,end };
 
-	spline.SetPositions(points);
+	spline_.SetPositions(points);
 }
 
 void RailCamera::Update()
@@ -39,44 +38,44 @@ void RailCamera::Update()
 	// スプライン曲線によって動かす
 	if (Key::Trigger(DIK_O)) 
 	{
-		spline.MoveStart(6000.0f, true);
+		spline_.MoveStart(6000.0f, true);
 	}
 
 	// 曲線のアップデート
-	spline.Update();
+	spline_.Update();
 
 	// ワールド行列の座標の数値を加算
 	// スプライン曲線に沿って移動
-	worldTransform->position = spline.GetNowPosition();
+	worldTransform_->position_ = spline_.GetNowPosition();
 
 	// ワールド行列の回転の数値を加算
-	worldTransform->rotation += { 0, 0, 0 };
+	worldTransform_->rotation_ += { 0, 0, 0 };
 	
 	// ワールド行列の行列再計算
-	worldTransform->UpdateObject3D();
+	worldTransform_->UpdateObject3D();
 
 	// レールカメラには常にワールド座標を代入
-	camera->position = {
-		worldTransform->matWorld.m[3][0],
-		worldTransform->matWorld.m[3][1],
-		worldTransform->matWorld.m[3][2]};
+	camera_->position_ = {
+		worldTransform_->matWorld_.m[3][0],
+		worldTransform_->matWorld_.m[3][1],
+		worldTransform_->matWorld_.m[3][2]};
 
 	// ワールド前方ベクトル
 	Vector3 forward = {0, 0, 1};
 
 	// レールカメラの回転を反映
-	forward = Matrix4::Transform(forward, worldTransform->matWorld);
+	forward = Matrix4::Transform(forward, worldTransform_->matWorld_);
 	
 	// 視点+前方ベクトルで注視点
-	camera->target = camera->position + forward;
+	camera_->target_ = camera_->position_ + forward;
 	
 	// 上方向ベクトル
 	Vector3 up = {0, 1, 0};
 	
 	// カメラの上方向をforwardと同様に変換
-	camera->up = Matrix4::Transform(up, worldTransform->matWorld);
+	camera_->up_ = Matrix4::Transform(up, worldTransform_->matWorld_);
 	
 	// カメラ更新
-	camera->Update();
+	camera_->Update();
 
 }

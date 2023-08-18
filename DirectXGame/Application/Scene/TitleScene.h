@@ -24,20 +24,20 @@ class TitleScene : public IScene
 {
 private:
 	// 衝突マネージャ
-	CollisionManager* collisionManager = nullptr;
+	CollisionManager* collisionManager_ = nullptr;
 
 	// カメラ
-	Camera* camera = nullptr;
-	RailCamera* railCamera = nullptr;
+	Camera* camera_ = nullptr;
+	RailCamera* railCamera_ = nullptr;
 
 	// プレイヤー,敵
-	std::list<std::unique_ptr<Enemy>> enemys;
+	std::list<std::unique_ptr<Enemy>> enemys_;
 
 	// 天球
-	unique_ptr<Skydome> skydome = nullptr;
+	unique_ptr<Skydome> skydome_ = nullptr;
 
 	// シーン切り替えフラグ
-	bool isStart = false;
+	bool isStart_ = false;
 
 public:
 	// 初期化

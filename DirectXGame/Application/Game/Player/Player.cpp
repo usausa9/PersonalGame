@@ -9,51 +9,51 @@ using namespace Input;
 void Player::Initialize(Camera* camera)
 {
 	// 自機モデル読み込み
-	playerModel = OBJModel::LoadFromOBJ("vicviper");
-	reticleModel = OBJModel::LoadFromOBJ("ICO");
+	playerModel_ = OBJModel::LoadFromOBJ("vicviper");
+	reticleModel_ = OBJModel::LoadFromOBJ("ICO");
 
 	// レティクルスプライト割り当て
-	reticleTex = TextureManager::Load(L"Resources/Sprites/reticle.png");
-	reticleSp = make_unique<Sprite>(reticleTex);
-	reticleSp->position = reticlePos;
+	reticleTex_ = TextureManager::Load(L"Resources/Sprites/reticle.png");
+	reticleSp_ = make_unique<Sprite>(reticleTex_);
+	reticleSp_->position_ = reticlePos_;
 
 	// 当たり判定デバッグ用スプライト
-	aTex = TextureManager::Load(L"Resources/Sprites/texture.png");
-	aSp = make_unique<Sprite>(aTex);
-	aSp->position = {100,100};
+	aTex_ = TextureManager::Load(L"Resources/Sprites/texture.png");
+	aSp_ = make_unique<Sprite>(aTex_);
+	aSp_->position_ = {100,100};
 	
 	// 自機の行列初期化
-	rotation = { 0, 0, 0 };
-	position = { 0, 0, 22 };
+	rotation_ = { 0, 0, 0 };
+	position_ = { 0, 0, 22 };
 	InitializeObject3D();
 
 	// 自機モデルと自機オブジェクトを紐づけ
-	objModel = &playerModel;
-	reticleObj.objModel = &reticleModel;
-	reticleObj.position = { 0, 0, 50 };
-	reticleObj.InitializeObject3D();
+	objModel_ = &playerModel_;
+	reticleObj_.objModel_ = &reticleModel_;
+	reticleObj_.position_ = { 0, 0, 50 };
+	reticleObj_.InitializeObject3D();
 
 	// プレイヤー状態の初期化
-	state.Initialize();
+	state_.Initialize();
 
 	// コライダーの追加
 	float radius = 0.6f;
 	// 半径分だけ足元から浮いた座標を球の中心にする
 	SetCollider(new SphereCollider(Vector3({ 0, radius, 0 }),radius));
-	collider->SetAttribute(COLLISION_ATTR_ALLIES);
+	collider_->SetAttribute(COLLISION_ATTR_ALLIES);
 
 	// 自機弾モデル読み込み
-	bulletModel = OBJModel::LoadFromOBJ("ICO");
+	bulletModel_ = OBJModel::LoadFromOBJ("ICO");
 }
 
 // 更新
 void Player::Update()
 {
 	// プレイヤー状態の更新
-	state.Update();
+	state_.Update();
 
 	// 消滅フラグが立った弾を削除
-	bullets.remove_if([](unique_ptr<PlayerBullet>& bullet)
+	bullets_.remove_if([](unique_ptr<PlayerBullet>& bullet)
 	{
 		return bullet->IsDead();
 	});
@@ -69,11 +69,10 @@ void Player::Update()
 
 	// 弾発射 + 更新
 	Shot();
-	for (unique_ptr<PlayerBullet>& bullet : bullets)
+	for (unique_ptr<PlayerBullet>& bullet : bullets_)
 	{
 		bullet->Update();
 	}
-
 }
 
 // 描画
@@ -81,10 +80,10 @@ void Player::Draw()
 {
 	// オブジェ描画
 	DrawObject3D();
-	reticleObj.DrawObject3D();
+	reticleObj_.DrawObject3D();
 
 	// 弾描画
-	for (unique_ptr<PlayerBullet>& bullet : bullets)
+	for (unique_ptr<PlayerBullet>& bullet : bullets_)
 	{
 		bullet->Draw();
 	}
@@ -111,17 +110,17 @@ void Player::reticleUpdate()
 	// 画面上のレティクル座標を動かす
 	Vector2 reticleMoveVel = { 0, 0 };
 
-	if (state.ExpandNum() == false)
+	if (state_.ExpandNum() == false)
 	{
-		reticleSp->scale = { 0.9f, 0.9f };
+		reticleSp_->scale_ = { 0.9f, 0.9f };
 	}
 	else
 	{
-		reticleSp->scale = { 1.1f, 1.1f };
+		reticleSp_->scale_ = { 1.1f, 1.1f };
 	}
 
 	// 自機の速さとレティクルのスピード調整
-	reticleSpd = kReticleSpd * velocity;
+	reticleSpd_ = kReticleSpd_ * velocity_;
 
 	if (Key::Down(DIK_A) && Key::Down(DIK_D))
 	{
@@ -129,11 +128,11 @@ void Player::reticleUpdate()
 	}
 	else if (Key::Down(DIK_A))
 	{
-		reticleMoveVel.x = -reticleSpd;
+		reticleMoveVel.x = -reticleSpd_;
 	}
 	else if (Key::Down(DIK_D))
 	{
-		reticleMoveVel.x = reticleSpd;
+		reticleMoveVel.x = reticleSpd_;
 	}
 
 	if (Key::Down(DIK_W) && Key::Down(DIK_S))
@@ -142,35 +141,35 @@ void Player::reticleUpdate()
 	}
 	else if (Key::Down(DIK_W))
 	{
-		reticleMoveVel.y = -reticleSpd * kYMoveReticle;
+		reticleMoveVel.y = -reticleSpd_ * kYMoveReticle_;
 	}
 	else if (Key::Down(DIK_S))
 	{
-		reticleMoveVel.y = reticleSpd * kYMoveReticle;
+		reticleMoveVel.y = reticleSpd_ * kYMoveReticle_;
 	}
 
-	reticlePos += reticleMoveVel;
+	reticlePos_ += reticleMoveVel;
 
 	// レティクル座標の移動制限
-	Vector2 reticlePosMin = { reticleMoveLimit, reticleMoveLimit * 0.6f };
-	Vector2 reticlePosMax = { WinAPI::GetInstance()->width  - reticleMoveLimit,
-							  WinAPI::GetInstance()->height - reticleMoveLimit * 0.6f };
+	Vector2 reticlePosMin = { reticleMoveLimit_, reticleMoveLimit_ * 0.6f };
+	Vector2 reticlePosMax = { WinAPI::GetInstance()->width  - reticleMoveLimit_,
+							  WinAPI::GetInstance()->height - reticleMoveLimit_ * 0.6f };
 	
-	reticlePos.x = max(reticlePos.x, reticlePosMin.x);
-	reticlePos.y = max(reticlePos.y, reticlePosMin.y);
-	reticlePos.x = min(reticlePos.x, reticlePosMax.x);
-	reticlePos.y = min(reticlePos.y, reticlePosMax.y);
+	reticlePos_.x = max(reticlePos_.x, reticlePosMin.x);
+	reticlePos_.y = max(reticlePos_.y, reticlePosMin.y);
+	reticlePos_.x = min(reticlePos_.x, reticlePosMax.x);
+	reticlePos_.y = min(reticlePos_.y, reticlePosMax.y);
 
 	// 座標をスプライトにセット
-	reticleSp->position = reticlePos;
+	reticleSp_->position_ = reticlePos_;
 
 	// 合成行列の生成
 	Matrix4 matInverseVBV = matViewProjectionViewPort;
 	matInverseVBV = Matrix4::Inverse(matInverseVBV);
 
 	// スクリーン座標
-	Vector3 posNear = { reticlePos.x, reticlePos.y, 0 };
-	Vector3 posFar = { reticlePos.x, reticlePos.y, 1 };
+	Vector3 posNear = { reticlePos_.x, reticlePos_.y, 0 };
+	Vector3 posFar = { reticlePos_.x, reticlePos_.y, 1 };
 
 	// スクリーン座標系からワールド座標系へ
 	posNear = Matrix4::TransformDivW(posNear, matInverseVBV);
@@ -181,43 +180,42 @@ void Player::reticleUpdate()
 	direction.Normalize();
 
 	// カメラからレティクルの距離
-	reticleObj.position = posNear + direction * distanceReticle;
+	reticleObj_.position_ = posNear + direction * distanceReticle_;
 
-	reticleObj.UpdateObject3D();
-	reticleSp->Update();
+	reticleObj_.UpdateObject3D();
+	reticleSp_->Update();
 }
 
 void Player::DrawUI()
 {
-	
-	reticleSp->Draw();
+	reticleSp_->Draw();
 	
 	// 判定時描画
-	for (unique_ptr<PlayerBullet>& bullet : bullets)
+	for (unique_ptr<PlayerBullet>& bullet : bullets_)
 	{
 		if (bullet->IsDrawSP())
 		{
-			aSp->Draw();
+			aSp_->Draw();
 		};
 	}
 
 	// 自機状態の描画
-	state.DrawUI();
+	state_.DrawUI();
 }
 
 // 入力受け付け + 移動
 void Player::Move()
 {
 	// 移動量の初期化
-	move = { 0,0,0 };
+	move_ = { 0,0,0 };
 
 	// 強化に応じてスピード変化
-	velocity = formerlySpeed + (speedUpRate * state.SpeedUpNum());
+	velocity_ = formerlySpeed_ + (speedUpRate_ * state_.SpeedUpNum());
 
 	// WASD入力での移動
-	move += { 
-		(Key::Down(DIK_D) - Key::Down(DIK_A)) * velocity, 
-		(Key::Down(DIK_W) - Key::Down(DIK_S)) * velocity * kYMove,
+	move_ += {
+		(Key::Down(DIK_D) - Key::Down(DIK_A)) * velocity_,
+		(Key::Down(DIK_W) - Key::Down(DIK_S)) * velocity_ * kYMove_,
 		0 };
 
 	/*rev = {
@@ -226,26 +224,26 @@ void Player::Move()
 		((Key::Down(DIK_A) - Key::Down(DIK_D)) * rotateRev) * kYRotate };*/
 
 	// GamePadでの移動
-	move += {
-		Pad::GetLStick().x * velocity,
-		Pad::GetLStick().y * velocity * kYMove,
+	move_ += {
+		Pad::GetLStick().x * velocity_,
+		Pad::GetLStick().y * velocity_ * kYMove_,
 		0 };
 
 	// 移動量の加算
-	position += move;
+	position_ += move_;
 	/*rotation += rev;*/
 
 	// 範囲制限
-	position.x = max(position.x, -kMoveLimit.x);
-	position.y = max(position.y, -kMoveLimit.y);
-	position.x = min(position.x, +kMoveLimit.x);
-	position.y = min(position.y, +kMoveLimit.y);
+	position_.x = max(position_.x, -kMoveLimit_.x);
+	position_.y = max(position_.y, -kMoveLimit_.y);
+	position_.x = min(position_.x, +kMoveLimit_.x);
+	position_.y = min(position_.y, +kMoveLimit_.y);
 
 	// 範囲制限
-	rotation.x = max(rotation.x, -kRevLimit.x);
-	rotation.z = max(rotation.z, -kRevLimit.z);
-	rotation.x = min(rotation.x, +kRevLimit.x);
-	rotation.z = min(rotation.z, +kRevLimit.z);
+	rotation_.x = max(rotation_.x, -kRevLimit_.x);
+	rotation_.z = max(rotation_.z, -kRevLimit_.z);
+	rotation_.x = min(rotation_.x, +kRevLimit_.x);
+	rotation_.z = min(rotation_.z, +kRevLimit_.z);
 }
 
 void Player::Shot()
@@ -253,39 +251,39 @@ void Player::Shot()
 	// スペースキー or PadのAボタン のトリガー入力を受け付けた場合
 	if (Key::Trigger(DIK_SPACE) || Pad::Trigger(Button::A))
 	{
-		shotTimeData.Start(shotInterval);
+		shotTimeData_.Start(shotInterval_);
 	}
 
 	// スペースキー or PadのAボタン の押下入力を受け付けた場合
 	if (Key::Down(DIK_SPACE) || Pad::Down(Button::A))
 	{
 		// ショットのタイマーがインターバルと等しくなったときにもう一度タイマーを動かす (押下しているので)
-		if ((shotTimeData.GetTime()) == shotInterval)
+		if ((shotTimeData_.GetTime()) == shotInterval_)
 		{
-			shotTimeData.Start(shotInterval);
+			shotTimeData_.Start(shotInterval_);
 		}
 
-		if (shotTimeData.GetTime() == shotDelay)
+		if (shotTimeData_.GetTime() == shotDelay_)
 		{
 			// 自機弾の毎フレーム移動
 			Vector3 velocity = { 0, 0, 0 };
-			velocity = reticleObj.GetWorldPosition() - Object3D::GetWorldPosition();
+			velocity = reticleObj_.GetWorldPosition() - Object3D::GetWorldPosition();
 			velocity.Normalize();
-			velocity *= kBulletSpeed;
+			velocity *= kBulletSpeed_;
 
 			// 自機弾の自機からみたローカル発射位置
 			Vector3 delayPos = { 0, 0.2f, 7.1f };
 
 			// 速度ベクトルを自機の向きに合わせて回転
-			velocity = Matrix4::Transform(velocity, matWorld);
+			velocity = Matrix4::Transform(velocity, matWorld_);
 			//velocity = velocity * matWorld;
-			delayPos = delayPos * matWorld;
+			delayPos = delayPos * matWorld_;
 	
 			// 自機弾を生成、初期化
-			bullets.push_back(std::move(make_unique<PlayerBullet>()));
-			bullets.back()->Initialize(&bulletModel, GetWorldPosition() + delayPos, velocity);
+			bullets_.push_back(std::move(make_unique<PlayerBullet>()));
+			bullets_.back()->Initialize(&bulletModel_, GetWorldPosition() + delayPos, velocity);
 		}
 	}
 	// Timerのアップデート
-	shotTimeData.Update();
+	shotTimeData_.Update();
 }

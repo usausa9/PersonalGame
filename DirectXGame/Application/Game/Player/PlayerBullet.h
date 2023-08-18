@@ -27,23 +27,23 @@ public:
 
 private: 
 	// 自機弾の毎フレーム移動量
-	Vector3 velocity = {};
+	Vector3 velocity_ = {};
 
 	// 寿命<frame>
-	static const int32_t kLifeTime = 60 * 5;	// 5秒
+	static const int32_t kLifeTime_ = 60 * 5;	// 5秒
 	
 	// 消滅タイマー
-	int32_t deathTimer = kLifeTime;
+	int32_t deathTimer_ = kLifeTime_;
 
 	// 消滅フラグ
-	bool isDead = false;
+	bool isDead_ = false;
 
 	// デバッグ用
-	static bool isDrawSp;
+	static bool isDrawSp_;
 
 public:
 	// 外部参照用のGetter
-	bool IsDead() const { return isDead; }
+	bool IsDead() const { return isDead_; }
 	
-	bool IsDrawSP() const { return isDrawSp; }
+	bool IsDrawSP() const { return isDrawSp_; }
 };

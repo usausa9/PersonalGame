@@ -6,7 +6,7 @@ Camera* Camera::CurrentCamera = nullptr;
 
 Camera::~Camera()
 {
-	constBuffCamera->Unmap(0, nullptr);	// メモリリークは罪
+	constBuffCamera_->Unmap(0, nullptr);	// メモリリークは罪
 }
 
 void Camera::Initialize()
@@ -14,10 +14,10 @@ void Camera::Initialize()
 	SetCurrentCamera(this);
 
 	// 射影変換行列
-	matProjection = matProjection.CreateProjectionMat(
+	matProjection_ = matProjection_.CreateProjectionMat(
 		UsaMath::DegreesToRadians(90.0f),	// 上下画角90度
 		(float)WinAPI::GetInstance()->width / WinAPI::GetInstance()->height,
-		nearZ, farZ
+		nearZ_, farZ_
 	);
 
 	HRESULT result = S_FALSE;
@@ -43,11 +43,11 @@ void Camera::Initialize()
 		&cbResourceDesc,// リソース設定
 		D3D12_RESOURCE_STATE_GENERIC_READ,
 		nullptr,
-		IID_PPV_ARGS(&constBuffCamera));
+		IID_PPV_ARGS(&constBuffCamera_));
 	assert(SUCCEEDED(result));
 
 	// 定数バッファのマッピング
-	result = constBuffCamera->Map(0, nullptr, (void**)&constMapCamera);
+	result = constBuffCamera_->Map(0, nullptr, (void**)&constMapCamera_);
 	assert(SUCCEEDED(result));
 }
 
@@ -56,15 +56,15 @@ void Camera::Initialize(Vector3 _position, Vector3 _target, Vector3 _up)
 	SetCurrentCamera(this);
 
 	// ベクトルをもらってくる
-	position = _position;
-	target = _target;
-	up = _up;
+	position_ = _position;
+	target_ = _target;
+	up_ = _up;
 
 	// 射影変換行列
-	matProjection = matProjection.CreateProjectionMat(
+	matProjection_ = matProjection_.CreateProjectionMat(
 		UsaMath::DegreesToRadians(90.0f),	// 上下画角90度
 		(float)WinAPI::GetInstance()->width / WinAPI::GetInstance()->height,
-		nearZ, farZ
+		nearZ_, farZ_
 	);
 
 	HRESULT result = S_FALSE;
@@ -90,36 +90,36 @@ void Camera::Initialize(Vector3 _position, Vector3 _target, Vector3 _up)
 		&cbResourceDesc,// リソース設定
 		D3D12_RESOURCE_STATE_GENERIC_READ,
 		nullptr,
-		IID_PPV_ARGS(&constBuffCamera));
+		IID_PPV_ARGS(&constBuffCamera_));
 	assert(SUCCEEDED(result));
 
 	// 定数バッファのマッピング
-	result = constBuffCamera->Map(0, nullptr, (void**)&constMapCamera);
+	result = constBuffCamera_->Map(0, nullptr, (void**)&constMapCamera_);
 	assert(SUCCEEDED(result));
 }
 
 void Camera::Update()
 {
-	matView = Matrix4::Identity();
-	matView = matView.CreateViewMat(position, target, up);
+	matView_ = Matrix4::Identity();
+	matView_ = matView_.CreateViewMat(position_, target_, up_);
 
-	constMapCamera->projection = matProjection;
-	constMapCamera->view = matView;
-	constMapCamera->position = position;
+	constMapCamera_->projection = matProjection_;
+	constMapCamera_->view = matView_;
+	constMapCamera_->position = position_;
 
-	matBillboard = Matrix4::Inverse(matView);
-	matBillboard.m[3][0] = 0;
-	matBillboard.m[3][1] = 0;
-	matBillboard.m[3][2] = 0;
-	matBillboard.m[3][3] = 1;
+	matBillboard_ = Matrix4::Inverse(matView_);
+	matBillboard_.m[3][0] = 0;
+	matBillboard_.m[3][1] = 0;
+	matBillboard_.m[3][2] = 0;
+	matBillboard_.m[3][3] = 1;
 
-	constMapCamera->billboard = matBillboard;
+	constMapCamera_->billboard = matBillboard_;
 }
 
 void Camera::Set()
 {
 	// 定数バッファビューをセット [カメラ]
-	DirectXBase::GetInstance()->commandList->SetGraphicsRootConstantBufferView(3, constBuffCamera->GetGPUVirtualAddress());
+	DirectXBase::GetInstance()->commandList->SetGraphicsRootConstantBufferView(3, constBuffCamera_->GetGPUVirtualAddress());
 }
 
 void Camera::SetCurrentCamera(Camera* current)

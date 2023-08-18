@@ -8,50 +8,50 @@ using namespace Input;
 void GameScene::Initialize()
 {
 	// 当たり判定
-	collisionManager = CollisionManager::GetInstance();
+	collisionManager_ = CollisionManager::GetInstance();
 
 	// パーティクル用のパイプライン・Init
 	ParticleManager::CreatePipeline();
 
 	// カメラ初期化
-	camera = new Camera;
-	camera->Initialize();
+	camera_ = new Camera;
+	camera_->Initialize();
 
 	// レールカメラ初期化
-	railCamera = new RailCamera();
-	railCamera->Initialize({ 0, 0, -20.0f }, { 0, 0, 0 });
+	railCamera_ = new RailCamera();
+	railCamera_->Initialize({ 0, 0, -20.0f }, { 0, 0, 0 });
 
 	// プレイヤー初期化
-	player = make_unique<Player>();
-	player.get()->Initialize(camera);
+	player_ = make_unique<Player>();
+	player_.get()->Initialize(camera_);
 
 	// 天球初期化
-	skydome = make_unique<Skydome>();
-	skydome.get()->Initialize();
+	skydome_ = make_unique<Skydome>();
+	skydome_.get()->Initialize();
 }
 
 void GameScene::Finalize()
 {
-	delete railCamera;
+	delete railCamera_;
 }
 
 void GameScene::Update()
 {
 	// DirectX毎フレーム処理(更新処理) ここから
-	railCamera->Update();
+	railCamera_->Update();
 
 	// プレイヤーの更新
-	player->SetParent(railCamera->GetObject3d());
-	player->Update();
+	player_->SetParent(railCamera_->GetObject3d());
+	player_->Update();
 
 	// エネミーの更新
-	for (std::unique_ptr<Enemy>& enemy : enemys) 
+	for (std::unique_ptr<Enemy>& enemy : enemys_)
 	{
-		enemy->Update(railCamera->GetObject3d()->matWorld);
+		enemy->Update(railCamera_->GetObject3d()->matWorld_);
 	}
 
 	// 死んでる敵を消す
-	enemys.remove_if([](std::unique_ptr<Enemy>& enemy) 
+	enemys_.remove_if([](std::unique_ptr<Enemy>& enemy)
 	{
 		if (!enemy->IsAlive()) 
 		{
@@ -67,29 +67,29 @@ void GameScene::Update()
 	}
 
 	// 天球の行列更新
-	skydome->Update();
+	skydome_->Update();
 	
 	// カメラをレールカメラのものへ
-	camera = railCamera->GetCamera();
-	camera->Update();
+	camera_ = railCamera_->GetCamera();
+	camera_->Update();
 
 	// 全ての衝突をチェック (更新の最後)
-	collisionManager->CheckAllCollisions();
+	collisionManager_->CheckAllCollisions();
 }
 
 void GameScene::Draw3D()
 {
 	// カメラセット
-	camera->Set();
+	camera_->Set();
 
 	// 天球描画
-	skydome->Draw();
+	skydome_->Draw();
 
 	// プレイヤー描画
-	player->Draw();
+	player_->Draw();
 
 	// 敵描画
-	for (std::unique_ptr<Enemy>& enemy : enemys) 
+	for (std::unique_ptr<Enemy>& enemy : enemys_)
 	{
 		enemy->Draw();
 	}
@@ -98,14 +98,14 @@ void GameScene::Draw3D()
 void GameScene::DrawParticle()
 {
 	// カメラセット
-	camera->Set();
+	camera_->Set();
 
 	// パーティクルオブジェ描画
 }
 
 void GameScene::Draw2D()
 {
-	player->DrawUI();
+	player_->DrawUI();
 }
 
 void GameScene::EnemySpawn()
@@ -126,5 +126,5 @@ void GameScene::EnemySpawn()
 	newEnemy->Spawn();
 
 	// リストに登録
-	enemys.push_back(std::move(newEnemy));
+	enemys_.push_back(std::move(newEnemy));
 }

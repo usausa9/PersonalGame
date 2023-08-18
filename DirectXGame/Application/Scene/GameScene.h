@@ -25,18 +25,18 @@ class GameScene : public IScene
 {
 private:
 	// 衝突マネージャ
-	CollisionManager* collisionManager = nullptr;
+	CollisionManager* collisionManager_ = nullptr;
 	
 	// カメラ
-	Camera* camera = nullptr;
-	RailCamera* railCamera = nullptr;
+	Camera* camera_ = nullptr;
+	RailCamera* railCamera_ = nullptr;
 
 	// プレイヤー,敵
-	unique_ptr<Player> player = nullptr;
-	std::list<std::unique_ptr<Enemy>> enemys;
+	unique_ptr<Player> player_ = nullptr;
+	std::list<std::unique_ptr<Enemy>> enemys_;
 
 	// 天球
-	unique_ptr<Skydome> skydome = nullptr;
+	unique_ptr<Skydome> skydome_ = nullptr;
 
 public:
 	// 初期化

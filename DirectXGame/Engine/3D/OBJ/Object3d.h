@@ -19,35 +19,35 @@ class Object3D
 {
 public: // メンバ変数
 	// カメラ
-	static Camera* camera;
+	static Camera* camera_;
 
 	// 定数バッファ (行列用)
-	ID3D12Resource* constBuffTransform = nullptr;
+	ID3D12Resource* constBuffTransform_ = nullptr;
 
 	// 定数バッファマップ (行列用)
-	Object3DConstBufferDataTransform* constMapTransform = nullptr;
+	Object3DConstBufferDataTransform* constMapTransform_ = nullptr;
 
 	// アフィン変換情報
-	Vector3 scale = { 1,1,1 };
-	Vector3 rotation = { 0,0,0 };
-	Vector3 position = { 0,0,0 };
+	Vector3 scale_ = { 1,1,1 };
+	Vector3 rotation_ = { 0,0,0 };
+	Vector3 position_ = { 0,0,0 };
 
-	Vector3 GetWorldPosition() const { return { matWorld.m[3][0], matWorld.m[3][1], matWorld.m[3][2] }; }
+	Vector3 GetWorldPosition() const { return { matWorld_.m[3][0], matWorld_.m[3][1], matWorld_.m[3][2] }; }
 
 	// ワールド変換行列
-	Matrix4 matWorld = Matrix4::Identity();
+	Matrix4 matWorld_ = Matrix4::Identity();
 
 	// 親オブジェクトへのポインタ
-	Object3D* parent = nullptr;
+	Object3D* parent_ = nullptr;
 
 	// モデルのポインタ
-	OBJModel* objModel = nullptr;
+	OBJModel* objModel_ = nullptr;
 
 	// クラス名 (デバッグ用)
-	const char* name = nullptr;
+	const char* name_ = nullptr;
 
 	// コライダー
-	BaseCollider* collider = nullptr;
+	BaseCollider* collider_ = nullptr;
 
 public:
 	// コンストラクタ
@@ -69,7 +69,7 @@ public:
 	/// ワールド行列の取得
 	/// </summary>
 	/// <returns>ワールド行列</returns>
-	const Matrix4& GetMatWorld() { return matWorld; }
+	const Matrix4& GetMatWorld() { return matWorld_; }
 
 	/// <summary>
 	/// コライダーのセット

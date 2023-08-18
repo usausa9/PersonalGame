@@ -15,7 +15,7 @@ public:
 
 private:
 	// 天球モデル, 天球オブジェクト
-	OBJModel skydomeModel;
-	Object3D skydomeObj;
+	OBJModel skydomeModel_;
+	Object3D skydomeObj_;
 };
 

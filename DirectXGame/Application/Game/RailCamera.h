@@ -18,19 +18,19 @@ public:	// メンバ関数
 	void Update();
 
 	// オブジェクトのゲッター
-	Object3D* GetObject3d()const { return worldTransform; }
+	Object3D* GetObject3d()const { return worldTransform_; }
 
 	// カメラのゲッター
-	Camera* GetCamera()const { return camera; }
+	Camera* GetCamera()const { return camera_; }
 
 private: // メンバ変数
 	// ワールド変換データ
-	Object3D* worldTransform = nullptr;
+	Object3D* worldTransform_ = nullptr;
 
 	// カメラ
-	Camera* camera = nullptr;
+	Camera* camera_ = nullptr;
 
 	// カメラ用スプライン曲線
-	SplineCurve spline;
+	SplineCurve spline_;
 };
 

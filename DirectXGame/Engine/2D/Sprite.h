@@ -18,16 +18,16 @@ public:
 	void Draw();
 
 public: // メンバ変数
-	ComPtr<ID3D12Resource> vertBuff = nullptr;
-	D3D12_VERTEX_BUFFER_VIEW vbView{}; // 頂点バッファビューの作成
+	ComPtr<ID3D12Resource> vertBuff_ = nullptr;
+	D3D12_VERTEX_BUFFER_VIEW vbView_{}; // 頂点バッファビューの作成
 
-	ComPtr<ID3D12Resource> constBuffMaterial = nullptr;	// 定数バッファ
-	SpriteConstBufferDataMaterial* constMapMaterial = nullptr;// マップの割り当て
+	ComPtr<ID3D12Resource> constBuffMaterial_ = nullptr;	// 定数バッファ
+	SpriteConstBufferDataMaterial* constMapMaterial_ = nullptr;// マップの割り当て
 
 public:
-	TextureIndex tIndex = 0;	// 描画するものを入れられるようにする
+	TextureIndex tIndex_ = 0;	// 描画するものを入れられるようにする
 
-	Vector2 position = { 100,100 };
-	Vector2 scale = { 1,1 };
-	float rotation = 0;
+	Vector2 position_ = { 100,100 };
+	Vector2 scale_ = { 1,1 };
+	float rotation_ = 0;
 };

@@ -16,14 +16,14 @@ Sprite::Sprite()
 	
 }
 
-Sprite::Sprite(TextureIndex tex) : tIndex(tex)
+Sprite::Sprite(TextureIndex tex) : tIndex_(tex)
 {
 	Init();
 }
 
 Sprite::~Sprite()
 {
-	constBuffMaterial->Unmap(0, nullptr);	//  メモリリークは罪
+	constBuffMaterial_->Unmap(0, nullptr);	//  メモリリークは罪
 }
 
 void Sprite::Init()
@@ -31,8 +31,8 @@ void Sprite::Init()
 #pragma region 頂点バッファ
 	HRESULT pResult;
 
-	float w = TextureManager::GetData(tIndex)->metadata.width / 2.f;
-	float h = TextureManager::GetData(tIndex)->metadata.height / 2.f;
+	float w = TextureManager::GetData(tIndex_)->metadata.width / 2.f;
+	float h = TextureManager::GetData(tIndex_)->metadata.height / 2.f;
 
 	// 頂点データ
 	Vertex vertices[] =
@@ -68,12 +68,12 @@ void Sprite::Init()
 		&resDesc, // リソース設定
 		D3D12_RESOURCE_STATE_GENERIC_READ,
 		nullptr,
-		IID_PPV_ARGS(&vertBuff));
+		IID_PPV_ARGS(&vertBuff_));
 	assert(SUCCEEDED(pResult));
 
 	// GPU上のバッファに対応した仮想メモリ(メインメモリ上)を取得
 	Vertex* vertMap = nullptr;
-	pResult = vertBuff->Map(0, nullptr, (void**)&vertMap);
+	pResult = vertBuff_->Map(0, nullptr, (void**)&vertMap);
 	assert(SUCCEEDED(pResult));
 
 	// 全頂点に対して
@@ -83,14 +83,14 @@ void Sprite::Init()
 	}
 
 	// 繋がりを解除
-	vertBuff->Unmap(0, nullptr);
+	vertBuff_->Unmap(0, nullptr);
 	
 	// GPU仮想アドレス
-	vbView.BufferLocation = vertBuff->GetGPUVirtualAddress();
+	vbView_.BufferLocation = vertBuff_->GetGPUVirtualAddress();
 	// 頂点バッファのサイズ
-	vbView.SizeInBytes = sizeVB;
+	vbView_.SizeInBytes = sizeVB;
 	// 頂点1つ分のデータサイズ
-	vbView.StrideInBytes = sizeof(vertices[0]);
+	vbView_.StrideInBytes = sizeof(vertices[0]);
 #pragma endregion
 
 #pragma region 定数バッファ
@@ -117,22 +117,22 @@ void Sprite::Init()
 		&cbResourceDesc,// リソース設定
 		D3D12_RESOURCE_STATE_GENERIC_READ,
 		nullptr,
-		IID_PPV_ARGS(&constBuffMaterial));
+		IID_PPV_ARGS(&constBuffMaterial_));
 	assert(SUCCEEDED(vResult));
 
 	// 定数バッファのマッピング
-	vResult = constBuffMaterial->Map(0, nullptr, (void**)&constMapMaterial); // マッピング
+	vResult = constBuffMaterial_->Map(0, nullptr, (void**)&constMapMaterial_); // マッピング
 	assert(SUCCEEDED(vResult));
 
 	// 値を書き込むと自動的に転送される
-	constMapMaterial->color = Float4{1.f, 0.f, 1.f, 1.f}; // RGBAで半透明の赤
+	constMapMaterial_->color = Float4{1.f, 0.f, 1.f, 1.f}; // RGBAで半透明の赤
 	
 	Matrix4 matWorld;
-	matWorld = matWorld.Scale({ scale.x, scale.y, 1 });
-	matWorld *= matWorld.RotateZ(rotation);
-	matWorld *= matWorld.Translate({ position.x, position.y, 0 });
+	matWorld = matWorld.Scale({ scale_.x, scale_.y, 1 });
+	matWorld *= matWorld.RotateZ(rotation_);
+	matWorld *= matWorld.Translate({ position_.x, position_.y, 0 });
 
-	constMapMaterial->mat = matWorld * SpriteManager::SpriteProjection;
+	constMapMaterial_->mat = matWorld * SpriteManager::SpriteProjection;
 	
 #pragma endregion
 }
@@ -140,11 +140,11 @@ void Sprite::Init()
 void Sprite::Update() 
 {
 	Matrix4 matWorld;
-	matWorld = matWorld.Scale({ scale.x, scale.y, 1 });
-	matWorld *= matWorld.RotateZ(rotation);
-	matWorld *= matWorld.Translate({ position.x, position.y, 0 });
+	matWorld = matWorld.Scale({ scale_.x, scale_.y, 1 });
+	matWorld *= matWorld.RotateZ(rotation_);
+	matWorld *= matWorld.Translate({ position_.x, position_.y, 0 });
 
-	constMapMaterial->mat = matWorld * SpriteManager::SpriteProjection;
+	constMapMaterial_->mat = matWorld * SpriteManager::SpriteProjection;
 };
 
 void Sprite::Draw()
@@ -152,11 +152,11 @@ void Sprite::Draw()
 	ID3D12GraphicsCommandList* commandList = DirectXBase::GetInstance()->commandList.Get();
 
 	// 頂点バッファビューの設定コマンド
-	commandList->IASetVertexBuffers(0, 1, &vbView);
+	commandList->IASetVertexBuffers(0, 1, &vbView_);
 
 	// CBVの設定コマンド
-	commandList->SetGraphicsRootConstantBufferView(0, constBuffMaterial->GetGPUVirtualAddress());
-	commandList->SetGraphicsRootDescriptorTable(1, TextureManager::GetData(tIndex)->gpuHandle);
+	commandList->SetGraphicsRootConstantBufferView(0, constBuffMaterial_->GetGPUVirtualAddress());
+	commandList->SetGraphicsRootDescriptorTable(1, TextureManager::GetData(tIndex_)->gpuHandle);
 
 	// 描画コマンド
 	commandList->DrawInstanced(4, 1, 0, 0); // 全ての頂点を使って描画

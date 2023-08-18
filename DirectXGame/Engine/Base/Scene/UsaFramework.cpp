@@ -26,20 +26,20 @@ void UsaFramework::Initialize()
 
 #pragma region 基盤システムの初期化
 
-	window.Init();
-	window.CreateWindowObj(L"UsaEngine", 1280, 720);
-	window.Show();
+	window_.Init();
+	window_.CreateWindowObj(L"UsaEngine", 1280, 720);
+	window_.Show();
 
 	// DirectX初期化
 	DirectXBase::GetInstance()->Init();
 
 	// DirectInputの初期化
-	Key::Init(window.w.hInstance, window.hwnd);
+	Key::Init(window_.w.hInstance, window_.hwnd);
 	Pad::Init();
 
 	// スプライト共通部の初期化	
-	spriteManager = make_unique<SpriteManager>();
-	spriteManager->Init();
+	spriteManager_ = make_unique<SpriteManager>();
+	spriteManager_->Init();
 
 	// ImGuiの生成初期化
 	ImGuiManager::GetInstance()->Initialize();
@@ -244,12 +244,12 @@ void UsaFramework::Initialize()
 	ComPtr<ID3DBlob> rootSigBlob = nullptr;
 	result = D3D12SerializeRootSignature(&rootSignatureDesc, D3D_ROOT_SIGNATURE_VERSION_1_0, &rootSigBlob, &errorBlob);
 	assert(SUCCEEDED(result));
-	result = DirectXBase::GetInstance()->device->CreateRootSignature(0, rootSigBlob->GetBufferPointer(), rootSigBlob->GetBufferSize(), IID_PPV_ARGS(&rootSignature));
+	result = DirectXBase::GetInstance()->device->CreateRootSignature(0, rootSigBlob->GetBufferPointer(), rootSigBlob->GetBufferSize(), IID_PPV_ARGS(&rootSignature_));
 	assert(SUCCEEDED(result));
 	// rootSigBlob->Release();
 
 	// パイプラインにルートシグネチャをセット
-	pipelineDesc.pRootSignature = rootSignature.Get();
+	pipelineDesc.pRootSignature = rootSignature_.Get();
 
 	// デプスステンシルステートの設定
 	pipelineDesc.DepthStencilState.DepthEnable = true;							// 深度テストを行う
@@ -258,7 +258,7 @@ void UsaFramework::Initialize()
 	pipelineDesc.DSVFormat = DXGI_FORMAT_D32_FLOAT;		// 深度値フォーマット
 
 	// パイプランステートの生成
-	result = DirectXBase::GetInstance()->device->CreateGraphicsPipelineState(&pipelineDesc, IID_PPV_ARGS(&pipelineState));
+	result = DirectXBase::GetInstance()->device->CreateGraphicsPipelineState(&pipelineDesc, IID_PPV_ARGS(&pipelineState_));
 	assert(SUCCEEDED(result));
 
 	TextureManager::Init();
@@ -288,7 +288,7 @@ void UsaFramework::Update()
 	ImGuiManager::GetInstance()->Begin();
 	ImGui::ShowDemoWindow();
 #pragma region 基盤システムの更新
-	if (window.ProcessMessage() == true)
+	if (window_.ProcessMessage() == true)
 	{
 		endRequest_ = true;
 	}
@@ -310,8 +310,8 @@ void UsaFramework::PostUpdate()
 void UsaFramework::PreDraw()
 {
 	// パイプラインステートとルートシグネチャの設定コマンド
-	DirectXBase::GetInstance()->commandList->SetPipelineState(pipelineState.Get());
-	DirectXBase::GetInstance()->commandList->SetGraphicsRootSignature(rootSignature.Get());
+	DirectXBase::GetInstance()->commandList->SetPipelineState(pipelineState_.Get());
+	DirectXBase::GetInstance()->commandList->SetGraphicsRootSignature(rootSignature_.Get());
 
 	// プリミティブ形状の設定コマンド
 	//commandList->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_POINTLIST);	 // 点のリスト
@@ -359,7 +359,7 @@ void UsaFramework::Draw()
 	sceneManager_->DrawParticle();
 
 	// 2D描画
-	spriteManager->PreDraw();
+	spriteManager_->PreDraw();
 	sceneManager_->Draw2D();
 
 	// ImGui 描画

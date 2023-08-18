@@ -22,18 +22,18 @@ public:
 
 public: // メンバ変数
 
-	ComPtr<ID3DBlob> vsBlob = nullptr;		 // 頂点シェーダオブジェクト
-	ComPtr<ID3DBlob> psBlob = nullptr;		 // ピクセルシェーダオブジェクト
-	ComPtr<ID3DBlob> errorBlob = nullptr;	 // エラーオブジェクト
+	ComPtr<ID3DBlob> vsBlob_ = nullptr;		 // 頂点シェーダオブジェクト
+	ComPtr<ID3DBlob> psBlob_ = nullptr;		 // ピクセルシェーダオブジェクト
+	ComPtr<ID3DBlob> errorBlob_ = nullptr;	 // エラーオブジェクト
 
 	// グラフィックスパイプライン設定
-	D3D12_GRAPHICS_PIPELINE_STATE_DESC pipelineDesc{};
+	D3D12_GRAPHICS_PIPELINE_STATE_DESC pipelineDesc_{};
 
 	// ルートシグネチャ
-	ComPtr<ID3D12RootSignature> rootSignature = nullptr;
+	ComPtr<ID3D12RootSignature> rootSignature_ = nullptr;
 
 	// パイプラインステートの生成
-	ComPtr<ID3D12PipelineState> pipelineState = nullptr;
+	ComPtr<ID3D12PipelineState> pipelineState_ = nullptr;
 
 public:
 	static Matrix4 SpriteProjection;

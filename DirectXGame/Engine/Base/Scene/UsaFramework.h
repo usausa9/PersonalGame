@@ -55,22 +55,19 @@ public:
 
 protected: // メンバ変数
 	// シーン工場
-	AbstractSceneFactory * sceneFactory_ = nullptr;
+	AbstractSceneFactory* sceneFactory_ = nullptr;
 
 	// スプライトマネージャ
-	unique_ptr<SpriteManager> spriteManager = nullptr;
+	unique_ptr<SpriteManager> spriteManager_ = nullptr;
 
 	// 終了フラグ
 	bool endRequest_ = false;
 	// パイプラインステート
-	ComPtr<ID3D12PipelineState> pipelineState = nullptr;
+	ComPtr<ID3D12PipelineState> pipelineState_ = nullptr;
 	// ルートシグネチャ
-	ComPtr<ID3D12RootSignature> rootSignature = nullptr;
+	ComPtr<ID3D12RootSignature> rootSignature_ = nullptr;
 
 	// WindowsAPI初期化
-	WinAPI& window = *WinAPI::GetInstance();
-
-	// ImGui
-	unique_ptr<ImGuiManager> imGui = nullptr;
+	WinAPI& window_ = *WinAPI::GetInstance();
 };
 

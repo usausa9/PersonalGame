@@ -32,7 +32,6 @@ private:
 	
 	static int srvIndex;
 	static D3D12_DESCRIPTOR_HEAP_DESC srvHeapDesc;
-	
 
 	static ComPtr<ID3D12Resource> texBuff[maxTextureNum];
 	static TextureData textureData[maxTextureNum];
