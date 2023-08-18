@@ -1,4 +1,6 @@
 #pragma once
+#include "IScene.h"
+
 #include "Input.h"
 #include "ParticleManager.h"
 #include "Sprite.h"
@@ -10,6 +12,7 @@
 #include "Object3D.h"
 
 #include "Camera.h"
+#include "RailCamera.h"
 
 #include "OBJModel.h"
 
@@ -17,7 +20,7 @@
 
 class CollisionManager;
 
-class TitleScene
+class TitleScene : public IScene
 {
 private:
 	// 衝突マネージャ
@@ -25,30 +28,36 @@ private:
 
 	// カメラ
 	Camera* camera = nullptr;
+	RailCamera* railCamera = nullptr;
 
 	// プレイヤー,敵
-	unique_ptr<Player> player = nullptr;
-	unique_ptr<Enemy> enemy = nullptr;
+	std::list<std::unique_ptr<Enemy>> enemys;
 
 	// 天球
 	unique_ptr<Skydome> skydome = nullptr;
 
+	// シーン切り替えフラグ
+	bool isStart = false;
+
 public:
 	// 初期化
-	void Initialize();
+	void Initialize() override;
 
 	// 終了処理
-	void Finalize();
+	void Finalize() override;
 
 	// 毎フレーム更新
-	void Update();
+	void Update() override;
 
 	// 3D描画
-	void Draw3D();
+	void Draw3D() override;
 
 	// パーティクル描画
-	void DrawParticle();
+	void DrawParticle() override;
 
 	// 2D描画
-	void Draw2D();
+	void Draw2D() override;
+
+	// ゲームシーンへ
+	void PossibleStartGame();
 };

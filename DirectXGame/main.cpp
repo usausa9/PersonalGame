@@ -1,32 +1,38 @@
 #include "MyGame.h"
+#include "UsaFramework.h"
 
 // Windowsアプリでのエントリーポイント (main関数)
 int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 {
 	// ゲームインスタンス生成
-	MyGame game;
+	//MyGame game;
+	UsaFramework* game = new MyGame;
 
-	// ゲームの初期化
-	game.Initialize();
+	game->Run();
 
-	// ゲームループ
-	while (true)
-	{
-		// 更新処理
-		game.Update();
+	delete game;
 
-		// 終了フラグでブレイク
-		if (game.IsEndRequest() == true)
-		{
-			break;
-		}
+	//// ゲームの初期化
+	//game.Initialize();
 
-		// 描画処理
-		game.Draw();
-	}
+	//// ゲームループ
+	//while (true)
+	//{
+	//	// 更新処理
+	//	game.Update();
 
-	// ゲームの終了
-	game.Finalize();
+	//	// 終了フラグでブレイク
+	//	if (game.IsEndRequest() == true)
+	//	{
+	//		break;
+	//	}
+
+	//	// 描画処理
+	//	game.Draw();
+	//}
+
+	//// ゲームの終了
+	//game.Finalize();
 
 	return 0;
 }

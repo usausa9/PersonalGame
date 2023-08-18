@@ -1,4 +1,6 @@
 #pragma once
+#include "IScene.h"
+
 #include "Input.h"
 #include "ParticleManager.h"
 #include "Sprite.h"
@@ -14,15 +16,12 @@
 #include "RailCamera.h"
 
 #include "OBJModel.h"
-#include "FBXModel.h"
 
 #include "Skydome.h"
 
-#include "FbxLoader.h"
-
 class CollisionManager;
 
-class GameScene
+class GameScene : public IScene
 {
 private:
 	// 衝突マネージャ
@@ -41,23 +40,24 @@ private:
 
 public:
 	// 初期化
-	void Initialize();
+	void Initialize() override;
 
 	// 終了処理
-	void Finalize();
+	void Finalize() override;
 
 	// 毎フレーム更新
-	void Update();
+	void Update() override;
 
 	// 3D描画
-	void Draw3D();
+	void Draw3D() override;
 
 	// パーティクル描画
-	void DrawParticle();
+	void DrawParticle() override;
 
 	// 2D描画
-	void Draw2D();
+	void Draw2D() override;
 
+public:
 	// 敵
 	void EnemySpawn();
 };

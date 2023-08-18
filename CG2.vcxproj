@@ -60,7 +60,7 @@
       <PreprocessorDefinitions>_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <TreatWarningAsError>true</TreatWarningAsError>
-      <AdditionalIncludeDirectories>$(ProjectDir)DirectXGame\Application\Game\Enemy;$(ProjectDir)DirectXGame\Application\Game\Skydome;$(ProjectDir)DirectXGame\Application\Game;$(ProjectDir)DirectXGame\Application\Game\Player;$(ProjectDir)DirectXGame\Application\Base;$(ProjectDir)DirectXGame\Application\Scene;$(ProjectDir)DirectXGame\Engine\2D;$(ProjectDir)DirectXGame\Engine\2D_3D;$(ProjectDir)DirectXGame\Engine\3D;$(ProjectDir)DirectXGame\Engine\Audio;$(ProjectDir)DirectXGame\Engine\Base\Collision;$(ProjectDir)DirectXGame\Engine\Base;$(ProjectDir)DirectXGame\Engine\Base\Math;$(ProjectDir)DirectXGame\Engine\IO;$(ProjectDir)DirectXGame\Engine;$(ProjectDir)DirectXGame\Application;$(ProjectDir)DirectXGame\Engine\3D\FBX;$(ProjectDir)DirectXGame\Engine\3D\OBJ;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)DirectXGame\Application\Game\Enemy;$(ProjectDir)DirectXGame\Application\Game\Skydome;$(ProjectDir)DirectXGame\Application\Game;$(ProjectDir)DirectXGame\Application\Game\Player;$(ProjectDir)DirectXGame\Application\Base;$(ProjectDir)DirectXGame\Application\Scene;$(ProjectDir)DirectXGame\Engine\2D;$(ProjectDir)DirectXGame\Engine\2D_3D;$(ProjectDir)DirectXGame\Engine\3D;$(ProjectDir)DirectXGame\Engine\Audio;$(ProjectDir)DirectXGame\Engine\Base\Collision;$(ProjectDir)DirectXGame\Engine\Base;$(ProjectDir)DirectXGame\Engine\Base\Math;$(ProjectDir)DirectXGame\Engine\IO;$(ProjectDir)DirectXGame\Engine;$(ProjectDir)DirectXGame\Application;$(ProjectDir)DirectXGame\Engine\3D\FBX;$(ProjectDir)DirectXGame\Engine\3D\OBJ;$(ProjectDir)DirectXGame\Engine\Base\Scene;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
@@ -80,7 +80,7 @@
       <ConformanceMode>true</ConformanceMode>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <TreatWarningAsError>true</TreatWarningAsError>
-      <AdditionalIncludeDirectories>$(ProjectDir)DirectXGame\Application\Game\Enemy;$(ProjectDir)DirectXGame\Application\Game\Skydome;$(ProjectDir)DirectXGame\Application\Game;$(ProjectDir)DirectXGame\Application\Game\Player;$(ProjectDir)DirectXGame\Application\Base;$(ProjectDir)DirectXGame\Application\Scene;$(ProjectDir)DirectXGame\Engine\2D;$(ProjectDir)DirectXGame\Engine\2D_3D;$(ProjectDir)DirectXGame\Engine\3D;$(ProjectDir)DirectXGame\Engine\Audio;$(ProjectDir)DirectXGame\Engine\Base\Collision;$(ProjectDir)DirectXGame\Engine\Base;$(ProjectDir)DirectXGame\Engine\Base\Math;$(ProjectDir)DirectXGame\Engine\IO;$(ProjectDir)DirectXGame\Engine;$(ProjectDir)DirectXGame\Application;$(ProjectDir)DirectXGame\Engine\3D\FBX;$(ProjectDir)DirectXGame\Engine\3D\OBJ;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)DirectXGame\Application\Game\Enemy;$(ProjectDir)DirectXGame\Application\Game\Skydome;$(ProjectDir)DirectXGame\Application\Game;$(ProjectDir)DirectXGame\Application\Game\Player;$(ProjectDir)DirectXGame\Application\Base;$(ProjectDir)DirectXGame\Application\Scene;$(ProjectDir)DirectXGame\Engine\2D;$(ProjectDir)DirectXGame\Engine\2D_3D;$(ProjectDir)DirectXGame\Engine\3D;$(ProjectDir)DirectXGame\Engine\Audio;$(ProjectDir)DirectXGame\Engine\Base\Collision;$(ProjectDir)DirectXGame\Engine\Base;$(ProjectDir)DirectXGame\Engine\Base\Math;$(ProjectDir)DirectXGame\Engine\IO;$(ProjectDir)DirectXGame\Engine;$(ProjectDir)DirectXGame\Application;$(ProjectDir)DirectXGame\Engine\3D\FBX;$(ProjectDir)DirectXGame\Engine\3D\OBJ;$(ProjectDir)DirectXGame\Engine\Base\Scene;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
@@ -93,6 +93,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="DirectXGame\Engine\Base\Scene\AbstractSceneFactory.h" />
     <ClInclude Include="DirectXGame\Engine\Base\Collision\CollisionAttribute.h" />
     <ClInclude Include="DirectXGame\Engine\Base\Collision\CollisionPrimitive.h" />
     <ClInclude Include="DirectXGame\Engine\Base\Collision\CollisionManager.h" />
@@ -135,7 +136,10 @@
     <ClInclude Include="DirectXGame\Engine\2D\ImGuiManager.h" />
     <ClInclude Include="DirectXGame\Application\Scene\TitleScene.h" />
     <ClInclude Include="DirectXGame\Application\Game\Player\PlayerState.h" />
-    <ClInclude Include="DirectXGame\Engine\Base\UsaFramework.h" />
+    <ClInclude Include="DirectXGame\Engine\Base\Scene\UsaFramework.h" />
+    <ClInclude Include="DirectXGame\Engine\Base\Scene\IScene.h" />
+    <ClInclude Include="DirectXGame\Engine\Base\Scene\SceneManager.h" />
+    <ClInclude Include="DirectXGame\Application\Base\SceneFactory.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\shaders\Basic.hlsli" />
@@ -209,6 +213,8 @@
     <ClCompile Include="DirectXGame\Engine\3D\FBX\FBXModel.cpp" />
     <ClCompile Include="DirectXGame\Engine\3D\FBX\FBXObject3D.cpp" />
     <ClCompile Include="DirectXGame\Application\Scene\GameScene.cpp" />
+    <ClCompile Include="DirectXGame\Application\Base\SceneFactory.cpp" />
+    <ClCompile Include="DirectXGame\Engine\Base\Scene\SceneManager.cpp" />
     <ClCompile Include="DirectXGame\Engine\IO\Input.cpp" />
     <ClCompile Include="DirectXGame\main.cpp" />
     <ClCompile Include="DirectXGame\Engine\Base\Math\Matrix4.cpp" />
@@ -234,7 +240,7 @@
     <ClCompile Include="DirectXGame\Engine\2D\ImGuiManager.cpp" />
     <ClCompile Include="DirectXGame\Application\Scene\TitleScene.cpp" />
     <ClCompile Include="DirectXGame\Application\Game\Player\PlayerState.cpp" />
-    <ClCompile Include="DirectXGame\Engine\Base\UsaFramework.cpp" />
+    <ClCompile Include="DirectXGame\Engine\Base\Scene\UsaFramework.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="External\DirectXTex\DirectXTex_Desktop_2022_Win10.vcxproj">
