@@ -8,18 +8,18 @@ public:
 	// 頂点データ構造体
 	struct VertexPosNormalUv
 	{
-		Float3 pos;	// xyz座標
-		Float3 normal;// 法線ベクトル 
-		Float2 uv;	// uv座標
+		Vector3 pos;	// xyz座標
+		Vector3 normal;// 法線ベクトル 
+		Vector2 uv;	// uv座標
 	};
 
 	// マテリアル
 	struct Material
 	{
 		std::string name;
-		Float3 ambient;
-		Float3 diffuse;
-		Float3 specular;
+		Vector3 ambient;
+		Vector3 diffuse;
+		Vector3 specular;
 		float alpha;
 
 		TextureIndex index = -1;
@@ -36,25 +36,25 @@ public:
 	// 定数バッファ用 データ構造体 (マテリアル)
 	struct ConstBufferDataMaterial
 	{
-		Float3 ambient;
+		Vector3 ambient;
 		float pad1;
 
-		Float3 diffuse;
+		Vector3 diffuse;
 		float pad2;
 
-		Float3 specular;
+		Vector3 specular;
 		float alpha;
 
-		Float4 color; // 色(RGBA)
+		Vector4 color; // 色(RGBA)
 	};
 
-	Material material;
+	Material material_;
 
 public:
 	OBJModel();
 
 public:
-	ConstBufferDataMaterial* constMapMaterial = nullptr;
+	ConstBufferDataMaterial* constMapMaterial_ = nullptr;
 	// OBJファイルから３Dモデル読み込み
 	static OBJModel LoadFromOBJ(const std::string& modelName);
 
@@ -67,13 +67,13 @@ private:
 	void LoadFromOBJInternal(const std::string& modelName);
 
 private:
-	std::vector<unsigned short> indices;
-	std::vector<VertexPosNormalUv> vertices;
+	std::vector<unsigned short> indices_;
+	std::vector<VertexPosNormalUv> vertices_;
 
-	ComPtr<ID3D12Resource> vertBuff = nullptr;
-	ComPtr<ID3D12Resource> indexBuff = nullptr;
-	ComPtr<ID3D12Resource> constBuffMaterial = nullptr;
+	ComPtr<ID3D12Resource> vertBuff_ = nullptr;
+	ComPtr<ID3D12Resource> indexBuff_ = nullptr;
+	ComPtr<ID3D12Resource> constBuffMaterial_ = nullptr;
 
-	D3D12_VERTEX_BUFFER_VIEW vbView{};
-	D3D12_INDEX_BUFFER_VIEW ibView{};
+	D3D12_VERTEX_BUFFER_VIEW vbView_{};
+	D3D12_INDEX_BUFFER_VIEW ibView_{};
 };

@@ -5,16 +5,16 @@ class TimeData
 {
 private:
 	// 最大時間
-	float maxTime = 0;
+	float maxTime_ = 0;
 
 	// 現在時間
-	float nowTime = 0;
+	float nowTime_ = 0;
 
 	// 0.f - 1.fに変換するデータ
-	float timeRate = 0;
+	float timeRate_ = 0;
 
 	// タイマーのアクティブ
-	bool isActive = false;
+	bool isActive_ = false;
 
 public:
 	/// <summary>
@@ -27,9 +27,8 @@ public:
 	void Update();
 
 	// 現在時間のゲッター
-	float GetTime() { return nowTime; }
+	float GetTime() { return nowTime_; }
 
 	// レートのゲッター
-	float GetTimeRate() { return timeRate; }
+	float GetTimeRate() { return timeRate_; }
 };
-

@@ -3,7 +3,7 @@
 #include "DirectXBase.h"
 #include "BaseCollider.h"
 
-Camera* Object3D::camera_ = nullptr;
+Camera* Object3D::sCamera_ = nullptr;
 
 Object3D::~Object3D()
 {
@@ -34,7 +34,7 @@ void Object3D::InitializeObject3D()
 	resdesc.Layout = D3D12_TEXTURE_LAYOUT_ROW_MAJOR;
 
 	// 定数バッファの生成
-	result = DirectXBase::GetInstance()->device->CreateCommittedResource(
+	result = DirectXBase::GetInstance()->device_->CreateCommittedResource(
 		&heapProp,
 		D3D12_HEAP_FLAG_NONE,
 		&resdesc,
@@ -48,7 +48,7 @@ void Object3D::InitializeObject3D()
 	assert(SUCCEEDED(result));
 
 	// クラス名の文字列を取得
-	name_ = typeid(*this).name();
+	NAME_ = typeid(*this).name();
 }
 
 // 3Dオブジェクト更新処理
@@ -90,7 +90,7 @@ void Object3D::UpdateObject3D()
 void Object3D::DrawObject3D()
 {
 	// 定数バッファビュー(CBV)の設定コマンド
-	DirectXBase::GetInstance()->commandList->SetGraphicsRootConstantBufferView(2, constBuffTransform_->GetGPUVirtualAddress());
+	DirectXBase::GetInstance()->commandList_->SetGraphicsRootConstantBufferView(2, constBuffTransform_->GetGPUVirtualAddress());
 	
 	// 描画！
 	objModel_->Draw();

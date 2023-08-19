@@ -1,5 +1,4 @@
 #pragma once
-
 #include "AbstractSceneFactory.h"
 
 // ƒV[ƒ“ŠÇ—

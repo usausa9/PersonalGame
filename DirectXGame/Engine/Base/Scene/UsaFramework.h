@@ -70,4 +70,3 @@ protected: // ƒƒ“ƒo•Ï”
 	// WindowsAPI‰Šú‰»
 	WinAPI& window_ = *WinAPI::GetInstance();
 };
-

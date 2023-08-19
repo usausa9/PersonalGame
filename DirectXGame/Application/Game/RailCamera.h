@@ -33,4 +33,3 @@ private: // メンバ変数
 	// カメラ用スプライン曲線
 	SplineCurve spline_;
 };
-

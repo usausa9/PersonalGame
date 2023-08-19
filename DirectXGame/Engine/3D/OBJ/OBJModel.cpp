@@ -6,9 +6,6 @@
 #include <fstream>
 
 using namespace std;
-//Model::Material Model::material;
-
-//ID3D12Device* Model::device = nullptr;
 
 OBJModel::OBJModel()
 {
@@ -27,7 +24,6 @@ OBJModel OBJModel::LoadFromOBJ(const std::string& modelName)
 	model.CreateBuffers();
 
 	return model;
-#pragma endregion
 }
 
 void OBJModel::LoadMaterial(const std::string& directoryPath, const std::string& filename)
@@ -51,50 +47,55 @@ void OBJModel::LoadMaterial(const std::string& directoryPath, const std::string&
 		getline(line_stream, key, ' ');
 
 		// 先頭のタブ文字は無視する
-		if (key[0] == '\t') {
+		if (key[0] == '\t') 
+		{
 			key.erase(key.begin());	// 先頭削除
 		}
 
 		// 先頭が newmtl ならマテリアル名
-		if (key == "newmtl") {
+		if (key == "newmtl") 
+		{
 			// マテリアル読み込み
-			line_stream >> material.name;
+			line_stream >> material_.name;
 		}
 
 		// 先頭が Ka ならアンビエント色
-		if (key == "Ka") {
+		if (key == "Ka") 
+		{
 			// マテリアル読み込み
-			line_stream >> material.ambient.x;
-			line_stream >> material.ambient.y;
-			line_stream >> material.ambient.z;
+			line_stream >> material_.ambient.x;
+			line_stream >> material_.ambient.y;
+			line_stream >> material_.ambient.z;
 		}
 
 		// 先頭が Kd ならディフューズ色
-		if (key == "Ka") {
+		if (key == "Ka") 
+		{
 			// マテリアル読み込み
-			line_stream >> material.diffuse.x;
-			line_stream >> material.diffuse.y;
-			line_stream >> material.diffuse.z;
+			line_stream >> material_.diffuse.x;
+			line_stream >> material_.diffuse.y;
+			line_stream >> material_.diffuse.z;
 		}
 
 		// 先頭が Ks ならスペキュラー色
-		if (key == "Ks") {
+		if (key == "Ks") 
+		{
 			// マテリアル読み込み
-			line_stream >> material.specular.x;
-			line_stream >> material.specular.y;
-			line_stream >> material.specular.z;
+			line_stream >> material_.specular.x;
+			line_stream >> material_.specular.y;
+			line_stream >> material_.specular.z;
 		}
 
 		// 先頭が map_Kdならテクスチャファイル名
-		if (key == "map_Kd") {
-
+		if (key == "map_Kd")
+		{
 			string texFPath;
 
 			// テクスチャ
 			line_stream >> texFPath;
 
 			// テクスチャのロード
-			material.index = TextureManager::Load(directoryPath + texFPath);
+			material_.index = TextureManager::Load(directoryPath + texFPath);
 		}
 	}
 	// ファイルを閉じる
@@ -105,9 +106,8 @@ void OBJModel::CreateBuffers()
 {
 	HRESULT result;
 #pragma region 頂点バッファ
-
 	// 頂点データ全体のサイズ = 頂点データ一つ分のサイズ * 頂点データの要素数
-	UINT sizeVB = static_cast<UINT>(sizeof(VertexPosNormalUv) * vertices.size());
+	UINT sizeVB = static_cast<UINT>(sizeof(VertexPosNormalUv) * vertices_.size());
 
 	// 頂点バッファの設定
 	D3D12_HEAP_PROPERTIES heapProp{}; // ヒープ設定
@@ -124,43 +124,41 @@ void OBJModel::CreateBuffers()
 	resDesc.Layout = D3D12_TEXTURE_LAYOUT_ROW_MAJOR;
 
 	// 頂点バッファの生成
-	result = DirectXBase::GetInstance()->device->CreateCommittedResource(
+	result = DirectXBase::GetInstance()->device_->CreateCommittedResource(
 		&heapProp, // ヒープ設定
 		D3D12_HEAP_FLAG_NONE,
 		&resDesc, // リソース設定
 		D3D12_RESOURCE_STATE_GENERIC_READ,
 		nullptr,
-		IID_PPV_ARGS(&vertBuff));
+		IID_PPV_ARGS(&vertBuff_));
 	assert(SUCCEEDED(result));
 
 	// GPU上のバッファに対応した仮想メモリ(メインメモリ上)を取得
 	VertexPosNormalUv* vertMap = nullptr;
-	result = vertBuff->Map(0, nullptr, (void**)&vertMap);
+	result = vertBuff_->Map(0, nullptr, (void**)&vertMap);
 	assert(SUCCEEDED(result));
 
 	// 全頂点に対して
-	for (int i = 0; i < vertices.size(); i++)
+	for (int i = 0; i < vertices_.size(); i++)
 	{
-		vertMap[i] = vertices[i]; // 座標をコピー
+		vertMap[i] = vertices_[i]; // 座標をコピー
 	}
 
 	// 繋がりを解除
-	vertBuff->Unmap(0, nullptr);
+	vertBuff_->Unmap(0, nullptr);
 
 	// GPU仮想アドレス
-	vbView.BufferLocation = vertBuff->GetGPUVirtualAddress();
+	vbView_.BufferLocation = vertBuff_->GetGPUVirtualAddress();
 
 	// 頂点バッファのサイズ
-	vbView.SizeInBytes = sizeVB;
+	vbView_.SizeInBytes = sizeVB;
 
 	// 頂点1つ分のデータサイズ
-	vbView.StrideInBytes = sizeof(VertexPosNormalUv);
-
+	vbView_.StrideInBytes = sizeof(VertexPosNormalUv);
 #pragma endregion
 #pragma region インデックスバッファ
-
 	// インデックスデータ全体のサイズ
-	UINT sizeIB = static_cast<UINT>(sizeof(uint16_t) * indices.size());
+	UINT sizeIB = static_cast<UINT>(sizeof(uint16_t) * indices_.size());
 
 	// インデックスデータ リソース設定
 	resDesc.Dimension = D3D12_RESOURCE_DIMENSION_BUFFER;
@@ -172,36 +170,35 @@ void OBJModel::CreateBuffers()
 	resDesc.Layout = D3D12_TEXTURE_LAYOUT_ROW_MAJOR;
 
 	// インデックスバッファの生成
-	result = DirectXBase::GetInstance()->device->CreateCommittedResource(
+	result = DirectXBase::GetInstance()->device_->CreateCommittedResource(
 		&heapProp, // ヒープ設定
 		D3D12_HEAP_FLAG_NONE,
 		&resDesc, // リソース設定
 		D3D12_RESOURCE_STATE_GENERIC_READ,
 		nullptr,
-		IID_PPV_ARGS(&indexBuff));
+		IID_PPV_ARGS(&indexBuff_));
 	assert(SUCCEEDED(result));
 
 	// インデックスバッファをマッピング
 	uint16_t* indexMap = nullptr;
-	result = indexBuff->Map(0, nullptr, (void**)&indexMap);
+	result = indexBuff_->Map(0, nullptr, (void**)&indexMap);
 
 	// 全インデックスに対して
-	for (int i = 0; i < indices.size(); i++) {
-		indexMap[i] = indices[i]; //インデックスをコピー
+	for (int i = 0; i < indices_.size(); i++) 
+	{
+		indexMap[i] = indices_[i]; //インデックスをコピー
 	}
 
 	// インデックス マッピング解除
-	indexBuff->Unmap(0, nullptr);
+	indexBuff_->Unmap(0, nullptr);
 
 	// インデックスバッファビューの作成
-	ibView.BufferLocation = indexBuff->GetGPUVirtualAddress();
-	ibView.Format = DXGI_FORMAT_R16_UINT;
-	ibView.SizeInBytes = sizeIB;
-
+	ibView_.BufferLocation = indexBuff_->GetGPUVirtualAddress();
+	ibView_.Format = DXGI_FORMAT_R16_UINT;
+	ibView_.SizeInBytes = sizeIB;
 #pragma endregion
 
 #pragma region 定数バッファ
-
 	// ヒープ設定
 	D3D12_HEAP_PROPERTIES cbHeapProp{};
 	cbHeapProp.Type = D3D12_HEAP_TYPE_UPLOAD; // GPUの転送用
@@ -217,49 +214,46 @@ void OBJModel::CreateBuffers()
 	cbResourceDesc.Layout = D3D12_TEXTURE_LAYOUT_ROW_MAJOR;
 
 	// 定数バッファの生成
-	result = DirectXBase::GetInstance()->device->CreateCommittedResource(
+	result = DirectXBase::GetInstance()->device_->CreateCommittedResource(
 		&cbHeapProp,	// ヒープ設定
 		D3D12_HEAP_FLAG_NONE,
 		&cbResourceDesc,// リソース設定
 		D3D12_RESOURCE_STATE_GENERIC_READ,
 		nullptr,
-		IID_PPV_ARGS(&constBuffMaterial));
+		IID_PPV_ARGS(&constBuffMaterial_));
 	assert(SUCCEEDED(result));
 
 #pragma region マテリアルの転送
 	// 定数バッファのマッピング
-	result = constBuffMaterial->Map(0, nullptr, (void**)&constMapMaterial); // マッピング
+	result = constBuffMaterial_->Map(0, nullptr, (void**)&constMapMaterial_); // マッピング
 	assert(SUCCEEDED(result));
 
-	constMapMaterial->ambient = material.ambient;
-	constMapMaterial->diffuse = material.diffuse;
-	constMapMaterial->specular = material.specular;
-	constMapMaterial->alpha = material.alpha;
+	constMapMaterial_->ambient = material_.ambient;
+	constMapMaterial_->diffuse = material_.diffuse;
+	constMapMaterial_->specular = material_.specular;
+	constMapMaterial_->alpha = material_.alpha;
 
-	constMapMaterial->color = { 1,1,1,1 };
-
-	// constBuffMaterial->Unmap(0, nullptr);
+	constMapMaterial_->color = { 1,1,1,1 };
 #pragma endregion
 }
 
 void OBJModel::Draw()
 {
 	// 頂点バッファビューの設定
-	DirectXBase::GetInstance()->commandList->IASetVertexBuffers(0, 1, &vbView);
-	DirectXBase::GetInstance()->commandList->IASetIndexBuffer(&ibView);
+	DirectXBase::GetInstance()->commandList_->IASetVertexBuffers(0, 1, &vbView_);
+	DirectXBase::GetInstance()->commandList_->IASetIndexBuffer(&ibView_);
 
 	// 定数バッファビューをセット（マテリアル）
-	DirectXBase::GetInstance()->commandList->SetGraphicsRootConstantBufferView(0, constBuffMaterial->GetGPUVirtualAddress());
+	DirectXBase::GetInstance()->commandList_->SetGraphicsRootConstantBufferView(0, constBuffMaterial_->GetGPUVirtualAddress());
 
 	// シェーダリソースビューをセット
-	DirectXBase::GetInstance()->commandList->
+	DirectXBase::GetInstance()->commandList_->
 		SetGraphicsRootDescriptorTable
-		(1, TextureManager::GetData(material.index)->gpuHandle);
-
+		(1, TextureManager::GetData(material_.index)->gpuHandle);
 
 	// 描画コマンド
-	DirectXBase::GetInstance()->commandList->
-		DrawIndexedInstanced((UINT)indices.size(), 1, 0, 0, 0);
+	DirectXBase::GetInstance()->commandList_->
+		DrawIndexedInstanced((UINT)indices_.size(), 1, 0, 0, 0);
 }
 
 void OBJModel::LoadFromOBJInternal(const std::string& modelName)
@@ -275,9 +269,9 @@ void OBJModel::LoadFromOBJInternal(const std::string& modelName)
 	// ファイルオープン失敗をチェック
 	if (file.fail()) { assert(0); }
 
-	vector<Float3> positions; // 頂点座標
-	vector<Float3> normals; // 法線ベクトル
-	vector<Float2> texcoords; // テクスチャUV
+	vector<Vector3> positions; // 頂点座標
+	vector<Vector3> normals; // 法線ベクトル
+	vector<Vector2> texcoords; // テクスチャUV
 
 	string line;
 
@@ -302,21 +296,24 @@ void OBJModel::LoadFromOBJInternal(const std::string& modelName)
 		}
 
 		// 先頭文字列がvなら頂点座標
-		if (key == "v") {
+		if (key == "v") 
+		{
 			// X,Y,Z座標読み込み
-			Float3 position{};
+			Vector3 position{};
 			line_stream >> position.x;
 			line_stream >> position.y;
 			line_stream >> position.z;
 			position.z *= -1.0f;
+
 			// 座標データに追加
 			positions.emplace_back(position);
 		}
 
 		// 先頭文字列がvtならテクスチャ
-		if (key == "vt") {
+		if (key == "vt") 
+		{
 			// U,V成分読み込み
-			Float2 texcoord{};
+			Vector2 texcoord{};
 			line_stream >> texcoord.x;
 			line_stream >> texcoord.y;
 
@@ -328,23 +325,27 @@ void OBJModel::LoadFromOBJInternal(const std::string& modelName)
 		}
 
 		// 先頭文字列がVNなら法線ベクトル
-		if (key == "vn") {
+		if (key == "vn") 
+		{
 			// X,Y,Z成分読み込み
-			Float3 normal{};
+			Vector3 normal{};
 			line_stream >> normal.x;
 			line_stream >> normal.y;
 			line_stream >> normal.z;
 			normal.z *= -1.0f;
+
 			// 法線ベクトルデータに追加
 			normals.emplace_back(normal);
 		}
 
 		// 先頭文字列がfならポリゴン（三角形）
-		if (key == "f") {
+		if (key == "f") 
+		{
 			// 半角スペース区切りで行の続きを読み込む
 			std::string index_string;
 			int32_t triangleNum = 0;
 			VertexPosNormalUv triangle[3] = {};
+
 			while (getline(line_stream, index_string, ' ')) 
 			{
 				// 頂点インデックス１個分の文字列をストリームに変換して解析しやすくする
@@ -369,15 +370,13 @@ void OBJModel::LoadFromOBJInternal(const std::string& modelName)
 				if (triangleNum == 3) 
 				{
 					triangleNum = 0;
-					vertices.emplace_back(triangle[2]);
-					vertices.emplace_back(triangle[1]);
-					vertices.emplace_back(triangle[0]);
+					vertices_.emplace_back(triangle[2]);
+					vertices_.emplace_back(triangle[1]);
+					vertices_.emplace_back(triangle[0]);
 				}
 
-				//vertices.emplace_back(vertex);
-
 				// インデックスデータの追加
-				indices.emplace_back((unsigned short)indices.size());
+				indices_.emplace_back((unsigned short)indices_.size());
 			}
 		}
 	}

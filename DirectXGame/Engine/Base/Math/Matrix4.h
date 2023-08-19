@@ -1,8 +1,7 @@
 #pragma once
-
 #include "UsaMath.h"
 
-/// s—ñ
+// s—ñ
 class Matrix4 
 {
 public:

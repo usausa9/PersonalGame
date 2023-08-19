@@ -18,4 +18,3 @@ private:
 	OBJModel skydomeModel_;
 	Object3D skydomeObj_;
 };
-

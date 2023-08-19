@@ -30,10 +30,10 @@ private:
 	Vector3 velocity_ = {};
 
 	// 寿命<frame>
-	static const int32_t kLifeTime_ = 60 * 5;	// 5秒
+	static const int32_t s_kLIFE_TIME_ = 60 * 5;	// 5秒
 	
 	// 消滅タイマー
-	int32_t deathTimer_ = kLifeTime_;
+	int32_t deathTimer_ = s_kLIFE_TIME_;
 
 	// 消滅フラグ
 	bool isDead_ = false;

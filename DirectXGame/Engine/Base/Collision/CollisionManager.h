@@ -1,5 +1,4 @@
 #pragma once
-
 #include <forward_list>
 
 class BaseCollider;
@@ -16,7 +15,7 @@ public:	// メンバ関数
 	/// <param name="collider">追加するコライダー</param>
 	inline void AddCollider(BaseCollider* collider)
 	{
-		colliders.push_front(collider);
+		colliders_.push_front(collider);
 	}
 
 	/// <summary>
@@ -25,7 +24,7 @@ public:	// メンバ関数
 	/// <param name="collider">削除するコライダー</param>
 	inline void RemoveCollider(BaseCollider* collider)
 	{
-		colliders.remove(collider);
+		colliders_.remove(collider);
 	}
 
 	/// <summary>
@@ -40,5 +39,5 @@ private:
 	CollisionManager& operator=(const CollisionManager&) = delete;
 
 	// コライダーのリスト
-	std::forward_list<BaseCollider*> colliders;
+	std::forward_list<BaseCollider*> colliders_;
 };

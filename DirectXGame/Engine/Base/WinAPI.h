@@ -6,17 +6,17 @@ class WinAPI
 {
 public:
 	// ウィンドウサイズ
-	int width = 1280;
-	int height = 720;
+	uint16_t width_ = 1280;
+	uint16_t height_ = 720;
 	
 	// ウィンドウクラスの設定
-	WNDCLASSEX w{};
+	WNDCLASSEX w_{};
 	// ウィンドウハンドルの生成
-	HWND hwnd;
+	HWND hwnd_{};
 	// ウィンドウサイズ用の長方形の生成
-	RECT wrc;
+	RECT wrc_{};
 	// メッセージ情報構造体の生成
-	MSG msg = {};
+	MSG msg_{};
 
 public:
 	// シングルトンインスタンス
@@ -38,16 +38,16 @@ public:
 	void DebugText(LPCSTR text);
 
 	// ウィンドウオブジェクトの生成
-	void CreateWindowObj(LPCWSTR title, int windowWidth, int windowHeight);
+	void CreateWindowObj(LPCWSTR title, uint16_t windowWidth, uint16_t windowHeight);
 
 	// ウィンドウ表示
 	void Show();
 
 	// ウィンドウオブジェくト取得
-	HWND GetHwnd() const { return hwnd; }
+	HWND GetHwnd() const { return hwnd_; }
 
 public:
-	static WinAPI* currentWindow;
+	static WinAPI* sCurrentWindow_;
 
 private:
 	// シングルトンなのでプライベートに記述

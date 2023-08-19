@@ -2,7 +2,7 @@
 #include "WinAPI.h"
 #include "DirectXBase.h"
 
-Camera* Camera::CurrentCamera = nullptr;
+Camera* Camera::sCurrentCamera = nullptr;
 
 Camera::~Camera()
 {
@@ -16,7 +16,7 @@ void Camera::Initialize()
 	// 射影変換行列
 	matProjection_ = matProjection_.CreateProjectionMat(
 		UsaMath::DegreesToRadians(90.0f),	// 上下画角90度
-		(float)WinAPI::GetInstance()->width / WinAPI::GetInstance()->height,
+		(float)WinAPI::GetInstance()->width_ / WinAPI::GetInstance()->height_,
 		nearZ_, farZ_
 	);
 
@@ -37,7 +37,7 @@ void Camera::Initialize()
 	cbResourceDesc.Layout = D3D12_TEXTURE_LAYOUT_ROW_MAJOR;
 
 	// 定数バッファの生成
-	result = DirectXBase::GetInstance()->device->CreateCommittedResource(
+	result = DirectXBase::GetInstance()->device_->CreateCommittedResource(
 		&cbHeapProp,	// ヒープ設定
 		D3D12_HEAP_FLAG_NONE,
 		&cbResourceDesc,// リソース設定
@@ -51,19 +51,19 @@ void Camera::Initialize()
 	assert(SUCCEEDED(result));
 }
 
-void Camera::Initialize(Vector3 _position, Vector3 _target, Vector3 _up)
+void Camera::Initialize(Vector3 position, Vector3 target, Vector3 up)
 {
 	SetCurrentCamera(this);
 
 	// ベクトルをもらってくる
-	position_ = _position;
-	target_ = _target;
-	up_ = _up;
+	position_ = position;
+	target_ = target;
+	up_ = up;
 
 	// 射影変換行列
 	matProjection_ = matProjection_.CreateProjectionMat(
 		UsaMath::DegreesToRadians(90.0f),	// 上下画角90度
-		(float)WinAPI::GetInstance()->width / WinAPI::GetInstance()->height,
+		(float)WinAPI::GetInstance()->width_ / WinAPI::GetInstance()->height_,
 		nearZ_, farZ_
 	);
 
@@ -84,7 +84,7 @@ void Camera::Initialize(Vector3 _position, Vector3 _target, Vector3 _up)
 	cbResourceDesc.Layout = D3D12_TEXTURE_LAYOUT_ROW_MAJOR;
 
 	// 定数バッファの生成
-	result = DirectXBase::GetInstance()->device->CreateCommittedResource(
+	result = DirectXBase::GetInstance()->device_->CreateCommittedResource(
 		&cbHeapProp,	// ヒープ設定
 		D3D12_HEAP_FLAG_NONE,
 		&cbResourceDesc,// リソース設定
@@ -119,15 +119,15 @@ void Camera::Update()
 void Camera::Set()
 {
 	// 定数バッファビューをセット [カメラ]
-	DirectXBase::GetInstance()->commandList->SetGraphicsRootConstantBufferView(3, constBuffCamera_->GetGPUVirtualAddress());
+	DirectXBase::GetInstance()->commandList_->SetGraphicsRootConstantBufferView(3, constBuffCamera_->GetGPUVirtualAddress());
 }
 
 void Camera::SetCurrentCamera(Camera* current)
 {
-	CurrentCamera = current;
+	sCurrentCamera = current;
 }
 
 Camera* Camera::GetCurrentCamera()
 {
-	return CurrentCamera;
+	return sCurrentCamera;
 }

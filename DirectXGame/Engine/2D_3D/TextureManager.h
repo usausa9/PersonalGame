@@ -28,14 +28,14 @@ public:
 	static void Release();
 
 private:
-	const static int maxTextureNum = 1024;
+	const static uint16_t s_MAX_TEXTURE_NUM_ = 1024;
 	
-	static int srvIndex;
-	static D3D12_DESCRIPTOR_HEAP_DESC srvHeapDesc;
+	static uint16_t sSrvIndex_;
+	static D3D12_DESCRIPTOR_HEAP_DESC sSrvHeapDesc_;
 
-	static ComPtr<ID3D12Resource> texBuff[maxTextureNum];
-	static TextureData textureData[maxTextureNum];
+	static ComPtr<ID3D12Resource> sTexBuff_[s_MAX_TEXTURE_NUM_];
+	static TextureData sTextureData_[s_MAX_TEXTURE_NUM_];
 
 public:
-	static ComPtr<ID3D12DescriptorHeap> srvHeap;
+	static ComPtr<ID3D12DescriptorHeap> sSrvHeap_;
 };

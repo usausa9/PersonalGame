@@ -2,7 +2,7 @@
 #include "SphereCollider.h"
 #include "CollisionAttribute.h"
 
-bool Enemy::isOnCol_ = false;
+bool Enemy::sIsOnCol_ = false;
 
 // ‰Šú‰»
 void Enemy::Initialize(std::vector<Vector3>& points)
@@ -32,7 +32,7 @@ void Enemy::Initialize(std::vector<Vector3>& points)
 void Enemy::Update(const Matrix4& cameraMatrix)
 {
 	// “–‚½‚è”»’è‚ğˆê“I‚Éfalse‚Ö
-	isOnCol_ = false;
+	sIsOnCol_ = false;
 
 	// “G‚Ì‹O“¹XV
 	trajectory_.Update();
@@ -66,7 +66,7 @@ void Enemy::Spawn()
 void Enemy::OnCollision(const CollisionInfo& info)
 {
 	// ”»’è‚ğtrue‚É
-	isOnCol_ = true;
+	sIsOnCol_ = true;
 
 	// Õ“Ë”»’è‚É‚æ‚èÁ–Å
 	isAlive_ = false;

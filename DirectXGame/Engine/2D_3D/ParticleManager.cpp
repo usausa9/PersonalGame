@@ -1,18 +1,8 @@
 #include "ParticleManager.h"
 #include "DirectXBase.h"
 
-ComPtr<ID3D12RootSignature> ParticleManager::rootSignature; 	// ルートシグネチャ
-ComPtr<ID3D12PipelineState> ParticleManager::pipelineState;	// パイプライン
-
-// Float3同士の加算処理
-const Float3 operator+(const Float3& Ihs, const Float3& rhs)
-{
-	Float3 result = { 0,0,0 };
-	result.x = Ihs.x + rhs.x;
-	result.y = Ihs.y + rhs.y;
-	result.z = Ihs.z + rhs.z;
-	return result;
-}
+ComPtr<ID3D12RootSignature> ParticleManager::sRootSignature_; 	// ルートシグネチャ
+ComPtr<ID3D12PipelineState> ParticleManager::sPipelineState_;	// パイプライン
 
 void ParticleManager::CreatePipeline()
 {
@@ -235,12 +225,12 @@ void ParticleManager::CreatePipeline()
 	ComPtr<ID3DBlob> rootSigBlob = nullptr;
 	result = D3D12SerializeRootSignature(&rootSignatureDesc, D3D_ROOT_SIGNATURE_VERSION_1_0, &rootSigBlob, &errorBlob);
 	assert(SUCCEEDED(result));
-	result = DirectXBase::GetInstance()->device->CreateRootSignature(0, rootSigBlob->GetBufferPointer(), rootSigBlob->GetBufferSize(), IID_PPV_ARGS(&rootSignature));
+	result = DirectXBase::GetInstance()->device_->CreateRootSignature(0, rootSigBlob->GetBufferPointer(), rootSigBlob->GetBufferSize(), IID_PPV_ARGS(&sRootSignature_));
 	assert(SUCCEEDED(result));
 	// rootSigBlob->Release();
 
 	// パイプラインにルートシグネチャをセット
-	pipelineDesc.pRootSignature = rootSignature.Get();
+	pipelineDesc.pRootSignature = sRootSignature_.Get();
 
 	// デプスステンシルステートの設定
 	pipelineDesc.DepthStencilState.DepthEnable = true;							// 深度テストを行う
@@ -249,7 +239,7 @@ void ParticleManager::CreatePipeline()
 	pipelineDesc.DSVFormat = DXGI_FORMAT_D32_FLOAT;		// 深度値フォーマット
 
 	// パイプランステートの生成
-	result = DirectXBase::GetInstance()->device->CreateGraphicsPipelineState(&pipelineDesc, IID_PPV_ARGS(&pipelineState));
+	result = DirectXBase::GetInstance()->device_->CreateGraphicsPipelineState(&pipelineDesc, IID_PPV_ARGS(&sPipelineState_));
 	assert(SUCCEEDED(result));
 }
 
@@ -266,7 +256,7 @@ void ParticleManager::InitializeParticle()
 		// 定数バッファのリソース設定
 		D3D12_RESOURCE_DESC resdesc{};
 		resdesc.Dimension = D3D12_RESOURCE_DIMENSION_BUFFER;
-		resdesc.Width = (sizeof(constMapTransform) + 0xff) & ~0xff;
+		resdesc.Width = (sizeof(constMapTransform_) + 0xff) & ~0xff;
 		resdesc.Height = 1;
 		resdesc.DepthOrArraySize = 1;
 		resdesc.MipLevels = 1;
@@ -274,22 +264,22 @@ void ParticleManager::InitializeParticle()
 		resdesc.Layout = D3D12_TEXTURE_LAYOUT_ROW_MAJOR;
 
 		// 定数バッファの生成
-		result = DirectXBase::GetInstance()->device->CreateCommittedResource(
+		result = DirectXBase::GetInstance()->device_->CreateCommittedResource(
 			&heapProp,
 			D3D12_HEAP_FLAG_NONE,
 			&resdesc,
 			D3D12_RESOURCE_STATE_GENERIC_READ,
 			nullptr,
-			IID_PPV_ARGS(&constBuffTransform));
+			IID_PPV_ARGS(&constBuffTransform_));
 		assert(SUCCEEDED(result));
 
 		// 定数バッファのマッピング
-		result = constBuffTransform->Map(0, nullptr, (void**)&constMapTransform);
+		result = constBuffTransform_->Map(0, nullptr, (void**)&constMapTransform_);
 		assert(SUCCEEDED(result));
 	}
 
 	// 頂点データ全体のサイズ = 頂点データ一つ分のサイズ * 頂点データの要素数
-	UINT sizeVB = static_cast<UINT>(sizeof(Vertex) * vertexCount);
+	UINT sizeVB = static_cast<UINT>(sizeof(Vertex) * VERTEX_COUNT_);
 
 	// 頂点バッファの設定
 	D3D12_HEAP_PROPERTIES heapprop{};
@@ -306,39 +296,39 @@ void ParticleManager::InitializeParticle()
 	resdesc.Layout = D3D12_TEXTURE_LAYOUT_ROW_MAJOR;
 
 	// 頂点バッファの生成
-	DirectXBase::GetInstance()->device->CreateCommittedResource(
+	DirectXBase::GetInstance()->device_->CreateCommittedResource(
 		&heapprop,
 		D3D12_HEAP_FLAG_NONE,
 		&resdesc,
 		D3D12_RESOURCE_STATE_GENERIC_READ,
 		nullptr,
-		IID_PPV_ARGS(&vertBuff)
+		IID_PPV_ARGS(&vertBuff_)
 	);
 
 	// PIXデバッグ用の名前付け
-	vertBuff->SetName(L"PARTICLE VERT BUFF");
+	vertBuff_->SetName(L"PARTICLE VERT BUFF");
 
 	// GPU上のバッファに対応した仮想メモリを取得
-	vertBuff->Map(0, nullptr, (void**)&vertMap);
+	vertBuff_->Map(0, nullptr, (void**)&vertMap_);
 
 	// 頂点バッファビューの作成
-	vbView.BufferLocation = vertBuff->GetGPUVirtualAddress();
-	vbView.SizeInBytes = sizeVB;
-	vbView.StrideInBytes = sizeof(Vertex);
+	vbView_.BufferLocation = vertBuff_->GetGPUVirtualAddress();
+	vbView_.SizeInBytes = sizeVB;
+	vbView_.StrideInBytes = sizeof(Vertex);
 }
 
 // パーティクル更新処理
 void ParticleManager::UpdateParticle()
 {
 	// 寿命が尽きたパーティクルを全削除
-	particles.remove_if(
+	particles_.remove_if(
 		[](Particle& x) {
 			return x.frame >= x.num_frame;
 		}
 	);
 
 	// 全パーティクル更新
-	for (forward_list<Particle>::iterator it = particles.begin(); it != particles.end(); it++) 
+	for (forward_list<Particle>::iterator it = particles_.begin(); it != particles_.end(); it++) 
 	{
 		// 経過フレーム数カウント
 		it->frame++;
@@ -352,19 +342,19 @@ void ParticleManager::UpdateParticle()
 	}
 
 	// 生存数を0で初期化
-	activeCount = 0;
+	activeCount_ = 0;
 
 	// 頂点バッファへデータ転送
 	// パーティクルの情報を1つずつ反映
-	for (forward_list<Particle>::iterator it = particles.begin(); it != particles.end(); it++)
+	for (forward_list<Particle>::iterator it = particles_.begin(); it != particles_.end(); it++)
 	{
 		it->Update();
 
-		vertMap[activeCount].pos = it->position;
-		vertMap[activeCount].scale = Float2{it->scale, it->scale};
-		vertMap[activeCount].color = it->color;
+		vertMap_[activeCount_].pos = it->position;
+		vertMap_[activeCount_].scale = Vector2{it->scale, it->scale};
+		vertMap_[activeCount_].color = it->color;
 
-		activeCount++;
+		activeCount_++;
 	}
 }
 
@@ -372,27 +362,27 @@ void ParticleManager::UpdateParticle()
 void ParticleManager::DrawParticle(TextureIndex index)
 {
 	// 頂点バッファビューの設定
-	DirectXBase::GetInstance()->commandList->IASetVertexBuffers(0, 1, &vbView);
+	DirectXBase::GetInstance()->commandList_->IASetVertexBuffers(0, 1, &vbView_);
 
 	// 定数バッファビュー(CBV)の設定コマンド
-	DirectXBase::GetInstance()->commandList->SetGraphicsRootConstantBufferView(2, constBuffTransform->GetGPUVirtualAddress());
+	DirectXBase::GetInstance()->commandList_->SetGraphicsRootConstantBufferView(2, constBuffTransform_->GetGPUVirtualAddress());
 
 	// シェーダリソースビューをセット
-	DirectXBase::GetInstance()->commandList->
+	DirectXBase::GetInstance()->commandList_->
 		SetGraphicsRootDescriptorTable
 		(1, TextureManager::GetData(index)->gpuHandle);
 
 	// 描画コマンド
-	DirectXBase::GetInstance()->commandList->
-		DrawInstanced((UINT)activeCount, 1, 0, 0);
+	DirectXBase::GetInstance()->commandList_->
+		DrawInstanced((UINT)activeCount_, 1, 0, 0);
 }
 
-void ParticleManager::Add(int life, Float3 position, Float3 velocity, Float3 accel, float start_scale, float end_scale)
+void ParticleManager::Add(int life, Vector3 position, Vector3 velocity, Vector3 accel, float start_scale, float end_scale)
 {
 	// リストに要素追加
-	particles.emplace_front();
+	particles_.emplace_front();
 	// 追加した要素の参照
-	Particle& p = particles.front();
+	Particle& p = particles_.front();
 	// 値のセット
 	p.position = position;
 	p.velocity = velocity;

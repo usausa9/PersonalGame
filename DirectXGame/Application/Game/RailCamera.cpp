@@ -36,7 +36,7 @@ void RailCamera::Initialize(const Vector3& pos, const Vector3& rot)
 void RailCamera::Update()
 {
 	// スプライン曲線によって動かす
-	if (Key::Trigger(DIK_O)) 
+	if (Key::Trigger(DIK_O))
 	{
 		spline_.MoveStart(6000.0f, true);
 	}
@@ -50,7 +50,7 @@ void RailCamera::Update()
 
 	// ワールド行列の回転の数値を加算
 	worldTransform_->rotation_ += { 0, 0, 0 };
-	
+
 	// ワールド行列の行列再計算
 	worldTransform_->UpdateObject3D();
 
@@ -58,24 +58,23 @@ void RailCamera::Update()
 	camera_->position_ = {
 		worldTransform_->matWorld_.m[3][0],
 		worldTransform_->matWorld_.m[3][1],
-		worldTransform_->matWorld_.m[3][2]};
+		worldTransform_->matWorld_.m[3][2] };
 
 	// ワールド前方ベクトル
-	Vector3 forward = {0, 0, 1};
+	Vector3 forward = { 0, 0, 1 };
 
 	// レールカメラの回転を反映
 	forward = Matrix4::Transform(forward, worldTransform_->matWorld_);
-	
+
 	// 視点+前方ベクトルで注視点
 	camera_->target_ = camera_->position_ + forward;
-	
+
 	// 上方向ベクトル
-	Vector3 up = {0, 1, 0};
-	
+	Vector3 up = { 0, 1, 0 };
+
 	// カメラの上方向をforwardと同様に変換
 	camera_->up_ = Matrix4::Transform(up, worldTransform_->matWorld_);
-	
+
 	// カメラ更新
 	camera_->Update();
-
 }

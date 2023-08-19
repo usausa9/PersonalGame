@@ -114,15 +114,6 @@
     <ClInclude Include="DirectXGame\Engine\Base\Math\UsaMath.h">
       <Filter>2.ヘッダー ファイル\Engine\Base\Math</Filter>
     </ClInclude>
-    <ClInclude Include="DirectXGame\Engine\Base\Math\Float2.h">
-      <Filter>2.ヘッダー ファイル\Engine\Base\Math</Filter>
-    </ClInclude>
-    <ClInclude Include="DirectXGame\Engine\Base\Math\Float3.h">
-      <Filter>2.ヘッダー ファイル\Engine\Base\Math</Filter>
-    </ClInclude>
-    <ClInclude Include="DirectXGame\Engine\Base\Math\Float4.h">
-      <Filter>2.ヘッダー ファイル\Engine\Base\Math</Filter>
-    </ClInclude>
     <ClInclude Include="DirectXGame\Engine\Base\Math\Vector4.h">
       <Filter>2.ヘッダー ファイル\Engine\Base\Math</Filter>
     </ClInclude>

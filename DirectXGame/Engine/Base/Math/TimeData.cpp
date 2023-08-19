@@ -7,33 +7,33 @@
 void TimeData::Start(float allFrames)
 {
 	// 仮引数から最大フレームのセット
-	maxTime = allFrames;
+	maxTime_ = allFrames;
 
 	// 現在時間の初期化
-	nowTime = 0.0f;
+	nowTime_ = 0.0f;
 
 	// タイマー動作をtrueに
-	isActive = true;
+	isActive_ = true;
 }
 
 void TimeData::Update()
 {
 	// アクティブ中でなければ更新しない
-	if (!isActive) 
+	if (!isActive_) 
 	{
 		return;
 	}
 
 	// 現在時間を加算
-	nowTime += 1.0f;
+	nowTime_ += 1.0f;
 
 	// 0.f - 1.fに変換
-	timeRate = nowTime / maxTime;
+	timeRate_ = nowTime_ / maxTime_;
 
 	// 1を越えるなら1に, タイマー停止
-	timeRate = min(timeRate, 1.f);
-	if (timeRate == 1.f) 
+	timeRate_ = min(timeRate_, 1.f);
+	if (timeRate_ == 1.f) 
 	{
-		isActive = false;
+		isActive_ = false;
 	}
 }

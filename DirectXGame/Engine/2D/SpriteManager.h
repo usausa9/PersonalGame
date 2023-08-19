@@ -7,7 +7,7 @@
 // 定数バッファ用 データ構造体 (マテリアル)
 struct SpriteConstBufferDataMaterial
 {
-	Float4 color;	// 色(RGBA)
+	Vector4 color;	// 色(RGBA)
 	Matrix4 mat;	// 3D変換行列
 };
 
@@ -21,7 +21,6 @@ public:
 	void PreDraw();
 
 public: // メンバ変数
-
 	ComPtr<ID3DBlob> vsBlob_ = nullptr;		 // 頂点シェーダオブジェクト
 	ComPtr<ID3DBlob> psBlob_ = nullptr;		 // ピクセルシェーダオブジェクト
 	ComPtr<ID3DBlob> errorBlob_ = nullptr;	 // エラーオブジェクト
@@ -36,5 +35,5 @@ public: // メンバ変数
 	ComPtr<ID3D12PipelineState> pipelineState_ = nullptr;
 
 public:
-	static Matrix4 SpriteProjection;
+	static Matrix4 sSpriteProjection_;
 };

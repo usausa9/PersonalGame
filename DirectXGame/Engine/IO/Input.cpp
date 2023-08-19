@@ -10,16 +10,16 @@
 
 using namespace Input;
 
-Microsoft::WRL::ComPtr<IDirectInputDevice8> Key::keyboard = nullptr;
+Microsoft::WRL::ComPtr<IDirectInputDevice8> Key::sKeyboard_ = nullptr;
 
-XINPUT_STATE Pad::padState;
-XINPUT_STATE Pad::lastPadState;
+XINPUT_STATE Pad::sPadState_;
+XINPUT_STATE Pad::sLastPadState_;
 
 // 全キーの入力状態を取得する
-static BYTE _keys[256] = {};
+static BYTE keys[256] = {};
 
 // 全キーの1F前の入力状態を取得する
-static BYTE _prev[256] = {};
+static BYTE prevKeys[256] = {};
 
 void Key::Init(HINSTANCE hInstance, HWND hwnd)
 {
@@ -33,15 +33,15 @@ void Key::Init(HINSTANCE hInstance, HWND hwnd)
 	assert(SUCCEEDED(result));
 
 	// キーボードデバイスの生成
-	result = directInput->CreateDevice(GUID_SysKeyboard, &keyboard, NULL);
+	result = directInput->CreateDevice(GUID_SysKeyboard, &sKeyboard_, NULL);
 	assert(SUCCEEDED(result));
 
 	// 入力データ形式のセット
-	result = keyboard->SetDataFormat(&c_dfDIKeyboard); // 標準形式
+	result = sKeyboard_->SetDataFormat(&c_dfDIKeyboard); // 標準形式
 	assert(SUCCEEDED(result));
 
 	// 排他制御レベルのセット
-	result = keyboard->SetCooperativeLevel(hwnd, DISCL_FOREGROUND | DISCL_NONEXCLUSIVE | DISCL_NOWINKEY);
+	result = sKeyboard_->SetCooperativeLevel(hwnd, DISCL_FOREGROUND | DISCL_NONEXCLUSIVE | DISCL_NOWINKEY);
 	assert(SUCCEEDED(result));
 }
 
@@ -50,30 +50,30 @@ void Key::Update()
 	// 前後更新
 	for (int i = 0; i < 256; ++i)
 	{
-		_prev[i] = _keys[i];
+		prevKeys[i] = keys[i];
 	}
 
 	// キーボード情報の取得開始
-	keyboard->Acquire();
-	keyboard->GetDeviceState(sizeof(_keys), _keys);
+	sKeyboard_->Acquire();
+	sKeyboard_->GetDeviceState(sizeof(keys), keys);
 }
 
 // 押しっぱなし
 bool Key::Down(UINT8 keyNum)
 {
-	return _keys[keyNum];
+	return keys[keyNum];
 }
 
 // 押した瞬間
 bool Key::Trigger(UINT8 keyNum)
 {
-	return _keys[keyNum] && !_prev[keyNum];
+	return keys[keyNum] && !prevKeys[keyNum];
 }
 
 // 離した瞬間
 bool Key::Released(UINT8 keyNum)
 {
-	return !_keys[keyNum] && !_prev[keyNum];
+	return !keys[keyNum] && !prevKeys[keyNum];
 }
 
 void Pad::Init()
@@ -83,30 +83,30 @@ void Pad::Init()
 
 void Pad::Update()
 {
-	lastPadState = padState;
+	sLastPadState_ = sPadState_;
 
-	XInputGetState(0, &padState);
+	XInputGetState(0, &sPadState_);
 }
 
 bool Pad::Down(Button button)
 {
-	return padState.Gamepad.wButtons & (UINT)button;
+	return sPadState_.Gamepad.wButtons & (UINT)button;
 }
 
 bool Pad::Trigger(Button button)
 {
-	return padState.Gamepad.wButtons & (UINT)button && !(lastPadState.Gamepad.wButtons & (UINT)button);
+	return sPadState_.Gamepad.wButtons & (UINT)button && !(sLastPadState_.Gamepad.wButtons & (UINT)button);
 }
 
 bool Pad::Released(Button button)
 {
-	return lastPadState.Gamepad.wButtons & (UINT)button && !(padState.Gamepad.wButtons & (UINT)button);
+	return sLastPadState_.Gamepad.wButtons & (UINT)button && !(sPadState_.Gamepad.wButtons & (UINT)button);
 }
 
-Float2 Pad::GetLStick()
+Vector2 Pad::GetLStick()
 {
-	float x = padState.Gamepad.sThumbLX;
-	float y = padState.Gamepad.sThumbLY;
+	float x = sPadState_.Gamepad.sThumbLX;
+	float y = sPadState_.Gamepad.sThumbLY;
 
 	if (x * x < 5000 * 5000)
 	{
@@ -123,10 +123,10 @@ Float2 Pad::GetLStick()
 	return { x, y };
 }
 
-Float2 Pad::GetRStick()
+Vector2 Pad::GetRStick()
 {
-	float x = padState.Gamepad.sThumbRX;
-	float y = padState.Gamepad.sThumbRY;
+	float x = sPadState_.Gamepad.sThumbRX;
+	float y = sPadState_.Gamepad.sThumbRY;
 
 	x = x / 32767;
 	y = y / 32767;

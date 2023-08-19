@@ -16,19 +16,19 @@ void CollisionManager::CheckAllCollisions()
 	std::forward_list<BaseCollider*>::iterator itB;
 
 	// すべての組み合わせについて総当たりチェック
-	itA = colliders.begin();
-	for (; itA != colliders.end(); ++itA) 
+	itA = colliders_.begin();
+	for (; itA != colliders_.end(); ++itA) 
 	{
 		itB = itA;
 		++itB;
 
-		for (; itB != colliders.end(); ++itB) 
+		for (; itB != colliders_.end(); ++itB) 
 		{
 			BaseCollider* colA = *itA;
 			BaseCollider* colB = *itB;
 
 			// 属性が同じならスキップ
-			if (colA->attribute == colB->attribute) 
+			if (colA->attribute_ == colB->attribute_) 
 			{
 				continue;
 			}
@@ -46,7 +46,6 @@ void CollisionManager::CheckAllCollisions()
 					colA->OnCollision(CollisionInfo(colB->GetObject3d(), colB, inter));
 					colB->OnCollision(CollisionInfo(colA->GetObject3d(), colA, inter));
 				}
-
 			}
 		}
 	}

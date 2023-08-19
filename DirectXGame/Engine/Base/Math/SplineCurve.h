@@ -8,24 +8,24 @@ class SplineCurve
 {
 private: // メンバ変数
 	// 制御点の配列
-	std::vector<Vector3> controllPoints = {};
+	std::vector<Vector3> controllPoints_ = {};
 
 	// 現在地点
-	Vector3 currentPosition = {};
+	Vector3 currentPosition_ = {};
 	// スプライン補間用の始点終点用の制御点2つ
-	Vector3 dummyPoints[2] = {};
+	Vector3 dummyPoints_[2] = {};
 
 	// タイマーデータ
-	TimeData tData = {};
+	TimeData tData_ = {};
 
 	// 1区間あたりの補間時間
-	float segmentTime = 0;
+	float segmentTime_ = 0;
 
 	// 補間開始点
-	int32_t startIndex = 0;
+	int16_t startIndex_ = 0;
 
 	// 終点と始点を補間して循環させるかどうか
-	bool isLoop = false;
+	bool isLoop_ = false;
 
 public:	// メンバ関数
 	/// <summary>
@@ -39,9 +39,8 @@ public:	// メンバ関数
 	void Update();
 
 	// 制御点セット
-	void SetPositions(std::vector<Vector3> points) { this->controllPoints = points; }
+	void SetPositions(std::vector<Vector3> points) { this->controllPoints_ = points; }
 	
 	// 現在位置取得
-	Vector3 GetNowPosition() const { return currentPosition; }
-
+	Vector3 GetNowPosition() const { return currentPosition_; }
 };

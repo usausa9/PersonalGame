@@ -7,11 +7,11 @@ extern IMGUI_IMPL_API LRESULT ImGui_ImplWin32_WndProcHandler(HWND hwnd, uint32_t
 
 WinAPI* WinAPI::GetInstance()
 {
-	if (currentWindow == nullptr)
+	if (sCurrentWindow_ == nullptr)
 	{
-		currentWindow = new WinAPI;
+		sCurrentWindow_ = new WinAPI;
 	}
-	return currentWindow;
+	return sCurrentWindow_;
 }
 
 LRESULT WinAPI::WindowProc(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam)
@@ -42,33 +42,33 @@ void WinAPI::Init()
 	timeBeginPeriod(1);
 
 	// ウィンドウクラスの設定
-	w.cbSize = sizeof(WNDCLASSEX);
-	w.lpfnWndProc = (WNDPROC)WindowProc;	// ウィンドウプロシージャを設定
-	w.lpszClassName = L"DirectXGame";		// ウィンドウクラス名
-	w.hInstance = GetModuleHandle(nullptr); // ウィンドウハンドル
-	w.hCursor = LoadCursor(NULL, IDC_ARROW);// カーソル指定
+	w_.cbSize = sizeof(WNDCLASSEX);
+	w_.lpfnWndProc = (WNDPROC)WindowProc;	// ウィンドウプロシージャを設定
+	w_.lpszClassName = L"DirectXGame";		// ウィンドウクラス名
+	w_.hInstance = GetModuleHandle(nullptr); // ウィンドウハンドル
+	w_.hCursor = LoadCursor(NULL, IDC_ARROW);// カーソル指定
 
 	// ウィンドウクラスをOSに登録する
-	RegisterClassExW(&w);
+	RegisterClassExW(&w_);
 }
 
 void WinAPI::Finalize()
 {
-	delete currentWindow;
-	currentWindow = nullptr;
+	delete sCurrentWindow_;
+	sCurrentWindow_ = nullptr;
 }
 
 bool WinAPI::ProcessMessage()
 {
 	// メッセージがある？
-	if (PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE))
+	if (PeekMessage(&msg_, nullptr, 0, 0, PM_REMOVE))
 	{
-		TranslateMessage(&msg); // キー入力メッセージの処理
-		DispatchMessage(&msg);  // プロシージャにメッセージを送る  (こいつを呼ぶとウィンドウプロシージャが呼ばれるよ♡)
+		TranslateMessage(&msg_); // キー入力メッセージの処理
+		DispatchMessage(&msg_);  // プロシージャにメッセージを送る  (こいつを呼ぶとウィンドウプロシージャが呼ばれるよ♡)
 	}
 
 	// ×ボタンで終了メッセージが来たらゲームループを抜ける
-	if (msg.message == WM_QUIT)
+	if (msg_.message == WM_QUIT)
 	{
 		return true;
 	}
@@ -82,41 +82,41 @@ void WinAPI::DebugText(LPCSTR text)
 	OutputDebugStringA(text);
 }
 
-void WinAPI::CreateWindowObj(LPCWSTR title, int windowWidth, int windowHeight)
+void WinAPI::CreateWindowObj(LPCWSTR title, uint16_t windowWidth, uint16_t windowHeight)
 {
 	// ウィンドウサイズ
-	width = windowWidth;
-	height = windowHeight;
+	width_ = windowWidth;
+	height_ = windowHeight;
 
 	// ウィンドウサイズ{ X座標 Y座標 横幅 縦幅 }
-	wrc = { 0, 0, width, height };
+	wrc_ = { 0, 0, width_, height_ };
 
 	// 自動でサイズを補正する
-	AdjustWindowRect(&wrc, WS_OVERLAPPEDWINDOW, false);
+	AdjustWindowRect(&wrc_, WS_OVERLAPPEDWINDOW, false);
 
 	// ウィンドウオブジェクトの生成
-	hwnd = CreateWindow(
-		w.lpszClassName,		// クラス名
+	hwnd_ = CreateWindow(
+		w_.lpszClassName,		// クラス名
 		title,					// タイトルバーの文字
 		WS_OVERLAPPEDWINDOW,	// 標準的なウィンドウスタイル
 		CW_USEDEFAULT,			// 表示X座標 (OSに任せる)
 		CW_USEDEFAULT,			// 表示Y座標 (OSに任せる)
-		wrc.right - wrc.left,	// ウィンドウ横幅
-		wrc.bottom - wrc.top,	// ウィンドウ縦幅
+		wrc_.right - wrc_.left,	// ウィンドウ横幅
+		wrc_.bottom - wrc_.top,	// ウィンドウ縦幅
 		nullptr,				// 親ウィンドウハンドル
 		nullptr,				// メニューハンドル
-		w.hInstance,			// 呼び出しアプリケーションハンドル
+		w_.hInstance,			// 呼び出しアプリケーションハンドル
 		nullptr);				// オプション
 }
 
 void WinAPI::Show()
 {
 	// ウィンドウを表示状態にする
-	ShowWindow(hwnd, SW_SHOW);
+	ShowWindow(hwnd_, SW_SHOW);
 }
 
 WinAPI::WinAPI() {}
 
 WinAPI::~WinAPI() {}
 
-WinAPI* WinAPI::currentWindow;
+WinAPI* WinAPI::sCurrentWindow_;

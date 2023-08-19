@@ -21,54 +21,54 @@ void PlayerState::SetTexture()
 	stateSelectTex_[11] = TextureManager::Load(L"Resources/Sprites/StateName/StateName6b.png");
 	
 	// 0-9枚目までスプライトに紐づけ
-	for (int i = 0; i < spriteNum_ / 2; i++)
+	for (uint8_t i = 0; i < SPRITE_NUM_ / 2; i++)
 	{
 		stateSprite_[i] = make_unique<Sprite>(stateSelectTex_[i]);
  	}
 
 	// 10-14枚目までスプライトに紐づけ
-	for (int i = spriteNum_ / 2; i < spriteNum_ - powerUpNum_; i++)
+	for (uint8_t i = SPRITE_NUM_ / 2; i < SPRITE_NUM_ - POWER_UP_NUM_; i++)
 	{
 		stateSprite_[i] = make_unique<Sprite>(stateSelectTex_[10]);
 	}
 
 	// 14-19枚目までスプライトに紐づけ
-	for (int i = (spriteNum_ / 2) + powerUpNum_; i < spriteNum_; i++)
+	for (uint8_t i = (SPRITE_NUM_ / 2) + POWER_UP_NUM_; i < SPRITE_NUM_; i++)
 	{
 		stateSprite_[i] = make_unique<Sprite>(stateSelectTex_[11]);
 	}
 
 	// サイズ設定
-	for (int i = 0; i < spriteNum_; i++)
+	for (uint8_t i = 0; i < SPRITE_NUM_; i++)
 	{
-		stateSprite_[i]->scale_ = { scaleTexUI_, scaleTexUI_ };
+		stateSprite_[i]->scale_ = { SCALE_TEX_UI_, SCALE_TEX_UI_ };
 	}
 
 	// 位置移動
-	stateSprite_[0] ->position_ = spriteBase_;
-	stateSprite_[1] ->position_ = spriteBase_;
-	stateSprite_[10]->position_ = spriteBase_;
-	stateSprite_[15]->position_ = spriteBase_;
+	stateSprite_[0] ->position_ = SPRITE_BASE_POS_;
+	stateSprite_[1] ->position_ = SPRITE_BASE_POS_;
+	stateSprite_[10]->position_ = SPRITE_BASE_POS_;
+	stateSprite_[15]->position_ = SPRITE_BASE_POS_;
 			   							   
-	stateSprite_[2]-> position_ = spriteBase_ + Vector2(spriteSize_, 0);
-	stateSprite_[3]-> position_ = spriteBase_ + Vector2(spriteSize_, 0);
-	stateSprite_[11]->position_ = spriteBase_ + Vector2(spriteSize_, 0);
-	stateSprite_[16]->position_ = spriteBase_ + Vector2(spriteSize_, 0);
+	stateSprite_[2]-> position_ = SPRITE_BASE_POS_ + Vector2(s_SPRITE_SIZE_, 0);
+	stateSprite_[3]-> position_ = SPRITE_BASE_POS_ + Vector2(s_SPRITE_SIZE_, 0);
+	stateSprite_[11]->position_ = SPRITE_BASE_POS_ + Vector2(s_SPRITE_SIZE_, 0);
+	stateSprite_[16]->position_ = SPRITE_BASE_POS_ + Vector2(s_SPRITE_SIZE_, 0);
 			   													
-	stateSprite_[4] ->position_ = spriteBase_ + Vector2(spriteSize_ * 2, 0);
-	stateSprite_[5] ->position_ = spriteBase_ + Vector2(spriteSize_ * 2, 0);
-	stateSprite_[12]->position_ = spriteBase_ + Vector2(spriteSize_ * 2, 0);
-	stateSprite_[17]->position_ = spriteBase_ + Vector2(spriteSize_ * 2, 0);
+	stateSprite_[4] ->position_ = SPRITE_BASE_POS_ + Vector2(s_SPRITE_SIZE_ * 2, 0);
+	stateSprite_[5] ->position_ = SPRITE_BASE_POS_ + Vector2(s_SPRITE_SIZE_ * 2, 0);
+	stateSprite_[12]->position_ = SPRITE_BASE_POS_ + Vector2(s_SPRITE_SIZE_ * 2, 0);
+	stateSprite_[17]->position_ = SPRITE_BASE_POS_ + Vector2(s_SPRITE_SIZE_ * 2, 0);
 			   							 						
-	stateSprite_[6]-> position_ = spriteBase_ + Vector2(spriteSize_ * 3, 0);
-	stateSprite_[7]-> position_ = spriteBase_ + Vector2(spriteSize_ * 3, 0);
-	stateSprite_[13]->position_ = spriteBase_ + Vector2(spriteSize_ * 3, 0);
-	stateSprite_[18]->position_ = spriteBase_ + Vector2(spriteSize_ * 3, 0);
+	stateSprite_[6]-> position_ = SPRITE_BASE_POS_ + Vector2(s_SPRITE_SIZE_ * 3, 0);
+	stateSprite_[7]-> position_ = SPRITE_BASE_POS_ + Vector2(s_SPRITE_SIZE_ * 3, 0);
+	stateSprite_[13]->position_ = SPRITE_BASE_POS_ + Vector2(s_SPRITE_SIZE_ * 3, 0);
+	stateSprite_[18]->position_ = SPRITE_BASE_POS_ + Vector2(s_SPRITE_SIZE_ * 3, 0);
 
-	stateSprite_[8]-> position_ = spriteBase_ + Vector2(spriteSize_ * 4, 0);
-	stateSprite_[9]-> position_ = spriteBase_ + Vector2(spriteSize_ * 4, 0);
-	stateSprite_[14]->position_ = spriteBase_ + Vector2(spriteSize_ * 4, 0);
-	stateSprite_[19]->position_ = spriteBase_ + Vector2(spriteSize_ * 4, 0);
+	stateSprite_[8]-> position_ = SPRITE_BASE_POS_ + Vector2(s_SPRITE_SIZE_ * 4, 0);
+	stateSprite_[9]-> position_ = SPRITE_BASE_POS_ + Vector2(s_SPRITE_SIZE_ * 4, 0);
+	stateSprite_[14]->position_ = SPRITE_BASE_POS_ + Vector2(s_SPRITE_SIZE_ * 4, 0);
+	stateSprite_[19]->position_ = SPRITE_BASE_POS_ + Vector2(s_SPRITE_SIZE_ * 4, 0);
 }
 
 void PlayerState::Initialize()
@@ -76,13 +76,13 @@ void PlayerState::Initialize()
 	// 画像紐づけ
 	SetTexture();
 
-	for (int i = 0; i < uint8_t(State::BARRIER); i++)
+	for (uint8_t i = 0; i < uint8_t(State::BARRIER); i++)
 	{
 		powerUpSelect_[i] = uint8_t(SelectState::NONE);
 		powerUpStatus_[i] = uint8_t(SelectState::NONE);
 	}
 
-	nowSelect_ = uint8_t(State::_NONE);
+	nowSelect_ = uint8_t(State::NONESTATE);
 }
 
 void PlayerState::Update()
@@ -195,9 +195,9 @@ void PlayerState::Update()
 		if (powerUpSelect_[uint8_t(State::SPEEDUP)] == uint8_t(SelectState::SELECT))
 		{
 			powerUpStatus_[0]++;
-			nowSelect_ = uint8_t(State::_NONE);
+			nowSelect_ = uint8_t(State::NONESTATE);
 
-			if (powerUpStatus_[0] == maxSpeedUpNum_)
+			if (powerUpStatus_[0] == MAX_SPEEDUP_NUM_)
 			{
 				powerUpSelect_[uint8_t(State::SPEEDUP)] = uint8_t(SelectState::USED);
 			}
@@ -210,9 +210,9 @@ void PlayerState::Update()
 		if (powerUpSelect_[uint8_t(State::EXPAND)] == uint8_t(SelectState::SELECT))
 		{
 			powerUpStatus_[1]++;
-			nowSelect_ = uint8_t(State::_NONE);
+			nowSelect_ = uint8_t(State::NONESTATE);
 			
-			if (powerUpStatus_[1] == maxExpandNum_)
+			if (powerUpStatus_[1] == MAX_EXPAND_NUM_)
 			{
 				powerUpSelect_[uint8_t(State::EXPAND)] = uint8_t(SelectState::USED);
 			}
@@ -225,9 +225,9 @@ void PlayerState::Update()
 		if (powerUpSelect_[uint8_t(State::LASER)] == uint8_t(SelectState::SELECT))
 		{
 			powerUpStatus_[2]++;
-			nowSelect_ = uint8_t(State::_NONE);
+			nowSelect_ = uint8_t(State::NONESTATE);
 
-			if (powerUpStatus_[2] == maxLaserNum_)
+			if (powerUpStatus_[2] == MAX_LASER_NUM_)
 			{
 				powerUpSelect_[uint8_t(State::LASER)] = uint8_t(SelectState::USED);
 			}
@@ -240,9 +240,9 @@ void PlayerState::Update()
 		if (powerUpSelect_[uint8_t(State::OPTION)] == uint8_t(SelectState::SELECT))
 		{
 			powerUpStatus_[3]++;
-			nowSelect_ = uint8_t(State::_NONE);
+			nowSelect_ = uint8_t(State::NONESTATE);
 
-			if (powerUpStatus_[3] == maxOptionNum_)
+			if (powerUpStatus_[3] == MAX_OPTION_NUM_)
 			{
 				powerUpSelect_[uint8_t(State::OPTION)] = uint8_t(SelectState::USED);
 			}
@@ -255,9 +255,9 @@ void PlayerState::Update()
 		if (powerUpSelect_[uint8_t(State::BARRIER)] == uint8_t(SelectState::SELECT))
 		{
 			powerUpStatus_[4]++;
-			nowSelect_ = uint8_t(State::_NONE);
+			nowSelect_ = uint8_t(State::NONESTATE);
 
-			if (powerUpStatus_[4] == maxBarrierNum_)
+			if (powerUpStatus_[4] == MAX_BARRIER_NUM_)
 			{
 				powerUpSelect_[uint8_t(State::BARRIER)] = uint8_t(SelectState::USED);
 			}
@@ -270,7 +270,7 @@ void PlayerState::Update()
 
 	if (Enemy::IsOnCol() == true)
 	{
-		if (nowSelect_ == uint8_t(State::_NONE))
+		if (nowSelect_ == uint8_t(State::NONESTATE))
 		{
 			nowSelect_ = uint8_t(State::SPEEDUP);
 		}
@@ -281,7 +281,7 @@ void PlayerState::Update()
 	}
 
 	// サイズ設定
-	for (int i = 0; i < spriteNum_; i++)
+	for (uint8_t i = 0; i < SPRITE_NUM_; i++)
 	{
 		stateSprite_[i]->Update();
 	}

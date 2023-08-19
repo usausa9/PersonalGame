@@ -23,30 +23,30 @@ private:
 	std::chrono::steady_clock::time_point reference_;
 
 public:
-	std::vector<ID3D12Resource*> backBuffers;
-	D3D12_DESCRIPTOR_HEAP_DESC rtvHeapDesc{};
-	ComPtr<ID3D12DescriptorHeap> dsvHeap = nullptr;
+	std::vector<ID3D12Resource*> backBuffers_;
+	D3D12_DESCRIPTOR_HEAP_DESC rtvHeapDesc_{};
+	ComPtr<ID3D12DescriptorHeap> dsvHeap_ = nullptr;
 
-	D3D12_RESOURCE_BARRIER barrierDesc{};
-	ComPtr<ID3D12Fence> fence = nullptr;
-	UINT64 fenceVal = 0;
+	D3D12_RESOURCE_BARRIER barrierDesc_{};
+	ComPtr<ID3D12Fence> fence_ = nullptr;
+	UINT64 fenceVal_ = 0;
 
-	ComPtr<ID3D12Resource> depthBuff = nullptr;
+	ComPtr<ID3D12Resource> depthBuff_ = nullptr;
 
 public:
-	ComPtr<ID3D12Device> device = nullptr; // デバイス
-	ComPtr<ID3D12CommandAllocator> commandAllocator = nullptr; // コマンドアロケータ
-	ComPtr<ID3D12GraphicsCommandList> commandList = nullptr; // コマンドリスト
-	ComPtr<ID3D12CommandQueue> commandQueue = nullptr; // コマンドキュー
-	ComPtr<IDXGISwapChain4> swapChain = nullptr; // スワップチェーン
-	ComPtr<ID3D12DescriptorHeap> rtvHeap = nullptr; // レンダーターゲットビュー
+	ComPtr<ID3D12Device> device_ = nullptr; // デバイス
+	ComPtr<ID3D12CommandAllocator> commandAllocator_ = nullptr; // コマンドアロケータ
+	ComPtr<ID3D12GraphicsCommandList> commandList_ = nullptr; // コマンドリスト
+	ComPtr<ID3D12CommandQueue> commandQueue_ = nullptr; // コマンドキュー
+	ComPtr<IDXGISwapChain4> swapChain_ = nullptr; // スワップチェーン
+	ComPtr<ID3D12DescriptorHeap> rtvHeap_ = nullptr; // レンダーターゲットビュー
 
-	ComPtr<IDXGIFactory7> dxgiFactory = nullptr; // 統合]
+	ComPtr<IDXGIFactory7> dxgiFactory_ = nullptr; // 統合]
 
-	inline ID3D12Device* GetDevice() const { return device.Get(); }
-	inline ID3D12GraphicsCommandList* GetCommandList()const { return commandList.Get(); }
+	inline ID3D12Device* GetDevice() const { return device_.Get(); }
+	inline ID3D12GraphicsCommandList* GetCommandList()const { return commandList_.Get(); }
 
-	size_t GetBackBufferCount() const { return backBuffers.size(); }
+	size_t GetBackBufferCount() const { return backBuffers_.size(); }
 public:
 	// シングルトンインスタンスを取得
 	static DirectXBase* GetInstance();
@@ -77,7 +77,5 @@ private:
 	void UpdateFixFPS();
 
 public:
-	// ゲッター
-	/*static DirectXBase* Get();*/
-	static DirectXBase* currentDirectX;
+	static DirectXBase* sCurrentDirectX_;
 };

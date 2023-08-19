@@ -32,7 +32,7 @@ public:	// メンバ関数
 	bool IsAlive()const { return isAlive_; }
 
 	// 当たり判定状況を取得
-	static bool IsOnCol() { return isOnCol_; }
+	static bool IsOnCol() { return sIsOnCol_; }
 
 private: // 敵機のメンバ変数
 	// 敵機モデル, 敵機オブジェクト
@@ -44,5 +44,5 @@ private: // 敵機のメンバ変数
 	// 生存フラグ
 	bool isAlive_ = true;
 	// 当たり判定フラグ
-	static bool isOnCol_;
+	static bool sIsOnCol_;
 };

@@ -25,7 +25,7 @@ public:
 		LASER,		// レーザー化
 		OPTION,		// プレハブが増える
 		BARRIER,	// ５回までダメージを受けられるバリア
-		_NONE,		// どれも選ばれていない
+		NONESTATE,		// どれも選ばれていない
 	};
 
 public:
@@ -52,27 +52,28 @@ private:
 	// パワーアップアイテム関連
 	array<uint8_t, 5> powerUpSelect_ = { 0, 0, 0, 0, 0 };	// 現在の選択等描画用
 	array<uint8_t, 5> powerUpStatus_ = { 0, 0, 0, 0, 0 };	// プレイヤーの強化状態
-	uint8_t nowSelect_ = uint8_t(State::_NONE);
+	uint8_t nowSelect_ = uint8_t(State::NONESTATE);
 	
-	const uint8_t maxSpeedUpNum_ = 5;
-	const uint8_t maxExpandNum_ = 1;
-	const uint8_t maxLaserNum_ = 1;
-	const uint8_t maxOptionNum_ = 2;
-	const uint8_t maxBarrierNum_ = 1;
+	const uint8_t MAX_SPEEDUP_NUM_ = 5;
+	const uint8_t MAX_EXPAND_NUM_ = 1;
+	const uint8_t MAX_LASER_NUM_ = 1;
+	const uint8_t MAX_OPTION_NUM_ = 2;
+	const uint8_t MAX_BARRIER_NUM_ = 1;
 
 private:// 描画用
 	// テクスチャ関連
-	static const uint8_t powerUpNum_ = 5;
-	static const uint8_t texNum_ = 12;
-	static const uint8_t spriteNum_ = 20;
-	array<TextureIndex, texNum_> stateSelectTex_ = {};
-	array<unique_ptr<Sprite>, spriteNum_> stateSprite_ = {
+	static const uint8_t POWER_UP_NUM_ = 5;
+	static const uint8_t TEX_NUM_ = 12;
+	static const uint8_t SPRITE_NUM_ = 20;
+
+	array<TextureIndex, TEX_NUM_> stateSelectTex_ = {};
+	array<unique_ptr<Sprite>, SPRITE_NUM_> stateSprite_ = {
 		nullptr, nullptr, nullptr, nullptr, nullptr, 
 		nullptr, nullptr, nullptr, nullptr, nullptr, 
 		nullptr, nullptr, nullptr, nullptr, nullptr, 
 		nullptr, nullptr, nullptr, nullptr, nullptr, };
 
-	const float scaleTexUI_ = 1.5f;
-	const Vector2 spriteBase_ = { 337, 667 };
-	static const uint8_t spriteSize_ = 150;
+	const float SCALE_TEX_UI_ = 1.5f;
+	const Vector2 SPRITE_BASE_POS_ = { 337, 667 };
+	static const uint8_t s_SPRITE_SIZE_ = 150;
 };

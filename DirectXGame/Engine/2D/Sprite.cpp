@@ -7,8 +7,8 @@
 // 頂点データ構造体
 struct Vertex
 {
-	Float3 pos;	// xyz座標
-	Float2 uv;	// uv座標
+	Vector3 pos;	// xyz座標
+	Vector2 uv;	// uv座標
 };
 
 Sprite::Sprite()
@@ -62,7 +62,7 @@ void Sprite::Init()
 	resDesc.Layout = D3D12_TEXTURE_LAYOUT_ROW_MAJOR;
 
 	// 頂点バッファの生成
-	pResult = DirectXBase::GetInstance()->device->CreateCommittedResource(
+	pResult = DirectXBase::GetInstance()->device_->CreateCommittedResource(
 		&heapProp, // ヒープ設定
 		D3D12_HEAP_FLAG_NONE,
 		&resDesc, // リソース設定
@@ -111,7 +111,7 @@ void Sprite::Init()
 	HRESULT vResult;
 
 	// 定数バッファの生成
-	vResult = DirectXBase::GetInstance()->device->CreateCommittedResource(
+	vResult = DirectXBase::GetInstance()->device_->CreateCommittedResource(
 		&cbHeapProp,	// ヒープ設定
 		D3D12_HEAP_FLAG_NONE,
 		&cbResourceDesc,// リソース設定
@@ -125,14 +125,14 @@ void Sprite::Init()
 	assert(SUCCEEDED(vResult));
 
 	// 値を書き込むと自動的に転送される
-	constMapMaterial_->color = Float4{1.f, 0.f, 1.f, 1.f}; // RGBAで半透明の赤
+	constMapMaterial_->color = Vector4{1.f, 0.f, 1.f, 1.f}; // RGBAで半透明の赤
 	
 	Matrix4 matWorld;
 	matWorld = matWorld.Scale({ scale_.x, scale_.y, 1 });
 	matWorld *= matWorld.RotateZ(rotation_);
 	matWorld *= matWorld.Translate({ position_.x, position_.y, 0 });
 
-	constMapMaterial_->mat = matWorld * SpriteManager::SpriteProjection;
+	constMapMaterial_->mat = matWorld * SpriteManager::sSpriteProjection_;
 	
 #pragma endregion
 }
@@ -144,12 +144,12 @@ void Sprite::Update()
 	matWorld *= matWorld.RotateZ(rotation_);
 	matWorld *= matWorld.Translate({ position_.x, position_.y, 0 });
 
-	constMapMaterial_->mat = matWorld * SpriteManager::SpriteProjection;
+	constMapMaterial_->mat = matWorld * SpriteManager::sSpriteProjection_;
 };
 
 void Sprite::Draw()
 {
-	ID3D12GraphicsCommandList* commandList = DirectXBase::GetInstance()->commandList.Get();
+	ID3D12GraphicsCommandList* commandList = DirectXBase::GetInstance()->commandList_.Get();
 
 	// 頂点バッファビューの設定コマンド
 	commandList->IASetVertexBuffers(0, 1, &vbView_);

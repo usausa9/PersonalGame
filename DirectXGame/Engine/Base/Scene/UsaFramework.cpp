@@ -34,7 +34,7 @@ void UsaFramework::Initialize()
 	DirectXBase::GetInstance()->Init();
 
 	// DirectInputの初期化
-	Key::Init(window_.w.hInstance, window_.hwnd);
+	Key::Init(window_.w_.hInstance, window_.hwnd_);
 	Pad::Init();
 
 	// スプライト共通部の初期化	
@@ -244,7 +244,7 @@ void UsaFramework::Initialize()
 	ComPtr<ID3DBlob> rootSigBlob = nullptr;
 	result = D3D12SerializeRootSignature(&rootSignatureDesc, D3D_ROOT_SIGNATURE_VERSION_1_0, &rootSigBlob, &errorBlob);
 	assert(SUCCEEDED(result));
-	result = DirectXBase::GetInstance()->device->CreateRootSignature(0, rootSigBlob->GetBufferPointer(), rootSigBlob->GetBufferSize(), IID_PPV_ARGS(&rootSignature_));
+	result = DirectXBase::GetInstance()->device_->CreateRootSignature(0, rootSigBlob->GetBufferPointer(), rootSigBlob->GetBufferSize(), IID_PPV_ARGS(&rootSignature_));
 	assert(SUCCEEDED(result));
 	// rootSigBlob->Release();
 
@@ -258,11 +258,11 @@ void UsaFramework::Initialize()
 	pipelineDesc.DSVFormat = DXGI_FORMAT_D32_FLOAT;		// 深度値フォーマット
 
 	// パイプランステートの生成
-	result = DirectXBase::GetInstance()->device->CreateGraphicsPipelineState(&pipelineDesc, IID_PPV_ARGS(&pipelineState_));
+	result = DirectXBase::GetInstance()->device_->CreateGraphicsPipelineState(&pipelineDesc, IID_PPV_ARGS(&pipelineState_));
 	assert(SUCCEEDED(result));
 
 	TextureManager::Init();
-	FBXLoader::GetInstance()->Initialize(DirectXBase::GetInstance()->device.Get());
+	FBXLoader::GetInstance()->Initialize(DirectXBase::GetInstance()->device_.Get());
 
 	// シーンマネージャの生成
 	sceneManager_ = SceneManager::GetInstance();
@@ -310,18 +310,18 @@ void UsaFramework::PostUpdate()
 void UsaFramework::PreDraw()
 {
 	// パイプラインステートとルートシグネチャの設定コマンド
-	DirectXBase::GetInstance()->commandList->SetPipelineState(pipelineState_.Get());
-	DirectXBase::GetInstance()->commandList->SetGraphicsRootSignature(rootSignature_.Get());
+	DirectXBase::GetInstance()->commandList_->SetPipelineState(pipelineState_.Get());
+	DirectXBase::GetInstance()->commandList_->SetGraphicsRootSignature(rootSignature_.Get());
 
 	// プリミティブ形状の設定コマンド
 	//commandList->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_POINTLIST);	 // 点のリスト
 	//commandList->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_LINELIST);		 // 線のリスト
 	//commandList->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_LINESTRIP);	 // 線のストリップ
-	DirectXBase::GetInstance()->commandList->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);	 // 三角形のリスト
+	DirectXBase::GetInstance()->commandList_->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);	 // 三角形のリスト
 	//commandList->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP); // 三角形のストリップ
 
 	// SRVヒープの設定コマンド
-	DirectXBase::GetInstance()->commandList->SetDescriptorHeaps(1, TextureManager::srvHeap.GetAddressOf());
+	DirectXBase::GetInstance()->commandList_->SetDescriptorHeaps(1, TextureManager::sSrvHeap_.GetAddressOf());
 
 	//DirectXBase::GetInstance()->commandList->SetGraphicsRootDescriptorTable(1, TextureManager::GetData(reimuTex)->gpuHandle);
 
@@ -332,18 +332,18 @@ void UsaFramework::PreDraw()
 void UsaFramework::PreDrawParticle()
 {
 	// パイプラインステートとルートシグネチャの設定コマンド
-	DirectXBase::GetInstance()->commandList->SetPipelineState(ParticleManager::pipelineState.Get());
-	DirectXBase::GetInstance()->commandList->SetGraphicsRootSignature(ParticleManager::rootSignature.Get());
+	DirectXBase::GetInstance()->commandList_->SetPipelineState(ParticleManager::sPipelineState_.Get());
+	DirectXBase::GetInstance()->commandList_->SetGraphicsRootSignature(ParticleManager::sRootSignature_.Get());
 
 	// プリミティブ形状の設定コマンド
-	DirectXBase::GetInstance()->commandList->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_POINTLIST);		 // 点のリスト
+	DirectXBase::GetInstance()->commandList_->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_POINTLIST);		 // 点のリスト
 	//DirectXBase::GetInstance()->commandList->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_LINELIST);		 // 線のリスト
 	//DirectXBase::GetInstance()->commandList->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_LINESTRIP);	 // 線のストリップ
 	//DirectXBase::GetInstance()->commandList->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);	 // 三角形のリスト
 	//DirectXBase::GetInstance()->commandList->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP); // 三角形のストリップ
 
 	// SRVヒープの設定コマンド
-	DirectXBase::GetInstance()->commandList->SetDescriptorHeaps(1, TextureManager::srvHeap.GetAddressOf());
+	DirectXBase::GetInstance()->commandList_->SetDescriptorHeaps(1, TextureManager::sSrvHeap_.GetAddressOf());
 }
 
 void UsaFramework::Draw()

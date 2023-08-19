@@ -4,16 +4,16 @@
 #include <d3dcompiler.h>
 #pragma comment(lib,"d3dcompiler.lib")
 
-Matrix4 SpriteManager::SpriteProjection;
+Matrix4 SpriteManager::sSpriteProjection_;
 
 void SpriteManager::Init()
 {
 	HRESULT result = S_FALSE;
 
-	SpriteManager::SpriteProjection = Matrix4
+	SpriteManager::sSpriteProjection_ = Matrix4
 	{
-		2.f / WinAPI::GetInstance()->width, 0, 0, 0,
-		0, -2.f / WinAPI::GetInstance()->height, 0, 0,
+		2.f / WinAPI::GetInstance()->width_, 0, 0, 0,
+		0, -2.f / WinAPI::GetInstance()->height_, 0, 0,
 		0, 0, 1, 0,
 		-1, 1, 0, 1
 	};
@@ -201,19 +201,19 @@ void SpriteManager::Init()
 	ComPtr<ID3DBlob> rootSigBlob = nullptr;
 	result = D3D12SerializeRootSignature(&rootSignatureDesc, D3D_ROOT_SIGNATURE_VERSION_1_0, &rootSigBlob, &errorBlob_);
 	assert(SUCCEEDED(result));
-	result = DirectXBase::GetInstance()->device->CreateRootSignature(0, rootSigBlob->GetBufferPointer(), rootSigBlob->GetBufferSize(), IID_PPV_ARGS(&rootSignature_));
+	result = DirectXBase::GetInstance()->device_->CreateRootSignature(0, rootSigBlob->GetBufferPointer(), rootSigBlob->GetBufferSize(), IID_PPV_ARGS(&rootSignature_));
 	assert(SUCCEEDED(result));
 
 	// パイプラインにルートシグネチャをセット
 	pipelineDesc_.pRootSignature = rootSignature_.Get();
 
-	result = DirectXBase::GetInstance()->device->CreateGraphicsPipelineState(&pipelineDesc_, IID_PPV_ARGS(&pipelineState_));
+	result = DirectXBase::GetInstance()->device_->CreateGraphicsPipelineState(&pipelineDesc_, IID_PPV_ARGS(&pipelineState_));
 	assert(SUCCEEDED(result));
 }
 
 void SpriteManager::PreDraw()
 {
-	ID3D12GraphicsCommandList* commandList = DirectXBase::GetInstance()->commandList.Get();
+	ID3D12GraphicsCommandList* commandList = DirectXBase::GetInstance()->commandList_.Get();
 	
 	// パイプラインステートとルートシグネチャの設定コマンド
 	commandList->SetPipelineState(pipelineState_.Get());
@@ -223,5 +223,5 @@ void SpriteManager::PreDraw()
 	commandList->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);	 
 
 	// SRVヒープの設定コマンド
-	commandList->SetDescriptorHeaps(1, TextureManager::srvHeap.GetAddressOf());
+	commandList->SetDescriptorHeaps(1, TextureManager::sSrvHeap_.GetAddressOf());
 }

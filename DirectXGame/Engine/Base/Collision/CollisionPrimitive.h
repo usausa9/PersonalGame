@@ -32,12 +32,12 @@ struct Plane
 class Triangle 
 {
 public:
-	Vector3 p0;
-	Vector3 p1;
-	Vector3 p2;
+	Vector3 p0_;
+	Vector3 p1_;
+	Vector3 p2_;
 
 	// –@ü
-	Vector3 normal;
+	Vector3 normal_;
 
 	/// <summary>
 	/// –@ü‚ÌŒvZ

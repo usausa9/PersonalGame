@@ -19,7 +19,7 @@ class Object3D
 {
 public: // メンバ変数
 	// カメラ
-	static Camera* camera_;
+	static Camera* sCamera_;
 
 	// 定数バッファ (行列用)
 	ID3D12Resource* constBuffTransform_ = nullptr;
@@ -44,7 +44,7 @@ public: // メンバ変数
 	OBJModel* objModel_ = nullptr;
 
 	// クラス名 (デバッグ用)
-	const char* name_ = nullptr;
+	const char* NAME_ = nullptr;
 
 	// コライダー
 	BaseCollider* collider_ = nullptr;

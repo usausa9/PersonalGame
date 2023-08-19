@@ -12,7 +12,7 @@
 class Player : public Object3D
 {
 private:
-	const float distanceReticle_ = 40.0f;
+	const float DISTANCE_RETICLE_ = 40.0f;
 
 public:	// メンバ関数
 	// 初期化処理
@@ -66,25 +66,25 @@ private: // 自機のメンバ変数
 
 	// 自機の移動スピード 
 	float velocity_ = 0.5f;
-	const float formerlySpeed_ = 0.5f;
-	const float speedUpRate_ = 0.06f;
+	const float FORMERLY_SPEED_ = 0.5f;
+	const float SPEED_UP_RATE_ = 0.06f;
 
 	// 自機のXに対してのYスピード
-	const float kYMove_ = 0.7f;
+	const float kY_MOVE_ = 0.7f;
 	// 自機の移動範囲制限用
-	const Vector2 kMoveLimit_ = { 32.f, 17.f };
+	const Vector2 kMOVE_LIMIT_ = { 32.f, 17.f };
 
 	// 自機の回転量 
-	const float rotateRev_ = 0.03f;
+	const float ROTATE_REV_ = 0.03f;
 	// 自機Y回転量
-	const float kYRotate_ = 0.85f;
+	const float kY_ROTATE_ = 0.85f;
 	// 自機の回転範囲制限用
-	const Vector3 kRevLimit_ = { 0.3f, 0.f, 0.3f };
+	const Vector3 kREV_LIMIT_ = { 0.3f, 0.f, 0.3f };
 
 	// レティクル関連
 	float reticleSpd_ = 6.0f;
-	const float kYMoveReticle_ = 0.7f;
-	const float reticleMoveLimit_ = 340.f;
+	const float kY_MOVE_RETICLE_ = 0.7f;
+	const float RETICLE_MOVE_LIMIT_ = 340.f;
 
 	float kReticleSpd_ = 6.0f / 0.65f;
 
@@ -99,10 +99,10 @@ private: // 自機弾のメンバ変数
 	OBJModel bulletModel_;
 	
 	// 自機弾のスピード
-	const float kBulletSpeed_ = 2.2f;
+	const float kBULLET_SPEED_ = 2.2f;
 
 	// 弾発射の間隔用
 	TimeData shotTimeData_ = {};
-	const float shotDelay_ = 1.f;
-	const float shotInterval_ = 12.f;
+	const float SHOT_DELAY_ = 1.f;
+	const float SHOT_INTERVAL_ = 12.f;
 };

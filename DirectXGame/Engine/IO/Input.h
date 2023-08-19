@@ -52,7 +52,7 @@ namespace Input
 		static bool Released(UINT8 keyNum);	// ó£ÇµÇΩèuä‘
 
 	private: // ÉÅÉìÉoïœêî
-		static ComPtr<IDirectInputDevice8> keyboard;
+		static ComPtr<IDirectInputDevice8> sKeyboard_;
 	};
 
 	class Pad
@@ -65,11 +65,11 @@ namespace Input
 		static bool Trigger(Button button);		// âüÇµÇΩèuä‘
 		static bool Released(Button button);	// ó£ÇµÇΩèuä‘
 
-		static Float2 GetLStick();
-		static Float2 GetRStick();
+		static Vector2 GetLStick();
+		static Vector2 GetRStick();
 
 	private:
-		static XINPUT_STATE padState;
-		static XINPUT_STATE lastPadState;
+		static XINPUT_STATE sPadState_;
+		static XINPUT_STATE sLastPadState_;
 	};
 }

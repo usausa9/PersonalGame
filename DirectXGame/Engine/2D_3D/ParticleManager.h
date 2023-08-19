@@ -12,19 +12,19 @@ struct ParticleConstBufferDataTransform
 
 struct Vertex
 {
-	Float3 pos;
-	Float2 scale;
-	Float4 color;
+	Vector3 pos;
+	Vector2 scale;
+	Vector4 color;
 };
 
 struct Particle
 {
-	Float3 position = {};	// 座標
-	Float3 velocity = {}; // 速度
-	Float3 accel = {};	// 加速度
-	int frame = 0;			// 現在フレーム
-	int num_frame = 0;		// 終了フレーム
-	Float4 color = { 1,1,1,1 };
+	Vector3 position = {};	// 座標
+	Vector3 velocity = {}; // 速度
+	Vector3 accel = {};	// 加速度
+	uint32_t frame = 0;			// 現在フレーム
+	uint32_t num_frame = 0;		// 終了フレーム
+	Vector4 color = { 1,1,1,1 };
 
 	float scale = 1.0f;
 
@@ -44,25 +44,25 @@ class ParticleManager
 {
 public:
 	// 定数バッファ (行列用)
-	ID3D12Resource* constBuffTransform;
+	ID3D12Resource* constBuffTransform_;
 	
 	// 頂点データセット
-	const int vertexCount = 1024;
-	D3D12_VERTEX_BUFFER_VIEW vbView{};
-	ComPtr<ID3D12Resource> vertBuff = nullptr;
-	Vertex* vertMap = nullptr;
+	const uint16_t VERTEX_COUNT_ = 1024;
+	D3D12_VERTEX_BUFFER_VIEW vbView_{};
+	ComPtr<ID3D12Resource> vertBuff_ = nullptr;
+	Vertex* vertMap_ = nullptr;
 
 	// 定数バッファマップ (行列用)
-	ParticleConstBufferDataTransform* constMapTransform;
+	ParticleConstBufferDataTransform* constMapTransform_;
 
 	// アフィン変換情報
-	Vector3 scale = { 1,1,1 };
-	Vector3 rotation = { 0,0,0 };
-	Vector3 position = { 0,0,0 };
+	Vector3 scale_ = { 1,1,1 };
+	Vector3 rotation_ = { 0,0,0 };
+	Vector3 position_ = { 0,0,0 };
 
 public:
-	static ComPtr<ID3D12RootSignature> rootSignature; 	// ルートシグネチャ
-	static ComPtr<ID3D12PipelineState> pipelineState;	// パイプライン
+	static ComPtr<ID3D12RootSignature> sRootSignature_; 	// ルートシグネチャ
+	static ComPtr<ID3D12PipelineState> sPipelineState_;	// パイプライン
 
 	// パイプライン作成
 	static void CreatePipeline();
@@ -77,9 +77,9 @@ public:
 	void DrawParticle(TextureIndex index);
 
 	// コンテナに追加するもの
-	void Add(int life, Float3 position, Float3 velocity, Float3 accel, float start_scale, float end_scale);
+	void Add(int life, Vector3 position, Vector3 velocity, Vector3 accel, float start_scale, float end_scale);
 
 private:
-	int activeCount = 0;
-	forward_list<Particle> particles;
+	uint16_t activeCount_ = 0;
+	forward_list<Particle> particles_;
 };

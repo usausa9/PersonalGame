@@ -65,7 +65,7 @@ public:	// メンバ関数
 	/// 角度のセッター
 	/// </summary>
 	/// <param name=" 回転 "></param>
-	void SetRotation(Vector3 rotation) { this->rotation = rotation * (UsaMath::u_PI / 180); }
+	void SetRotation(Vector3 rotation) { this->rotation = rotation * (UsaMath::PI_ / 180); }
 
 	/// <summary>
 	/// 描画
@@ -109,7 +109,7 @@ public:
 
 public:	// 静的メンバ関数
 	// setter
-	static void SetDevice(ID3D12Device* device) { DirectXBase::GetInstance()->device = device; }
+	static void SetDevice(ID3D12Device* device) { DirectXBase::GetInstance()->device_ = device; }
 	static void SetCamera(Camera* camera) { FBXObject3D::camera = camera; }
 	static void SetCommandList(ID3D12GraphicsCommandList* commandList) { FBXObject3D::commandList = commandList; }
 	static void CreateGraphicsPipeline();	// パイプラインの生成

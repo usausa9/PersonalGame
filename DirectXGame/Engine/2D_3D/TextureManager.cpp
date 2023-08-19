@@ -1,33 +1,33 @@
 #include "TextureManager.h"
 #include "DirectXBase.h"
 
-int TextureManager::srvIndex = 0;
-D3D12_DESCRIPTOR_HEAP_DESC TextureManager::srvHeapDesc{};
-ComPtr<ID3D12DescriptorHeap> TextureManager::srvHeap = nullptr;
-ComPtr<ID3D12Resource> TextureManager::texBuff[maxTextureNum] = {};
-TextureData TextureManager::textureData[maxTextureNum] = {};
+uint16_t TextureManager::sSrvIndex_ = 0;
+D3D12_DESCRIPTOR_HEAP_DESC TextureManager::sSrvHeapDesc_{};
+ComPtr<ID3D12DescriptorHeap> TextureManager::sSrvHeap_ = nullptr;
+ComPtr<ID3D12Resource> TextureManager::sTexBuff_[s_MAX_TEXTURE_NUM_] = {};
+TextureData TextureManager::sTextureData_[s_MAX_TEXTURE_NUM_] = {};
 
 void TextureManager::Init()
 {
 	HRESULT result = S_FALSE;
 
-	srvIndex = 0;
+	sSrvIndex_ = 0;
 
 	// デスクリプタヒープの設定
-	srvHeapDesc.Type = D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV;
-	srvHeapDesc.Flags = D3D12_DESCRIPTOR_HEAP_FLAG_SHADER_VISIBLE;	// シェーダーから見えるように
-	srvHeapDesc.NumDescriptors = maxTextureNum;
+	sSrvHeapDesc_.Type = D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV;
+	sSrvHeapDesc_.Flags = D3D12_DESCRIPTOR_HEAP_FLAG_SHADER_VISIBLE;	// シェーダーから見えるように
+	sSrvHeapDesc_.NumDescriptors = s_MAX_TEXTURE_NUM_;
 
 	// 設定をもとにSRV用デスクリプタヒープを生成
-	result = DirectXBase::GetInstance()->device->CreateDescriptorHeap(&srvHeapDesc, IID_PPV_ARGS(&srvHeap));
+	result = DirectXBase::GetInstance()->device_->CreateDescriptorHeap(&sSrvHeapDesc_, IID_PPV_ARGS(&sSrvHeap_));
 	assert(SUCCEEDED(result));
 
-	for (auto& buff : texBuff)
+	for (auto& buff : sTexBuff_)
 	{
 		buff = nullptr;
 	}
 
-	for (auto& data : textureData)
+	for (auto& data : sTextureData_)
 	{
 		data = {};
 	}
@@ -37,7 +37,7 @@ TextureIndex TextureManager::Load(std::wstring filepath)
 {
 	HRESULT result = S_FALSE;
 
-	if (srvIndex >= maxTextureNum)
+	if (sSrvIndex_ >= s_MAX_TEXTURE_NUM_)
 	{
 		OutputDebugString(L"over maxTextureNum");
 
@@ -49,7 +49,7 @@ TextureIndex TextureManager::Load(std::wstring filepath)
 	result = LoadFromWICFile(
 		filepath.c_str(),
 		WIC_FLAGS_NONE,
-		&textureData[srvIndex].metadata, scratchImg);
+		&sTextureData_[sSrvIndex_].metadata, scratchImg);
 
 	ScratchImage mipChain{};
 	// ミップマップ生成
@@ -58,11 +58,11 @@ TextureIndex TextureManager::Load(std::wstring filepath)
 		TEX_FILTER_DEFAULT, 0, mipChain);
 	if (SUCCEEDED(result)) {
 		scratchImg = std::move(mipChain);
-		textureData[srvIndex].metadata = scratchImg.GetMetadata();
+		sTextureData_[sSrvIndex_].metadata = scratchImg.GetMetadata();
 	}
 
 	// 読み込んだディフューズテクスチャをSRGBとして扱う
-	textureData[srvIndex].metadata.format = MakeSRGB(textureData[srvIndex].metadata.format);
+	sTextureData_[sSrvIndex_].metadata.format = MakeSRGB(sTextureData_[sSrvIndex_].metadata.format);
 
 	// ヒープ設定
 	D3D12_HEAP_PROPERTIES textureHeapProp{};
@@ -73,33 +73,33 @@ TextureIndex TextureManager::Load(std::wstring filepath)
 	// リソース設定
 	D3D12_RESOURCE_DESC textureResourceDesc{};
 	textureResourceDesc.Dimension = D3D12_RESOURCE_DIMENSION_TEXTURE2D;
-	textureResourceDesc.Format = textureData[srvIndex].metadata.format;
-	textureResourceDesc.Width = textureData[srvIndex].metadata.width;
-	textureResourceDesc.Height = (UINT)textureData[srvIndex].metadata.height;
-	textureResourceDesc.DepthOrArraySize = (UINT16)textureData[srvIndex].metadata.arraySize;
-	textureResourceDesc.MipLevels = (UINT16)textureData[srvIndex].metadata.mipLevels;
+	textureResourceDesc.Format = sTextureData_[sSrvIndex_].metadata.format;
+	textureResourceDesc.Width = sTextureData_[sSrvIndex_].metadata.width;
+	textureResourceDesc.Height = (UINT)sTextureData_[sSrvIndex_].metadata.height;
+	textureResourceDesc.DepthOrArraySize = (UINT16)sTextureData_[sSrvIndex_].metadata.arraySize;
+	textureResourceDesc.MipLevels = (UINT16)sTextureData_[sSrvIndex_].metadata.mipLevels;
 	textureResourceDesc.SampleDesc.Count = 1;
 
 #pragma region テクスチャバッファ
 
 	// テクスチャバッファの生成
-	result = DirectXBase::GetInstance()->device->CreateCommittedResource(
+	result = DirectXBase::GetInstance()->device_->CreateCommittedResource(
 		&textureHeapProp,
 		D3D12_HEAP_FLAG_NONE,
 		&textureResourceDesc,
 		D3D12_RESOURCE_STATE_GENERIC_READ,
 		nullptr,
-		IID_PPV_ARGS(&texBuff[srvIndex]));
+		IID_PPV_ARGS(&sTexBuff_[sSrvIndex_]));
 	assert(SUCCEEDED(result));
 
 	// 全ミップマップについて
-	for (size_t i = 0; i < textureData[srvIndex].metadata.mipLevels; i++)
+	for (size_t i = 0; i < sTextureData_[sSrvIndex_].metadata.mipLevels; i++)
 	{
 		// ミップマップレベルを指定してイメージを取得
 		const Image* img = scratchImg.GetImage(i, 0, 0);
 
 		// テクスチャバッファにデータ転送
-		result = texBuff[srvIndex]->WriteToSubresource(
+		result = sTexBuff_[sSrvIndex_]->WriteToSubresource(
 			(UINT)i,
 			nullptr,		// 全領域へコピー
 			img->pixels,	// 元データアドレス
@@ -110,10 +110,10 @@ TextureIndex TextureManager::Load(std::wstring filepath)
 	}
 
 	// SRVヒープの先頭ハンドルを取得
-	D3D12_CPU_DESCRIPTOR_HANDLE srvHandle = srvHeap->GetCPUDescriptorHandleForHeapStart();
+	D3D12_CPU_DESCRIPTOR_HANDLE srvHandle = sSrvHeap_->GetCPUDescriptorHandleForHeapStart();
 
 	srvHandle.ptr += 
-		DirectXBase::GetInstance()->device->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV) * srvIndex;
+		DirectXBase::GetInstance()->device_->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV) * sSrvIndex_;
 
 	// シェーダーリソースビュー設定
 	D3D12_SHADER_RESOURCE_VIEW_DESC srvDesc{};		// 設定構造体
@@ -123,20 +123,20 @@ TextureIndex TextureManager::Load(std::wstring filepath)
 	srvDesc.Texture2D.MipLevels = textureResourceDesc.MipLevels;
 
 	// ハンドルの指す位置にシェーダーリソースビュー作成
-	DirectXBase::GetInstance()->device->CreateShaderResourceView(texBuff[srvIndex].Get(), &srvDesc, srvHandle);
+	DirectXBase::GetInstance()->device_->CreateShaderResourceView(sTexBuff_[sSrvIndex_].Get(), &srvDesc, srvHandle);
 
 	// GPU用
-	D3D12_GPU_DESCRIPTOR_HANDLE gpuSrvHandle = srvHeap->GetGPUDescriptorHandleForHeapStart();
+	D3D12_GPU_DESCRIPTOR_HANDLE gpuSrvHandle = sSrvHeap_->GetGPUDescriptorHandleForHeapStart();
 
 	gpuSrvHandle.ptr +=
-		DirectXBase::GetInstance()->device->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV) * srvIndex;
+		DirectXBase::GetInstance()->device_->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV) * sSrvIndex_;
 
-	textureData[srvIndex].cpuHandle = srvHandle;
-	textureData[srvIndex].gpuHandle = gpuSrvHandle;
+	sTextureData_[sSrvIndex_].cpuHandle = srvHandle;
+	sTextureData_[sSrvIndex_].gpuHandle = gpuSrvHandle;
 
-	srvIndex++;
+	sSrvIndex_++;
 
-	return srvIndex - 1;
+	return sSrvIndex_ - 1;
 }
 
 TextureIndex TextureManager::Load(std::string filepath)
@@ -163,17 +163,17 @@ TextureIndex TextureManager::Load(std::string filepath)
 
 TextureData* TextureManager::GetData(TextureIndex index)
 {
-	return &textureData[index];
+	return &sTextureData_[index];
 }
 
 ID3D12Resource* TextureManager::GetBuff(TextureIndex index)
 {
-	return texBuff[index].Get();
+	return sTexBuff_[index].Get();
 }
 
 void TextureManager::Release()
 {
-	for (auto& buff : texBuff)
+	for (auto& buff : sTexBuff_)
 	{
 		if (buff.Get())
 		{
@@ -181,7 +181,7 @@ void TextureManager::Release()
 		}
 	}
 
-	for (auto& data : textureData)
+	for (auto& data : sTextureData_)
 	{
 		data = {};
 	}

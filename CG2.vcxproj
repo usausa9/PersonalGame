@@ -106,9 +106,6 @@
     <ClInclude Include="DirectXGame\Engine\Base\DirectXBase.h" />
     <ClInclude Include="DirectXGame\Engine\3D\FBX\FBXLoader.h" />
     <ClInclude Include="DirectXGame\Engine\3D\FBX\FBXObject3D.h" />
-    <ClInclude Include="DirectXGame\Engine\Base\Math\Float2.h" />
-    <ClInclude Include="DirectXGame\Engine\Base\Math\Float3.h" />
-    <ClInclude Include="DirectXGame\Engine\Base\Math\Float4.h" />
     <ClInclude Include="DirectXGame\Application\Scene\GameScene.h" />
     <ClInclude Include="DirectXGame\Engine\IO\Input.h" />
     <ClInclude Include="DirectXGame\Engine\Base\Math\Matrix4.h" />

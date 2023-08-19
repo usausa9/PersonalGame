@@ -23,7 +23,6 @@ public:
 	CameraConstBufferData* constMapCamera_ = nullptr;
 
 	// アフィン変換情報
-	// Float3 rotation = { 0,0,0 };
 	Vector3 target_ = { 0,0,0 };
 	Vector3 position_ = { 0,0,-20 };
 
@@ -41,7 +40,7 @@ public:
 	Matrix4 matBillboard_ = Matrix4::Identity();
 
 	// 今使用しているカメラからのポインタ、カメラへのポインタ
-	static Camera* CurrentCamera;
+	static Camera* sCurrentCamera;
 
 	static void SetCurrentCamera(Camera* current);
 

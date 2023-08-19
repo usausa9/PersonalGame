@@ -58,9 +58,9 @@ public:
 	// 頂点データ構造体
 	struct VertexPosNormalUvSkin
 	{
-		Float3 pos;		// xyz座標
-		Float3 normal;	// 法線ベクトル 
-		Float2 uv;		// uv座標
+		Vector3 pos;		// xyz座標
+		Vector3 normal;	// 法線ベクトル 
+		Vector2 uv;		// uv座標
 		UINT boneIndex[MAX_BONE_INDICES];
 		float boneWeight[MAX_BONE_INDICES];
 	};
@@ -77,9 +77,9 @@ private:
 	// 頂点インデックス配列
 	vector<unsigned short> indices;
 	// アンビエント係数
-	Float3 ambient = { 1,1,1 };
+	Vector3 ambient = { 1,1,1 };
 	// ディフューズ係数
-	Float3 diffuse = { 1,1,1 };
+	Vector3 diffuse = { 1,1,1 };
 	// テクスチャメタデータ
 	TexMetadata metadata = {};
 	// スクラッチイメージ
