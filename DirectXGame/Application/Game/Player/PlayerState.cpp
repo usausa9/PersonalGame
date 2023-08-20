@@ -268,7 +268,7 @@ void PlayerState::Update()
 		}
 	}
 
-	if (Enemy::IsOnCol() == true)
+	if (Enemy::IsOnCol() == true || Key::Trigger(DIK_9))
 	{
 		if (nowSelect_ == uint8_t(State::NONESTATE))
 		{

@@ -23,9 +23,6 @@ class CollisionManager;
 class TitleScene : public IScene
 {
 private:
-	// 衝突マネージャ
-	CollisionManager* collisionManager_ = nullptr;
-
 	// カメラ
 	Camera* camera_ = nullptr;
 	RailCamera* railCamera_ = nullptr;
@@ -33,11 +30,13 @@ private:
 	// プレイヤー,敵
 	std::list<std::unique_ptr<Enemy>> enemys_;
 
-	// 天球
-	unique_ptr<Skydome> skydome_ = nullptr;
-
 	// シーン切り替えフラグ
 	bool isStart_ = false;
+
+	// タイトルスプライト
+	TextureIndex titleTex_ = {};
+	unique_ptr<Sprite> titleSprite_ = nullptr;
+	const Vector2 SPRITE_BASE_POS_ = { 640, 360 };
 
 public:
 	// 初期化
