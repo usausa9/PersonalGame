@@ -59,5 +59,5 @@ public:
 
 public:
 	// “G
-	void EnemySpawn();
+	void EnemySpawn(uint8_t enemyKind);
 };

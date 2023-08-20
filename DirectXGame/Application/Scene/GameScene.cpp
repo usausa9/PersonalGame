@@ -61,9 +61,13 @@ void GameScene::Update()
 		return false; 
 	});
 
-	if (Key::Trigger(DIK_Q)) 
+	if (Key::Trigger(DIK_Y)) 
 	{
-		EnemySpawn();
+		EnemySpawn(uint8_t(EnemyKinds::NORMAL));
+	}
+	else if (Key::Trigger(DIK_U))
+	{
+		EnemySpawn(uint8_t(EnemyKinds::POWER));
 	}
 
 	// 天球の行列更新
@@ -108,7 +112,7 @@ void GameScene::Draw2D()
 	player_->DrawUI();
 }
 
-void GameScene::EnemySpawn()
+void GameScene::EnemySpawn(uint8_t enemyKind)
 {
 	// スプライン制御点
 	float z = 40.0f;
@@ -122,7 +126,7 @@ void GameScene::EnemySpawn()
 
 	// 敵の生成と初期化
 	std::unique_ptr<Enemy> newEnemy = std::make_unique<Enemy>();
-	newEnemy->Initialize(enemyMovePoints);
+	newEnemy->Initialize(enemyMovePoints, enemyKind);
 	newEnemy->Spawn();
 
 	// リストに登録

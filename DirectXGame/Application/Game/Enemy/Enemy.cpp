@@ -2,13 +2,24 @@
 #include "SphereCollider.h"
 #include "CollisionAttribute.h"
 
-bool Enemy::sIsOnCol_ = false;
+bool Enemy::sIsPowerUp_ = false;
 
 // 初期化
-void Enemy::Initialize(std::vector<Vector3>& points)
+void Enemy::Initialize(std::vector<Vector3>& points, uint8_t enemyKind)
 {
-	// 自機モデル読み込み
-	enemyModel_ = OBJModel::LoadFromOBJ("Cube");
+	if (enemyKind == uint8_t(EnemyKinds::NORMAL))
+	{
+		// 自機モデル読み込み
+		enemyModel_ = OBJModel::LoadFromOBJ("Cube");
+	}
+	else if (enemyKind == uint8_t(EnemyKinds::POWER))
+	{
+		// 自機モデル読み込み
+		enemyModel_ = OBJModel::LoadFromOBJ("ICO");
+	}
+
+	// 敵の種類指定
+	enemyKind_ = enemyKind;
 
 	// 自機の行列初期化
 	rotation_ = { 0, 0, 0 };
@@ -31,8 +42,8 @@ void Enemy::Initialize(std::vector<Vector3>& points)
 // 更新
 void Enemy::Update(const Matrix4& cameraMatrix)
 {
-	// 当たり判定を一時的にfalseへ
-	sIsOnCol_ = false;
+	// 強化可能判定を一時的にfalseへ
+	sIsPowerUp_ = false;
 
 	// 敵の軌道更新
 	trajectory_.Update();
@@ -65,8 +76,11 @@ void Enemy::Spawn()
 
 void Enemy::OnCollision(const CollisionInfo& info)
 {
-	// 判定をtrueに
-	sIsOnCol_ = true;
+	if (enemyKind_ == uint8_t(EnemyKinds::POWER))
+	{
+		// 判定をtrueに
+		sIsPowerUp_ = true;
+	}
 
 	// 衝突判定により消滅
 	isAlive_ = false;
