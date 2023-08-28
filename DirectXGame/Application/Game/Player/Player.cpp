@@ -10,7 +10,7 @@ void Player::Initialize(Camera* camera)
 {
 	// 自機モデル読み込み
 	playerModel_ = OBJModel::LoadFromOBJ("vicviper");
-	reticleModel_ = OBJModel::LoadFromOBJ("ICO");
+	reticleModel_ = OBJModel::LoadFromOBJ("sphere");
 
 	// レティクルスプライト割り当て
 	reticleTex_ = TextureManager::Load(L"Resources/Sprites/reticle.png");
@@ -43,7 +43,7 @@ void Player::Initialize(Camera* camera)
 	collider_->SetAttribute(COLLISION_ATTR_ALLIES);
 
 	// 自機弾モデル読み込み
-	bulletModel_ = OBJModel::LoadFromOBJ("ICO");
+	bulletModel_ = OBJModel::LoadFromOBJ("sphere");
 }
 
 // 更新
