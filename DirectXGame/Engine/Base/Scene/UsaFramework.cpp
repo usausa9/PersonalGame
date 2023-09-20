@@ -363,7 +363,7 @@ void UsaFramework::Draw()
 	sceneManager_->Draw2D();
 
 	// ImGui •`‰æ
-	ImGuiManager::GetInstance()->Draw();
+	//ImGuiManager::GetInstance()->Draw();
 
 	// •`‰æŒãˆ—
 	PostDraw();

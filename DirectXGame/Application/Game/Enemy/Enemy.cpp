@@ -1,6 +1,10 @@
 #include "Enemy.h"
 #include "SphereCollider.h"
 #include "CollisionAttribute.h"
+#include "TimeData.h"
+
+#include <fstream>
+#include <sstream>
 
 bool Enemy::sIsPowerUp_ = false;
 

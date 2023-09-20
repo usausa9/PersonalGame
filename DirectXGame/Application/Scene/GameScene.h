@@ -19,6 +19,10 @@
 
 #include "Skydome.h"
 
+#include <iostream>
+#include <string>
+#include <sstream>
+
 class CollisionManager;
 
 class GameScene : public IScene
@@ -60,4 +64,19 @@ public:
 public:
 	// 敵
 	void EnemySpawn(uint8_t enemyKind);
+
+	// ファイル読み込み
+	void LoadCsvFile();
+
+	// 読み込んだデータから敵の種類付け等
+	void LoadData();
+
+	// 敵発生コマンド
+	std::stringstream enemyData_;
+
+	// 敵発生待ち時間
+	TimeData waitTimer_;
+
+	// 敵待ちフラグ
+	bool isStandBy_ = false;
 };

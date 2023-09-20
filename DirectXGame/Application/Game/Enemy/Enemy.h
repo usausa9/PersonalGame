@@ -2,7 +2,6 @@
 #include "UsaMath.h"
 #include "Input.h"
 #include "PlayerBullet.h"
-#include "TimeData.h"
 #include "SplineCurve.h"
 
 #include <list>
@@ -28,6 +27,8 @@ public:	// メンバ関数
 
 	// 発生処理
 	void Spawn();
+
+
 
 	/// <summary>
 	/// 衝突時のコールバック関数

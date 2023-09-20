@@ -195,7 +195,7 @@ void Player::DrawUI()
 	{
 		if (bullet->IsDrawSP())
 		{
-			aSp_->Draw();
+			//aSp_->Draw();
 		};
 	}
 
