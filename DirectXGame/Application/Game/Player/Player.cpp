@@ -284,6 +284,6 @@ void Player::Shot()
 			bullets_.back()->Initialize(&bulletModel_, GetWorldPosition() + delayPos, velocity);
 		}
 	}
-	// Timerのアップデート
+	// タイマーのアップデート
 	shotTimeData_.Update();
 }
