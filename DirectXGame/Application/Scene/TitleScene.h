@@ -17,6 +17,7 @@
 #include "OBJModel.h"
 
 #include "Skydome.h"
+#include "TimeData.h"
 
 class CollisionManager;
 
@@ -35,8 +36,17 @@ private:
 
 	// タイトルスプライト
 	TextureIndex titleTex_ = {};
+	TextureIndex titleSceneTex_ = {}; 
+	TextureIndex plessKeyTex_ = {};
 	unique_ptr<Sprite> titleSprite_ = nullptr;
-	const Vector2 SPRITE_BASE_POS_ = { 640, 360 };
+	unique_ptr<Sprite> titleSceneSprite_ = nullptr;
+	unique_ptr<Sprite> plessKeySprite_ = nullptr;
+	const Vector2 TITLE_BASE_POS_ = { 640, 360 };
+	const Vector2 TITLE_SCENE_BASE_POS_ = { 640, 240 };
+	const Vector2 PLESS_KEY_BASE_POS_ = { 640, 480 };
+
+	// 天球
+	unique_ptr<Skydome> skydome_ = nullptr;
 
 public:
 	// 初期化

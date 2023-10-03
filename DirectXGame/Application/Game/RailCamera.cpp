@@ -3,6 +3,8 @@
 
 using namespace Input;
 
+bool RailCamera::isMove_ = false;
+
 RailCamera::~RailCamera()
 {
 	delete worldTransform_;
@@ -31,14 +33,17 @@ void RailCamera::Initialize(const Vector3& pos, const Vector3& rot)
 	std::vector<Vector3> points{ start,p1,p2,end };
 
 	spline_.SetPositions(points);
+
+	isMove_ = false;
 }
 
 void RailCamera::Update()
 {
 	// スプライン曲線によって動かす
-	if (Key::Trigger(DIK_O))
+	if (isMove_ == false)
 	{
 		spline_.MoveStart(2800.0f, true);
+		isMove_ = true;
 	}
 
 	// 曲線のアップデート

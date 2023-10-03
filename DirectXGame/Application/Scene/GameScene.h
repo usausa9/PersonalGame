@@ -39,6 +39,9 @@ private:
 	unique_ptr<Player> player_ = nullptr;
 	std::list<std::unique_ptr<Enemy>> enemys_;
 
+	// “G‹@ƒ‚ƒfƒ‹
+	OBJModel enemyModel_[2];
+
 	// “V‹…
 	unique_ptr<Skydome> skydome_ = nullptr;
 

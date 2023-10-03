@@ -124,35 +124,14 @@ void GameScene::Draw2D()
 
 void GameScene::EnemySpawn(uint8_t enemyKind, uint8_t trajectoryKind)
 {
-	if (enemyKind == uint8_t(EnemyKinds::NORMAL))
-	{
-		std::vector<Vector3> enemyMovePoints = TrajectoryKind(trajectoryKind);
+	std::vector<Vector3> enemyMovePoints = TrajectoryKind(trajectoryKind);
 
-
-		// “G‚Ì¶¬‚Æ‰Šú‰»
-		std::unique_ptr<Enemy> newEnemy = std::make_unique<Enemy>();
-		newEnemy->Initialize(enemyMovePoints, enemyKind);
-		newEnemy->Spawn();
-
-		// ƒŠƒXƒg‚É“o˜^
-		enemys_.push_back(std::move(newEnemy));
-	}
-	else if (enemyKind == uint8_t(EnemyKinds::POWER))
-	{
-		std::vector<Vector3> enemyMovePoints = TrajectoryKind(trajectoryKind);
-	
-		// “G‚Ì¶¬‚Æ‰Šú‰»
-		std::unique_ptr<Enemy> newEnemy = std::make_unique<Enemy>();
-		newEnemy->Initialize(enemyMovePoints, enemyKind);
-		newEnemy->Spawn();
-
-		// ƒŠƒXƒg‚É“o˜^
-		enemys_.push_back(std::move(newEnemy));
-	}
-	else
-	{
-
-	}
+	// “G‚Ì¶¬‚Æ‰Šú‰»
+	std::unique_ptr<Enemy> newEnemy = std::make_unique<Enemy>();
+	newEnemy->Initialize(enemyMovePoints, enemyKind);
+	newEnemy->Spawn();
+	// ƒŠƒXƒg‚É“o˜^
+	enemys_.push_back(std::move(newEnemy));
 }
 
 void GameScene::LoadCsvFile()

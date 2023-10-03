@@ -20,10 +20,25 @@ void TitleScene::Initialize()
 	railCamera_ = new RailCamera();
 	railCamera_->Initialize({ 0, 0, -20.0f }, { 0, 0, 0 });
 
+	// 天球
+	skydome_ = make_unique<Skydome>();
+	skydome_.get()->Initialize();
+
+	// 天球の行列更新
+	skydome_->Update();
+
 	// タイトルスプライト
 	titleTex_ = TextureManager::Load(L"Resources/Sprites/title.png");
 	titleSprite_ = make_unique<Sprite>(titleTex_);
-	titleSprite_->position_ = SPRITE_BASE_POS_;
+	titleSprite_->position_ = TITLE_BASE_POS_;
+
+	titleSceneTex_ = TextureManager::Load(L"Resources/Sprites/title_scene.png");
+	titleSceneSprite_ = make_unique<Sprite>(titleSceneTex_);
+	titleSceneSprite_->position_ = TITLE_SCENE_BASE_POS_;
+
+	plessKeyTex_ = TextureManager::Load(L"Resources/Sprites/pless_key.png");
+	plessKeySprite_ = make_unique<Sprite>(plessKeyTex_);
+	plessKeySprite_->position_ = PLESS_KEY_BASE_POS_;
 }
 
 void TitleScene::Finalize()
@@ -33,10 +48,10 @@ void TitleScene::Finalize()
 
 void TitleScene::Update()
 {
-	// 取りあえず仮でTキーを押したらゲームシーンに。
+	// SPACEキーを押したらゲームシーンに。
 	isStart_ = false;
 
-	if (Key::Trigger(DIK_T))
+	if (Key::Trigger(DIK_SPACE))
 	{
 		isStart_ = true;
 	}
@@ -51,27 +66,32 @@ void TitleScene::Update()
 	camera_ = railCamera_->GetCamera();
 	camera_->Update();
 
-	// タイトルスプライト更新3
+	// タイトルスプライト更新
 	titleSprite_->Update();
+	titleSceneSprite_->Update();
+	plessKeySprite_->Update();
 }
 
 void TitleScene::Draw3D()
 {
 	// カメラセット
 	camera_->Set();
+	
+	// 天球描画
+	skydome_->Draw();
 }
 
 void TitleScene::DrawParticle()
 {
 	// カメラセット
 	camera_->Set();
-
-	// パーティクルオブジェ描画
 }
 
 void TitleScene::Draw2D()
 {
-	titleSprite_->Draw();
+	//titleSprite_->Draw();
+	titleSceneSprite_->Draw();
+	plessKeySprite_->Draw();
 }
 
 void TitleScene::PossibleStartGame()
