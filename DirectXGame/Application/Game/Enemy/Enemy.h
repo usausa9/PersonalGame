@@ -13,6 +13,15 @@ enum class EnemyKinds : uint8_t
 	POWER = 0x0002,// 自機が強化される
 };
 
+// 軌道の種類
+enum class TrajectoryKinds : uint8_t
+{
+	CENTER_STRAIGHT = 0x0001,
+
+	LEFT_2_RIGHT = 0x0003,
+	RIGHT_2_LEFT = 0x0004,
+};
+
 class Enemy : public Object3D
 {
 public:	// メンバ関数
@@ -27,8 +36,6 @@ public:	// メンバ関数
 
 	// 発生処理
 	void Spawn();
-
-
 
 	/// <summary>
 	/// 衝突時のコールバック関数

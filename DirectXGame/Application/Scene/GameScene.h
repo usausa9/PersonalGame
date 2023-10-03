@@ -63,13 +63,16 @@ public:
 
 public:
 	// 敵
-	void EnemySpawn(uint8_t enemyKind);
+	void EnemySpawn(uint8_t enemyKind, uint8_t trajectoryKind);
 
 	// ファイル読み込み
 	void LoadCsvFile();
 
 	// 読み込んだデータから敵の種類付け等
-	void LoadData();
+	void UpdateEnemyData();
+
+	// 敵の起動種類
+	std::vector<Vector3> TrajectoryKind(uint8_t trajectoryKind);
 
 	// 敵発生コマンド
 	std::stringstream enemyData_;
