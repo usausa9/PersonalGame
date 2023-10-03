@@ -39,6 +39,8 @@ void TitleScene::Initialize()
 	plessKeyTex_ = TextureManager::Load(L"Resources/Sprites/pless_key.png");
 	plessKeySprite_ = make_unique<Sprite>(plessKeyTex_);
 	plessKeySprite_->position_ = PLESS_KEY_BASE_POS_;
+
+	plessAnimeTimer.Start(float)
 }
 
 void TitleScene::Finalize()

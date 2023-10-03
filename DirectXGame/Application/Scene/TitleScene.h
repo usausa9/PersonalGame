@@ -23,31 +23,6 @@ class CollisionManager;
 
 class TitleScene : public IScene
 {
-private:
-	// カメラ
-	Camera* camera_ = nullptr;
-	RailCamera* railCamera_ = nullptr;
-
-	// プレイヤー,敵
-	std::list<std::unique_ptr<Enemy>> enemys_;
-
-	// シーン切り替えフラグ
-	bool isStart_ = false;
-
-	// タイトルスプライト
-	TextureIndex titleTex_ = {};
-	TextureIndex titleSceneTex_ = {}; 
-	TextureIndex plessKeyTex_ = {};
-	unique_ptr<Sprite> titleSprite_ = nullptr;
-	unique_ptr<Sprite> titleSceneSprite_ = nullptr;
-	unique_ptr<Sprite> plessKeySprite_ = nullptr;
-	const Vector2 TITLE_BASE_POS_ = { 640, 360 };
-	const Vector2 TITLE_SCENE_BASE_POS_ = { 640, 240 };
-	const Vector2 PLESS_KEY_BASE_POS_ = { 640, 480 };
-
-	// 天球
-	unique_ptr<Skydome> skydome_ = nullptr;
-
 public:
 	// 初期化
 	void Initialize() override;
@@ -69,4 +44,36 @@ public:
 
 	// ゲームシーンへ
 	void PossibleStartGame();
+
+private:
+	// カメラ
+	Camera* camera_ = nullptr;
+	RailCamera* railCamera_ = nullptr;
+
+	// プレイヤー,敵
+	std::list<std::unique_ptr<Enemy>> enemys_;
+
+	// シーン切り替えフラグ
+	bool isStart_ = false;
+
+	// タイトルスプライト
+	TextureIndex titleTex_ = {};
+	TextureIndex titleSceneTex_ = {};
+	TextureIndex plessKeyTex_ = {};
+	unique_ptr<Sprite> titleSprite_ = nullptr;
+	unique_ptr<Sprite> titleSceneSprite_ = nullptr;
+	unique_ptr<Sprite> plessKeySprite_ = nullptr;
+	const Vector2 TITLE_BASE_POS_ = { 640, 360 };
+	const Vector2 TITLE_SCENE_BASE_POS_ = { 640, 240 };
+	const Vector2 PLESS_KEY_BASE_POS_ = { 640, 480 };
+
+	// プレスキーの大きさ
+	float plessKeySpriteSize_ = 1.f;
+
+	// プレスキーのアニメーション用
+	TimeData plessAnimeTimer;
+	const float PLESS_ANIME_MAX_TIMER_ = 60;
+
+	// 天球
+	unique_ptr<Skydome> skydome_ = nullptr;
 };
