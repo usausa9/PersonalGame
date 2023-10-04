@@ -5,6 +5,8 @@
 
 #include "Matrix4.h"
 
+#include "Easing.h"
+
 #include <cmath>
 
 namespace UsaMath

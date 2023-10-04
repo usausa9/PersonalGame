@@ -32,6 +32,9 @@ public:
 	// レートのゲッター
 	float GetTimeRate() { return timeRate_; }
 
+	// 1 - レートのゲッター
+	float GetDisTimeRate() { return 1.f - timeRate_; }
+
 	// アクティブのゲッター
 	bool GetActive() { return isActive_; }
-};
+}; 

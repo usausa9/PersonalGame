@@ -138,6 +138,7 @@
     <ClInclude Include="DirectXGame\Engine\Base\Scene\SceneManager.h" />
     <ClInclude Include="DirectXGame\Application\Base\SceneFactory.h" />
     <ClInclude Include="DirectXGame\Application\Game\Score.h" />
+    <ClInclude Include="DirectXGame\Engine\Base\Math\Easing.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\shaders\Basic.hlsli" />
@@ -240,6 +241,7 @@
     <ClCompile Include="DirectXGame\Application\Game\Player\PlayerState.cpp" />
     <ClCompile Include="DirectXGame\Engine\Base\Scene\UsaFramework.cpp" />
     <ClCompile Include="DirectXGame\Application\Game\Score.cpp" />
+    <ClCompile Include="DirectXGame\Engine\Base\Math\Easing.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="External\DirectXTex\DirectXTex_Desktop_2022_Win10.vcxproj">

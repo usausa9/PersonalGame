@@ -36,11 +36,11 @@ void TitleScene::Initialize()
 	titleSceneSprite_ = make_unique<Sprite>(titleSceneTex_);
 	titleSceneSprite_->position_ = TITLE_SCENE_BASE_POS_;
 
-	plessKeyTex_ = TextureManager::Load(L"Resources/Sprites/pless_key.png");
-	plessKeySprite_ = make_unique<Sprite>(plessKeyTex_);
-	plessKeySprite_->position_ = PLESS_KEY_BASE_POS_;
+	pressKeyTex_ = TextureManager::Load(L"Resources/Sprites/press_key.png");
+	pressKeySprite_ = make_unique<Sprite>(pressKeyTex_);
+	pressKeySprite_->position_ = PRESS_KEY_BASE_POS_;
 
-	plessAnimeTimer.Start(float)
+	nowActiveTimer_ = 0;
 }
 
 void TitleScene::Finalize()
@@ -68,10 +68,40 @@ void TitleScene::Update()
 	camera_ = railCamera_->GetCamera();
 	camera_->Update();
 
+	// pressKEYのアニメーションタイマー更新
+	if (nowActiveTimer_ == 0 && !pressAnimeTimer_[1].GetActive())
+	{
+		pressAnimeTimer_[0].Start(PRESS_ANIME_MAX_TIMER_);
+		nowActiveTimer_ = 1;
+	}
+	else if (nowActiveTimer_ == 1 && !pressAnimeTimer_[0].GetActive())
+	{
+		pressAnimeTimer_[1].Start(PRESS_ANIME_MAX_TIMER_);
+		nowActiveTimer_ = 0;
+	}
+
+	pressAnimeTimer_[0].Update();
+	pressAnimeTimer_[1].Update();
+
+	if (nowActiveTimer_ == 1)
+	{
+		kPressKeySpriteSize_ = {
+		0.8f + (Easing::In(pressAnimeTimer_[0].GetTimeRate()) / 3),
+		0.8f + (Easing::In(pressAnimeTimer_[0].GetTimeRate()) / 3)};
+	}
+	else
+	{
+		kPressKeySpriteSize_ = {
+		0.8f + (Easing::In(pressAnimeTimer_[1].GetDisTimeRate()) / 3),
+		0.8f + (Easing::In(pressAnimeTimer_[1].GetDisTimeRate()) / 3)};
+	}
+
+	pressKeySprite_->scale_ = { kPressKeySpriteSize_ };
+
 	// タイトルスプライト更新
 	titleSprite_->Update();
 	titleSceneSprite_->Update();
-	plessKeySprite_->Update();
+	pressKeySprite_->Update();
 }
 
 void TitleScene::Draw3D()
@@ -93,7 +123,7 @@ void TitleScene::Draw2D()
 {
 	//titleSprite_->Draw();
 	titleSceneSprite_->Draw();
-	plessKeySprite_->Draw();
+	pressKeySprite_->Draw();
 }
 
 void TitleScene::PossibleStartGame()
