@@ -13,11 +13,11 @@ void PlayerBullet::Initialize(bool bulletState, OBJModel* model, const Vector3& 
 	position_ = pos;
 	if (bulletState == true)
 	{
-		scale_ = { 2.2f,2.2f,2.2f };
+		scale_ = SMALL_SCALE_;
 	}
 	else
 	{
-		scale_ = { 1.5f,1.5f,1.5f };
+		scale_ = EXPAND_SCALE_;
 	}
 	InitializeObject3D();
 
@@ -28,11 +28,11 @@ void PlayerBullet::Initialize(bool bulletState, OBJModel* model, const Vector3& 
 	float radius = 0.f;
 	if (bulletState == true)
 	{
-		radius = 4.f;
+		radius = EXPAND_COLLIDER_SIZE_;
 	}
 	else
 	{
-		radius = 2.7f;
+		radius = SMALL_COLLIDER_SIZE_;
 	}
 	// îºåaï™ÇæÇØë´å≥Ç©ÇÁïÇÇ¢ÇΩç¿ïWÇãÖÇÃíÜêSÇ…Ç∑ÇÈ
 	SetCollider(new SphereCollider(Vector3({ 0, radius, 0 }), radius));

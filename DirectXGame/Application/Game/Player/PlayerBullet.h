@@ -41,6 +41,14 @@ private:
 	// デバッグ用
 	static bool isDrawSp_;
 
+	// 自機強化に応じたサイズパラメータ
+	const float SMALL_SIZE_ = 1.5f;
+	const float EXPAND_SIZE_ = 2.2f;
+	const float SMALL_COLLIDER_SIZE_ = 2.5f;
+	const float EXPAND_COLLIDER_SIZE_ = 4.f;
+	const Vector3 SMALL_SCALE_ = { SMALL_SIZE_, SMALL_SIZE_, SMALL_SIZE_};
+	const Vector3 EXPAND_SCALE_ = { EXPAND_SIZE_, EXPAND_SIZE_, EXPAND_SIZE_ };
+
 public:
 	// 外部参照用のGetter
 	bool IsDead() const { return isDead_; }
