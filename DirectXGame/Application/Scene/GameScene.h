@@ -25,6 +25,13 @@
 
 class CollisionManager;
 
+enum class Phase : uint8_t
+{
+	IDLE = 0x0000,
+	MOB = 0x0001,
+	BOSS = 0x0002,
+};
+
 class GameScene : public IScene
 {
 private:

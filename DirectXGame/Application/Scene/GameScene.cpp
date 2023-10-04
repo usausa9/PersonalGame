@@ -154,11 +154,11 @@ std::vector<Vector3> GameScene::TrajectoryKind(uint8_t trajectoryKind)
 	{
 		// スプライン制御点
 		float z = 40.0f;
-		Vector3 start = { -10,  0, z };
-		Vector3 p1 =	{  -5,  5, z };
+		Vector3 start = { -20,  0, z };
+		Vector3 p1 =	{ -10, 10, z };
 		Vector3 p2 =    {	0,  0, z };
-		Vector3 p3 =	{	5, -5, z };
-		Vector3 end =	{  10,  0, z };
+		Vector3 p3 =	{  10,-10, z };
+		Vector3 end =	{  20,  0, z };
 
 		std::vector<Vector3> movePoints = { start, p1, p2, p3, end };
 
@@ -168,11 +168,11 @@ std::vector<Vector3> GameScene::TrajectoryKind(uint8_t trajectoryKind)
 	{
 		// スプライン制御点
 		float z = 40.0f;
-		Vector3 start =	{  10,  0, z };
-		Vector3 p1 =	{   5, -5, z };
+		Vector3 start =	{  20,  0, z };
+		Vector3 p1 =	{  10,-10, z };
 		Vector3 p2 =	{   0,  0, z };
-		Vector3 p3 =	{  -5,  5, z };
-		Vector3 end =	{ -10,  0, z };
+		Vector3 p3 =	{ -10, 10, z };
+		Vector3 end =	{ -20,  0, z };
 
 		std::vector<Vector3> movePoints = { start, p1, p2, p3, end };
 

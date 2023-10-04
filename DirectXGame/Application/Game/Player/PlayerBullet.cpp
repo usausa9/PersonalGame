@@ -4,20 +4,36 @@
 
 bool PlayerBullet::isDrawSp_ = false;
 
-void PlayerBullet::Initialize(OBJModel* model, const Vector3& pos, const Vector3& vel)
+void PlayerBullet::Initialize(bool bulletState, OBJModel* model, const Vector3& pos, const Vector3& vel)
 {
 	// モデル紐づけ(仮引数で貰ってくる)
 	objModel_ = model;
 
-	// 行列更新,位置更新
+	// 行列更新
 	position_ = pos;
+	if (bulletState == true)
+	{
+		scale_ = { 2.2f,2.2f,2.2f };
+	}
+	else
+	{
+		scale_ = { 1.5f,1.5f,1.5f };
+	}
 	InitializeObject3D();
 
 	// 引数で移動量を受け取る
 	velocity_ = vel;
 
-	// コライダーの追加
-	float radius = 1.0f;
+	// コライダーの追加 (強化ステートによりけり弾の大きさを変更)
+	float radius = 0.f;
+	if (bulletState == true)
+	{
+		radius = 4.f;
+	}
+	else
+	{
+		radius = 2.7f;
+	}
 	// 半径分だけ足元から浮いた座標を球の中心にする
 	SetCollider(new SphereCollider(Vector3({ 0, radius, 0 }), radius));
 	collider_->SetAttribute(COLLISION_ATTR_ALLIES);

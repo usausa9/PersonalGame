@@ -281,7 +281,9 @@ void Player::Shot()
 	
 			// 自機弾を生成、初期化
 			bullets_.push_back(std::move(make_unique<PlayerBullet>()));
-			bullets_.back()->Initialize(&bulletModel_, GetWorldPosition() + delayPos, velocity);
+
+
+			bullets_.back()->Initialize(state_.ExpandNum(), &bulletModel_, GetWorldPosition() + delayPos, velocity);
 		}
 	}
 	// タイマーのアップデート

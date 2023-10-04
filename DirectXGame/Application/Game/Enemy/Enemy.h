@@ -10,7 +10,7 @@
 enum class EnemyKinds : uint8_t
 {
 	NORMAL = 0x0001,// ’Êí‚Ì“G
-	POWER = 0x0002,// ©‹@‚ª‹­‰»‚³‚ê‚é
+	POWER = 0x0002,	// ©‹@‚ª‹­‰»‚³‚ê‚é
 };
 
 // ‹O“¹‚Ìí—Ş

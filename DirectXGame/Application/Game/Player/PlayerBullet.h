@@ -11,7 +11,7 @@ public:
 	/// </summary>
 	/// <param name="model">自機弾 モデル</param>
 	/// <param name="pos">発射位置</param>
-	void Initialize(OBJModel* model, const Vector3& pos, const Vector3& velocity);
+	void Initialize(bool bulletState, OBJModel* model, const Vector3& pos, const Vector3& velocity);
 
 	// 更新処理
 	void Update();
