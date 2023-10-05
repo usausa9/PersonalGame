@@ -5,7 +5,7 @@
 #include "Vector3.h"
 
 /// <summary>
-/// ‹…Õ“Ë”»’èƒIƒuƒWƒFƒNƒg
+/// çƒè¡çªåˆ¤å®šã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
 /// </summary>
 class SphereCollider : public BaseCollider, public Sphere
 {
@@ -14,20 +14,20 @@ public:
 		offset_(offset),
 		radius_(radius)
 	{
-		// ‹…Œ`ó‚ğƒZƒbƒg
+		// çƒå½¢çŠ¶ã‚’ã‚»ãƒƒãƒˆ
 		shapeType_ = COLLISIONSHAPE_SPHERE;
 	}
 
 	/// <summary>
-	/// XV
+	/// æ›´æ–°
 	/// </summary>
 	void Update() override;
 
 	inline void SetRadius(float radius) { this->radius_ = radius; }
 
 private:
-	// ƒIƒuƒWƒFƒNƒg’†S‚©‚ç‚ÌƒIƒtƒZƒbƒg
+	// ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆä¸­å¿ƒã‹ã‚‰ã®ã‚ªãƒ•ã‚»ãƒƒãƒˆ
 	Vector3 offset_;
-	// ”¼Œa
+	// åŠå¾„
 	float radius_;
 };

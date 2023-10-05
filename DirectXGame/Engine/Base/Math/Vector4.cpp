@@ -1,20 +1,20 @@
 #include "Vector4.h"
 #include <cmath>	// sqrt
 
-// ƒRƒ“ƒXƒgƒ‰ƒNƒ^
-// —ëƒxƒNƒgƒ‹‚Æ‚µ‚Ä¶¬
+// ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
+// é›¶ãƒ™ã‚¯ãƒˆãƒ«ã¨ã—ã¦ç”Ÿæˆ
 Vector4::Vector4() : x(0), y(0), z(0), w(0) {}
 
-// x,y¬•ª‚ğw’è‚µ‚Ä‚Ì¶¬
+// x,yæˆåˆ†ã‚’æŒ‡å®šã—ã¦ã®ç”Ÿæˆ
 Vector4::Vector4(float x, float y, float z, float w) :x(x), y(y), z(z), w(w) {}
 
-// ƒmƒ‹ƒ€(’·‚³)‚ğ‹‚ß‚é
+// ãƒãƒ«ãƒ (é•·ã•)ã‚’æ±‚ã‚ã‚‹
 float Vector4::Length() const
 {
 	return sqrt(x * x + y * y + z * z + w * w);
 }
 
-// ³‹K‰»
+// æ­£è¦åŒ–
 Vector4& Vector4::Normalize() /*const*/
 {
 	float len = Length();
@@ -26,13 +26,13 @@ Vector4& Vector4::Normalize() /*const*/
 	return *this;
 }
 
-// “àÏ‚ğ‹‚ß‚é
+// å†…ç©ã‚’æ±‚ã‚ã‚‹
 float Vector4::Dot(const Vector4& v)
 {
 	return x * v.x + y * v.y + z * v.z + w * v.w;
 }
 
-// ’P€‰‰ZqƒI[ƒo[ƒ[ƒh
+// å˜é …æ¼”ç®—å­ã‚ªãƒ¼ãƒãƒ¼ãƒ­ãƒ¼ãƒ‰
 Vector4 Vector4::operator+() const
 {
 	return *this;
@@ -43,7 +43,7 @@ Vector4 Vector4::operator-() const
 	return Vector4(-x, -y, -z, -w);
 }
 
-// ‘ã“ü‰‰ZqƒI[ƒo[ƒ[ƒh
+// ä»£å…¥æ¼”ç®—å­ã‚ªãƒ¼ãƒãƒ¼ãƒ­ãƒ¼ãƒ‰
 Vector4& Vector4::operator+=(const Vector4& v)
 {
 	x += v.x;
@@ -78,7 +78,7 @@ Vector4& Vector4::operator/=(float s)
 	return*this;
 }
 
-// 2€‰‰ZqƒI[ƒo[ƒ[ƒh
+// 2é …æ¼”ç®—å­ã‚ªãƒ¼ãƒãƒ¼ãƒ­ãƒ¼ãƒ‰
 const Vector4 operator+(const Vector4& v1, const Vector4& v2)
 {
 	Vector4 temp(v1);

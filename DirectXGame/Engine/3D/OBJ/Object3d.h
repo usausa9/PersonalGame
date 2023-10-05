@@ -9,77 +9,77 @@
 
 class BaseCollider;
 
-// ’è”ƒoƒbƒtƒ@—pƒf[ƒ^\‘¢‘Ì (3D•ÏŠ·s—ñ)
+// å®šæ•°ãƒãƒƒãƒ•ã‚¡ç”¨ãƒ‡ãƒ¼ã‚¿æ§‹é€ ä½“ (3Då¤‰æ›è¡Œåˆ—)
 struct Object3DConstBufferDataTransform
 {
-	Matrix4 mat; // 3D•ÏŠ·s—ñ
+	Matrix4 mat; // 3Då¤‰æ›è¡Œåˆ—
 };
 
 class Object3D
 {
-public: // ƒƒ“ƒo•Ï”
-	// ƒJƒƒ‰
+public: // ãƒ¡ãƒ³ãƒå¤‰æ•°
+	// ã‚«ãƒ¡ãƒ©
 	static Camera* sCamera_;
 
-	// ’è”ƒoƒbƒtƒ@ (s—ñ—p)
+	// å®šæ•°ãƒãƒƒãƒ•ã‚¡ (è¡Œåˆ—ç”¨)
 	ID3D12Resource* constBuffTransform_ = nullptr;
 
-	// ’è”ƒoƒbƒtƒ@ƒ}ƒbƒv (s—ñ—p)
+	// å®šæ•°ãƒãƒƒãƒ•ã‚¡ãƒãƒƒãƒ— (è¡Œåˆ—ç”¨)
 	Object3DConstBufferDataTransform* constMapTransform_ = nullptr;
 
-	// ƒAƒtƒBƒ“•ÏŠ·î•ñ
+	// ã‚¢ãƒ•ã‚£ãƒ³å¤‰æ›æƒ…å ±
 	Vector3 scale_ = { 1,1,1 };
 	Vector3 rotation_ = { 0,0,0 };
 	Vector3 position_ = { 0,0,0 };
 
 	Vector3 GetWorldPosition() const { return { matWorld_.m[3][0], matWorld_.m[3][1], matWorld_.m[3][2] }; }
 
-	// ƒ[ƒ‹ƒh•ÏŠ·s—ñ
+	// ãƒ¯ãƒ¼ãƒ«ãƒ‰å¤‰æ›è¡Œåˆ—
 	Matrix4 matWorld_ = Matrix4::Identity();
 
-	// eƒIƒuƒWƒFƒNƒg‚Ö‚Ìƒ|ƒCƒ“ƒ^
+	// è¦ªã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã¸ã®ãƒã‚¤ãƒ³ã‚¿
 	Object3D* parent_ = nullptr;
 
-	// ƒ‚ƒfƒ‹‚Ìƒ|ƒCƒ“ƒ^
+	// ãƒ¢ãƒ‡ãƒ«ã®ãƒã‚¤ãƒ³ã‚¿
 	OBJModel* objModel_ = nullptr;
 
-	// ƒNƒ‰ƒX–¼ (ƒfƒoƒbƒO—p)
+	// ã‚¯ãƒ©ã‚¹å (ãƒ‡ãƒãƒƒã‚°ç”¨)
 	const char* NAME_ = nullptr;
 
-	// ƒRƒ‰ƒCƒ_[
+	// ã‚³ãƒ©ã‚¤ãƒ€ãƒ¼
 	BaseCollider* collider_ = nullptr;
 
 public:
-	// ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+	// ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 	Object3D() = default;
 
-	// ƒfƒXƒgƒ‰ƒNƒ^
+	// ãƒ‡ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 	virtual ~Object3D();
 
-	// 3DƒIƒuƒWƒFƒNƒg‰Šú‰»
+	// 3Dã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆåˆæœŸåŒ–
 	virtual void InitializeObject3D();
 
-	// 3DƒIƒuƒWƒFƒNƒgXVˆ—
+	// 3Dã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆæ›´æ–°å‡¦ç†
 	virtual void UpdateObject3D();
 
-	// 3DƒIƒuƒWƒFƒNƒg•`‰æˆ—
+	// 3Dã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆæç”»å‡¦ç†
 	virtual void DrawObject3D();
 
 	/// <summary>
-	/// ƒ[ƒ‹ƒhs—ñ‚Ìæ“¾
+	/// ãƒ¯ãƒ¼ãƒ«ãƒ‰è¡Œåˆ—ã®å–å¾—
 	/// </summary>
-	/// <returns>ƒ[ƒ‹ƒhs—ñ</returns>
+	/// <returns>ãƒ¯ãƒ¼ãƒ«ãƒ‰è¡Œåˆ—</returns>
 	const Matrix4& GetMatWorld() { return matWorld_; }
 
 	/// <summary>
-	/// ƒRƒ‰ƒCƒ_[‚ÌƒZƒbƒg
+	/// ã‚³ãƒ©ã‚¤ãƒ€ãƒ¼ã®ã‚»ãƒƒãƒˆ
 	/// </summary>
-	/// <param name="collider">ƒRƒ‰ƒCƒ_[</param>
+	/// <param name="collider">ã‚³ãƒ©ã‚¤ãƒ€ãƒ¼</param>
 	void SetCollider(BaseCollider* collider);
 
 	/// <summary>
-	/// Õ“ËƒR[ƒ‹ƒoƒbƒNŠÖ”
+	/// è¡çªæ™‚ã‚³ãƒ¼ãƒ«ãƒãƒƒã‚¯é–¢æ•°
 	/// </summary>
-	/// <param name="info">Õ“Ëî•ñ</param>
+	/// <param name="info">è¡çªæƒ…å ±</param>
 	virtual void OnCollision(const CollisionInfo& info) {}
 };

@@ -7,32 +7,32 @@
 
 class RailCamera
 {
-public:	// ƒƒ“ƒoŠÖ”
-	// ƒfƒXƒgƒ‰ƒNƒ^
+public:	// ãƒ¡ãƒ³ãƒé–¢æ•°
+	// ãƒ‡ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 	~RailCamera();
 
-	// ‰Šú‰»ˆ—
+	// åˆæœŸåŒ–å‡¦ç†
 	void Initialize(const Vector3& pos, const Vector3& rot);
 
-	// XVˆ—
+	// æ›´æ–°å‡¦ç†
 	void Update();
 
-	// ƒIƒuƒWƒFƒNƒg‚ÌƒQƒbƒ^[
+	// ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®ã‚²ãƒƒã‚¿ãƒ¼
 	Object3D* GetObject3d()const { return worldTransform_; }
 
-	// ƒJƒƒ‰‚ÌƒQƒbƒ^[
+	// ã‚«ãƒ¡ãƒ©ã®ã‚²ãƒƒã‚¿ãƒ¼
 	Camera* GetCamera()const { return camera_; }
 
-private: // ƒƒ“ƒo•Ï”
-	// ƒ[ƒ‹ƒh•ÏŠ·ƒf[ƒ^
+private: // ãƒ¡ãƒ³ãƒå¤‰æ•°
+	// ãƒ¯ãƒ¼ãƒ«ãƒ‰å¤‰æ›ãƒ‡ãƒ¼ã‚¿
 	Object3D* worldTransform_ = nullptr;
 
-	// ƒJƒƒ‰
+	// ã‚«ãƒ¡ãƒ©
 	Camera* camera_ = nullptr;
 
-	// ƒJƒƒ‰—pƒXƒvƒ‰ƒCƒ“‹Èü
+	// ã‚«ãƒ¡ãƒ©ç”¨ã‚¹ãƒ—ãƒ©ã‚¤ãƒ³æ›²ç·š
 	SplineCurve spline_;
 
-	// “®‚¢‚Ä‚¢‚é‚©ƒtƒ‰ƒO
+	// å‹•ã„ã¦ã„ã‚‹ã‹ãƒ•ãƒ©ã‚°
 	static bool isMove_;
 };

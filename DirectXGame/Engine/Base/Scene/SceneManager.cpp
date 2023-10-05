@@ -12,61 +12,61 @@ void SceneManager::ChangeScene(const std::string& sceneName)
 	assert(sceneFactory_);
 	assert(nextScene_ == nullptr);
 
-	// ŽŸƒV[ƒ“‚ð¶¬
+	// æ¬¡ã‚·ãƒ¼ãƒ³ã‚’ç”Ÿæˆ
 	nextScene_ = sceneFactory_->CreateScene(sceneName);
 }
 
 void SceneManager::Update()
 {
-	// Ø‚è‘Ö‚¦‹@\
+	// åˆ‡ã‚Šæ›¿ãˆæ©Ÿæ§‹
 
-	// ŽŸƒV[ƒ“‚Ì—\–ñ‚ª‚ ‚é‚È‚ç
+	// æ¬¡ã‚·ãƒ¼ãƒ³ã®äºˆç´„ãŒã‚ã‚‹ãªã‚‰
 	if (nextScene_)
 	{
-		// ‹ŒƒV[ƒ“‚ÌI—¹
+		// æ—§ã‚·ãƒ¼ãƒ³ã®çµ‚äº†
 		if (currentScene_)
 		{
-			// Œ»ÝƒV[ƒ“‚ÌI—¹ˆ—
+			// ç¾åœ¨ã‚·ãƒ¼ãƒ³ã®çµ‚äº†å‡¦ç†
 			currentScene_->Finalize();
 			delete currentScene_;
 		}
 
-		// ƒV[ƒ“Ø‚è‘Ö‚¦
+		// ã‚·ãƒ¼ãƒ³åˆ‡ã‚Šæ›¿ãˆ
 		currentScene_ = nextScene_;
 		nextScene_ = nullptr;
 
-		// ƒV[ƒ“ƒ}ƒl[ƒWƒƒ‚ðƒZƒbƒg
+		// ã‚·ãƒ¼ãƒ³ãƒžãƒãƒ¼ã‚¸ãƒ£ã‚’ã‚»ãƒƒãƒˆ
 		currentScene_->SetSceneManager(this);
 
-		// ŽŸƒV[ƒ“‚Ì‰Šú‰»
+		// æ¬¡ã‚·ãƒ¼ãƒ³ã®åˆæœŸåŒ–
 		currentScene_->Initialize();
 	}
 
-	// ŽÀs’†ƒV[ƒ“‚ðXV‚·‚é
+	// å®Ÿè¡Œä¸­ã‚·ãƒ¼ãƒ³ã‚’æ›´æ–°ã™ã‚‹
 	currentScene_->Update();
 }
 
 void SceneManager::Draw3D()
 {
-	// 3D•`‰æ
+	// 3Dæç”»
 	currentScene_->Draw3D();
 }
 
 void SceneManager::DrawParticle()
 {
-	// ƒp[ƒeƒBƒNƒ‹•`‰æ
+	// ãƒ‘ãƒ¼ãƒ†ã‚£ã‚¯ãƒ«æç”»
 	currentScene_->DrawParticle();
 }
 
 void SceneManager::Draw2D()
 {
-	// 2D•`‰æ
+	// 2Dæç”»
 	currentScene_->Draw2D();
 }
 
 SceneManager::~SceneManager()
 {
-	// ÅŒã‚ÌƒV[ƒ“‚ÌI—¹‚Æ‰ð•ú
+	// æœ€å¾Œã®ã‚·ãƒ¼ãƒ³ã®çµ‚äº†ã¨è§£æ”¾
 	currentScene_->Finalize();
 	delete currentScene_;
 }

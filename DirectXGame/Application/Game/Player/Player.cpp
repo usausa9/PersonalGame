@@ -5,69 +5,69 @@
 
 using namespace Input;
 
-// ‰Šú‰»
+// åˆæœŸåŒ–
 void Player::Initialize(Camera* camera)
 {
-	// ©‹@ƒ‚ƒfƒ‹“Ç‚İ‚İ
+	// è‡ªæ©Ÿãƒ¢ãƒ‡ãƒ«èª­ã¿è¾¼ã¿
 	playerModel_ = OBJModel::LoadFromOBJ("vicviper");
 	reticleModel_ = OBJModel::LoadFromOBJ("sphere");
 
-	// ƒŒƒeƒBƒNƒ‹ƒXƒvƒ‰ƒCƒgŠ„‚è“–‚Ä
+	// ãƒ¬ãƒ†ã‚£ã‚¯ãƒ«ã‚¹ãƒ—ãƒ©ã‚¤ãƒˆå‰²ã‚Šå½“ã¦
 	reticleTex_ = TextureManager::Load(L"Resources/Sprites/reticle.png");
 	reticleSp_ = make_unique<Sprite>(reticleTex_);
 	reticleSp_->position_ = reticlePos_;
 
-	// “–‚½‚è”»’èƒfƒoƒbƒO—pƒXƒvƒ‰ƒCƒg
+	// å½“ãŸã‚Šåˆ¤å®šãƒ‡ãƒãƒƒã‚°ç”¨ã‚¹ãƒ—ãƒ©ã‚¤ãƒˆ
 	aTex_ = TextureManager::Load(L"Resources/Sprites/texture.png");
 	aSp_ = make_unique<Sprite>(aTex_);
 	aSp_->position_ = { 100, 100 };
-	
-	// ©‹@‚Ìs—ñ‰Šú‰»
+
+	// è‡ªæ©Ÿã®è¡Œåˆ—åˆæœŸåŒ–
 	rotation_ = { 0, 0, 0 };
 	position_ = { 0, 0, 22 };
 	InitializeObject3D();
 
-	// ©‹@ƒ‚ƒfƒ‹‚Æ©‹@ƒIƒuƒWƒFƒNƒg‚ğ•R‚Ã‚¯
+	// è‡ªæ©Ÿãƒ¢ãƒ‡ãƒ«ã¨è‡ªæ©Ÿã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’ç´ã¥ã‘
 	objModel_ = &playerModel_;
 	reticleObj_.objModel_ = &reticleModel_;
 	reticleObj_.position_ = { 0, 0, 50 };
 	reticleObj_.InitializeObject3D();
 
-	// ƒvƒŒƒCƒ„[ó‘Ô‚Ì‰Šú‰»
+	// ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼çŠ¶æ…‹ã®åˆæœŸåŒ–
 	state_.Initialize();
 
-	// ƒRƒ‰ƒCƒ_[‚Ì’Ç‰Á
+	// ã‚³ãƒ©ã‚¤ãƒ€ãƒ¼ã®è¿½åŠ 
 	float radius = 0.6f;
-	// ”¼Œa•ª‚¾‚¯‘«Œ³‚©‚ç•‚‚¢‚½À•W‚ğ‹…‚Ì’†S‚É‚·‚é
-	SetCollider(new SphereCollider(Vector3({ 0, radius, 0 }),radius));
+	// åŠå¾„åˆ†ã ã‘è¶³å…ƒã‹ã‚‰æµ®ã„ãŸåº§æ¨™ã‚’çƒã®ä¸­å¿ƒã«ã™ã‚‹
+	SetCollider(new SphereCollider(Vector3({ 0, radius, 0 }), radius));
 	collider_->SetAttribute(COLLISION_ATTR_ALLIES);
 
-	// ©‹@’eƒ‚ƒfƒ‹“Ç‚İ‚İ
+	// è‡ªæ©Ÿå¼¾ãƒ¢ãƒ‡ãƒ«èª­ã¿è¾¼ã¿
 	bulletModel_ = OBJModel::LoadFromOBJ("sphere");
 }
 
-// XV
+// æ›´æ–°
 void Player::Update()
 {
-	// ƒvƒŒƒCƒ„[ó‘Ô‚ÌXV
+	// ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼çŠ¶æ…‹ã®æ›´æ–°
 	state_.Update();
 
-	// Á–Åƒtƒ‰ƒO‚ª—§‚Á‚½’e‚ğíœ
+	// æ¶ˆæ»…ãƒ•ãƒ©ã‚°ãŒç«‹ã£ãŸå¼¾ã‚’å‰Šé™¤
 	bullets_.remove_if([](unique_ptr<PlayerBullet>& bullet)
-	{
-		return bullet->IsDead();
-	});
+		{
+			return bullet->IsDead();
+		});
 
-	// “ü—Í‚©‚ç‚ÌˆÚ“®ˆ—
+	// å…¥åŠ›ã‹ã‚‰ã®ç§»å‹•å‡¦ç†
 	Move();
 
-	// s—ñXV •K‚¸ŒÄ‚Ño‚·
+	// è¡Œåˆ—æ›´æ–° å¿…ãšå‘¼ã³å‡ºã™
 	UpdateObject3D();
 
-	// ƒŒƒeƒBƒNƒ‹‚ÌXV
+	// ãƒ¬ãƒ†ã‚£ã‚¯ãƒ«ã®æ›´æ–°
 	reticleUpdate();
 
-	// ’e”­Ë + XV
+	// å¼¾ç™ºå°„ + æ›´æ–°
 	Shot();
 	for (unique_ptr<PlayerBullet>& bullet : bullets_)
 	{
@@ -75,14 +75,14 @@ void Player::Update()
 	}
 }
 
-// •`‰æ
+// æç”»
 void Player::Draw()
 {
-	// ƒIƒuƒWƒF•`‰æ
+	// ã‚ªãƒ–ã‚¸ã‚§æç”»
 	DrawObject3D();
 	reticleObj_.DrawObject3D();
 
-	// ’e•`‰æ
+	// å¼¾æç”»
 	for (unique_ptr<PlayerBullet>& bullet : bullets_)
 	{
 		bullet->Draw();
@@ -96,18 +96,18 @@ void Player::OnCollision(const CollisionInfo& info)
 
 void Player::reticleUpdate()
 {
-	// ƒrƒ…[ƒ|[ƒgs—ñ
-	Matrix4 matViewPort = Matrix4::Identity(); 
-	matViewPort.m[0][0] =   WinAPI::GetInstance()->width_  / 2.0f;
+	// ãƒ“ãƒ¥ãƒ¼ãƒãƒ¼ãƒˆè¡Œåˆ—
+	Matrix4 matViewPort = Matrix4::Identity();
+	matViewPort.m[0][0] = WinAPI::GetInstance()->width_ / 2.0f;
 	matViewPort.m[1][1] = -(WinAPI::GetInstance()->height_ / 2.0f);
-	matViewPort.m[3][0] =   WinAPI::GetInstance()->width_  / 2.0f;
-	matViewPort.m[3][1] =   WinAPI::GetInstance()->height_ / 2.0f;
+	matViewPort.m[3][0] = WinAPI::GetInstance()->width_ / 2.0f;
+	matViewPort.m[3][1] = WinAPI::GetInstance()->height_ / 2.0f;
 
-	// ƒJƒƒ‰s—ñ‚Æ‚Ì‡¬
-	Matrix4 matViewProjectionViewPort = 
+	// ã‚«ãƒ¡ãƒ©è¡Œåˆ—ã¨ã®åˆæˆ
+	Matrix4 matViewProjectionViewPort =
 		Camera::GetCurrentCamera()->GetViewProjection() * matViewPort;
-	
-	// ‰æ–Êã‚ÌƒŒƒeƒBƒNƒ‹À•W‚ğ“®‚©‚·
+
+	// ç”»é¢ä¸Šã®ãƒ¬ãƒ†ã‚£ã‚¯ãƒ«åº§æ¨™ã‚’å‹•ã‹ã™
 	Vector2 reticleMoveVel = { 0, 0 };
 
 	if (state_.ExpandNum() == false)
@@ -119,7 +119,7 @@ void Player::reticleUpdate()
 		reticleSp_->scale_ = { 1.1f, 1.1f };
 	}
 
-	// ©‹@‚Ì‘¬‚³‚ÆƒŒƒeƒBƒNƒ‹‚ÌƒXƒs[ƒh’²®
+	// è‡ªæ©Ÿã®é€Ÿã•ã¨ãƒ¬ãƒ†ã‚£ã‚¯ãƒ«ã®ã‚¹ãƒ”ãƒ¼ãƒ‰èª¿æ•´
 	reticleSpd_ = kReticleSpd_ * velocity_;
 
 	if (Key::Down(DIK_A) && Key::Down(DIK_D))
@@ -150,36 +150,36 @@ void Player::reticleUpdate()
 
 	reticlePos_ += reticleMoveVel;
 
-	// ƒŒƒeƒBƒNƒ‹À•W‚ÌˆÚ“®§ŒÀ
+	// ãƒ¬ãƒ†ã‚£ã‚¯ãƒ«åº§æ¨™ã®ç§»å‹•åˆ¶é™
 	Vector2 reticlePosMin = { RETICLE_MOVE_LIMIT_, RETICLE_MOVE_LIMIT_ * 0.6f };
-	Vector2 reticlePosMax = { WinAPI::GetInstance()->width_  - RETICLE_MOVE_LIMIT_,
+	Vector2 reticlePosMax = { WinAPI::GetInstance()->width_ - RETICLE_MOVE_LIMIT_,
 							  WinAPI::GetInstance()->height_ - RETICLE_MOVE_LIMIT_ * 0.6f };
-	
+
 	reticlePos_.x = max(reticlePos_.x, reticlePosMin.x);
 	reticlePos_.y = max(reticlePos_.y, reticlePosMin.y);
 	reticlePos_.x = min(reticlePos_.x, reticlePosMax.x);
 	reticlePos_.y = min(reticlePos_.y, reticlePosMax.y);
 
-	// À•W‚ğƒXƒvƒ‰ƒCƒg‚ÉƒZƒbƒg
+	// åº§æ¨™ã‚’ã‚¹ãƒ—ãƒ©ã‚¤ãƒˆã«ã‚»ãƒƒãƒˆ
 	reticleSp_->position_ = reticlePos_;
 
-	// ‡¬s—ñ‚Ì¶¬
+	// åˆæˆè¡Œåˆ—ã®ç”Ÿæˆ
 	Matrix4 matInverseVBV = matViewProjectionViewPort;
 	matInverseVBV = Matrix4::Inverse(matInverseVBV);
 
-	// ƒXƒNƒŠ[ƒ“À•W
+	// ã‚¹ã‚¯ãƒªãƒ¼ãƒ³åº§æ¨™
 	Vector3 posNear = { reticlePos_.x, reticlePos_.y, 0 };
 	Vector3 posFar = { reticlePos_.x, reticlePos_.y, 1 };
 
-	// ƒXƒNƒŠ[ƒ“À•WŒn‚©‚çƒ[ƒ‹ƒhÀ•WŒn‚Ö
+	// ã‚¹ã‚¯ãƒªãƒ¼ãƒ³åº§æ¨™ç³»ã‹ã‚‰ãƒ¯ãƒ¼ãƒ«ãƒ‰åº§æ¨™ç³»ã¸
 	posNear = Matrix4::TransformDivW(posNear, matInverseVBV);
 	posFar = Matrix4::TransformDivW(posFar, matInverseVBV);
 
-	// ƒŒƒC‚Ì•ûŒü
+	// ãƒ¬ã‚¤ã®æ–¹å‘
 	Vector3 direction = posFar - posNear;
 	direction.Normalize();
 
-	// ƒJƒƒ‰‚©‚çƒŒƒeƒBƒNƒ‹‚Ì‹——£
+	// ã‚«ãƒ¡ãƒ©ã‹ã‚‰ãƒ¬ãƒ†ã‚£ã‚¯ãƒ«ã®è·é›¢
 	reticleObj_.position_ = posNear + direction * DISTANCE_RETICLE_;
 
 	reticleObj_.UpdateObject3D();
@@ -189,8 +189,8 @@ void Player::reticleUpdate()
 void Player::DrawUI()
 {
 	reticleSp_->Draw();
-	
-	// ”»’è•`‰æ
+
+	// åˆ¤å®šæ™‚æç”»
 	for (unique_ptr<PlayerBullet>& bullet : bullets_)
 	{
 		if (bullet->IsDrawSP())
@@ -199,47 +199,47 @@ void Player::DrawUI()
 		};
 	}
 
-	// ©‹@ó‘Ô‚Ì•`‰æ
+	// è‡ªæ©ŸçŠ¶æ…‹ã®æç”»
 	state_.DrawUI();
 }
 
-// “ü—Íó‚¯•t‚¯ + ˆÚ“®
+// å…¥åŠ›å—ã‘ä»˜ã‘ + ç§»å‹•
 void Player::Move()
 {
-	// ˆÚ“®—Ê‚Ì‰Šú‰»
+	// ç§»å‹•é‡ã®åˆæœŸåŒ–
 	move_ = { 0,0,0 };
 
-	// ‹­‰»‚É‰‚¶‚ÄƒXƒs[ƒh•Ï‰»
+	// å¼·åŒ–ã«å¿œã˜ã¦ã‚¹ãƒ”ãƒ¼ãƒ‰å¤‰åŒ–
 	velocity_ = FORMERLY_SPEED_ + (SPEED_UP_RATE_ * state_.SpeedUpNum());
 
-	// WASD“ü—Í‚Å‚ÌˆÚ“®
+	// WASDå…¥åŠ›ã§ã®ç§»å‹•
 	move_ += {
-		(Key::Down(DIK_D) - Key::Down(DIK_A)) * velocity_,
-		(Key::Down(DIK_W) - Key::Down(DIK_S)) * velocity_ * kY_MOVE_,
-		0 };
+		(Key::Down(DIK_D) - Key::Down(DIK_A))* velocity_,
+			(Key::Down(DIK_W) - Key::Down(DIK_S))* velocity_* kY_MOVE_,
+			0 };
 
 	/*rev = {
 		(Key::Down(DIK_S) - Key::Down(DIK_W)) * rotateRev,
 		0,
 		((Key::Down(DIK_A) - Key::Down(DIK_D)) * rotateRev) * kYRotate };*/
 
-	// GamePad‚Å‚ÌˆÚ“®
+		// GamePadã§ã®ç§»å‹•
 	move_ += {
-		Pad::GetLStick().x * velocity_,
-		Pad::GetLStick().y * velocity_ * kY_MOVE_,
-		0 };
+		Pad::GetLStick().x* velocity_,
+			Pad::GetLStick().y* velocity_* kY_MOVE_,
+			0 };
 
-	// ˆÚ“®—Ê‚Ì‰ÁZ
+	// ç§»å‹•é‡ã®åŠ ç®—
 	position_ += move_;
 	/*rotation += rev;*/
 
-	// ”ÍˆÍ§ŒÀ
+	// ç¯„å›²åˆ¶é™
 	position_.x = max(position_.x, -kMOVE_LIMIT_.x);
 	position_.y = max(position_.y, -kMOVE_LIMIT_.y);
 	position_.x = min(position_.x, +kMOVE_LIMIT_.x);
 	position_.y = min(position_.y, +kMOVE_LIMIT_.y);
 
-	// ”ÍˆÍ§ŒÀ
+	// ç¯„å›²åˆ¶é™
 	rotation_.x = max(rotation_.x, -kREV_LIMIT_.x);
 	rotation_.z = max(rotation_.z, -kREV_LIMIT_.z);
 	rotation_.x = min(rotation_.x, +kREV_LIMIT_.x);
@@ -248,16 +248,16 @@ void Player::Move()
 
 void Player::Shot()
 {
-	// ƒXƒy[ƒXƒL[ or Pad‚ÌAƒ{ƒ^ƒ“ ‚ÌƒgƒŠƒK[“ü—Í‚ğó‚¯•t‚¯‚½ê‡
+	// ã‚¹ãƒšãƒ¼ã‚¹ã‚­ãƒ¼ or Padã®Aãƒœã‚¿ãƒ³ ã®ãƒˆãƒªã‚¬ãƒ¼å…¥åŠ›ã‚’å—ã‘ä»˜ã‘ãŸå ´åˆ
 	if (Key::Trigger(DIK_SPACE) || Pad::Trigger(Button::A))
 	{
 		shotTimeData_.Start(SHOT_INTERVAL_);
 	}
 
-	// ƒXƒy[ƒXƒL[ or Pad‚ÌAƒ{ƒ^ƒ“ ‚Ì‰Ÿ‰º“ü—Í‚ğó‚¯•t‚¯‚½ê‡
+	// ã‚¹ãƒšãƒ¼ã‚¹ã‚­ãƒ¼ or Padã®Aãƒœã‚¿ãƒ³ ã®æŠ¼ä¸‹å…¥åŠ›ã‚’å—ã‘ä»˜ã‘ãŸå ´åˆ
 	if (Key::Down(DIK_SPACE) || Pad::Down(Button::A))
 	{
-		// ƒVƒ‡ƒbƒg‚Ìƒ^ƒCƒ}[‚ªƒCƒ“ƒ^[ƒoƒ‹‚Æ“™‚µ‚­‚È‚Á‚½‚Æ‚«‚É‚à‚¤ˆê“xƒ^ƒCƒ}[‚ğ“®‚©‚· (‰Ÿ‰º‚µ‚Ä‚¢‚é‚Ì‚Å)
+		// ã‚·ãƒ§ãƒƒãƒˆã®ã‚¿ã‚¤ãƒãƒ¼ãŒã‚¤ãƒ³ã‚¿ãƒ¼ãƒãƒ«ã¨ç­‰ã—ããªã£ãŸã¨ãã«ã‚‚ã†ä¸€åº¦ã‚¿ã‚¤ãƒãƒ¼ã‚’å‹•ã‹ã™ (æŠ¼ä¸‹ã—ã¦ã„ã‚‹ã®ã§)
 		if ((shotTimeData_.GetTime()) == SHOT_INTERVAL_)
 		{
 			shotTimeData_.Start(SHOT_INTERVAL_);
@@ -265,27 +265,27 @@ void Player::Shot()
 
 		if (shotTimeData_.GetTime() == SHOT_DELAY_)
 		{
-			// ©‹@’e‚Ì–ˆƒtƒŒ[ƒ€ˆÚ“®
+			// è‡ªæ©Ÿå¼¾ã®æ¯ãƒ•ãƒ¬ãƒ¼ãƒ ç§»å‹•
 			Vector3 velocity = { 0, 0, 0 };
 			velocity = reticleObj_.GetWorldPosition() - Object3D::GetWorldPosition();
 			velocity.Normalize();
 			velocity *= kBULLET_SPEED_;
 
-			// ©‹@’e‚Ì©‹@‚©‚ç‚İ‚½ƒ[ƒJƒ‹”­ËˆÊ’u
+			// è‡ªæ©Ÿå¼¾ã®è‡ªæ©Ÿã‹ã‚‰ã¿ãŸãƒ­ãƒ¼ã‚«ãƒ«ç™ºå°„ä½ç½®
 			Vector3 delayPos = { 0, 0.2f, 7.1f };
 
-			// ‘¬“xƒxƒNƒgƒ‹‚ğ©‹@‚ÌŒü‚«‚É‡‚í‚¹‚Ä‰ñ“]
+			// é€Ÿåº¦ãƒ™ã‚¯ãƒˆãƒ«ã‚’è‡ªæ©Ÿã®å‘ãã«åˆã‚ã›ã¦å›è»¢
 			velocity = Matrix4::Transform(velocity, matWorld_);
 			//velocity = velocity * matWorld;
 			delayPos = delayPos * matWorld_;
-	
-			// ©‹@’e‚ğ¶¬A‰Šú‰»
+
+			// è‡ªæ©Ÿå¼¾ã‚’ç”Ÿæˆã€åˆæœŸåŒ–
 			bullets_.push_back(std::move(make_unique<PlayerBullet>()));
 
 
 			bullets_.back()->Initialize(state_.ExpandNum(), &bulletModel_, GetWorldPosition() + delayPos, velocity);
 		}
 	}
-	// ƒ^ƒCƒ}[‚ÌƒAƒbƒvƒf[ƒg
+	// ã‚¿ã‚¤ãƒãƒ¼ã®ã‚¢ãƒƒãƒ—ãƒ‡ãƒ¼ãƒˆ
 	shotTimeData_.Update();
 }

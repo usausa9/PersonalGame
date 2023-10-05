@@ -9,114 +9,114 @@
 
 class FBXObject3D
 {
-protected:	// ƒGƒCƒŠƒAƒX
-	// Microsoft::WRL::‚ğÈ—ª
+protected:	// ã‚¨ã‚¤ãƒªã‚¢ã‚¹
+	// Microsoft::WRL::ã‚’çœç•¥
 	template <class T> using ComPtr = Microsoft::WRL::ComPtr<T>;
 
-public: // ’è”
-	// ƒ{[ƒ“‚ÌÅ‘å”
+public: // å®šæ•°
+	// ãƒœãƒ¼ãƒ³ã®æœ€å¤§æ•°
 	static const int MAX_BONES = 32;
 
-public:	// ƒTƒuƒNƒ‰ƒX
-	// ’è”ƒoƒbƒtƒ@—pƒf[ƒ^\‘¢‘Ì (À•W•ÏŠ·s—ñ—p)
+public:	// ã‚µãƒ–ã‚¯ãƒ©ã‚¹
+	// å®šæ•°ãƒãƒƒãƒ•ã‚¡ç”¨ãƒ‡ãƒ¼ã‚¿æ§‹é€ ä½“ (åº§æ¨™å¤‰æ›è¡Œåˆ—ç”¨)
 	struct ConstBufferDataTransform
 	{
-		Matrix4 viewProjection;	// ƒrƒ…[ƒvƒƒWƒFƒNƒVƒ‡ƒ“s—ñ
-		Matrix4 worldTransform;	// ƒ[ƒ‹ƒhs—ñ
-		Vector3 cameraPosition;	// ƒJƒƒ‰À•W
+		Matrix4 viewProjection;	// ãƒ“ãƒ¥ãƒ¼ãƒ—ãƒ­ã‚¸ã‚§ã‚¯ã‚·ãƒ§ãƒ³è¡Œåˆ—
+		Matrix4 worldTransform;	// ãƒ¯ãƒ¼ãƒ«ãƒ‰è¡Œåˆ—
+		Vector3 cameraPosition;	// ã‚«ãƒ¡ãƒ©åº§æ¨™
 	};
 
-	// ’è”ƒoƒbƒtƒ@—pƒf[ƒ^\‘¢‘Ì (ƒXƒLƒjƒ“ƒO)
+	// å®šæ•°ãƒãƒƒãƒ•ã‚¡ç”¨ãƒ‡ãƒ¼ã‚¿æ§‹é€ ä½“ (ã‚¹ã‚­ãƒ‹ãƒ³ã‚°)
 	struct ConstBufferDataSkin
 	{
 		Matrix4 bones[MAX_BONES];
 	};
 
-public:	// ƒƒ“ƒoŠÖ”
+public:	// ãƒ¡ãƒ³ãƒé–¢æ•°
 	/// <summary>
-	/// ‰Šú‰»
+	/// åˆæœŸåŒ–
 	/// </summary>
 	void Initialize();
 
 	/// <summary>
-	/// –ˆƒtƒŒ[ƒ€ˆ—
+	/// æ¯ãƒ•ãƒ¬ãƒ¼ãƒ å‡¦ç†
 	/// </summary>
 	void Update();
 
 	/// <summary>
-	/// ƒ‚ƒfƒ‹‚ÌƒZƒbƒg
+	/// ãƒ¢ãƒ‡ãƒ«ã®ã‚»ãƒƒãƒˆ
 	/// </summary>
-	/// <param name="model"> ƒ‚ƒfƒ‹ </param>
+	/// <param name="model"> ãƒ¢ãƒ‡ãƒ« </param>
 	void SetModel(FBXModel* model) { this->model = model; }
 
 	/// <summary>
-	/// ˆÊ’u‚ÌƒZƒbƒ^[
+	/// ä½ç½®ã®ã‚»ãƒƒã‚¿ãƒ¼
 	/// </summary>
-	/// <param name=" ˆÊ’u "></param>
+	/// <param name=" ä½ç½® "></param>
 	void SetPosition(Vector3 position) { this->position = position; }
 
 	/// <summary>
-	/// ‘å‚«‚³‚ÌƒZƒbƒ^[
+	/// å¤§ãã•ã®ã‚»ãƒƒã‚¿ãƒ¼
 	/// </summary>
-	/// <param name=" ‘å‚«‚³ "></param>
+	/// <param name=" å¤§ãã• "></param>
 	void SetScale(Vector3 scale) { this->scale = scale; }
 
 	/// <summary>
-	/// Šp“x‚ÌƒZƒbƒ^[
+	/// è§’åº¦ã®ã‚»ãƒƒã‚¿ãƒ¼
 	/// </summary>
-	/// <param name=" ‰ñ“] "></param>
+	/// <param name=" å›è»¢ "></param>
 	void SetRotation(Vector3 rotation) { this->rotation = rotation * (UsaMath::PI_ / 180); }
 
 	/// <summary>
-	/// •`‰æ
+	/// æç”»
 	/// </summary>
 	/// <param name="cmdList"></param>
 	void Draw();
 
 	/// <summary>
-	/// ƒAƒjƒ[ƒVƒ‡ƒ“ŠJn
+	/// ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³é–‹å§‹
 	/// </summary>
 	void PlayAnimation();
 
-protected:	// ƒƒ“ƒo•Ï”
-	// ’è”ƒoƒbƒtƒ@
+protected:	// ãƒ¡ãƒ³ãƒå¤‰æ•°
+	// å®šæ•°ãƒãƒƒãƒ•ã‚¡
 	ComPtr<ID3D12Resource> constBuffTransform;
-	// ’è”ƒoƒbƒtƒ@ (ƒXƒLƒ“)
+	// å®šæ•°ãƒãƒƒãƒ•ã‚¡ (ã‚¹ã‚­ãƒ³)
 	ComPtr<ID3D12Resource> constBuffSkin;
 
-	// ƒ[ƒJƒ‹ƒXƒP[ƒ‹
+	// ãƒ­ãƒ¼ã‚«ãƒ«ã‚¹ã‚±ãƒ¼ãƒ«
 	Vector3 scale = { 1,1,1 };
-	// X,Y,Z²ü‚è‚Ìƒ[ƒJƒ‹‰ñ“]Šp
+	// X,Y,Zè»¸å‘¨ã‚Šã®ãƒ­ãƒ¼ã‚«ãƒ«å›è»¢è§’
 	Vector3 rotation = { 0,0,0 };
-	// ƒ[ƒJƒ‹À•W
+	// ãƒ­ãƒ¼ã‚«ãƒ«åº§æ¨™
 	Vector3 position = { 0,0,0 };
-	// ƒ[ƒJƒ‹ƒ[ƒ‹ƒh•ÏŠ·s—ñ
+	// ãƒ­ãƒ¼ã‚«ãƒ«ãƒ¯ãƒ¼ãƒ«ãƒ‰å¤‰æ›è¡Œåˆ—
 	Matrix4 matWorld = {};
-	// ƒ‚ƒfƒ‹
+	// ãƒ¢ãƒ‡ãƒ«
 	FBXModel* model = nullptr;
 
 public:
-	// 1ƒtƒŒ[ƒ€‚ÌŠÔ
+	// 1ãƒ•ãƒ¬ãƒ¼ãƒ ã®æ™‚é–“
 	FbxTime frameTime;
-	// ƒAƒjƒ[ƒVƒ‡ƒ“ŠJnŠÔ
+	// ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³é–‹å§‹æ™‚é–“
 	FbxTime startTime;
-	// ƒAƒjƒ[ƒVƒ‡ƒ“I—¹ŠÔ
+	// ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³çµ‚äº†æ™‚é–“
 	FbxTime endTime;
-	// Œ»İŠÔ (ƒAƒjƒ[ƒVƒ‡ƒ“)
+	// ç¾åœ¨æ™‚é–“ (ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³)
 	FbxTime currentTime;
-	// ƒAƒjƒ[ƒVƒ‡ƒ“Ä¶’†
+	// ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³å†ç”Ÿä¸­
 	bool isPlay = false;
 
-public:	// Ã“Iƒƒ“ƒoŠÖ”
+public:	// é™çš„ãƒ¡ãƒ³ãƒé–¢æ•°
 	// setter
 	static void SetDevice(ID3D12Device* device) { DirectXBase::GetInstance()->device_ = device; }
 	static void SetCamera(Camera* camera) { FBXObject3D::camera = camera; }
 	static void SetCommandList(ID3D12GraphicsCommandList* commandList) { FBXObject3D::commandList = commandList; }
-	static void CreateGraphicsPipeline();	// ƒpƒCƒvƒ‰ƒCƒ“‚Ì¶¬
+	static void CreateGraphicsPipeline();	// ãƒ‘ã‚¤ãƒ—ãƒ©ã‚¤ãƒ³ã®ç”Ÿæˆ
 
-private: // Ã“Iƒƒ“ƒo•Ï”
-	static ID3D12GraphicsCommandList* commandList;	//ƒRƒ}ƒ“ƒhƒŠƒXƒg
-	static Camera* camera;			// ƒJƒƒ‰
+private: // é™çš„ãƒ¡ãƒ³ãƒå¤‰æ•°
+	static ID3D12GraphicsCommandList* commandList;	//ã‚³ãƒãƒ³ãƒ‰ãƒªã‚¹ãƒˆ
+	static Camera* camera;			// ã‚«ãƒ¡ãƒ©
 	static ComPtr<ID3D12RootSignature> rootSigunature;
 	static ComPtr<ID3D12PipelineState> pipelineState;
 };

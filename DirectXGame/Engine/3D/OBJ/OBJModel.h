@@ -5,15 +5,15 @@
 class OBJModel
 {
 public:
-	// ’¸“_ƒf[ƒ^\‘¢‘Ì
+	// é ‚ç‚¹ãƒ‡ãƒ¼ã‚¿æ§‹é€ ä½“
 	struct VertexPosNormalUv
 	{
-		Vector3 pos;	// xyzÀ•W
-		Vector3 normal;// –@üƒxƒNƒgƒ‹ 
-		Vector2 uv;	// uvÀ•W
+		Vector3 pos;	// xyzåº§æ¨™
+		Vector3 normal;// æ³•ç·šãƒ™ã‚¯ãƒˆãƒ« 
+		Vector2 uv;	// uvåº§æ¨™
 	};
 
-	// ƒ}ƒeƒŠƒAƒ‹
+	// ãƒãƒ†ãƒªã‚¢ãƒ«
 	struct Material
 	{
 		std::string name;
@@ -33,7 +33,7 @@ public:
 		}
 	};
 
-	// ’è”ƒoƒbƒtƒ@—p ƒf[ƒ^\‘¢‘Ì (ƒ}ƒeƒŠƒAƒ‹)
+	// å®šæ•°ãƒãƒƒãƒ•ã‚¡ç”¨ ãƒ‡ãƒ¼ã‚¿æ§‹é€ ä½“ (ãƒãƒ†ãƒªã‚¢ãƒ«)
 	struct ConstBufferDataMaterial
 	{
 		Vector3 ambient;
@@ -45,7 +45,7 @@ public:
 		Vector3 specular;
 		float alpha;
 
-		Vector4 color; // F(RGBA)
+		Vector4 color; // è‰²(RGBA)
 	};
 
 	Material material_;
@@ -55,7 +55,7 @@ public:
 
 public:
 	ConstBufferDataMaterial* constMapMaterial_ = nullptr;
-	// OBJƒtƒ@ƒCƒ‹‚©‚ç‚RDƒ‚ƒfƒ‹“Ç‚İ‚İ
+	// OBJãƒ•ã‚¡ã‚¤ãƒ«ã‹ã‚‰ï¼“Dãƒ¢ãƒ‡ãƒ«èª­ã¿è¾¼ã¿
 	static OBJModel LoadFromOBJ(const std::string& modelName);
 
 	void LoadMaterial(const std::string& directoryPath, const std::string& filename);

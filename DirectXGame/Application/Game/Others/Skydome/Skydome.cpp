@@ -2,16 +2,16 @@
 
 void Skydome::Initialize()
 {
-	// ©‹@ƒ‚ƒfƒ‹“Ç‚İ‚İ
+	// è‡ªæ©Ÿãƒ¢ãƒ‡ãƒ«èª­ã¿è¾¼ã¿
 	skydomeModel_ = OBJModel::LoadFromOBJ("skydome");
 
-	// ©‹@‚Ìs—ñ‰Šú‰»
+	// è‡ªæ©Ÿã®è¡Œåˆ—åˆæœŸåŒ–
 	skydomeObj_.scale_ = { 1000,1000,1000 };
 	skydomeObj_.rotation_ = { 0, 0, 0 };
 	skydomeObj_.position_ = { 0, 0, 0 };
 	skydomeObj_.InitializeObject3D();
 
-	// ©‹@ƒ‚ƒfƒ‹‚Æ©‹@ƒIƒuƒWƒFƒNƒg‚ğ•R‚Ã‚¯
+	// è‡ªæ©Ÿãƒ¢ãƒ‡ãƒ«ã¨è‡ªæ©Ÿã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’ç´ã¥ã‘
 	skydomeObj_.objModel_ = &skydomeModel_;
 }
 
@@ -22,6 +22,6 @@ void Skydome::Update()
 
 void Skydome::Draw()
 {
-	// ƒIƒuƒWƒF•`‰æ
+	// ã‚ªãƒ–ã‚¸ã‚§æç”»
 	skydomeObj_.DrawObject3D();
 }

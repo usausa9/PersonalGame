@@ -4,7 +4,7 @@
 #include "Object3d.h"
 
 /// <summary>
-/// ƒRƒ‰ƒCƒ_[Šî’êƒNƒ‰ƒX
+/// ã‚³ãƒ©ã‚¤ãƒ€ãƒ¼åŸºåº•ã‚¯ãƒ©ã‚¹
 /// </summary>
 class BaseCollider
 {
@@ -15,7 +15,7 @@ public:
 	BaseCollider() = default;
 	virtual ~BaseCollider() = default;
 
-	inline void SetObject(Object3D* object) 
+	inline void SetObject(Object3D* object)
 	{
 		this->object3d_ = object;
 	}
@@ -26,17 +26,17 @@ public:
 	}
 
 	/// <summary>
-	/// XVˆ—
+	/// æ›´æ–°å‡¦ç†
 	/// </summary>
 	virtual void Update() = 0;
 
 	inline CollisionShapeType GetShapeType() { return shapeType_; }
 
 	/// <summary>
-	/// Õ“ËƒR[ƒ‹ƒoƒbƒNŠÖ”
+	/// è¡çªæ™‚ã‚³ãƒ¼ãƒ«ãƒãƒƒã‚¯é–¢æ•°
 	/// </summary>
-	/// <param name="info">Õ“Ëî•ñ</param>
-	inline void OnCollision(const CollisionInfo& info) 
+	/// <param name="info">è¡çªæƒ…å ±</param>
+	inline void OnCollision(const CollisionInfo& info)
 	{
 		object3d_->OnCollision(info);
 	}
@@ -47,10 +47,10 @@ public:
 
 protected:
 	Object3D* object3d_ = nullptr;
-	// Œ`óƒ^ƒCƒv
+	// å½¢çŠ¶ã‚¿ã‚¤ãƒ—
 	CollisionShapeType shapeType_ = SHAPE_UNKNOWN;
 
-	// “–‚½‚è”»’è‘®«
+	// å½“ãŸã‚Šåˆ¤å®šå±æ€§
 	unsigned short attribute_ = 0b1111111111111111;
 };
 

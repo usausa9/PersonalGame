@@ -24,39 +24,39 @@ class CollisionManager;
 class TitleScene : public IScene
 {
 public:
-	// ‰Šú‰»
+	// åˆæœŸåŒ–
 	void Initialize() override;
 
-	// I—¹ˆ—
+	// çµ‚äº†å‡¦ç†
 	void Finalize() override;
 
-	// –ˆƒtƒŒ[ƒ€XV
+	// æ¯ãƒ•ãƒ¬ãƒ¼ãƒ æ›´æ–°
 	void Update() override;
 
-	// 3D•`‰æ
+	// 3Dæç”»
 	void Draw3D() override;
 
-	// ƒp[ƒeƒBƒNƒ‹•`‰æ
+	// ãƒ‘ãƒ¼ãƒ†ã‚£ã‚¯ãƒ«æç”»
 	void DrawParticle() override;
 
-	// 2D•`‰æ
+	// 2Dæç”»
 	void Draw2D() override;
 
-	// ƒQ[ƒ€ƒV[ƒ“‚Ö
+	// ã‚²ãƒ¼ãƒ ã‚·ãƒ¼ãƒ³ã¸
 	void PossibleStartGame();
 
 private:
-	// ƒJƒƒ‰
+	// ã‚«ãƒ¡ãƒ©
 	Camera* camera_ = nullptr;
 	RailCamera* railCamera_ = nullptr;
 
-	// ƒvƒŒƒCƒ„[,“G
+	// ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼,æ•µ
 	std::list<std::unique_ptr<Enemy>> enemys_;
 
-	// ƒV[ƒ“Ø‚è‘Ö‚¦ƒtƒ‰ƒO
+	// ã‚·ãƒ¼ãƒ³åˆ‡ã‚Šæ›¿ãˆãƒ•ãƒ©ã‚°
 	bool isStart_ = false;
 
-	// ƒ^ƒCƒgƒ‹ƒXƒvƒ‰ƒCƒg
+	// ã‚¿ã‚¤ãƒˆãƒ«ã‚¹ãƒ—ãƒ©ã‚¤ãƒˆ
 	TextureIndex titleTex_ = {};
 	TextureIndex titleSceneTex_ = {};
 	TextureIndex pressKeyTex_ = {};
@@ -67,14 +67,14 @@ private:
 	const Vector2 TITLE_SCENE_BASE_POS_ = { 640, 240 };
 	const Vector2 PRESS_KEY_BASE_POS_ = { 640, 480 };
 
-	// ƒvƒŒƒXƒL[‚Ì‘å‚«‚³‚ÌƒXƒJƒ‰[
-	Vector2 kPressKeySpriteSize_ = {1.f, 1.f};
+	// ãƒ—ãƒ¬ã‚¹ã‚­ãƒ¼ã®å¤§ãã•ã®ã‚¹ã‚«ãƒ©ãƒ¼
+	Vector2 kPressKeySpriteSize_ = { 1.f, 1.f };
 
-	// ƒvƒŒƒXƒL[‚ÌƒAƒjƒ[ƒVƒ‡ƒ“—p
+	// ãƒ—ãƒ¬ã‚¹ã‚­ãƒ¼ã®ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ç”¨
 	TimeData pressAnimeTimer_[2];
 	const float PRESS_ANIME_MAX_TIMER_ = 37.f;
 	uint8_t nowActiveTimer_ = 0;
 
-	// “V‹…
+	// å¤©çƒ
 	unique_ptr<Skydome> skydome_ = nullptr;
 };

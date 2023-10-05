@@ -1,35 +1,35 @@
 #pragma once
 
-// ‘O•ûéŒ¾
+// å‰æ–¹å®£è¨€
 class SceneManager;
 
 class IScene
 {
 public:
-	// ‰Šú‰»
+	// åˆæœŸåŒ–
 	virtual void Initialize() = 0;
 
-	// I—¹
+	// çµ‚äº†
 	virtual void Finalize() = 0;
 
-	// XVˆ—
+	// æ›´æ–°å‡¦ç†
 	virtual void Update() = 0;
 
-	// 3D•`‰æ
+	// 3Dæç”»
 	virtual void Draw3D() = 0;
 
-	// ƒp[ƒeƒBƒNƒ‹•`‰æ
+	// ãƒ‘ãƒ¼ãƒ†ã‚£ã‚¯ãƒ«æç”»
 	virtual void DrawParticle() = 0;
 
-	// 2D•`‰æ
+	// 2Dæç”»
 	virtual void Draw2D() = 0;
 
-public: // ƒƒ“ƒoŠÖ”
+public: // ãƒ¡ãƒ³ãƒé–¢æ•°
 	virtual ~IScene() = default;
 
 	virtual void SetSceneManager(SceneManager* sceneManager) { sceneManager_ = sceneManager; }
 
 protected:
-	// ƒV[ƒ“ƒ}ƒl[ƒWƒƒ (Ø‚è‚à‚Ì)
+	// ã‚·ãƒ¼ãƒ³ãƒãƒãƒ¼ã‚¸ãƒ£ (å€Ÿã‚Šã‚‚ã®)
 	SceneManager* sceneManager_ = nullptr;
 };

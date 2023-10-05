@@ -2,10 +2,10 @@
 
 void SphereCollider::Update()
 {
-	// ワールド行列から座標を抽出
+	// 繝ｯ繝ｼ繝ｫ繝芽｡悟�励°繧牙ｺｧ讓吶ｒ謚ｽ蜃ｺ
 	const Matrix4& matWorld = object3d_->GetMatWorld();
 
-	// 球のメンバ変数を更新
+	// 逅�縺ｮ繝｡繝ｳ繝仙､画焚繧呈峩譁ｰ
 	Sphere::position.x = matWorld.m[3][0];
 	Sphere::position.y = matWorld.m[3][1];
 	Sphere::position.z = matWorld.m[3][2];

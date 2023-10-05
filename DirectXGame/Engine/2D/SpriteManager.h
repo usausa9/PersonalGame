@@ -4,34 +4,34 @@
 
 #include "WinAPI.h"
 
-// ’è”ƒoƒbƒtƒ@—p ƒf[ƒ^\‘¢‘Ì (ƒ}ƒeƒŠƒAƒ‹)
+// å®šæ•°ãƒãƒƒãƒ•ã‚¡ç”¨ ãƒ‡ãƒ¼ã‚¿æ§‹é€ ä½“ (ãƒãƒ†ãƒªã‚¢ãƒ«)
 struct SpriteConstBufferDataMaterial
 {
-	Vector4 color;	// F(RGBA)
-	Matrix4 mat;	// 3D•ÏŠ·s—ñ
+	Vector4 color;	// è‰²(RGBA)
+	Matrix4 mat;	// 3Då¤‰æ›è¡Œåˆ—
 };
 
 class SpriteManager
 {
 public:
-	// ‰Šú‰»
+	// åˆæœŸåŒ–
 	void Init();
 
-	// •`‰æ‘Oˆ—
+	// æç”»å‰å‡¦ç†
 	void PreDraw();
 
-public: // ƒƒ“ƒo•Ï”
-	ComPtr<ID3DBlob> vsBlob_ = nullptr;		 // ’¸“_ƒVƒF[ƒ_ƒIƒuƒWƒFƒNƒg
-	ComPtr<ID3DBlob> psBlob_ = nullptr;		 // ƒsƒNƒZƒ‹ƒVƒF[ƒ_ƒIƒuƒWƒFƒNƒg
-	ComPtr<ID3DBlob> errorBlob_ = nullptr;	 // ƒGƒ‰[ƒIƒuƒWƒFƒNƒg
+public: // ãƒ¡ãƒ³ãƒå¤‰æ•°
+	ComPtr<ID3DBlob> vsBlob_ = nullptr;		 // é ‚ç‚¹ã‚·ã‚§ãƒ¼ãƒ€ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
+	ComPtr<ID3DBlob> psBlob_ = nullptr;		 // ãƒ”ã‚¯ã‚»ãƒ«ã‚·ã‚§ãƒ¼ãƒ€ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
+	ComPtr<ID3DBlob> errorBlob_ = nullptr;	 // ã‚¨ãƒ©ãƒ¼ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
 
-	// ƒOƒ‰ƒtƒBƒbƒNƒXƒpƒCƒvƒ‰ƒCƒ“İ’è
+	// ã‚°ãƒ©ãƒ•ã‚£ãƒƒã‚¯ã‚¹ãƒ‘ã‚¤ãƒ—ãƒ©ã‚¤ãƒ³è¨­å®š
 	D3D12_GRAPHICS_PIPELINE_STATE_DESC pipelineDesc_{};
 
-	// ƒ‹[ƒgƒVƒOƒlƒ`ƒƒ
+	// ãƒ«ãƒ¼ãƒˆã‚·ã‚°ãƒãƒãƒ£
 	ComPtr<ID3D12RootSignature> rootSignature_ = nullptr;
 
-	// ƒpƒCƒvƒ‰ƒCƒ“ƒXƒe[ƒg‚Ì¶¬
+	// ãƒ‘ã‚¤ãƒ—ãƒ©ã‚¤ãƒ³ã‚¹ãƒ†ãƒ¼ãƒˆã®ç”Ÿæˆ
 	ComPtr<ID3D12PipelineState> pipelineState_ = nullptr;
 
 public:

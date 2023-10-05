@@ -4,17 +4,17 @@
 class Skydome
 {
 public:
-	// ‰Šú‰»
+	// åˆæœŸåŒ–
 	void Initialize();
 
 	// 
 	void Update();
 
-	// •`‰æ
+	// æç”»
 	void Draw();
 
 private:
-	// “V‹…ƒ‚ƒfƒ‹, “V‹…ƒIƒuƒWƒFƒNƒg
+	// å¤©çƒãƒ¢ãƒ‡ãƒ«, å¤©çƒã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
 	OBJModel skydomeModel_;
 	Object3D skydomeObj_;
 };

@@ -31,9 +31,6 @@
     <Filter Include="1.ソース ファイル\Engine\IO">
       <UniqueIdentifier>{4f404e6f-932b-4052-b9db-8efe40f8628c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="1.ソース ファイル\Engine\Scene">
-      <UniqueIdentifier>{334549e8-c652-45cf-8b79-65e85ed4e952}</UniqueIdentifier>
-    </Filter>
     <Filter Include="1.ソース ファイル\Application\Base">
       <UniqueIdentifier>{52ed70f4-e791-4d67-9e8f-d8a41bb56987}</UniqueIdentifier>
     </Filter>
@@ -85,9 +82,6 @@
     <Filter Include="2.ヘッダー ファイル\Engine\2D/3D">
       <UniqueIdentifier>{219d0800-c6e0-431b-886d-26998ab7ca95}</UniqueIdentifier>
     </Filter>
-    <Filter Include="2.ヘッダー ファイル\Engine\Scene">
-      <UniqueIdentifier>{68934415-a7fc-403c-a612-99dbd206f8a2}</UniqueIdentifier>
-    </Filter>
     <Filter Include="1.ソース ファイル\Engine\2D/3D">
       <UniqueIdentifier>{14bbeac3-8e1d-488d-8f11-bbc9b2d52fe4}</UniqueIdentifier>
     </Filter>
@@ -123,6 +117,12 @@
     </Filter>
     <Filter Include="1.ソース ファイル\Application\Game\Others">
       <UniqueIdentifier>{b352801b-11a8-4cad-8cc7-5d9db79ccfa1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="1.ソース ファイル\Engine\Base\Scene">
+      <UniqueIdentifier>{334549e8-c652-45cf-8b79-65e85ed4e952}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="2.ヘッダー ファイル\Engine\Base\Scene">
+      <UniqueIdentifier>{68934415-a7fc-403c-a612-99dbd206f8a2}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -207,18 +207,6 @@
     <ClInclude Include="DirectXGame\Engine\Base\Math\Easing.h">
       <Filter>2.ヘッダー ファイル\Engine\Base</Filter>
     </ClInclude>
-    <ClInclude Include="DirectXGame\Engine\Base\Scene\AbstractSceneFactory.h">
-      <Filter>2.ヘッダー ファイル\Engine\Base</Filter>
-    </ClInclude>
-    <ClInclude Include="DirectXGame\Engine\Base\Scene\SceneManager.h">
-      <Filter>2.ヘッダー ファイル\Engine\Base</Filter>
-    </ClInclude>
-    <ClInclude Include="DirectXGame\Engine\Base\Scene\IScene.h">
-      <Filter>2.ヘッダー ファイル\Engine\Base</Filter>
-    </ClInclude>
-    <ClInclude Include="DirectXGame\Engine\Base\Scene\UsaFramework.h">
-      <Filter>2.ヘッダー ファイル\Engine\Base</Filter>
-    </ClInclude>
     <ClInclude Include="DirectXGame\Engine\Base\Math\TimeData.h">
       <Filter>2.ヘッダー ファイル\Engine\Base\Math</Filter>
     </ClInclude>
@@ -255,9 +243,6 @@
     <ClInclude Include="DirectXGame\Application\Game\Enemy\Enemy.h">
       <Filter>2.ヘッダー ファイル\Application\Game\Enemy</Filter>
     </ClInclude>
-    <ClInclude Include="Boss.h">
-      <Filter>2.ヘッダー ファイル\Application\Game\Enemy</Filter>
-    </ClInclude>
     <ClInclude Include="DirectXGame\Application\Game\RailCamera.h">
       <Filter>2.ヘッダー ファイル\Application\Game\Others</Filter>
     </ClInclude>
@@ -266,6 +251,21 @@
     </ClInclude>
     <ClInclude Include="DirectXGame\Application\Game\Others\Score\Score.h">
       <Filter>2.ヘッダー ファイル\Application\Game\Others</Filter>
+    </ClInclude>
+    <ClInclude Include="DirectXGame\Application\Game\Enemy\Boss.h">
+      <Filter>2.ヘッダー ファイル\Application\Game\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="DirectXGame\Engine\Base\Scene\AbstractSceneFactory.h">
+      <Filter>2.ヘッダー ファイル\Engine\Base\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="DirectXGame\Engine\Base\Scene\IScene.h">
+      <Filter>2.ヘッダー ファイル\Engine\Base\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="DirectXGame\Engine\Base\Scene\SceneManager.h">
+      <Filter>2.ヘッダー ファイル\Engine\Base\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="DirectXGame\Engine\Base\Scene\UsaFramework.h">
+      <Filter>2.ヘッダー ファイル\Engine\Base\Scene</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -384,9 +384,6 @@
     <ClCompile Include="DirectXGame\Engine\2D\ImGuiManager.cpp">
       <Filter>1.ソース ファイル\Engine\Base</Filter>
     </ClCompile>
-    <ClCompile Include="DirectXGame\Engine\Base\Scene\SceneManager.cpp">
-      <Filter>1.ソース ファイル\Engine\Base</Filter>
-    </ClCompile>
     <ClCompile Include="DirectXGame\Engine\Base\Collision\CollisionManager.cpp">
       <Filter>1.ソース ファイル\Engine\2D/3D</Filter>
     </ClCompile>
@@ -399,17 +396,11 @@
     <ClCompile Include="DirectXGame\Engine\Base\Collision\SphereCollider.cpp">
       <Filter>1.ソース ファイル\Engine\2D/3D</Filter>
     </ClCompile>
-    <ClCompile Include="DirectXGame\Engine\Base\Scene\UsaFramework.cpp">
-      <Filter>1.ソース ファイル\Engine\Base</Filter>
-    </ClCompile>
     <ClCompile Include="DirectXGame\Engine\Base\Math\SplineCurve.cpp">
       <Filter>1.ソース ファイル\Engine\Base\Math</Filter>
     </ClCompile>
     <ClCompile Include="DirectXGame\Application\Scene\TitleScene.cpp">
       <Filter>1.ソース ファイル\Application\Scene</Filter>
-    </ClCompile>
-    <ClCompile Include="Boss.cpp">
-      <Filter>1.ソース ファイル\Application\Game\Enemy</Filter>
     </ClCompile>
     <ClCompile Include="DirectXGame\Application\Game\Enemy\Enemy.cpp">
       <Filter>1.ソース ファイル\Application\Game\Enemy</Filter>
@@ -431,6 +422,15 @@
     </ClCompile>
     <ClCompile Include="DirectXGame\Application\Game\Others\Skydome\Skydome.cpp">
       <Filter>1.ソース ファイル\Application\Game\Others</Filter>
+    </ClCompile>
+    <ClCompile Include="DirectXGame\Application\Game\Enemy\Boss.cpp">
+      <Filter>1.ソース ファイル\Application\Game\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="DirectXGame\Engine\Base\Scene\SceneManager.cpp">
+      <Filter>1.ソース ファイル\Engine\Base\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="DirectXGame\Engine\Base\Scene\UsaFramework.cpp">
+      <Filter>1.ソース ファイル\Engine\Base\Scene</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

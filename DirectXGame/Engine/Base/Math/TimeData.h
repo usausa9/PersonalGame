@@ -4,37 +4,37 @@
 class TimeData
 {
 private:
-	// Å‘åŠÔ
+	// æœ€å¤§æ™‚é–“
 	float maxTime_ = 0;
 
-	// Œ»İŠÔ
+	// ç¾åœ¨æ™‚é–“
 	float nowTime_ = 0;
 
-	// 0.f - 1.f‚É•ÏŠ·‚·‚éƒf[ƒ^
+	// 0.f - 1.fã«å¤‰æ›ã™ã‚‹ãƒ‡ãƒ¼ã‚¿
 	float timeRate_ = 0;
 
-	// ƒ^ƒCƒ}[‚ÌƒAƒNƒeƒBƒu
+	// ã‚¿ã‚¤ãƒãƒ¼ã®ã‚¢ã‚¯ãƒ†ã‚£ãƒ–
 	bool isActive_ = false;
 
 public:
 	/// <summary>
-	/// ƒ^ƒCƒ}[‚ÌŠJn
+	/// ã‚¿ã‚¤ãƒãƒ¼ã®é–‹å§‹
 	/// </summary>
-	/// <param name="allFrame">‘S‘ÌƒtƒŒ[ƒ€”</param>
+	/// <param name="allFrame">å…¨ä½“ãƒ•ãƒ¬ãƒ¼ãƒ æ•°</param>
 	void Start(float allFrames);
 
-	// XVˆ—
+	// æ›´æ–°å‡¦ç†
 	void Update();
 
-	// Œ»İŠÔ‚ÌƒQƒbƒ^[
+	// ç¾åœ¨æ™‚é–“ã®ã‚²ãƒƒã‚¿ãƒ¼
 	float GetTime() { return nowTime_; }
 
-	// ƒŒ[ƒg‚ÌƒQƒbƒ^[
+	// ãƒ¬ãƒ¼ãƒˆã®ã‚²ãƒƒã‚¿ãƒ¼
 	float GetTimeRate() { return timeRate_; }
 
-	// 1 - ƒŒ[ƒg‚ÌƒQƒbƒ^[
+	// 1 - ãƒ¬ãƒ¼ãƒˆã®ã‚²ãƒƒã‚¿ãƒ¼
 	float GetDisTimeRate() { return 1.f - timeRate_; }
 
-	// ƒAƒNƒeƒBƒu‚ÌƒQƒbƒ^[
+	// ã‚¢ã‚¯ãƒ†ã‚£ãƒ–ã®ã‚²ãƒƒã‚¿ãƒ¼
 	bool GetActive() { return isActive_; }
-}; 
+};

@@ -11,7 +11,7 @@
 #pragma comment (lib,"d3d12.lib")
 #pragma comment (lib,"dxgi.lib")
 
-// DirectXŠî”Õ
+// DirectXåŸºç›¤
 class DirectXBase
 {
 private:
@@ -19,7 +19,7 @@ private:
 
 	template <class T> using ComPtr = Microsoft::WRL::ComPtr<T>;
 
-	// ‹L˜^ŠÔ(FPSŒÅ’è—p)
+	// è¨˜éŒ²æ™‚é–“(FPSå›ºå®šç”¨)
 	std::chrono::steady_clock::time_point reference_;
 
 public:
@@ -34,46 +34,46 @@ public:
 	ComPtr<ID3D12Resource> depthBuff_ = nullptr;
 
 public:
-	ComPtr<ID3D12Device> device_ = nullptr; // ƒfƒoƒCƒX
-	ComPtr<ID3D12CommandAllocator> commandAllocator_ = nullptr; // ƒRƒ}ƒ“ƒhƒAƒƒP[ƒ^
-	ComPtr<ID3D12GraphicsCommandList> commandList_ = nullptr; // ƒRƒ}ƒ“ƒhƒŠƒXƒg
-	ComPtr<ID3D12CommandQueue> commandQueue_ = nullptr; // ƒRƒ}ƒ“ƒhƒLƒ…[
-	ComPtr<IDXGISwapChain4> swapChain_ = nullptr; // ƒXƒƒbƒvƒ`ƒF[ƒ“
-	ComPtr<ID3D12DescriptorHeap> rtvHeap_ = nullptr; // ƒŒƒ“ƒ_[ƒ^[ƒQƒbƒgƒrƒ…[
+	ComPtr<ID3D12Device> device_ = nullptr; // ãƒ‡ãƒã‚¤ã‚¹
+	ComPtr<ID3D12CommandAllocator> commandAllocator_ = nullptr; // ã‚³ãƒãƒ³ãƒ‰ã‚¢ãƒ­ã‚±ãƒ¼ã‚¿
+	ComPtr<ID3D12GraphicsCommandList> commandList_ = nullptr; // ã‚³ãƒãƒ³ãƒ‰ãƒªã‚¹ãƒˆ
+	ComPtr<ID3D12CommandQueue> commandQueue_ = nullptr; // ã‚³ãƒãƒ³ãƒ‰ã‚­ãƒ¥ãƒ¼
+	ComPtr<IDXGISwapChain4> swapChain_ = nullptr; // ã‚¹ãƒ¯ãƒƒãƒ—ãƒã‚§ãƒ¼ãƒ³
+	ComPtr<ID3D12DescriptorHeap> rtvHeap_ = nullptr; // ãƒ¬ãƒ³ãƒ€ãƒ¼ã‚¿ãƒ¼ã‚²ãƒƒãƒˆãƒ“ãƒ¥ãƒ¼
 
-	ComPtr<IDXGIFactory7> dxgiFactory_ = nullptr; // “‡]
+	ComPtr<IDXGIFactory7> dxgiFactory_ = nullptr; // çµ±åˆ]
 
 	inline ID3D12Device* GetDevice() const { return device_.Get(); }
 	inline ID3D12GraphicsCommandList* GetCommandList()const { return commandList_.Get(); }
 
 	size_t GetBackBufferCount() const { return backBuffers_.size(); }
 public:
-	// ƒVƒ“ƒOƒ‹ƒgƒ“ƒCƒ“ƒXƒ^ƒ“ƒX‚ğæ“¾
+	// ã‚·ãƒ³ã‚°ãƒ«ãƒˆãƒ³ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ã‚’å–å¾—
 	static DirectXBase* GetInstance();
 
-	// ‰Šú‰»
+	// åˆæœŸåŒ–
 	void Init();
 
-	// I—¹ˆ—
+	// çµ‚äº†å‡¦ç†
 	static void Finalize();
 
-	// •`‰æ‘Oˆ—
+	// æç”»å‰å‡¦ç†
 	void PreDraw();
 
-	// •`‰æŒãˆ—
+	// æç”»å¾Œå‡¦ç†
 	void PostDraw();
 
 private:
-	// ƒVƒ“ƒOƒ‹ƒgƒ“‚È‚Ì‚Åƒvƒ‰ƒCƒx[ƒg‚É‹Lq
+	// ã‚·ãƒ³ã‚°ãƒ«ãƒˆãƒ³ãªã®ã§ãƒ—ãƒ©ã‚¤ãƒ™ãƒ¼ãƒˆã«è¨˜è¿°
 	DirectXBase();
 	~DirectXBase();
 	DirectXBase(const DirectXBase&);
 	DirectXBase& operator=(const DirectXBase&);
 
-	// FPSŒÅ’è‰Šú‰»
+	// FPSå›ºå®šåˆæœŸåŒ–
 	void InitializeFixFPS();
 
-	// FPSŒÅ’èXV
+	// FPSå›ºå®šæ›´æ–°
 	void UpdateFixFPS();
 
 public:

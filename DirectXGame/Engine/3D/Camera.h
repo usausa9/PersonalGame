@@ -1,10 +1,10 @@
 #pragma once
 #include "Common.h"
 
-// ’è”ƒoƒbƒtƒ@—pƒf[ƒ^\‘¢‘Ì (3D•ÏŠ·s—ñ)
+// å®šæ•°ãƒãƒƒãƒ•ã‚¡ç”¨ãƒ‡ãƒ¼ã‚¿æ§‹é€ ä½“ (3Då¤‰æ›è¡Œåˆ—)
 struct CameraConstBufferData
 {
-	Matrix4 view; 
+	Matrix4 view;
 	Matrix4 projection;
 	Matrix4 billboard;
 	Vector3 position;
@@ -16,30 +16,30 @@ public:
 	~Camera();
 
 public:
-	// ’è”ƒoƒbƒtƒ@ (s—ñ—p)
+	// å®šæ•°ãƒãƒƒãƒ•ã‚¡ (è¡Œåˆ—ç”¨)
 	ID3D12Resource* constBuffCamera_ = nullptr;
 
-	// ’è”ƒoƒbƒtƒ@ƒ}ƒbƒv (s—ñ—p)
+	// å®šæ•°ãƒãƒƒãƒ•ã‚¡ãƒãƒƒãƒ— (è¡Œåˆ—ç”¨)
 	CameraConstBufferData* constMapCamera_ = nullptr;
 
-	// ƒAƒtƒBƒ“•ÏŠ·î•ñ
+	// ã‚¢ãƒ•ã‚£ãƒ³å¤‰æ›æƒ…å ±
 	Vector3 target_ = { 0,0,0 };
 	Vector3 position_ = { 0,0,-20 };
 
-	// 3D—p‚ÌË‰e•ÏŠ·
+	// 3Dç”¨ã®å°„å½±å¤‰æ›
 	Matrix4 matProjection_ = Matrix4::Identity();
 
-	// ƒrƒ…[•ÏŠ·s—ñ
+	// ãƒ“ãƒ¥ãƒ¼å¤‰æ›è¡Œåˆ—
 	Matrix4 matView_ = Matrix4::Identity();
 	Vector3 up_ = { 0,1,0 };
 
 	float nearZ_ = 0.1f;
 	float farZ_ = 1500.0f;
-	
-	// ƒrƒ‹ƒ{[ƒhs—ñ
+
+	// ãƒ“ãƒ«ãƒœãƒ¼ãƒ‰è¡Œåˆ—
 	Matrix4 matBillboard_ = Matrix4::Identity();
 
-	// ¡g—p‚µ‚Ä‚¢‚éƒJƒƒ‰‚©‚ç‚Ìƒ|ƒCƒ“ƒ^AƒJƒƒ‰‚Ö‚Ìƒ|ƒCƒ“ƒ^
+	// ä»Šä½¿ç”¨ã—ã¦ã„ã‚‹ã‚«ãƒ¡ãƒ©ã‹ã‚‰ã®ãƒã‚¤ãƒ³ã‚¿ã€ã‚«ãƒ¡ãƒ©ã¸ã®ãƒã‚¤ãƒ³ã‚¿
 	static Camera* sCurrentCamera;
 
 	static void SetCurrentCamera(Camera* current);
@@ -47,19 +47,19 @@ public:
 	static Camera* GetCurrentCamera();
 
 public:
-	// ƒJƒƒ‰‰Šú‰»
+	// ã‚«ãƒ¡ãƒ©åˆæœŸåŒ–
 	void Initialize();
-	void Initialize(Vector3 position, Vector3 target, Vector3 up = {0, 1, 0});
+	void Initialize(Vector3 position, Vector3 target, Vector3 up = { 0, 1, 0 });
 
-	// ƒJƒƒ‰XVˆ—
+	// ã‚«ãƒ¡ãƒ©æ›´æ–°å‡¦ç†
 	void Update();
 
-	// ƒJƒƒ‰ƒZƒbƒg
+	// ã‚«ãƒ¡ãƒ©ã‚»ãƒƒãƒˆ
 	void Set();
 
-	// ƒrƒ…[ƒvƒƒWƒFƒNƒVƒ‡ƒ“
+	// ãƒ“ãƒ¥ãƒ¼ãƒ—ãƒ­ã‚¸ã‚§ã‚¯ã‚·ãƒ§ãƒ³
 	Matrix4 GetViewProjection()const { return matView_ * matProjection_; }
-	
-	// ƒJƒƒ‰À•Wæ“¾
+
+	// ã‚«ãƒ¡ãƒ©åº§æ¨™å–å¾—
 	Vector3 GetEye()const { return position_; }
 };

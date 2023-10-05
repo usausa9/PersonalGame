@@ -7,111 +7,111 @@
 
 struct Node
 {
-	// –¼‘O
+	// åå‰
 	string name;
 
-	// ƒ[ƒJƒ‹ƒXƒP[ƒ‹
+	// ãƒ­ãƒ¼ã‚«ãƒ«ã‚¹ã‚±ãƒ¼ãƒ«
 	Vector4 scaling = { 1,1,1,0 };
-	// ƒ[ƒJƒ‹‰ñ“]Šp
+	// ãƒ­ãƒ¼ã‚«ãƒ«å›è»¢è§’
 	Vector4 rotation = { 0,0,0,0 };
-	// ƒ[ƒJƒ‹ˆÚ“®
+	// ãƒ­ãƒ¼ã‚«ãƒ«ç§»å‹•
 	Vector4 translation = { 0,0,0,1 };
-	// ƒ[ƒJƒ‹•ÏŒ`s—ñ
+	// ãƒ­ãƒ¼ã‚«ãƒ«å¤‰å½¢è¡Œåˆ—
 	Matrix4 transform;
-	// ƒOƒ[ƒoƒ‹•ÏŒ`s—ñ
+	// ã‚°ãƒ­ãƒ¼ãƒãƒ«å¤‰å½¢è¡Œåˆ—
 	Matrix4 globalTransform;
 
-	// eƒm[ƒh
+	// è¦ªãƒãƒ¼ãƒ‰
 	Node* parent = nullptr;
 };
 
 class FBXModel
 {
 private:
-	// Microsoft::WRL::‚ğÈ—ª
+	// Microsoft::WRL::ã‚’çœç•¥
 	template<class T> using ComPtr = Microsoft::WRL::ComPtr<T>;
 
-public: // ’è”
-	// ƒ{[ƒ“ƒCƒ“ƒfƒbƒNƒX‚ÌÅ‘å”
+public: // å®šæ•°
+	// ãƒœãƒ¼ãƒ³ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ã®æœ€å¤§æ•°
 	static const int MAX_BONE_INDICES = 4;
 
 public:
-	// ƒtƒŒƒ“ƒhƒNƒ‰ƒX
+	// ãƒ•ãƒ¬ãƒ³ãƒ‰ã‚¯ãƒ©ã‚¹
 	friend class FBXLoader;
 
-	// ƒ{[ƒ“\‘¢‘Ì
+	// ãƒœãƒ¼ãƒ³æ§‹é€ ä½“
 	struct Bone
 	{
-		// –¼‘O
+		// åå‰
 		std::string name;
-		// ‰Šúp¨‚Ì‹ts—ñ
+		// åˆæœŸå§¿å‹¢ã®é€†è¡Œåˆ—
 		Matrix4 invInitialPose;
-		// ƒNƒ‰ƒXƒ^[ (FBX‘¤‚Ìƒ{[ƒ“î•ñ)
+		// ã‚¯ãƒ©ã‚¹ã‚¿ãƒ¼ (FBXå´ã®ãƒœãƒ¼ãƒ³æƒ…å ±)
 		FbxCluster* fbxCluster;
-		// ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+		// ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 		Bone(const std::string& name)
 		{
 			this->name = name;
 		}
 	};
 
-	// ’¸“_ƒf[ƒ^\‘¢‘Ì
+	// é ‚ç‚¹ãƒ‡ãƒ¼ã‚¿æ§‹é€ ä½“
 	struct VertexPosNormalUvSkin
 	{
-		Vector3 pos;		// xyzÀ•W
-		Vector3 normal;	// –@üƒxƒNƒgƒ‹ 
-		Vector2 uv;		// uvÀ•W
+		Vector3 pos;		// xyzåº§æ¨™
+		Vector3 normal;	// æ³•ç·šãƒ™ã‚¯ãƒˆãƒ« 
+		Vector2 uv;		// uvåº§æ¨™
 		UINT boneIndex[MAX_BONE_INDICES];
 		float boneWeight[MAX_BONE_INDICES];
 	};
 
 private:
-	// ƒ‚ƒfƒ‹–¼
+	// ãƒ¢ãƒ‡ãƒ«å
 	string name;
-	// ƒm[ƒh”z—ñ
+	// ãƒãƒ¼ãƒ‰é…åˆ—
 	vector<Node> nodes;
-	// ƒƒbƒVƒ…‚ğ‚Âƒm[ƒh
+	// ãƒ¡ãƒƒã‚·ãƒ¥ã‚’æŒã¤ãƒãƒ¼ãƒ‰
 	Node* meshNode = nullptr;
-	// ’¸“_ƒf[ƒ^”z—ñ
+	// é ‚ç‚¹ãƒ‡ãƒ¼ã‚¿é…åˆ—
 	vector<VertexPosNormalUvSkin> vertices;
-	// ’¸“_ƒCƒ“ƒfƒbƒNƒX”z—ñ
+	// é ‚ç‚¹ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹é…åˆ—
 	vector<unsigned short> indices;
-	// ƒAƒ“ƒrƒGƒ“ƒgŒW”
+	// ã‚¢ãƒ³ãƒ“ã‚¨ãƒ³ãƒˆä¿‚æ•°
 	Vector3 ambient = { 1,1,1 };
-	// ƒfƒBƒtƒ…[ƒYŒW”
+	// ãƒ‡ã‚£ãƒ•ãƒ¥ãƒ¼ã‚ºä¿‚æ•°
 	Vector3 diffuse = { 1,1,1 };
-	// ƒeƒNƒXƒ`ƒƒƒƒ^ƒf[ƒ^
+	// ãƒ†ã‚¯ã‚¹ãƒãƒ£ãƒ¡ã‚¿ãƒ‡ãƒ¼ã‚¿
 	TexMetadata metadata = {};
-	// ƒXƒNƒ‰ƒbƒ`ƒCƒ[ƒW
+	// ã‚¹ã‚¯ãƒ©ãƒƒãƒã‚¤ãƒ¡ãƒ¼ã‚¸
 	ScratchImage scratchImg = {};
-	// ’¸“_ƒoƒbƒtƒ@
+	// é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡
 	ComPtr<ID3D12Resource> vertBuff = nullptr;
-	// ƒCƒ“ƒfƒbƒNƒXƒoƒbƒtƒ@
+	// ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ãƒãƒƒãƒ•ã‚¡
 	ComPtr<ID3D12Resource> indexBuff = nullptr;
-	// ƒeƒNƒXƒ`ƒƒƒoƒbƒtƒ@
+	// ãƒ†ã‚¯ã‚¹ãƒãƒ£ãƒãƒƒãƒ•ã‚¡
 	ComPtr<ID3D12Resource> texBuff = nullptr;
-	// ’¸“_ƒoƒbƒtƒ@ƒrƒ…[
+	// é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ãƒ“ãƒ¥ãƒ¼
 	D3D12_VERTEX_BUFFER_VIEW vbView{};
-	// ƒCƒ“ƒfƒbƒNƒXƒoƒbƒtƒ@ƒrƒ…[
+	// ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ãƒãƒƒãƒ•ã‚¡ãƒ“ãƒ¥ãƒ¼
 	D3D12_INDEX_BUFFER_VIEW ibView{};
-	// SRV—pƒfƒXƒNƒŠƒvƒ^ƒq[ƒv
+	// SRVç”¨ãƒ‡ã‚¹ã‚¯ãƒªãƒ—ã‚¿ãƒ’ãƒ¼ãƒ—
 	ComPtr<ID3D12DescriptorHeap> descHeapSRV = nullptr;
-	// ƒ{[ƒ“”z—ñ
+	// ãƒœãƒ¼ãƒ³é…åˆ—
 	std::vector<Bone> bones;
-	// FBXƒV[ƒ“
+	// FBXã‚·ãƒ¼ãƒ³
 	FbxScene* fbxScene = nullptr;
 
 public:
-	// ƒfƒXƒgƒ‰ƒNƒ^
+	// ãƒ‡ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 	~FBXModel();
 
-	// ƒoƒbƒtƒ@¶¬
+	// ãƒãƒƒãƒ•ã‚¡ç”Ÿæˆ
 	void CreateBuffers(ID3D12Device* device);
 
-	// •`‰æ
+	// æç”»
 	void Draw(ID3D12GraphicsCommandList* commandList);
 
-	// ƒ‚ƒfƒ‹‚Ì•ÏŒ`s—ñæ“¾
+	// ãƒ¢ãƒ‡ãƒ«ã®å¤‰å½¢è¡Œåˆ—å–å¾—
 	const Matrix4& GetModelTransform() { return meshNode->globalTransform; }
 
 	// getter

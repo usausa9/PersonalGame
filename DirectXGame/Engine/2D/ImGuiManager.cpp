@@ -11,25 +11,25 @@ ImGuiManager* ImGuiManager::GetInstance()
 
 void ImGuiManager::Initialize()
 {
-	// ImGui‚ÌƒRƒ“ƒeƒLƒXƒg‚ð¶¬
+	// ImGuiã®ã‚³ãƒ³ãƒ†ã‚­ã‚¹ãƒˆã‚’ç”Ÿæˆ
 	ImGui::CreateContext();
 
-	// ImGui‚ÌƒXƒ^ƒCƒ‹Ý’è
+	// ImGuiã®ã‚¹ã‚¿ã‚¤ãƒ«è¨­å®š
 	ImGui::StyleColorsDark();
 
-	// ƒfƒXƒNƒŠƒvƒ^ƒq[ƒvÝ’è
+	// ãƒ‡ã‚¹ã‚¯ãƒªãƒ—ã‚¿ãƒ’ãƒ¼ãƒ—è¨­å®š
 	D3D12_DESCRIPTOR_HEAP_DESC desc = {};
 	desc.Type = D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV;
 	desc.NumDescriptors = 1;
 	desc.Flags = D3D12_DESCRIPTOR_HEAP_FLAG_SHADER_VISIBLE;
-	// ƒfƒXƒNƒŠƒvƒ^ƒq[ƒv¶¬
+	// ãƒ‡ã‚¹ã‚¯ãƒªãƒ—ã‚¿ãƒ’ãƒ¼ãƒ—ç”Ÿæˆ
 	HRESULT result = S_FALSE;
 	result = DirectXBase::GetInstance()->GetDevice()->CreateDescriptorHeap(&desc, IID_PPV_ARGS(&srvHeap_));
 	assert(SUCCEEDED(result));
 
-	// Win32—p‚Ì‰ŠúŠÖ”
+	// Win32ç”¨ã®åˆæœŸé–¢æ•°
 	ImGui_ImplWin32_Init(WinAPI::GetInstance()->GetHwnd());
-	// DirectX12—p‚Ì‰ŠúŠÖ”
+	// DirectX12ç”¨ã®åˆæœŸé–¢æ•°
 	ImGui_ImplDX12_Init(
 		DirectXBase::GetInstance()->GetDevice(),
 		static_cast<int>(DirectXBase::GetInstance()->GetBackBufferCount()),
@@ -38,24 +38,24 @@ void ImGuiManager::Initialize()
 		srvHeap_.Get()->GetGPUDescriptorHandleForHeapStart());
 
 	ImGuiIO& io = ImGui::GetIO();
-	// •W€ƒtƒHƒ“ƒg‚ð’Ç‰Á
+	// æ¨™æº–ãƒ•ã‚©ãƒ³ãƒˆã‚’è¿½åŠ 
 	io.Fonts->AddFontDefault();
 }
 
 void ImGuiManager::Finalize()
 {
-	// ŒãŽn––
+	// å¾Œå§‹æœ«
 	ImGui_ImplDX12_Shutdown();
 	ImGui_ImplWin32_Shutdown();
 	ImGui::DestroyContext();
 
-	// ƒq[ƒv‰ð–@
+	// ãƒ’ãƒ¼ãƒ—è§£æ³•
 	srvHeap_.Reset();
 }
 
 void ImGuiManager::Begin()
 {
-	// ImGuiƒtƒŒ[ƒ€ŠJŽn
+	// ImGuiãƒ•ãƒ¬ãƒ¼ãƒ é–‹å§‹
 	ImGui_ImplDX12_NewFrame();
 	ImGui_ImplWin32_NewFrame();
 	ImGui::NewFrame();
@@ -63,16 +63,16 @@ void ImGuiManager::Begin()
 
 void ImGuiManager::End()
 {
-	// •`‰æ‘O€”õ
+	// æç”»å‰æº–å‚™
 	ImGui::Render();
 }
 
 void ImGuiManager::Draw()
 {
-	// ƒfƒXƒNƒŠƒvƒ^ƒq[ƒv‚Ì”z—ñ‚ðƒZƒbƒg‚·‚éƒRƒ}ƒ“ƒh
-	ID3D12DescriptorHeap* ppHeaps[] = {srvHeap_.Get()};
+	// ãƒ‡ã‚¹ã‚¯ãƒªãƒ—ã‚¿ãƒ’ãƒ¼ãƒ—ã®é…åˆ—ã‚’ã‚»ãƒƒãƒˆã™ã‚‹ã‚³ãƒžãƒ³ãƒ‰
+	ID3D12DescriptorHeap* ppHeaps[] = { srvHeap_.Get() };
 	DirectXBase::GetInstance()->GetCommandList()->SetDescriptorHeaps(_countof(ppHeaps), ppHeaps);
-	
-	// •`‰æƒRƒ}ƒ“ƒh‚ð”­s
+
+	// æç”»ã‚³ãƒžãƒ³ãƒ‰ã‚’ç™ºè¡Œ
 	ImGui_ImplDX12_RenderDrawData(ImGui::GetDrawData(), DirectXBase::GetInstance()->GetCommandList());
 }

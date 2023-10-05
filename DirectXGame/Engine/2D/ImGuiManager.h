@@ -6,30 +6,30 @@ class ImGuiManager
 {
 	template <class T> using ComPtr = Microsoft::WRL::ComPtr<T>;
 
-public:	// ƒƒ“ƒoŠÖ”
-	// ƒVƒ“ƒOƒ‹ƒgƒ“ƒCƒ“ƒXƒ^ƒ“ƒX‚ğæ“¾
+public:	// ãƒ¡ãƒ³ãƒé–¢æ•°
+	// ã‚·ãƒ³ã‚°ãƒ«ãƒˆãƒ³ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ã‚’å–å¾—
 	static ImGuiManager* GetInstance();
-	
+
 	/// <summary>
-	/// ‰Šú‰»
+	/// åˆæœŸåŒ–
 	/// </summary>
 	void Initialize();
 
 	/// <summary>
-	/// I—¹ˆ—
+	/// çµ‚äº†å‡¦ç†
 	/// </summary>
 	void Finalize();
 
-	// ImGuió•tŠJn
+	// ImGuiå—ä»˜é–‹å§‹
 	void Begin();
 
-	// ImGuió•tI—¹
+	// ImGuiå—ä»˜çµ‚äº†
 	void End();
 
-	// •`‰æ
+	// æç”»
 	void Draw();
 
-private: // ƒƒ“ƒo•Ï”
-	// SRV—pƒfƒXƒNƒŠƒvƒ^ƒq[ƒv
+private: // ãƒ¡ãƒ³ãƒå¤‰æ•°
+	// SRVç”¨ãƒ‡ã‚¹ã‚¯ãƒªãƒ—ã‚¿ãƒ’ãƒ¼ãƒ—
 	ComPtr<ID3D12DescriptorHeap> srvHeap_;
 };

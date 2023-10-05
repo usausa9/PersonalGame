@@ -9,7 +9,7 @@ Object3D::~Object3D()
 {
 	if (collider_)
 	{
-		// Õ“Ëƒ}ƒl[ƒWƒƒ‚©‚ç“o˜^‰ðœ
+		// è¡çªãƒžãƒãƒ¼ã‚¸ãƒ£ã‹ã‚‰ç™»éŒ²è§£é™¤
 		CollisionManager::GetInstance()->RemoveCollider(collider_);
 		delete collider_;
 	}
@@ -19,11 +19,11 @@ void Object3D::InitializeObject3D()
 {
 	HRESULT result;
 
-	// ’è”ƒoƒbƒtƒ@‚Ìƒq[ƒvÝ’è
+	// å®šæ•°ãƒãƒƒãƒ•ã‚¡ã®ãƒ’ãƒ¼ãƒ—è¨­å®š
 	D3D12_HEAP_PROPERTIES heapProp{};
 	heapProp.Type = D3D12_HEAP_TYPE_UPLOAD;
 
-	// ’è”ƒoƒbƒtƒ@‚ÌƒŠƒ\[ƒXÝ’è
+	// å®šæ•°ãƒãƒƒãƒ•ã‚¡ã®ãƒªã‚½ãƒ¼ã‚¹è¨­å®š
 	D3D12_RESOURCE_DESC resdesc{};
 	resdesc.Dimension = D3D12_RESOURCE_DIMENSION_BUFFER;
 	resdesc.Width = (sizeof(constMapTransform_) + 0xff) & ~0xff;
@@ -33,7 +33,7 @@ void Object3D::InitializeObject3D()
 	resdesc.SampleDesc.Count = 1;
 	resdesc.Layout = D3D12_TEXTURE_LAYOUT_ROW_MAJOR;
 
-	// ’è”ƒoƒbƒtƒ@‚Ì¶¬
+	// å®šæ•°ãƒãƒƒãƒ•ã‚¡ã®ç”Ÿæˆ
 	result = DirectXBase::GetInstance()->device_->CreateCommittedResource(
 		&heapProp,
 		D3D12_HEAP_FLAG_NONE,
@@ -43,20 +43,20 @@ void Object3D::InitializeObject3D()
 		IID_PPV_ARGS(&constBuffTransform_));
 	assert(SUCCEEDED(result));
 
-	// ’è”ƒoƒbƒtƒ@‚Ìƒ}ƒbƒsƒ“ƒO
+	// å®šæ•°ãƒãƒƒãƒ•ã‚¡ã®ãƒžãƒƒãƒ”ãƒ³ã‚°
 	result = constBuffTransform_->Map(0, nullptr, (void**)&constMapTransform_);
 	assert(SUCCEEDED(result));
 
-	// ƒNƒ‰ƒX–¼‚Ì•¶Žš—ñ‚ðŽæ“¾
+	// ã‚¯ãƒ©ã‚¹åã®æ–‡å­—åˆ—ã‚’å–å¾—
 	NAME_ = typeid(*this).name();
 }
 
-// 3DƒIƒuƒWƒFƒNƒgXVˆ—
+// 3Dã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆæ›´æ–°å‡¦ç†
 void Object3D::UpdateObject3D()
 {
 	Matrix4 matScale, matRot, matTrans;
 
-	// ƒXƒP[ƒ‹A‰ñ“]A•½sˆÚ“®s—ñ‚ÌŒvŽZ
+	// ã‚¹ã‚±ãƒ¼ãƒ«ã€å›žè»¢ã€å¹³è¡Œç§»å‹•è¡Œåˆ—ã®è¨ˆç®—
 	matScale = matScale.Scale(scale_);
 	matRot = Matrix4::Identity();
 	matRot *= matRot.RotateZ(rotation_.z);
@@ -64,23 +64,23 @@ void Object3D::UpdateObject3D()
 	matRot *= matRot.RotateY(rotation_.y);
 	matTrans = matTrans.Translate(position_);
 
-	// ƒ[ƒ‹ƒhs—ñ‚Ì‡¬
-	matWorld_ = Matrix4::Identity();	// •ÏŒ`‚ðƒŠƒZƒbƒg
-	matWorld_ *= matScale;			// ƒ[ƒ‹ƒhs—ñ‚ÉƒXƒP[ƒŠƒ“ƒO‚ð”½‰f
-	matWorld_ *= matRot;				// ƒ[ƒ‹ƒhs—ñ‚É‰ñ“]‚ð”½‰f
-	matWorld_ *= matTrans;			// ƒ[ƒ‹ƒhs—ñ‚É•½sˆÚ“®‚ð”½‰f
+	// ãƒ¯ãƒ¼ãƒ«ãƒ‰è¡Œåˆ—ã®åˆæˆ
+	matWorld_ = Matrix4::Identity();	// å¤‰å½¢ã‚’ãƒªã‚»ãƒƒãƒˆ
+	matWorld_ *= matScale;			// ãƒ¯ãƒ¼ãƒ«ãƒ‰è¡Œåˆ—ã«ã‚¹ã‚±ãƒ¼ãƒªãƒ³ã‚°ã‚’åæ˜ 
+	matWorld_ *= matRot;				// ãƒ¯ãƒ¼ãƒ«ãƒ‰è¡Œåˆ—ã«å›žè»¢ã‚’åæ˜ 
+	matWorld_ *= matTrans;			// ãƒ¯ãƒ¼ãƒ«ãƒ‰è¡Œåˆ—ã«å¹³è¡Œç§»å‹•ã‚’åæ˜ 
 
-	// eƒIƒuƒWƒFƒNƒg‚ª‚ ‚ê‚Î
+	// è¦ªã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆãŒã‚ã‚Œã°
 	if (parent_ != nullptr)
 	{
-		// eƒIƒuƒWƒFƒNƒg‚Ìƒ[ƒ‹ƒhs—ñ‚ðŠ|‚¯‚é
+		// è¦ªã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®ãƒ¯ãƒ¼ãƒ«ãƒ‰è¡Œåˆ—ã‚’æŽ›ã‘ã‚‹
 		matWorld_ *= parent_->matWorld_;
 	}
 
-	// ’è”ƒoƒbƒtƒ@‚Öƒf[ƒ^“]‘—
+	// å®šæ•°ãƒãƒƒãƒ•ã‚¡ã¸ãƒ‡ãƒ¼ã‚¿è»¢é€
 	constMapTransform_->mat = matWorld_;
 
-	// “–‚½‚è”»’èXV
+	// å½“ãŸã‚Šåˆ¤å®šæ›´æ–°
 	if (collider_)
 	{
 		collider_->Update();
@@ -89,10 +89,10 @@ void Object3D::UpdateObject3D()
 
 void Object3D::DrawObject3D()
 {
-	// ’è”ƒoƒbƒtƒ@ƒrƒ…[(CBV)‚ÌÝ’èƒRƒ}ƒ“ƒh
+	// å®šæ•°ãƒãƒƒãƒ•ã‚¡ãƒ“ãƒ¥ãƒ¼(CBV)ã®è¨­å®šã‚³ãƒžãƒ³ãƒ‰
 	DirectXBase::GetInstance()->commandList_->SetGraphicsRootConstantBufferView(2, constBuffTransform_->GetGPUVirtualAddress());
-	
-	// •`‰æI
+
+	// æç”»ï¼
 	objModel_->Draw();
 }
 
@@ -101,9 +101,9 @@ void Object3D::SetCollider(BaseCollider* collider)
 	collider->SetObject(this);
 	this->collider_ = collider;
 
-	// Õ“Ëƒ}ƒl[ƒWƒƒ‚É“o˜^
+	// è¡çªãƒžãƒãƒ¼ã‚¸ãƒ£ã«ç™»éŒ²
 	CollisionManager::GetInstance()->AddCollider(collider);
 
-	// ƒRƒ‰ƒCƒ_[‚ðXV
+	// ã‚³ãƒ©ã‚¤ãƒ€ãƒ¼ã‚’æ›´æ–°
 	collider->Update();
 }

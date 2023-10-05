@@ -7,51 +7,51 @@ class PlayerBullet : public Object3D
 {
 public:
 	/// <summary>
-	/// ‰Šú‰»
+	/// åˆæœŸåŒ–
 	/// </summary>
-	/// <param name="model">©‹@’e ƒ‚ƒfƒ‹</param>
-	/// <param name="pos">”­ËˆÊ’u</param>
+	/// <param name="model">è‡ªæ©Ÿå¼¾ ãƒ¢ãƒ‡ãƒ«</param>
+	/// <param name="pos">ç™ºå°„ä½ç½®</param>
 	void Initialize(bool bulletState, OBJModel* model, const Vector3& pos, const Vector3& velocity);
 
-	// XVˆ—
+	// æ›´æ–°å‡¦ç†
 	void Update();
 
-	// •`‰æˆ—
+	// æç”»å‡¦ç†
 	void Draw();
 
 	/// <summary>
-	/// Õ“Ë‚ÌƒR[ƒ‹ƒoƒbƒNŠÖ”
+	/// è¡çªæ™‚ã®ã‚³ãƒ¼ãƒ«ãƒãƒƒã‚¯é–¢æ•°
 	/// </summary>
-	/// <param name="info">Õ“Ëî•ñ</param>
+	/// <param name="info">è¡çªæƒ…å ±</param>
 	void OnCollision(const CollisionInfo& info) override;
 
-private: 
-	// ©‹@’e‚Ì–ˆƒtƒŒ[ƒ€ˆÚ“®—Ê
+private:
+	// è‡ªæ©Ÿå¼¾ã®æ¯ãƒ•ãƒ¬ãƒ¼ãƒ ç§»å‹•é‡
 	Vector3 velocity_ = {};
 
-	// õ–½<frame>
-	static const int32_t s_kLIFE_TIME_ = 60 * 5;	// 5•b
-	
-	// Á–Åƒ^ƒCƒ}[
+	// å¯¿å‘½<frame>
+	static const int32_t s_kLIFE_TIME_ = 60 * 5;	// 5ç§’
+
+	// æ¶ˆæ»…ã‚¿ã‚¤ãƒãƒ¼
 	int32_t deathTimer_ = s_kLIFE_TIME_;
 
-	// Á–Åƒtƒ‰ƒO
+	// æ¶ˆæ»…ãƒ•ãƒ©ã‚°
 	bool isDead_ = false;
 
-	// ƒfƒoƒbƒO—p
+	// ãƒ‡ãƒãƒƒã‚°ç”¨
 	static bool isDrawSp_;
 
-	// ©‹@‹­‰»‚É‰‚¶‚½ƒTƒCƒYƒpƒ‰ƒ[ƒ^
+	// è‡ªæ©Ÿå¼·åŒ–ã«å¿œã˜ãŸã‚µã‚¤ã‚ºãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿
 	const float SMALL_SIZE_ = 1.5f;
 	const float EXPAND_SIZE_ = 2.2f;
 	const float SMALL_COLLIDER_SIZE_ = 2.5f;
 	const float EXPAND_COLLIDER_SIZE_ = 4.f;
-	const Vector3 SMALL_SCALE_ = { SMALL_SIZE_, SMALL_SIZE_, SMALL_SIZE_};
+	const Vector3 SMALL_SCALE_ = { SMALL_SIZE_, SMALL_SIZE_, SMALL_SIZE_ };
 	const Vector3 EXPAND_SCALE_ = { EXPAND_SIZE_, EXPAND_SIZE_, EXPAND_SIZE_ };
 
 public:
-	// ŠO•”QÆ—p‚ÌGetter
+	// å¤–éƒ¨å‚ç…§ç”¨ã®Getter
 	bool IsDead() const { return isDead_; }
-	
+
 	bool IsDrawSP() const { return isDrawSp_; }
 };

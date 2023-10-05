@@ -5,7 +5,7 @@ void Triangle::ComputeNormal()
 	Vector3 p0_p1 = p1_ - p0_;
 	Vector3 p0_p2 = p2_ - p0_;
 
-	// 外積から垂直なベクトルを算出
+	// 螟也ｩ阪°繧牙桙逶ｴ縺ｪ繝吶け繝医Ν繧堤ｮ怜�ｺ
 	normal_ = p0_p1.Cross(p0_p2);
 	normal_.Normalize();
 }

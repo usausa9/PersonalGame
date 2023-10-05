@@ -6,47 +6,47 @@ Camera* Camera::sCurrentCamera = nullptr;
 
 Camera::~Camera()
 {
-	constBuffCamera_->Unmap(0, nullptr);	// ƒƒ‚ƒŠƒŠ[ƒN‚Íß
+	constBuffCamera_->Unmap(0, nullptr);	// ãƒ¡ãƒ¢ãƒªãƒªãƒ¼ã‚¯ã¯ç½ª
 }
 
 void Camera::Initialize()
 {
 	SetCurrentCamera(this);
 
-	// ŽË‰e•ÏŠ·s—ñ
+	// å°„å½±å¤‰æ›è¡Œåˆ—
 	matProjection_ = matProjection_.CreateProjectionMat(
-		UsaMath::DegreesToRadians(90.0f),	// ã‰º‰æŠp90“x
+		UsaMath::DegreesToRadians(90.0f),	// ä¸Šä¸‹ç”»è§’90åº¦
 		(float)WinAPI::GetInstance()->width_ / WinAPI::GetInstance()->height_,
 		nearZ_, farZ_
 	);
 
 	HRESULT result = S_FALSE;
 
-	// ƒq[ƒvÝ’è
+	// ãƒ’ãƒ¼ãƒ—è¨­å®š
 	D3D12_HEAP_PROPERTIES cbHeapProp{};
-	cbHeapProp.Type = D3D12_HEAP_TYPE_UPLOAD; // GPU‚Ì“]‘——p
+	cbHeapProp.Type = D3D12_HEAP_TYPE_UPLOAD; // GPUã®è»¢é€ç”¨
 
-	// ƒŠƒ\[ƒXÝ’è
+	// ãƒªã‚½ãƒ¼ã‚¹è¨­å®š
 	D3D12_RESOURCE_DESC cbResourceDesc{};
 	cbResourceDesc.Dimension = D3D12_RESOURCE_DIMENSION_BUFFER;
-	cbResourceDesc.Width = (sizeof(CameraConstBufferData) + 0xff) & ~0xff; // 256ƒoƒCƒgƒAƒ‰ƒCƒ“ƒƒ“ƒg
+	cbResourceDesc.Width = (sizeof(CameraConstBufferData) + 0xff) & ~0xff; // 256ãƒã‚¤ãƒˆã‚¢ãƒ©ã‚¤ãƒ³ãƒ¡ãƒ³ãƒˆ
 	cbResourceDesc.Height = 1;
 	cbResourceDesc.DepthOrArraySize = 1;
 	cbResourceDesc.MipLevels = 1;
 	cbResourceDesc.SampleDesc.Count = 1;
 	cbResourceDesc.Layout = D3D12_TEXTURE_LAYOUT_ROW_MAJOR;
 
-	// ’è”ƒoƒbƒtƒ@‚Ì¶¬
+	// å®šæ•°ãƒãƒƒãƒ•ã‚¡ã®ç”Ÿæˆ
 	result = DirectXBase::GetInstance()->device_->CreateCommittedResource(
-		&cbHeapProp,	// ƒq[ƒvÝ’è
+		&cbHeapProp,	// ãƒ’ãƒ¼ãƒ—è¨­å®š
 		D3D12_HEAP_FLAG_NONE,
-		&cbResourceDesc,// ƒŠƒ\[ƒXÝ’è
+		&cbResourceDesc,// ãƒªã‚½ãƒ¼ã‚¹è¨­å®š
 		D3D12_RESOURCE_STATE_GENERIC_READ,
 		nullptr,
 		IID_PPV_ARGS(&constBuffCamera_));
 	assert(SUCCEEDED(result));
 
-	// ’è”ƒoƒbƒtƒ@‚Ìƒ}ƒbƒsƒ“ƒO
+	// å®šæ•°ãƒãƒƒãƒ•ã‚¡ã®ãƒžãƒƒãƒ”ãƒ³ã‚°
 	result = constBuffCamera_->Map(0, nullptr, (void**)&constMapCamera_);
 	assert(SUCCEEDED(result));
 }
@@ -55,45 +55,45 @@ void Camera::Initialize(Vector3 position, Vector3 target, Vector3 up)
 {
 	SetCurrentCamera(this);
 
-	// ƒxƒNƒgƒ‹‚ð‚à‚ç‚Á‚Ä‚­‚é
+	// ãƒ™ã‚¯ãƒˆãƒ«ã‚’ã‚‚ã‚‰ã£ã¦ãã‚‹
 	position_ = position;
 	target_ = target;
 	up_ = up;
 
-	// ŽË‰e•ÏŠ·s—ñ
+	// å°„å½±å¤‰æ›è¡Œåˆ—
 	matProjection_ = matProjection_.CreateProjectionMat(
-		UsaMath::DegreesToRadians(90.0f),	// ã‰º‰æŠp90“x
+		UsaMath::DegreesToRadians(90.0f),	// ä¸Šä¸‹ç”»è§’90åº¦
 		(float)WinAPI::GetInstance()->width_ / WinAPI::GetInstance()->height_,
 		nearZ_, farZ_
 	);
 
 	HRESULT result = S_FALSE;
 
-	// ƒq[ƒvÝ’è
+	// ãƒ’ãƒ¼ãƒ—è¨­å®š
 	D3D12_HEAP_PROPERTIES cbHeapProp{};
-	cbHeapProp.Type = D3D12_HEAP_TYPE_UPLOAD; // GPU‚Ì“]‘——p
+	cbHeapProp.Type = D3D12_HEAP_TYPE_UPLOAD; // GPUã®è»¢é€ç”¨
 
-	// ƒŠƒ\[ƒXÝ’è
+	// ãƒªã‚½ãƒ¼ã‚¹è¨­å®š
 	D3D12_RESOURCE_DESC cbResourceDesc{};
 	cbResourceDesc.Dimension = D3D12_RESOURCE_DIMENSION_BUFFER;
-	cbResourceDesc.Width = (sizeof(CameraConstBufferData) + 0xff) & ~0xff; // 256ƒoƒCƒgƒAƒ‰ƒCƒ“ƒƒ“ƒg
+	cbResourceDesc.Width = (sizeof(CameraConstBufferData) + 0xff) & ~0xff; // 256ãƒã‚¤ãƒˆã‚¢ãƒ©ã‚¤ãƒ³ãƒ¡ãƒ³ãƒˆ
 	cbResourceDesc.Height = 1;
 	cbResourceDesc.DepthOrArraySize = 1;
 	cbResourceDesc.MipLevels = 1;
 	cbResourceDesc.SampleDesc.Count = 1;
 	cbResourceDesc.Layout = D3D12_TEXTURE_LAYOUT_ROW_MAJOR;
 
-	// ’è”ƒoƒbƒtƒ@‚Ì¶¬
+	// å®šæ•°ãƒãƒƒãƒ•ã‚¡ã®ç”Ÿæˆ
 	result = DirectXBase::GetInstance()->device_->CreateCommittedResource(
-		&cbHeapProp,	// ƒq[ƒvÝ’è
+		&cbHeapProp,	// ãƒ’ãƒ¼ãƒ—è¨­å®š
 		D3D12_HEAP_FLAG_NONE,
-		&cbResourceDesc,// ƒŠƒ\[ƒXÝ’è
+		&cbResourceDesc,// ãƒªã‚½ãƒ¼ã‚¹è¨­å®š
 		D3D12_RESOURCE_STATE_GENERIC_READ,
 		nullptr,
 		IID_PPV_ARGS(&constBuffCamera_));
 	assert(SUCCEEDED(result));
 
-	// ’è”ƒoƒbƒtƒ@‚Ìƒ}ƒbƒsƒ“ƒO
+	// å®šæ•°ãƒãƒƒãƒ•ã‚¡ã®ãƒžãƒƒãƒ”ãƒ³ã‚°
 	result = constBuffCamera_->Map(0, nullptr, (void**)&constMapCamera_);
 	assert(SUCCEEDED(result));
 }
@@ -118,7 +118,7 @@ void Camera::Update()
 
 void Camera::Set()
 {
-	// ’è”ƒoƒbƒtƒ@ƒrƒ…[‚ðƒZƒbƒg [ƒJƒƒ‰]
+	// å®šæ•°ãƒãƒƒãƒ•ã‚¡ãƒ“ãƒ¥ãƒ¼ã‚’ã‚»ãƒƒãƒˆ [ã‚«ãƒ¡ãƒ©]
 	DirectXBase::GetInstance()->commandList_->SetGraphicsRootConstantBufferView(3, constBuffCamera_->GetGPUVirtualAddress());
 }
 

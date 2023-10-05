@@ -1,27 +1,27 @@
 #pragma once
 #include "UsaMath.h"
 
-// ƒC[ƒWƒ“ƒO—p
+// ã‚¤ãƒ¼ã‚¸ãƒ³ã‚°ç”¨
 namespace Easing
 {
-	// t‚Í0-1Aexp‚ÍŽw”
+	// tã¯0-1ã€expã¯æŒ‡æ•°
 	Vector2 Out(Vector2 start, Vector2 end, float t, float exp = 3);
-	// t‚Í0-1Aexp‚ÍŽw”
+	// tã¯0-1ã€expã¯æŒ‡æ•°
 	Vector2 In(Vector2 start, Vector2 end, float t, float exp = 3);
-	// t‚Í0-1
+	// tã¯0-1
 	Vector2 InOut(Vector2 start, Vector2 end, float t);
 
-	// t‚Í0-1Aexp‚ÍŽw”
+	// tã¯0-1ã€expã¯æŒ‡æ•°
 	float Out(float start, float end, float t, float exp = 3);
-	// t‚Í0-1Aexp‚ÍŽw”
+	// tã¯0-1ã€expã¯æŒ‡æ•°
 	float In(float start, float end, float t, float exp = 3);
-	// t‚Í0-1
+	// tã¯0-1
 	float InOut(float start, float end, float t);
 
-	// t‚Í0-1Aexp‚ÍŽw”A–ß‚è’l‚Í0-1
+	// tã¯0-1ã€expã¯æŒ‡æ•°ã€æˆ»ã‚Šå€¤ã¯0-1
 	float Out(float t, float exp = 3);
-	// t‚Í0-1Aexp‚ÍŽw”A–ß‚è’l‚Í0-1
+	// tã¯0-1ã€expã¯æŒ‡æ•°ã€æˆ»ã‚Šå€¤ã¯0-1
 	float In(float t, float exp = 3);
-	// t‚Í0-1
+	// tã¯0-1
 	float InOut(float t);
 };

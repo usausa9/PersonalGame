@@ -15,33 +15,33 @@ void CollisionManager::CheckAllCollisions()
 	std::forward_list<BaseCollider*>::iterator itA;
 	std::forward_list<BaseCollider*>::iterator itB;
 
-	// ‚·‚×‚Ä‚Ì‘g‚Ý‡‚í‚¹‚É‚Â‚¢‚Ä‘“–‚½‚èƒ`ƒFƒbƒN
+	// ã™ã¹ã¦ã®çµ„ã¿åˆã‚ã›ã«ã¤ã„ã¦ç·å½“ãŸã‚Šãƒã‚§ãƒƒã‚¯
 	itA = colliders_.begin();
-	for (; itA != colliders_.end(); ++itA) 
+	for (; itA != colliders_.end(); ++itA)
 	{
 		itB = itA;
 		++itB;
 
-		for (; itB != colliders_.end(); ++itB) 
+		for (; itB != colliders_.end(); ++itB)
 		{
 			BaseCollider* colA = *itA;
 			BaseCollider* colB = *itB;
 
-			// ‘®«‚ª“¯‚¶‚È‚çƒXƒLƒbƒv
-			if (colA->attribute_ == colB->attribute_) 
+			// å±žæ€§ãŒåŒã˜ãªã‚‰ã‚¹ã‚­ãƒƒãƒ—
+			if (colA->attribute_ == colB->attribute_)
 			{
 				continue;
 			}
 
-			// 0‚Æ‚à‚É‹…
+			// 0ã¨ã‚‚ã«çƒ
 			if (colA->GetShapeType() == COLLISIONSHAPE_SPHERE &&
-				colB->GetShapeType() == COLLISIONSHAPE_SPHERE) 
-				{
+				colB->GetShapeType() == COLLISIONSHAPE_SPHERE)
+			{
 				Sphere* sphereA = dynamic_cast<Sphere*>(colA);
 				Sphere* sphereB = dynamic_cast<Sphere*>(colB);
 				Vector3 inter;
 
-				if (Collision::Col_SphereToSphere(*sphereA, *sphereB, nullptr, &inter)) 
+				if (Collision::Col_SphereToSphere(*sphereA, *sphereB, nullptr, &inter))
 				{
 					colA->OnCollision(CollisionInfo(colB->GetObject3d(), colB, inter));
 					colB->OnCollision(CollisionInfo(colA->GetObject3d(), colA, inter));

@@ -1,49 +1,49 @@
 #pragma once
 #include "UsaMath.h"
 
-// s—ñ
-class Matrix4 
+// è¡Œåˆ—
+class Matrix4
 {
 public:
-	// s—ñ
+	// è¡Œåˆ—
 	float m[4][4];
 
-	// ’PˆÊs—ñ‘ã“ü
+	// å˜ä½è¡Œåˆ—ä»£å…¥
 	static Matrix4 Identity();
 	Matrix4 Identity(Matrix4 matrix);
 
-	// s—ñ‚ÌƒXƒJƒ‰[
+	// è¡Œåˆ—ã®ã‚¹ã‚«ãƒ©ãƒ¼
 	Matrix4 ScalarProduct(Matrix4 matrix, Vector3 scalar);
-	
-	// s—ñ“¯m‚ÌŠ|‚¯Z
+
+	// è¡Œåˆ—åŒå£«ã®æ›ã‘ç®—
 	Matrix4 Matrix4Product(Matrix4 matrix, Matrix4 matrix2);
-	
-	// Šg‘åk¬s—ñ
+
+	// æ‹¡å¤§ç¸®å°è¡Œåˆ—
 	Matrix4 Scale(const Vector3& s);
-	
-	// ‰ñ“]s—ñ
+
+	// å›è»¢è¡Œåˆ—
 	Matrix4 RotateX(float angle);
 	Matrix4 RotateY(float angle);
 	Matrix4 RotateZ(float angle);
-	
-	// •½sˆÚ“®s—ñì¬
+
+	// å¹³è¡Œç§»å‹•è¡Œåˆ—ä½œæˆ
 	Matrix4 Translate(const Vector3& t);
 
-	// À•W•ÏŠ·iƒxƒNƒgƒ‹‚Æs—ñ‚ÌŠ|‚¯Zj
+	// åº§æ¨™å¤‰æ›ï¼ˆãƒ™ã‚¯ãƒˆãƒ«ã¨è¡Œåˆ—ã®æ›ã‘ç®—ï¼‰
 	static Vector3 Transform(const Vector3& v, const Matrix4& m);
 	static Vector3 TransformDivW(const Vector3& v, const Matrix4& m);
 
-	// ‹ts—ñ¶¬
+	// é€†è¡Œåˆ—ç”Ÿæˆ
 	static Matrix4 Inverse(const Matrix4 m);
 
-	// ƒrƒ…[s—ñŠÖ˜A
+	// ãƒ“ãƒ¥ãƒ¼è¡Œåˆ—é–¢é€£
 	Matrix4 CreateViewMat(const Vector3& eye, const Vector3& target, const Vector3& up);
 	Matrix4 CreateProjectionMat(float fovY, float aspectRatio, float nearZ, float farZ);
 
-	// ‘ã“ü‰‰ZqƒI[ƒo[ƒ[ƒh
+	// ä»£å…¥æ¼”ç®—å­ã‚ªãƒ¼ãƒãƒ¼ãƒ­ãƒ¼ãƒ‰
 	Matrix4& operator*=(const Matrix4& m2);
 };
 
-// 2€‰‰ZqƒI[ƒo[ƒ[ƒh
+// 2é …æ¼”ç®—å­ã‚ªãƒ¼ãƒãƒ¼ãƒ­ãƒ¼ãƒ‰
 const Matrix4 operator*(const Matrix4& m1, const Matrix4& m2);
 const Vector3 operator*(const Vector3& v, const Matrix4& m);

@@ -6,33 +6,33 @@
 
 void TimeData::Start(float allFrames)
 {
-	// ‰¼ˆø”‚©‚çÅ‘åƒtƒŒ[ƒ€‚ÌƒZƒbƒg
+	// ä»®å¼•æ•°ã‹ã‚‰æœ€å¤§ãƒ•ãƒ¬ãƒ¼ãƒ ã®ã‚»ãƒƒãƒˆ
 	maxTime_ = allFrames;
 
-	// Œ»İŠÔ‚Ì‰Šú‰»
+	// ç¾åœ¨æ™‚é–“ã®åˆæœŸåŒ–
 	nowTime_ = 0.0f;
 
-	// ƒ^ƒCƒ}[“®ì‚ğtrue‚É
+	// ã‚¿ã‚¤ãƒãƒ¼å‹•ä½œã‚’trueã«
 	isActive_ = true;
 }
 
 void TimeData::Update()
 {
-	// ƒAƒNƒeƒBƒu’†‚Å‚È‚¯‚ê‚ÎXV‚µ‚È‚¢
-	if (!isActive_) 
+	// ã‚¢ã‚¯ãƒ†ã‚£ãƒ–ä¸­ã§ãªã‘ã‚Œã°æ›´æ–°ã—ãªã„
+	if (!isActive_)
 	{
 		return;
 	}
 
-	// Œ»İŠÔ‚ğ‰ÁZ
+	// ç¾åœ¨æ™‚é–“ã‚’åŠ ç®—
 	nowTime_ += 1.0f;
 
-	// 0.f - 1.f‚É•ÏŠ·
+	// 0.f - 1.fã«å¤‰æ›
 	timeRate_ = nowTime_ / maxTime_;
 
-	// 1‚ğ‰z‚¦‚é‚È‚ç1‚É, ƒ^ƒCƒ}[’â~
+	// 1ã‚’è¶Šãˆã‚‹ãªã‚‰1ã«, ã‚¿ã‚¤ãƒãƒ¼åœæ­¢
 	timeRate_ = min(timeRate_, 1.f);
-	if (timeRate_ == 1.f) 
+	if (timeRate_ == 1.f)
 	{
 		isActive_ = false;
 	}

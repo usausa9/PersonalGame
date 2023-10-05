@@ -2,7 +2,7 @@
 
 #include <cmath>
 
-// ’PˆÊs—ñ‘ã“ü
+// å˜ä½è¡Œåˆ—ä»£å…¥
 Matrix4 Matrix4::Identity()
 {
 	static const Matrix4 result
@@ -36,7 +36,7 @@ Matrix4 Matrix4::Identity(Matrix4 matrix)
 	return matrix;
 }
 
-// s—ñ‚ÌƒXƒJƒ‰[
+// è¡Œåˆ—ã®ã‚¹ã‚«ãƒ©ãƒ¼
 Matrix4 Matrix4::ScalarProduct(Matrix4 matrix, Vector3 scalar)
 {
 	matrix.m[0][0] *= scalar.x;
@@ -57,7 +57,7 @@ Matrix4 Matrix4::ScalarProduct(Matrix4 matrix, Vector3 scalar)
 	return matrix;
 }
 
-// s—ñ“¯m‚ÌŠ|‚¯Z
+// è¡Œåˆ—åŒå£«ã®æ›ã‘ç®—
 Matrix4 Matrix4::Matrix4Product(Matrix4 matrix, Matrix4 matrix2)
 {
 	Matrix4 matResult = {};
@@ -76,7 +76,7 @@ Matrix4 Matrix4::Matrix4Product(Matrix4 matrix, Matrix4 matrix2)
 	return matResult;
 }
 
-// Šg‘åk¬s—ñ
+// æ‹¡å¤§ç¸®å°è¡Œåˆ—
 Matrix4 Matrix4::Scale(const Vector3& s)
 {
 	Matrix4 result
@@ -90,7 +90,7 @@ Matrix4 Matrix4::Scale(const Vector3& s)
 	return result;
 }
 
-#pragma region ‰ñ“]s—ñ
+#pragma region å›è»¢è¡Œåˆ—
 
 Matrix4 Matrix4::RotateX(float angle)
 {
@@ -185,7 +185,7 @@ Vector3 Matrix4::TransformDivW(const Vector3& v, const Matrix4& m)
 
 Matrix4 Matrix4::Inverse(const Matrix4 m)
 {
-	// i = s  j = —ñ  k = ‘ÎŠp¬•ª‚ª‘¶İ‚·‚é—ñ
+	// i = è¡Œ  j = åˆ—  k = å¯¾è§’æˆåˆ†ãŒå­˜åœ¨ã™ã‚‹åˆ—
 
 	Matrix4 mat = {};
 	Matrix4 result = {};
@@ -193,14 +193,14 @@ Matrix4 Matrix4::Inverse(const Matrix4 m)
 
 	mat = m;
 
-	// identityMatrix‚ğ’PˆÊs—ñ‚Å‰Šú‰»
+	// identityMatrixã‚’å˜ä½è¡Œåˆ—ã§åˆæœŸåŒ–
 	identityMatrix = Matrix4::Identity();
 
-	// ‘|‚«o‚µ—p ‰E‘¤‚É‚Å‚½4*4‚ªŒ‹‰Ê‚É‚È‚é ‰E‘¤‚É’PˆÊs—ñ‚ğ‘ã“ü
+	// æƒãå‡ºã—ç”¨ å³å´ã«ã§ãŸ4*4ãŒçµæœã«ãªã‚‹ å³å´ã«å˜ä½è¡Œåˆ—ã‚’ä»£å…¥
 	float sweep[4][8] = {};
 
-	// s—ñ‚Ì¶‘¤‚ÉŒ³‚Ìs—ñ
-	for (int i = 0; i < 4; i++) 
+	// è¡Œåˆ—ã®å·¦å´ã«å…ƒã®è¡Œåˆ—
+	for (int i = 0; i < 4; i++)
 	{
 		for (int j = 0; j < 4; j++)
 		{
@@ -209,72 +209,72 @@ Matrix4 Matrix4::Inverse(const Matrix4 m)
 		}
 	}
 
-	// ‹ts—ñŒvZ
-	for (int k = 0; k < 4; k++) 
+	// é€†è¡Œåˆ—è¨ˆç®—
+	for (int k = 0; k < 4; k++)
 	{
-		// ƒ[ƒœZ‘Îô
+		// ã‚¼ãƒ­é™¤ç®—å¯¾ç­–
 		double max = fabs(sweep[k][k]);
 		int max_i = k;
 
-		for (int i = k + 1; i < 4; i++) 
+		for (int i = k + 1; i < 4; i++)
 		{
-			if (fabs(sweep[i][k]) > max) 
+			if (fabs(sweep[i][k]) > max)
 			{
 				max = fabs(sweep[i][k]);
 				max_i = i;
 			}
 		}
 
-		// â‘Î’l‚ÌÅ‘å’l‚ª0‚È‚ç‹ts—ñ‚ª–³‚¢‚Ì‚Å’PˆÊs—ñ‚ğ•Ô‚·‚Æ‚·‚éB
-		if (fabs(sweep[max_i][k]) <= 0.000001f) 
+		// çµ¶å¯¾å€¤ã®æœ€å¤§å€¤ãŒ0ãªã‚‰é€†è¡Œåˆ—ãŒç„¡ã„ã®ã§å˜ä½è¡Œåˆ—ã‚’è¿”ã™ã¨ã™ã‚‹ã€‚
+		if (fabs(sweep[max_i][k]) <= 0.000001f)
 		{
 			return identityMatrix;
 		}
 
-		// “ü‚ê‘Ö‚¦
+		// å…¥ã‚Œæ›¿ãˆ
 		if (k != max_i)
 		{
-			for (int i = 0; i < 8; i++) 
+			for (int i = 0; i < 8; i++)
 			{
-				// “ü‚ê‘Ö‚¦Œ³‚Ìtemp‚ÉAmax_i ‚ğ‘ã“ü
+				// å…¥ã‚Œæ›¿ãˆå…ƒã®tempã«ã€max_i ã‚’ä»£å…¥
 				float temp = sweep[max_i][i];
 
-				// ƒRƒs[‚µ‚½‚Ì‚ÅAk i ‚ğ‘ã“ü
+				// ã‚³ãƒ”ãƒ¼ã—ãŸã®ã§ã€k i ã‚’ä»£å…¥
 				sweep[max_i][i] = sweep[k][i];
 
-				// temp‚ÉŠi”[‚µ‚Ä‚¨‚¢‚½Œ³‚Ìƒf[ƒ^‚ğ k i‚É‘ã“ü
+				// tempã«æ ¼ç´ã—ã¦ãŠã„ãŸå…ƒã®ãƒ‡ãƒ¼ã‚¿ã‚’ k iã«ä»£å…¥
 				sweep[k][i] = temp;
 			}
 		}
 
-		// [k][k]‚ÉŠ|‚¯‚½‚ç1‚É‚È‚é’l‚ğ‹‚ß‚é (ƒ[ƒœZ‘ÎôÏ‚İ)
+		// [k][k]ã«æ›ã‘ãŸã‚‰1ã«ãªã‚‹å€¤ã‚’æ±‚ã‚ã‚‹ (ã‚¼ãƒ­é™¤ç®—å¯¾ç­–æ¸ˆã¿)
 		float identityScalar = 1 / sweep[k][k];
-		for (int i = 0; i < 8; i++) 
+		for (int i = 0; i < 8; i++)
 		{
 			sweep[k][i] *= identityScalar;
 		}
 
-		// [i][k]‚ª0‚É‚È‚é‚æ‚¤‚Éks‚ğ -i”{
-		for (int i = 0; i < 4; i++) 
+		// [i][k]ãŒ0ã«ãªã‚‹ã‚ˆã†ã«kè¡Œã‚’ -iå€
+		for (int i = 0; i < 4; i++)
 		{
-			// ’PˆÊs—ñˆÊ’u‚È‚ç”ò‚Î‚·
+			// å˜ä½è¡Œåˆ—ä½ç½®ãªã‚‰é£›ã°ã™
 			if (i == k) { continue; }
 
-			// ks–Ú‚ÉŠ|‚¯‚é’l‚ğ‹‚ß‚é
+			// kè¡Œç›®ã«æ›ã‘ã‚‹å€¤ã‚’æ±‚ã‚ã‚‹
 			float constantNum = -sweep[i][k];
 
-			for (int j = 0; j < 8; j++) 
+			for (int j = 0; j < 8; j++)
 			{
-				// ‚±‚ê‚Åi k ‚ª0‚É‚È‚é
+				// ã“ã‚Œã§i k ãŒ0ã«ãªã‚‹
 				sweep[i][j] += sweep[k][j] * constantNum;
 			}
 		}
 	}
 
-	// Š®¬
-	for (int i = 0; i < 4; i++) 
+	// å®Œæˆ
+	for (int i = 0; i < 4; i++)
 	{
-		for (int j = 0; j < 4; j++) 
+		for (int j = 0; j < 4; j++)
 		{
 			result.m[i][j] = sweep[i][j + 4];
 		}
@@ -287,7 +287,7 @@ Matrix4 Matrix4::CreateViewMat(const Vector3& eye, const Vector3& target, const 
 {
 	Matrix4 result = {};
 
-	// ƒJƒƒ‰‚Ìƒ[ƒ‹ƒhs—ñ‚ğì¬
+	// ã‚«ãƒ¡ãƒ©ã®ãƒ¯ãƒ¼ãƒ«ãƒ‰è¡Œåˆ—ã‚’ä½œæˆ
 	Vector3 cameraVecZ = target - eye;
 	cameraVecZ.Normalize();
 
@@ -297,7 +297,7 @@ Matrix4 Matrix4::CreateViewMat(const Vector3& eye, const Vector3& target, const 
 	Vector3 cameraVecY = cameraVecZ.Cross(cameraVecX);
 	cameraVecY.Normalize();
 
-	result = 
+	result =
 	{
 		cameraVecX.x, cameraVecX.y, cameraVecX.z,	0,
 		cameraVecY.x, cameraVecY.y, cameraVecY.z,	0,
@@ -305,7 +305,7 @@ Matrix4 Matrix4::CreateViewMat(const Vector3& eye, const Vector3& target, const 
 		eye.x		, eye.y		  , eye.z		,	1
 	};
 
-	// ì¬‚µ‚½ƒ[ƒ‹ƒhs—ñ‚ğ‹ts—ñ‚É•ÏŠ·
+	// ä½œæˆã—ãŸãƒ¯ãƒ¼ãƒ«ãƒ‰è¡Œåˆ—ã‚’é€†è¡Œåˆ—ã«å¤‰æ›
 	result = Inverse(result);
 
 	return result;
@@ -320,7 +320,7 @@ Matrix4 Matrix4::CreateProjectionMat(float fovY, float aspectRatio, float nearZ,
 	float z = farZ / (farZ - nearZ);
 	float cameraZ = (-nearZ * farZ) / (farZ - nearZ);
 
-	result = 
+	result =
 	{
 		w,0,0,0,
 		0,h,0,0,
@@ -335,18 +335,18 @@ Matrix4& Matrix4::operator*=(const Matrix4& m2)
 {
 	Matrix4 result = {};
 
-	for (int i = 0; i < 4; i++) 
+	for (int i = 0; i < 4; i++)
 	{
 		for (int j = 0; j < 4; j++)
 		{
-			for (int k = 0; k < 4; k++) 
+			for (int k = 0; k < 4; k++)
 			{
 				result.m[i][j] += m[i][k] * m2.m[k][j];
 			}
 		}
 	}
 
-	for (int i = 0; i < 4; i++) 
+	for (int i = 0; i < 4; i++)
 	{
 		for (int j = 0; j < 4; j++)
 		{

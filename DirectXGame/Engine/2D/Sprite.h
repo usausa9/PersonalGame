@@ -10,22 +10,22 @@ public:
 	~Sprite();
 
 private:
-	// ‰Šú‰»
+	// åˆæœŸåŒ–
 	void Init();
 
 public:
 	void Update();
 	void Draw();
 
-public: // ƒƒ“ƒo•Ï”
+public: // ãƒ¡ãƒ³ãƒå¤‰æ•°
 	ComPtr<ID3D12Resource> vertBuff_ = nullptr;
-	D3D12_VERTEX_BUFFER_VIEW vbView_{}; // ’¸“_ƒoƒbƒtƒ@ƒrƒ…[‚Ìì¬
+	D3D12_VERTEX_BUFFER_VIEW vbView_{}; // é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ãƒ“ãƒ¥ãƒ¼ã®ä½œæˆ
 
-	ComPtr<ID3D12Resource> constBuffMaterial_ = nullptr;	// ’è”ƒoƒbƒtƒ@
-	SpriteConstBufferDataMaterial* constMapMaterial_ = nullptr;// ƒ}ƒbƒv‚ÌŠ„‚è“–‚Ä
+	ComPtr<ID3D12Resource> constBuffMaterial_ = nullptr;	// å®šæ•°ãƒãƒƒãƒ•ã‚¡
+	SpriteConstBufferDataMaterial* constMapMaterial_ = nullptr;// ãƒãƒƒãƒ—ã®å‰²ã‚Šå½“ã¦
 
 public:
-	TextureIndex tIndex_ = 0;	// •`‰æ‚·‚é‚à‚Ì‚ğ“ü‚ê‚ç‚ê‚é‚æ‚¤‚É‚·‚é
+	TextureIndex tIndex_ = 0;	// æç”»ã™ã‚‹ã‚‚ã®ã‚’å…¥ã‚Œã‚‰ã‚Œã‚‹ã‚ˆã†ã«ã™ã‚‹
 
 	Vector2 position_ = { 100,100 };
 	Vector2 scale_ = { 1,1 };

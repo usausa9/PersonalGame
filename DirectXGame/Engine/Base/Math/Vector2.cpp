@@ -1,20 +1,20 @@
 #include "Vector2.h"
 #include <cmath>    // sqrt
 
-// ƒRƒ“ƒXƒgƒ‰ƒNƒ^
-// —ëƒxƒNƒgƒ‹‚Æ‚µ‚Ä¶¬
+// ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
+// é›¶ãƒ™ã‚¯ãƒˆãƒ«ã¨ã—ã¦ç”Ÿæˆ
 Vector2::Vector2() : x(0), y(0) {}
 
-// x,y¬•ª‚ğw’è‚µ‚Ä‚Ì¶¬
+// x,yæˆåˆ†ã‚’æŒ‡å®šã—ã¦ã®ç”Ÿæˆ
 Vector2::Vector2(float x, float y) : x(x), y(y) {}
 
-// ƒmƒ‹ƒ€(’·‚³)‚ğ‹‚ß‚é
+// ãƒãƒ«ãƒ (é•·ã•)ã‚’æ±‚ã‚ã‚‹
 float Vector2::length() const
 {
 	return sqrt(x * x + y * y);
 }
 
-// ³‹K‰»
+// æ­£è¦åŒ–
 Vector2& Vector2::normalize()
 {
 	float len = length();
@@ -27,19 +27,19 @@ Vector2& Vector2::normalize()
 	return *this;
 }
 
-// “àÏ‚ğ‹‚ß‚é
+// å†…ç©ã‚’æ±‚ã‚ã‚‹
 float Vector2::dot(const Vector2& v) const
 {
 	return x * v.x + y * v.y;
 }
 
-// ŠOÏ‚ğ‹‚ß‚é
+// å¤–ç©ã‚’æ±‚ã‚ã‚‹
 float Vector2::cross(const Vector2& v) const
 {
 	return x * v.y - y * v.x;
 }
 
-// ’P€‰‰ZqƒI[ƒo[ƒ[ƒh
+// å˜é …æ¼”ç®—å­ã‚ªãƒ¼ãƒãƒ¼ãƒ­ãƒ¼ãƒ‰
 Vector2 Vector2::operator+() const
 {
 	return *this;
@@ -49,7 +49,7 @@ Vector2 Vector2::operator-() const
 	return Vector2(-x, -y);
 }
 
-// ‘ã“ü‰‰ZqƒI[ƒo[ƒ[ƒh
+// ä»£å…¥æ¼”ç®—å­ã‚ªãƒ¼ãƒãƒ¼ãƒ­ãƒ¼ãƒ‰
 Vector2& Vector2::operator+=(const Vector2& v)
 {
 	x += v.x;
@@ -75,8 +75,8 @@ Vector2& Vector2::operator/=(float s)
 	return *this;
 }
 
-// 2€‰‰ZqƒI[ƒo[ƒ[ƒh
-// ¦‚¢‚ë‚ñ‚Èˆø”‚Ìƒpƒ^[ƒ“‚É‘Î‰‚·‚é‚½‚ßAˆÈ‰º‚Ì‚æ‚¤‚É€”õ‚µ‚Ä‚¢‚é
+// 2é …æ¼”ç®—å­ã‚ªãƒ¼ãƒãƒ¼ãƒ­ãƒ¼ãƒ‰
+// â€»ã„ã‚ã‚“ãªå¼•æ•°ã®ãƒ‘ã‚¿ãƒ¼ãƒ³ã«å¯¾å¿œã™ã‚‹ãŸã‚ã€ä»¥ä¸‹ã®ã‚ˆã†ã«æº–å‚™ã—ã¦ã„ã‚‹
 const Vector2 operator+(const Vector2& v1, const Vector2& v2)
 {
 	Vector2 temp(v1);

@@ -16,15 +16,15 @@ void RailCamera::Initialize(const Vector3& pos, const Vector3& rot)
 	worldTransform_ = new Object3D();
 	camera_ = new Camera();
 
-	// ƒ[ƒ‹ƒhs—ñ‚Ì‰ŠúÝ’è
+	// ãƒ¯ãƒ¼ãƒ«ãƒ‰è¡Œåˆ—ã®åˆæœŸè¨­å®š
 	worldTransform_->InitializeObject3D();
 	worldTransform_->position_ = pos;
 	worldTransform_->rotation_ = rot;
 
-	// ƒrƒ…[s—ñ‚Ì‰Šú‰»
+	// ãƒ“ãƒ¥ãƒ¼è¡Œåˆ—ã®åˆæœŸåŒ–
 	camera_->Initialize();
 
-	// ƒXƒvƒ‰ƒCƒ“‹Èü‚Ì§Œä“_
+	// ã‚¹ãƒ—ãƒ©ã‚¤ãƒ³æ›²ç·šã®åˆ¶å¾¡ç‚¹
 	Vector3 start{ 0,0,0 };
 	Vector3 p1{ 100,250,150 };
 	Vector3 p2{ 0,0,200 };
@@ -39,47 +39,47 @@ void RailCamera::Initialize(const Vector3& pos, const Vector3& rot)
 
 void RailCamera::Update()
 {
-	// ƒXƒvƒ‰ƒCƒ“‹Èü‚É‚æ‚Á‚Ä“®‚©‚·
+	// ã‚¹ãƒ—ãƒ©ã‚¤ãƒ³æ›²ç·šã«ã‚ˆã£ã¦å‹•ã‹ã™
 	if (isMove_ == false)
 	{
 		spline_.MoveStart(2800.0f, true);
 		isMove_ = true;
 	}
 
-	// ‹Èü‚ÌƒAƒbƒvƒf[ƒg
+	// æ›²ç·šã®ã‚¢ãƒƒãƒ—ãƒ‡ãƒ¼ãƒˆ
 	spline_.Update();
 
-	// ƒ[ƒ‹ƒhs—ñ‚ÌÀ•W‚Ì”’l‚ð‰ÁŽZ
-	// ƒXƒvƒ‰ƒCƒ“‹Èü‚É‰ˆ‚Á‚ÄˆÚ“®
+	// ãƒ¯ãƒ¼ãƒ«ãƒ‰è¡Œåˆ—ã®åº§æ¨™ã®æ•°å€¤ã‚’åŠ ç®—
+	// ã‚¹ãƒ—ãƒ©ã‚¤ãƒ³æ›²ç·šã«æ²¿ã£ã¦ç§»å‹•
 	worldTransform_->position_ = spline_.GetNowPosition();
 
-	// ƒ[ƒ‹ƒhs—ñ‚Ì‰ñ“]‚Ì”’l‚ð‰ÁŽZ
+	// ãƒ¯ãƒ¼ãƒ«ãƒ‰è¡Œåˆ—ã®å›žè»¢ã®æ•°å€¤ã‚’åŠ ç®—
 	worldTransform_->rotation_ += { 0, 0, 0 };
 
-	// ƒ[ƒ‹ƒhs—ñ‚Ìs—ñÄŒvŽZ
+	// ãƒ¯ãƒ¼ãƒ«ãƒ‰è¡Œåˆ—ã®è¡Œåˆ—å†è¨ˆç®—
 	worldTransform_->UpdateObject3D();
 
-	// ƒŒ[ƒ‹ƒJƒƒ‰‚É‚Íí‚Éƒ[ƒ‹ƒhÀ•W‚ð‘ã“ü
+	// ãƒ¬ãƒ¼ãƒ«ã‚«ãƒ¡ãƒ©ã«ã¯å¸¸ã«ãƒ¯ãƒ¼ãƒ«ãƒ‰åº§æ¨™ã‚’ä»£å…¥
 	camera_->position_ = {
 		worldTransform_->matWorld_.m[3][0],
 		worldTransform_->matWorld_.m[3][1],
 		worldTransform_->matWorld_.m[3][2] };
 
-	// ƒ[ƒ‹ƒh‘O•ûƒxƒNƒgƒ‹
+	// ãƒ¯ãƒ¼ãƒ«ãƒ‰å‰æ–¹ãƒ™ã‚¯ãƒˆãƒ«
 	Vector3 forward = { 0, 0, 1 };
 
-	// ƒŒ[ƒ‹ƒJƒƒ‰‚Ì‰ñ“]‚ð”½‰f
+	// ãƒ¬ãƒ¼ãƒ«ã‚«ãƒ¡ãƒ©ã®å›žè»¢ã‚’åæ˜ 
 	forward = Matrix4::Transform(forward, worldTransform_->matWorld_);
 
-	// Ž‹“_+‘O•ûƒxƒNƒgƒ‹‚Å’Ž‹“_
+	// è¦–ç‚¹+å‰æ–¹ãƒ™ã‚¯ãƒˆãƒ«ã§æ³¨è¦–ç‚¹
 	camera_->target_ = camera_->position_ + forward;
 
-	// ã•ûŒüƒxƒNƒgƒ‹
+	// ä¸Šæ–¹å‘ãƒ™ã‚¯ãƒˆãƒ«
 	Vector3 up = { 0, 1, 0 };
 
-	// ƒJƒƒ‰‚Ìã•ûŒü‚ðforward‚Æ“¯—l‚É•ÏŠ·
+	// ã‚«ãƒ¡ãƒ©ã®ä¸Šæ–¹å‘ã‚’forwardã¨åŒæ§˜ã«å¤‰æ›
 	camera_->up_ = Matrix4::Transform(up, worldTransform_->matWorld_);
 
-	// ƒJƒƒ‰XV
+	// ã‚«ãƒ¡ãƒ©æ›´æ–°
 	camera_->Update();
 }

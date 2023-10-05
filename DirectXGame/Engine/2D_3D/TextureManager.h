@@ -17,7 +17,7 @@ struct TextureData
 class TextureManager
 {
 public:
-	// ‰Šú‰»
+	// åˆæœŸåŒ–
 	static void Init();
 	static TextureIndex Load(std::wstring filepath);
 	static TextureIndex Load(std::string filepath);
@@ -29,7 +29,7 @@ public:
 
 private:
 	const static uint16_t s_MAX_TEXTURE_NUM_ = 1024;
-	
+
 	static uint16_t sSrvIndex_;
 	static D3D12_DESCRIPTOR_HEAP_DESC sSrvHeapDesc_;
 

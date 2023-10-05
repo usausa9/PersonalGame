@@ -3,68 +3,68 @@
 #include "UsaMath.h"
 
 /// <summary>
-/// ‹…
+/// çƒ
 /// </summary>
-struct Sphere 
+struct Sphere
 {
-	// À•W
+	// åº§æ¨™
 	Vector3 position = { 0,0,0 };
 
-	// ”¼Œa
+	// åŠå¾„
 	float radius = 1.0f;
 };
 
 /// <summary>
-/// •½–Ê
+/// å¹³é¢
 /// </summary>
-struct Plane 
+struct Plane
 {
-	// –@üƒxƒNƒgƒ‹
+	// æ³•ç·šãƒ™ã‚¯ãƒˆãƒ«
 	Vector3 normal = { 0,1,0 };
 
-	// Œ´“_(0,0)‚©‚ç‚Ì‹——£
+	// åŸç‚¹(0,0)ã‹ã‚‰ã®è·é›¢
 	float distance = 0.0f;
 };
 
 /// <summary>
-/// –@ü•t‚«OŠpŒ`(Œv‰ñ‚è‚ª•\–Ê)
+/// æ³•ç·šä»˜ãä¸‰è§’å½¢(æ™‚è¨ˆå›ã‚ŠãŒè¡¨é¢)
 /// </summary>
-class Triangle 
+class Triangle
 {
 public:
 	Vector3 p0_;
 	Vector3 p1_;
 	Vector3 p2_;
 
-	// –@ü
+	// æ³•ç·š
 	Vector3 normal_;
 
 	/// <summary>
-	/// –@ü‚ÌŒvZ
+	/// æ³•ç·šã®è¨ˆç®—
 	/// </summary>
 	void ComputeNormal();
 };
 
 /// <summary>
-/// ƒŒƒC(”¼’¼ü)
+/// ãƒ¬ã‚¤(åŠç›´ç·š)
 /// </summary>
-struct Ray 
+struct Ray
 {
-	// n“_À•W
+	// å§‹ç‚¹åº§æ¨™
 	Vector3 start{ 0,0,0 };
 
-	// •ûŒü
+	// æ–¹å‘
 	Vector3 dir{ 1,0,0 };
 };
 
 /// <summary>
-/// ‰~(2D)
+/// å††(2D)
 /// </summary>
-struct Circle 
+struct Circle
 {
-	// ’†SÀ•W
+	// ä¸­å¿ƒåº§æ¨™
 	Vector2 pos{ 0,0 };
 
-	// ”¼Œa
+	// åŠå¾„
 	float radius = 0.0f;
 };

@@ -3,82 +3,82 @@
 #include "CollisionPrimitive.h"
 
 /// <summary>
-/// “–‚½‚è”»’èƒwƒ‹ƒp[ƒNƒ‰ƒX
+/// å½“ãŸã‚Šåˆ¤å®šãƒ˜ãƒ«ãƒ‘ãƒ¼ã‚¯ãƒ©ã‚¹
 /// </summary>
 class Collision
 {
 public:
 	/// <summary>
-	/// "‹…" ‚Æ "‹…" ‚Ì “–‚½‚è”»’è
+	/// "çƒ" ã¨ "çƒ" ã® å½“ãŸã‚Šåˆ¤å®š
 	/// </summary>
-	/// <param name="s1">‹…1</param>
-	/// <param name="s2">‹…2</param>
-	/// <param name="distance">‹——£(o—Í)</param>
-	/// <param name="inter">Œğ“_(o—Í)</param>
-	/// <returns>Õ“Ë‚µ‚Ä‚¢‚é‚©</returns>
+	/// <param name="s1">çƒ1</param>
+	/// <param name="s2">çƒ2</param>
+	/// <param name="distance">è·é›¢(å‡ºåŠ›)</param>
+	/// <param name="inter">äº¤ç‚¹(å‡ºåŠ›)</param>
+	/// <returns>è¡çªã—ã¦ã„ã‚‹ã‹</returns>
 	static bool Col_SphereToSphere(const Sphere& s1, const Sphere& s2, float* distance = nullptr, Vector3* inter = nullptr);
 
 	/// <summary>
-	/// "‹…" ‚Æ "•½–Ê" ‚Ì “–‚½‚è”»’è
+	/// "çƒ" ã¨ "å¹³é¢" ã® å½“ãŸã‚Šåˆ¤å®š
 	/// </summary>
-	/// <param name="sphere">‹…</param>
-	/// <param name="plane">•½–Ê</param>
-	/// <param name="inter">Œğ“_(•½–Êã‚Å‚ÌÚ“_)</param>
-	/// <returns>Œğ·‚µ‚Ä‚¢‚é‚©</returns>
+	/// <param name="sphere">çƒ</param>
+	/// <param name="plane">å¹³é¢</param>
+	/// <param name="inter">äº¤ç‚¹(å¹³é¢ä¸Šã§ã®æ¥ç‚¹)</param>
+	/// <returns>äº¤å·®ã—ã¦ã„ã‚‹ã‹</returns>
 	static bool Col_SphereToPlane(const Sphere& sphere, const Plane& plane, Vector3* inter = nullptr);
 
 	/// <summary>
-	/// "“_" ‚Æ "OŠpŒ`" ‚Ì Å‹ßÚ“_‚ğ‹‚ß‚é
+	/// "ç‚¹" ã¨ "ä¸‰è§’å½¢" ã® æœ€è¿‘æ¥ç‚¹ã‚’æ±‚ã‚ã‚‹
 	/// </summary>
-	/// <param name="point">“_</param>
-	/// <param name="triangle">OŠpŒ`</param>
-	/// <param name="closest">Å‹ßÚ“_(o—Í)</param>
+	/// <param name="point">ç‚¹</param>
+	/// <param name="triangle">ä¸‰è§’å½¢</param>
+	/// <param name="closest">æœ€è¿‘æ¥ç‚¹(å‡ºåŠ›)</param>
 	static void ClosestPtPointToTriangle(const Vector3& point, const Triangle& triangle, Vector3* closest);
 
 	/// <summary>
-	/// "‹…" ‚Æ "OŠpŒ`" ‚Ì “–‚½‚è”»’è
+	/// "çƒ" ã¨ "ä¸‰è§’å½¢" ã® å½“ãŸã‚Šåˆ¤å®š
 	/// </summary>
-	/// <param name="sphere">‹…</param>
-	/// <param name="triangle">OŠpŒ`</param>
-	/// <param name="inter">Œğ“_(OŠpŒ`ã‚ÌÅ‹ßÚ“_)</param>
-	/// <returns>Œğ·‚µ‚Ä‚¢‚é‚©</returns>
+	/// <param name="sphere">çƒ</param>
+	/// <param name="triangle">ä¸‰è§’å½¢</param>
+	/// <param name="inter">äº¤ç‚¹(ä¸‰è§’å½¢ä¸Šã®æœ€è¿‘æ¥ç‚¹)</param>
+	/// <returns>äº¤å·®ã—ã¦ã„ã‚‹ã‹</returns>
 	static bool Col_SphereToTriangle(const Sphere& sphere, const Triangle& triangle, Vector3* inter = nullptr);
 
 	/// <summary>
-	/// "ƒŒƒC" ‚Æ "•½–Ê" ‚Ì “–‚½‚è”»’è
+	/// "ãƒ¬ã‚¤" ã¨ "å¹³é¢" ã® å½“ãŸã‚Šåˆ¤å®š
 	/// </summary>
-	/// <param name="ray">ƒŒƒC</param>
-	/// <param name="plane">•½–Ê</param>
-	/// <param name="distance">‹——£(o—Í)</param>
-	/// <param name="inter">Œğ“_(o—Í)</param>
-	/// <returns>Œğ·‚µ‚Ä‚¢‚é‚©</returns>
+	/// <param name="ray">ãƒ¬ã‚¤</param>
+	/// <param name="plane">å¹³é¢</param>
+	/// <param name="distance">è·é›¢(å‡ºåŠ›)</param>
+	/// <param name="inter">äº¤ç‚¹(å‡ºåŠ›)</param>
+	/// <returns>äº¤å·®ã—ã¦ã„ã‚‹ã‹</returns>
 	static bool Col_RayToPlane(const Ray& ray, const Plane& plane, float* distance = nullptr, Vector3* inter = nullptr);
 
 	/// <summary>
-	/// "ƒŒƒC" ‚Æ "OŠpŒ`" ‚Ì “–‚½‚è”»’è
+	/// "ãƒ¬ã‚¤" ã¨ "ä¸‰è§’å½¢" ã® å½“ãŸã‚Šåˆ¤å®š
 	/// </summary>
-	/// <param name="ray">ƒŒƒC</param>
-	/// <param name="triangle">OŠpŒ`</param>
-	/// <param name="distance">‹——£(o—Í)</param>
-	/// <param name="inter">Œğ“_(o—Í)</param>
-	/// <returns>Œğ·‚µ‚Ä‚¢‚é‚©</returns>
+	/// <param name="ray">ãƒ¬ã‚¤</param>
+	/// <param name="triangle">ä¸‰è§’å½¢</param>
+	/// <param name="distance">è·é›¢(å‡ºåŠ›)</param>
+	/// <param name="inter">äº¤ç‚¹(å‡ºåŠ›)</param>
+	/// <returns>äº¤å·®ã—ã¦ã„ã‚‹ã‹</returns>
 	static bool Col_RayToTriangle(const Ray& ray, const Triangle& triangle, float* distance = nullptr, Vector3* inter = nullptr);
 
 	/// <summary>
-	/// "ƒŒƒC" ‚Æ "‹…" ‚Ì “–‚½‚è”»’è
+	/// "ãƒ¬ã‚¤" ã¨ "çƒ" ã® å½“ãŸã‚Šåˆ¤å®š
 	/// </summary>
-	/// <param name="ray">ƒŒƒC</param>
-	/// <param name="sphere">‹…</param>
-	/// <param name="distance">‹——£(o—Í)</param>
-	/// <param name="inter">Œğ“_(o—Í)</param>
-	/// <returns>Œğ·‚µ‚Ä‚¢‚é‚©‚Ç‚¤‚©</returns>
+	/// <param name="ray">ãƒ¬ã‚¤</param>
+	/// <param name="sphere">çƒ</param>
+	/// <param name="distance">è·é›¢(å‡ºåŠ›)</param>
+	/// <param name="inter">äº¤ç‚¹(å‡ºåŠ›)</param>
+	/// <returns>äº¤å·®ã—ã¦ã„ã‚‹ã‹ã©ã†ã‹</returns>
 	static bool Col_RayToSphere(const Ray& ray, const Sphere& sphere, float* distance = nullptr, Vector3* inter = nullptr);
 
 	/// <summary>
-	/// "‰~" ‚Æ "‰~" ‚Ì “–‚½‚è”»’è
+	/// "å††" ã¨ "å††" ã® å½“ãŸã‚Šåˆ¤å®š
 	/// </summary>
-	/// <param name="c1">‰~1</param>
-	/// <param name="c2">‰~2</param>
+	/// <param name="c1">å††1</param>
+	/// <param name="c2">å††2</param>
 	/// <returns></returns>
 	static bool Col_CircleToCircle(const Circle& c1, const Circle& c2);
 };

@@ -2,98 +2,98 @@
 
 void SplineCurve::MoveStart(float allTime, bool isLoop)
 {
-	// ï‚ä‘ÇÃâÒêîéÊìæ (É_É~Å[ì_ÇèúÇ≠ÇÃÇ≈ -2ì_)
+	// Ë£úÈñì„ÅÆÂõûÊï∞ÂèñÂæó („ÉÄ„Éü„ÉºÁÇπ„ÇíÈô§„Åè„ÅÆ„Åß -2ÁÇπ)
 	int32_t lerpCount = (int32_t)controllPoints_.size() - 2;
 
-	// èzä¬Ç≥ÇπÇÈÇÃÇ≈Ç†ÇÍÇŒèIì_Ç∆énì_ï™ÇÃï‚ä‘Çí«â¡
-	if (isLoop == true) 
+	// Âæ™Áí∞„Åï„Åõ„Çã„ÅÆ„Åß„ÅÇ„Çå„Å∞ÁµÇÁÇπ„Å®ÂßãÁÇπÂàÜ„ÅÆË£úÈñì„ÇíËøΩÂä†
+	if (isLoop == true)
 	{
 		lerpCount++;
 	}
 
-	// ãÊä‘ñàÇ…Ç©ÇØÇÈéûä‘Çï‚ä‘âÒêîÇ∆çáåvéûä‘Ç©ÇÁéÊìæ
+	// Âå∫ÈñìÊØé„Å´„Åã„Åë„ÇãÊôÇÈñì„ÇíË£úÈñìÂõûÊï∞„Å®ÂêàË®àÊôÇÈñì„Åã„ÇâÂèñÂæó
 	segmentTime_ = allTime / (float)lerpCount;
 
-	// énì_èIì_ÇÃÉRÉsÅ[Ç≈É_É~Å[ç¿ïWÇê›íË
+	// ÂßãÁÇπÁµÇÁÇπ„ÅÆ„Ç≥„Éî„Éº„Åß„ÉÄ„Éü„ÉºÂ∫ßÊ®ô„ÇíË®≠ÂÆö
 	dummyPoints_[0] = controllPoints_.front();
 	dummyPoints_[1] = controllPoints_.back();
 
-	// åªç›ínì_ÇÃéÊìæ
+	// ÁèæÂú®Âú∞ÁÇπ„ÅÆÂèñÂæó
 	currentPosition_ = controllPoints_[0];
 
-	// èzä¬Ç≥ÇπÇÈÇ©Çâºà¯êîÇ©ÇÁéÛÇØéÊÇË
+	// Âæ™Áí∞„Åï„Åõ„Çã„Åã„Çí‰ªÆÂºïÊï∞„Åã„ÇâÂèó„ÅëÂèñ„Çä
 	this->isLoop_ = isLoop;
 
-	// É^ÉCÉ}Å[ãNìÆ,ÉCÉìÉfÉbÉNÉXÇèâä˙âªÇµÇƒÇ®Ç≠
+	// „Çø„Ç§„Éû„ÉºËµ∑Âãï,„Ç§„É≥„Éá„ÉÉ„ÇØ„Çπ„ÇíÂàùÊúüÂåñ„Åó„Å¶„Åä„Åè
 	startIndex_ = 0;
 	tData_.Start(segmentTime_);
 }
 
 void SplineCurve::Update()
 {
-	// É^ÉCÉ}Å[ÉfÅ[É^ÇÃçXêV
+	// „Çø„Ç§„Éû„Éº„Éá„Éº„Çø„ÅÆÊõ¥Êñ∞
 	tData_.Update();
 
 	float timeRate = tData_.GetTimeRate();
-	// ï‚ä‘Ç™èIÇÌÇ¡ÇΩÇÁ
-	if (timeRate >= 1.0f) 
+	// Ë£úÈñì„ÅåÁµÇ„Çè„Å£„Åü„Çâ
+	if (timeRate >= 1.0f)
 	{
-		// çƒìxÉ^ÉCÉ}Å[ÉZÉbÉgÅAÉCÉìÉfÉbÉNÉXÇêiÇﬂÇÈ
+		// ÂÜçÂ∫¶„Çø„Ç§„Éû„Éº„Çª„ÉÉ„Éà„ÄÅ„Ç§„É≥„Éá„ÉÉ„ÇØ„Çπ„ÇíÈÄ≤„ÇÅ„Çã
 		tData_.Start(segmentTime_);
 		startIndex_++;
 		timeRate = 0.0f;
 	}
-	
-	// ï‚äÆópç¿ïW,ÉfÅ[É^
+
+	// Ë£úÂÆåÁî®Â∫ßÊ®ô,„Éá„Éº„Çø
 	Vector3 points[4] = {};
 	int32_t index[4] = {};
 
-	// ç≈ëÂï‚ä‘êî
+	// ÊúÄÂ§ßË£úÈñìÊï∞
 	size_t maxLerpNum = 0;
-	if (isLoop_) 
+	if (isLoop_)
 	{
 		maxLerpNum = controllPoints_.size() - 1;
 	}
-	else 
+	else
 	{
 		maxLerpNum = controllPoints_.size() - 2;
 	}
 
-	// èzä¬Ç∑ÇÈÇÃÇ≈Ç†ÇÍÇŒ
+	// Âæ™Áí∞„Åô„Çã„ÅÆ„Åß„ÅÇ„Çå„Å∞
 	if (isLoop_ == true)
 	{
 		int32_t backIndex;
 		backIndex = (int32_t)controllPoints_.size() - 1;
 
-		// èzä¬ópÅAÉCÉìÉfÉbÉNÉXÇ™ÉIÅ[ÉoÅ[ÉtÉçÅ[ÇµÇΩÇ∆Ç´Ç…0Ç…ñﬂÇ∑
+		// Âæ™Áí∞Áî®„ÄÅ„Ç§„É≥„Éá„ÉÉ„ÇØ„Çπ„Åå„Ç™„Éº„Éê„Éº„Éï„É≠„Éº„Åó„Åü„Å®„Åç„Å´0„Å´Êàª„Åô
 		if (startIndex_ > maxLerpNum)
 		{
 			startIndex_ = 0;
 		}
 
-#pragma region ÉXÉvÉâÉCÉìï‚ä‘
-		if (startIndex_ == 0) 
+#pragma region „Çπ„Éó„É©„Ç§„É≥Ë£úÈñì
+		if (startIndex_ == 0)
 		{
 			index[0] = backIndex;
 			index[1] = startIndex_;
 			index[2] = startIndex_ + 1;
 			index[3] = startIndex_ + 2;
 		}
-		else if (startIndex_ == backIndex - 1) 
+		else if (startIndex_ == backIndex - 1)
 		{
 			index[0] = startIndex_ - 1;
 			index[1] = startIndex_;
 			index[2] = startIndex_ + 1;
 			index[3] = 0;
 		}
-		else if (startIndex_ == backIndex) 
+		else if (startIndex_ == backIndex)
 		{
 			index[0] = startIndex_ - 1;
 			index[1] = startIndex_;
 			index[2] = 0;
 			index[3] = 1;
 		}
-		else 
+		else
 		{
 			index[0] = startIndex_ - 1;
 			index[1] = startIndex_;
@@ -107,16 +107,16 @@ void SplineCurve::Update()
 		points[3] = controllPoints_[index[3]];
 
 		Vector3 position = 0.5 *
-		( 2 * points[1] + (-1 * points[0] + points[2]) * (timeRate)+
-		( 2 * points[0] - 5 * points[1] + 4 * points[2] - points[3]) * (timeRate * timeRate) +
-		(-1 * points[0] + 3 * points[1] - 3 * points[2] + points[3]) * (timeRate * timeRate * timeRate));
+			(2 * points[1] + (-1 * points[0] + points[2]) * (timeRate)+
+				(2 * points[0] - 5 * points[1] + 4 * points[2] - points[3]) * (timeRate * timeRate) +
+				(-1 * points[0] + 3 * points[1] - 3 * points[2] + points[3]) * (timeRate * timeRate * timeRate));
 
 		currentPosition_ = position;
 #pragma endregion
 	}
-	else // èzä¬ÇµÇ»Ç¢ÇÃÇ≈Ç†ÇÍÇŒ
+	else // Âæ™Áí∞„Åó„Å™„ÅÑ„ÅÆ„Åß„ÅÇ„Çå„Å∞
 	{
-#pragma region ÉXÉvÉâÉCÉìï‚ä‘
+#pragma region „Çπ„Éó„É©„Ç§„É≥Ë£úÈñì
 		if (startIndex_ == maxLerpNum)
 		{
 			points[3] = dummyPoints_[1];
@@ -148,9 +148,9 @@ void SplineCurve::Update()
 		points[2] = controllPoints_[startIndex_ + 1];
 
 		Vector3 position = 0.5 *
-		( 2 * points[1] + (-1 * points[0] + points[2]) * (timeRate)+
-		( 2 * points[0] - 5 * points[1] + 4 * points[2] - points[3]) * (timeRate * timeRate) +
-		(-1 * points[0] + 3 * points[1] - 3 * points[2] + points[3]) * (timeRate * timeRate * timeRate));
+			(2 * points[1] + (-1 * points[0] + points[2]) * (timeRate)+
+				(2 * points[0] - 5 * points[1] + 4 * points[2] - points[3]) * (timeRate * timeRate) +
+				(-1 * points[0] + 3 * points[1] - 3 * points[2] + points[3]) * (timeRate * timeRate * timeRate));
 
 		currentPosition_ = position;
 #pragma endregion

@@ -4,10 +4,10 @@
 #include "OBJModel.h"
 #include "Camera.h"
 
-// ’è”ƒoƒbƒtƒ@—pƒf[ƒ^\‘¢‘Ì (3D•ÏŠ·s—ñ)
+// å®šæ•°ãƒãƒƒãƒ•ã‚¡ç”¨ãƒ‡ãƒ¼ã‚¿æ§‹é€ ä½“ (3Då¤‰æ›è¡Œåˆ—)
 struct ParticleConstBufferDataTransform
 {
-	Matrix4 mat; // 3D•ÏŠ·s—ñ
+	Matrix4 mat; // 3Då¤‰æ›è¡Œåˆ—
 };
 
 struct Vertex
@@ -19,11 +19,11 @@ struct Vertex
 
 struct Particle
 {
-	Vector3 position = {};	// À•W
-	Vector3 velocity = {}; // ‘¬“x
-	Vector3 accel = {};	// ‰Á‘¬“x
-	uint32_t frame = 0;			// Œ»İƒtƒŒ[ƒ€
-	uint32_t num_frame = 0;		// I—¹ƒtƒŒ[ƒ€
+	Vector3 position = {};	// åº§æ¨™
+	Vector3 velocity = {}; // é€Ÿåº¦
+	Vector3 accel = {};	// åŠ é€Ÿåº¦
+	uint32_t frame = 0;			// ç¾åœ¨ãƒ•ãƒ¬ãƒ¼ãƒ 
+	uint32_t num_frame = 0;		// çµ‚äº†ãƒ•ãƒ¬ãƒ¼ãƒ 
 	Vector4 color = { 1,1,1,1 };
 
 	float scale = 1.0f;
@@ -31,7 +31,7 @@ struct Particle
 	float s_scale = 1.0f;
 	float e_scale = 0.0f;
 
-	void Update() 
+	void Update()
 	{
 		float t = (float)frame / num_frame;
 		float t2 = 1 - t;
@@ -43,40 +43,40 @@ struct Particle
 class ParticleManager
 {
 public:
-	// ’è”ƒoƒbƒtƒ@ (s—ñ—p)
+	// å®šæ•°ãƒãƒƒãƒ•ã‚¡ (è¡Œåˆ—ç”¨)
 	ID3D12Resource* constBuffTransform_;
-	
-	// ’¸“_ƒf[ƒ^ƒZƒbƒg
+
+	// é ‚ç‚¹ãƒ‡ãƒ¼ã‚¿ã‚»ãƒƒãƒˆ
 	const uint16_t VERTEX_COUNT_ = 1024;
 	D3D12_VERTEX_BUFFER_VIEW vbView_{};
 	ComPtr<ID3D12Resource> vertBuff_ = nullptr;
 	Vertex* vertMap_ = nullptr;
 
-	// ’è”ƒoƒbƒtƒ@ƒ}ƒbƒv (s—ñ—p)
+	// å®šæ•°ãƒãƒƒãƒ•ã‚¡ãƒãƒƒãƒ— (è¡Œåˆ—ç”¨)
 	ParticleConstBufferDataTransform* constMapTransform_;
 
-	// ƒAƒtƒBƒ“•ÏŠ·î•ñ
+	// ã‚¢ãƒ•ã‚£ãƒ³å¤‰æ›æƒ…å ±
 	Vector3 scale_ = { 1,1,1 };
 	Vector3 rotation_ = { 0,0,0 };
 	Vector3 position_ = { 0,0,0 };
 
 public:
-	static ComPtr<ID3D12RootSignature> sRootSignature_; 	// ƒ‹[ƒgƒVƒOƒlƒ`ƒƒ
-	static ComPtr<ID3D12PipelineState> sPipelineState_;	// ƒpƒCƒvƒ‰ƒCƒ“
+	static ComPtr<ID3D12RootSignature> sRootSignature_; 	// ãƒ«ãƒ¼ãƒˆã‚·ã‚°ãƒãƒãƒ£
+	static ComPtr<ID3D12PipelineState> sPipelineState_;	// ãƒ‘ã‚¤ãƒ—ãƒ©ã‚¤ãƒ³
 
-	// ƒpƒCƒvƒ‰ƒCƒ“ì¬
+	// ãƒ‘ã‚¤ãƒ—ãƒ©ã‚¤ãƒ³ä½œæˆ
 	static void CreatePipeline();
 
-	// particle‰Šú‰»
+	// particleåˆæœŸåŒ–
 	void InitializeParticle();
 
-	// particleXVˆ—
+	// particleæ›´æ–°å‡¦ç†
 	void UpdateParticle();
 
-	// particle•`‰æˆ—
+	// particleæç”»å‡¦ç†
 	void DrawParticle(TextureIndex index);
 
-	// ƒRƒ“ƒeƒi‚É’Ç‰Á‚·‚é‚à‚Ì
+	// ã‚³ãƒ³ãƒ†ãƒŠã«è¿½åŠ ã™ã‚‹ã‚‚ã®
 	void Add(int life, Vector3 position, Vector3 velocity, Vector3 accel, float start_scale, float end_scale);
 
 private:

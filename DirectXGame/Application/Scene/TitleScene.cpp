@@ -9,25 +9,25 @@ using namespace Input;
 
 void TitleScene::Initialize()
 {
-	// ƒp[ƒeƒBƒNƒ‹—p‚ÌƒpƒCƒvƒ‰ƒCƒ“EInit
+	// ãƒ‘ãƒ¼ãƒ†ã‚£ã‚¯ãƒ«ç”¨ã®ãƒ‘ã‚¤ãƒ—ãƒ©ã‚¤ãƒ³ãƒ»Init
 	ParticleManager::CreatePipeline();
 
-	// ƒJƒƒ‰‰Šú‰»
+	// ã‚«ãƒ¡ãƒ©åˆæœŸåŒ–
 	camera_ = new Camera;
 	camera_->Initialize();
 
-	// ƒŒ[ƒ‹ƒJƒƒ‰‰Šú‰»
+	// ãƒ¬ãƒ¼ãƒ«ã‚«ãƒ¡ãƒ©åˆæœŸåŒ–
 	railCamera_ = new RailCamera();
 	railCamera_->Initialize({ 0, 0, -20.0f }, { 0, 0, 0 });
 
-	// “V‹…
+	// å¤©çƒ
 	skydome_ = make_unique<Skydome>();
 	skydome_.get()->Initialize();
 
-	// “V‹…‚Ìs—ñXV
+	// å¤©çƒã®è¡Œåˆ—æ›´æ–°
 	skydome_->Update();
 
-	// ƒ^ƒCƒgƒ‹ƒXƒvƒ‰ƒCƒg
+	// ã‚¿ã‚¤ãƒˆãƒ«ã‚¹ãƒ—ãƒ©ã‚¤ãƒˆ
 	titleTex_ = TextureManager::Load(L"Resources/Sprites/title.png");
 	titleSprite_ = make_unique<Sprite>(titleTex_);
 	titleSprite_->position_ = TITLE_BASE_POS_;
@@ -50,7 +50,7 @@ void TitleScene::Finalize()
 
 void TitleScene::Update()
 {
-	// SPACEƒL[‚ğ‰Ÿ‚µ‚½‚çƒQ[ƒ€ƒV[ƒ“‚ÉB
+	// SPACEã‚­ãƒ¼ã‚’æŠ¼ã—ãŸã‚‰ã‚²ãƒ¼ãƒ ã‚·ãƒ¼ãƒ³ã«ã€‚
 	isStart_ = false;
 
 	if (Key::Trigger(DIK_SPACE))
@@ -58,17 +58,17 @@ void TitleScene::Update()
 		isStart_ = true;
 	}
 
-	// ƒXƒ^[ƒgƒtƒ‰ƒO‚ª—§‚Á‚½‚çƒQ[ƒ€ƒV[ƒ“‚Ö
+	// ã‚¹ã‚¿ãƒ¼ãƒˆãƒ•ãƒ©ã‚°ãŒç«‹ã£ãŸã‚‰ã‚²ãƒ¼ãƒ ã‚·ãƒ¼ãƒ³ã¸
 	PossibleStartGame();
 
-	// DirectX–ˆƒtƒŒ[ƒ€ˆ—(XVˆ—) ‚±‚±‚©‚ç
+	// DirectXæ¯ãƒ•ãƒ¬ãƒ¼ãƒ å‡¦ç†(æ›´æ–°å‡¦ç†) ã“ã“ã‹ã‚‰
 	railCamera_->Update();
 
-	// ƒJƒƒ‰‚ğƒŒ[ƒ‹ƒJƒƒ‰‚Ì‚à‚Ì‚Ö
+	// ã‚«ãƒ¡ãƒ©ã‚’ãƒ¬ãƒ¼ãƒ«ã‚«ãƒ¡ãƒ©ã®ã‚‚ã®ã¸
 	camera_ = railCamera_->GetCamera();
 	camera_->Update();
 
-	// pressKEY‚ÌƒAƒjƒ[ƒVƒ‡ƒ“ƒ^ƒCƒ}[XV
+	// pressKEYã®ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ã‚¿ã‚¤ãƒãƒ¼æ›´æ–°
 	if (nowActiveTimer_ == 0 && !pressAnimeTimer_[1].GetActive())
 	{
 		pressAnimeTimer_[0].Start(PRESS_ANIME_MAX_TIMER_);
@@ -87,18 +87,18 @@ void TitleScene::Update()
 	{
 		kPressKeySpriteSize_ = {
 		0.8f + (Easing::In(pressAnimeTimer_[0].GetTimeRate()) / 3),
-		0.8f + (Easing::In(pressAnimeTimer_[0].GetTimeRate()) / 3)};
+		0.8f + (Easing::In(pressAnimeTimer_[0].GetTimeRate()) / 3) };
 	}
 	else
 	{
 		kPressKeySpriteSize_ = {
 		0.8f + (Easing::In(pressAnimeTimer_[1].GetDisTimeRate()) / 3),
-		0.8f + (Easing::In(pressAnimeTimer_[1].GetDisTimeRate()) / 3)};
+		0.8f + (Easing::In(pressAnimeTimer_[1].GetDisTimeRate()) / 3) };
 	}
 
 	pressKeySprite_->scale_ = { kPressKeySpriteSize_ };
 
-	// ƒ^ƒCƒgƒ‹ƒXƒvƒ‰ƒCƒgXV
+	// ã‚¿ã‚¤ãƒˆãƒ«ã‚¹ãƒ—ãƒ©ã‚¤ãƒˆæ›´æ–°
 	titleSprite_->Update();
 	titleSceneSprite_->Update();
 	pressKeySprite_->Update();
@@ -106,16 +106,16 @@ void TitleScene::Update()
 
 void TitleScene::Draw3D()
 {
-	// ƒJƒƒ‰ƒZƒbƒg
+	// ã‚«ãƒ¡ãƒ©ã‚»ãƒƒãƒˆ
 	camera_->Set();
-	
-	// “V‹…•`‰æ
+
+	// å¤©çƒæç”»
 	skydome_->Draw();
 }
 
 void TitleScene::DrawParticle()
 {
-	// ƒJƒƒ‰ƒZƒbƒg
+	// ã‚«ãƒ¡ãƒ©ã‚»ãƒƒãƒˆ
 	camera_->Set();
 }
 
@@ -130,7 +130,7 @@ void TitleScene::PossibleStartGame()
 {
 	if (isStart_ == true)
 	{
-		// ƒV[ƒ“Ø‚è‘Ö‚¦ˆË—Š
+		// ã‚·ãƒ¼ãƒ³åˆ‡ã‚Šæ›¿ãˆä¾é ¼
 		SceneManager::GetInstance()->ChangeScene("GAME");
 	}
 }

@@ -6,10 +6,10 @@ bool PlayerBullet::isDrawSp_ = false;
 
 void PlayerBullet::Initialize(bool bulletState, OBJModel* model, const Vector3& pos, const Vector3& vel)
 {
-	// ƒ‚ƒfƒ‹•R‚Ã‚¯(‰¼ˆø”‚Å–á‚Á‚Ä‚­‚é)
+	// ãƒ¢ãƒ‡ãƒ«ç´ã¥ã‘(ä»®å¼•æ•°ã§è²°ã£ã¦ãã‚‹)
 	objModel_ = model;
 
-	// s—ñXV
+	// è¡Œåˆ—æ›´æ–°
 	position_ = pos;
 	if (bulletState == true)
 	{
@@ -21,10 +21,10 @@ void PlayerBullet::Initialize(bool bulletState, OBJModel* model, const Vector3& 
 	}
 	InitializeObject3D();
 
-	// ˆø”‚ÅˆÚ“®—Ê‚ğó‚¯æ‚é
+	// å¼•æ•°ã§ç§»å‹•é‡ã‚’å—ã‘å–ã‚‹
 	velocity_ = vel;
 
-	// ƒRƒ‰ƒCƒ_[‚Ì’Ç‰Á (‹­‰»ƒXƒe[ƒg‚É‚æ‚è‚¯‚è’e‚Ì‘å‚«‚³‚ğ•ÏX)
+	// ã‚³ãƒ©ã‚¤ãƒ€ãƒ¼ã®è¿½åŠ  (å¼·åŒ–ã‚¹ãƒ†ãƒ¼ãƒˆã«ã‚ˆã‚Šã‘ã‚Šå¼¾ã®å¤§ãã•ã‚’å¤‰æ›´)
 	float radius = 0.f;
 	if (bulletState == true)
 	{
@@ -34,7 +34,7 @@ void PlayerBullet::Initialize(bool bulletState, OBJModel* model, const Vector3& 
 	{
 		radius = SMALL_COLLIDER_SIZE_;
 	}
-	// ”¼Œa•ª‚¾‚¯‘«Œ³‚©‚ç•‚‚¢‚½À•W‚ğ‹…‚Ì’†S‚É‚·‚é
+	// åŠå¾„åˆ†ã ã‘è¶³å…ƒã‹ã‚‰æµ®ã„ãŸåº§æ¨™ã‚’çƒã®ä¸­å¿ƒã«ã™ã‚‹
 	SetCollider(new SphereCollider(Vector3({ 0, radius, 0 }), radius));
 	collider_->SetAttribute(COLLISION_ATTR_ALLIES);
 }
@@ -42,23 +42,23 @@ void PlayerBullet::Initialize(bool bulletState, OBJModel* model, const Vector3& 
 void PlayerBullet::Update()
 {
 	isDrawSp_ = false;
-	
-	// ŠÔŒo‰ß‚ÅÁ–Å
+
+	// æ™‚é–“çµŒéã§æ¶ˆæ»…
 	if (--deathTimer_ <= 0)
 	{
 		isDead_ = true;
 	}
 
-	// ˆÚ“®—Ê‚©‚çÀ•W‚ğˆÚ“®
+	// ç§»å‹•é‡ã‹ã‚‰åº§æ¨™ã‚’ç§»å‹•
 	position_ += velocity_;
 
-	// s—ñXV
+	// è¡Œåˆ—æ›´æ–°
 	UpdateObject3D();
 }
 
 void PlayerBullet::Draw()
 {
-	// ƒIƒuƒWƒFƒNƒg•`‰æ
+	// ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆæç”»
 	DrawObject3D();
 }
 

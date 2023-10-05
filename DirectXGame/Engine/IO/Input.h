@@ -42,16 +42,16 @@ namespace Input
 	public:
 		template <class T> using ComPtr = Microsoft::WRL::ComPtr<T>;
 
-		// ‰Šú‰»‚ÆƒAƒbƒvƒf[ƒg‚ÌŠÖ” —pˆÓ
+		// åˆæœŸåŒ–ã¨ã‚¢ãƒƒãƒ—ãƒ‡ãƒ¼ãƒˆã®é–¢æ•° ç”¨æ„
 		static void Init(HINSTANCE hInstance, HWND hwnd);
 		static void Update();
 
-		// ƒL[ƒ{[ƒh“ü—Íˆ——p (•Ô‚è’l0,1)
-		static bool Down(UINT8 keyNum);		// ‰Ÿ‚µ‚Á‚Ï‚È‚µ
-		static bool Trigger(UINT8 keyNum);	// ‰Ÿ‚µ‚½uŠÔ
-		static bool Released(UINT8 keyNum);	// —£‚µ‚½uŠÔ
+		// ã‚­ãƒ¼ãƒœãƒ¼ãƒ‰å…¥åŠ›å‡¦ç†ç”¨ (è¿”ã‚Šå€¤0,1)
+		static bool Down(UINT8 keyNum);		// æŠ¼ã—ã£ã±ãªã—
+		static bool Trigger(UINT8 keyNum);	// æŠ¼ã—ãŸç¬é–“
+		static bool Released(UINT8 keyNum);	// é›¢ã—ãŸç¬é–“
 
-	private: // ƒƒ“ƒo•Ï”
+	private: // ãƒ¡ãƒ³ãƒå¤‰æ•°
 		static ComPtr<IDirectInputDevice8> sKeyboard_;
 	};
 
@@ -61,9 +61,9 @@ namespace Input
 		static void Init();
 		static void Update();
 
-		static bool Down(Button button);		// ‰Ÿ‚µ‚Á‚Ï‚È‚µ
-		static bool Trigger(Button button);		// ‰Ÿ‚µ‚½uŠÔ
-		static bool Released(Button button);	// —£‚µ‚½uŠÔ
+		static bool Down(Button button);		// æŠ¼ã—ã£ã±ãªã—
+		static bool Trigger(Button button);		// æŠ¼ã—ãŸç¬é–“
+		static bool Released(Button button);	// é›¢ã—ãŸç¬é–“
 
 		static Vector2 GetLStick();
 		static Vector2 GetRStick();

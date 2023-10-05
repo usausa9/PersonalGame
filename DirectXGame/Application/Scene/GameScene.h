@@ -35,61 +35,61 @@ enum class Phase : uint8_t
 class GameScene : public IScene
 {
 private:
-	// Õ“Ëƒ}ƒl[ƒWƒƒ
+	// è¡çªãƒãƒãƒ¼ã‚¸ãƒ£
 	CollisionManager* collisionManager_ = nullptr;
-	
-	// ƒJƒƒ‰
+
+	// ã‚«ãƒ¡ãƒ©
 	Camera* camera_ = nullptr;
 	RailCamera* railCamera_ = nullptr;
 
-	// ƒvƒŒƒCƒ„[,“G
+	// ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼,æ•µ
 	unique_ptr<Player> player_ = nullptr;
 	std::list<std::unique_ptr<Enemy>> enemys_;
 
-	// “G‹@ƒ‚ƒfƒ‹
+	// æ•µæ©Ÿãƒ¢ãƒ‡ãƒ«
 	OBJModel enemyModel_[2];
 
-	// “V‹…
+	// å¤©çƒ
 	unique_ptr<Skydome> skydome_ = nullptr;
 
 public:
-	// ‰Šú‰»
+	// åˆæœŸåŒ–
 	void Initialize() override;
 
-	// I—¹ˆ—
+	// çµ‚äº†å‡¦ç†
 	void Finalize() override;
 
-	// –ˆƒtƒŒ[ƒ€XV
+	// æ¯ãƒ•ãƒ¬ãƒ¼ãƒ æ›´æ–°
 	void Update() override;
 
-	// 3D•`‰æ
+	// 3Dæç”»
 	void Draw3D() override;
 
-	// ƒp[ƒeƒBƒNƒ‹•`‰æ
+	// ãƒ‘ãƒ¼ãƒ†ã‚£ã‚¯ãƒ«æç”»
 	void DrawParticle() override;
 
-	// 2D•`‰æ
+	// 2Dæç”»
 	void Draw2D() override;
 
 public:
-	// “G
+	// æ•µ
 	void EnemySpawn(uint8_t enemyKind, uint8_t trajectoryKind);
 
-	// ƒtƒ@ƒCƒ‹“Ç‚İ‚İ
+	// ãƒ•ã‚¡ã‚¤ãƒ«èª­ã¿è¾¼ã¿
 	void LoadCsvFile();
 
-	// “Ç‚İ‚ñ‚¾ƒf[ƒ^‚©‚ç“G‚Ìí—Ş•t‚¯“™
+	// èª­ã¿è¾¼ã‚“ã ãƒ‡ãƒ¼ã‚¿ã‹ã‚‰æ•µã®ç¨®é¡ä»˜ã‘ç­‰
 	void UpdateEnemyData();
 
-	// “G‚Ì‹N“®í—Ş
+	// æ•µã®èµ·å‹•ç¨®é¡
 	std::vector<Vector3> TrajectoryKind(uint8_t trajectoryKind);
 
-	// “G”­¶ƒRƒ}ƒ“ƒh
+	// æ•µç™ºç”Ÿã‚³ãƒãƒ³ãƒ‰
 	std::stringstream enemyData_;
 
-	// “G”­¶‘Ò‚¿ŠÔ
+	// æ•µç™ºç”Ÿå¾…ã¡æ™‚é–“
 	TimeData waitTimer_;
 
-	// “G‘Ò‚¿ƒtƒ‰ƒO
+	// æ•µå¾…ã¡ãƒ•ãƒ©ã‚°
 	bool isStandBy_ = false;
 };

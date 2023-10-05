@@ -8,62 +8,62 @@
 
 bool Enemy::sIsPowerUp_ = false;
 
-// ‰Šú‰»
+// åˆæœŸåŒ–
 void Enemy::Initialize(std::vector<Vector3>& points, uint8_t enemyKind)
 {
 	if (enemyKind == uint8_t(EnemyKinds::NORMAL))
 	{
-		// ©‹@ƒ‚ƒfƒ‹“Ç‚İ‚İ
+		// è‡ªæ©Ÿãƒ¢ãƒ‡ãƒ«èª­ã¿è¾¼ã¿
 		enemyModel_ = OBJModel::LoadFromOBJ("Cube");
 	}
 	else if (enemyKind == uint8_t(EnemyKinds::POWER))
 	{
-		// ©‹@ƒ‚ƒfƒ‹“Ç‚İ‚İ
+		// è‡ªæ©Ÿãƒ¢ãƒ‡ãƒ«èª­ã¿è¾¼ã¿
 		enemyModel_ = OBJModel::LoadFromOBJ("ICO");
 	}
 
-	// “G‚Ìí—Şw’è
+	// æ•µã®ç¨®é¡æŒ‡å®š
 	enemyKind_ = enemyKind;
 
-	// ©‹@‚Ìs—ñ‰Šú‰»
+	// è‡ªæ©Ÿã®è¡Œåˆ—åˆæœŸåŒ–
 	rotation_ = { 0, 0, 0 };
 	position_ = { 0, 0, 0 };
 	InitializeObject3D();
 
-	// ©‹@ƒ‚ƒfƒ‹‚Æ©‹@ƒIƒuƒWƒFƒNƒg‚ğ•R‚Ã‚¯
+	// è‡ªæ©Ÿãƒ¢ãƒ‡ãƒ«ã¨è‡ªæ©Ÿã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’ç´ã¥ã‘
 	objModel_ = &enemyModel_;
 
-	// ‹O“¹§Œä“_‚Ìİ’è
+	// è»Œé“åˆ¶å¾¡ç‚¹ã®è¨­å®š
 	trajectory_.SetPositions(points);
 
-	// ƒRƒ‰ƒCƒ_[‚Ì’Ç‰Á
+	// ã‚³ãƒ©ã‚¤ãƒ€ãƒ¼ã®è¿½åŠ 
 	float radius = 1.3f;
-	// ”¼Œa•ª‚¾‚¯‘«Œ³‚©‚ç•‚‚¢‚½À•W‚ğ‹…‚Ì’†S‚É‚·‚é
+	// åŠå¾„åˆ†ã ã‘è¶³å…ƒã‹ã‚‰æµ®ã„ãŸåº§æ¨™ã‚’çƒã®ä¸­å¿ƒã«ã™ã‚‹
 	SetCollider(new SphereCollider(Vector3({ 0, radius, 0 }), radius));
 	collider_->SetAttribute(COLLISION_ATTR_ENEMYS);
 }
 
-// XV
+// æ›´æ–°
 void Enemy::Update(const Matrix4& cameraMatrix)
 {
-	// ‹­‰»‰Â”\”»’è‚ğˆê“I‚Éfalse‚Ö
+	// å¼·åŒ–å¯èƒ½åˆ¤å®šã‚’ä¸€æ™‚çš„ã«falseã¸
 	sIsPowerUp_ = false;
 
-	// “G‚Ì‹O“¹XV
+	// æ•µã®è»Œé“æ›´æ–°
 	trajectory_.Update();
 
-	// À•W‚ğƒJƒƒ‰Šî€‚É
+	// åº§æ¨™ã‚’ã‚«ãƒ¡ãƒ©åŸºæº–ã«
 	Vector3 cameraPos = { cameraMatrix.m[3][0],cameraMatrix.m[3][1], cameraMatrix.m[3][2] };
 	position_ = Matrix4::Transform(trajectory_.GetNowPosition(), cameraMatrix) + cameraPos;
 
-	// s—ñXV •K‚¸ŒÄ‚Ño‚·
+	// è¡Œåˆ—æ›´æ–° å¿…ãšå‘¼ã³å‡ºã™
 	UpdateObject3D();
 }
 
-// •`‰æ
+// æç”»
 void Enemy::Draw()
 {
-	// ƒIƒuƒWƒF•`‰æ
+	// ã‚ªãƒ–ã‚¸ã‚§æç”»
 	DrawObject3D();
 
 	if (isAlive_ != true)
@@ -74,7 +74,7 @@ void Enemy::Draw()
 
 void Enemy::Spawn()
 {
-	// “G”­¶
+	// æ•µç™ºç”Ÿ
 	trajectory_.MoveStart(600, true);
 }
 
@@ -82,10 +82,10 @@ void Enemy::OnCollision(const CollisionInfo& info)
 {
 	if (enemyKind_ == uint8_t(EnemyKinds::POWER))
 	{
-		// ”»’è‚ğtrue‚É
+		// åˆ¤å®šã‚’trueã«
 		sIsPowerUp_ = true;
 	}
 
-	// Õ“Ë”»’è‚É‚æ‚èÁ–Å
+	// è¡çªåˆ¤å®šã«ã‚ˆã‚Šæ¶ˆæ»…
 	isAlive_ = false;
 }

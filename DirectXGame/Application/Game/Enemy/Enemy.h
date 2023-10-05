@@ -6,14 +6,14 @@
 
 #include <list>
 
-// “G‚Ìí—Ş
+// æ•µã®ç¨®é¡
 enum class EnemyKinds : uint8_t
 {
-	NORMAL = 0x0001,// ’Êí‚Ì“G
-	POWER = 0x0002,	// ©‹@‚ª‹­‰»‚³‚ê‚é
+	NORMAL = 0x0001,// é€šå¸¸ã®æ•µ
+	POWER = 0x0002,	// è‡ªæ©ŸãŒå¼·åŒ–ã•ã‚Œã‚‹
 };
 
-// ‹O“¹‚Ìí—Ş
+// è»Œé“ã®ç¨®é¡
 enum class TrajectoryKinds : uint8_t
 {
 	CENTER_STRAIGHT = 0x0001,
@@ -24,42 +24,42 @@ enum class TrajectoryKinds : uint8_t
 
 class Enemy : public Object3D
 {
-public:	// ƒƒ“ƒoŠÖ”
-	// ‰Šú‰»ˆ—
+public:	// ãƒ¡ãƒ³ãƒé–¢æ•°
+	// åˆæœŸåŒ–å‡¦ç†
 	void Initialize(std::vector<Vector3>& points, uint8_t enemyKind);
 
-	// XVˆ—
+	// æ›´æ–°å‡¦ç†
 	void Update(const Matrix4& cameraMatrix);
 
-	// •`‰æˆ—
+	// æç”»å‡¦ç†
 	void Draw();
 
-	// ”­¶ˆ—
+	// ç™ºç”Ÿå‡¦ç†
 	void Spawn();
 
 	/// <summary>
-	/// Õ“Ë‚ÌƒR[ƒ‹ƒoƒbƒNŠÖ”
+	/// è¡çªæ™‚ã®ã‚³ãƒ¼ãƒ«ãƒãƒƒã‚¯é–¢æ•°
 	/// </summary>
-	/// <param name="info">Õ“Ëî•ñ</param>
+	/// <param name="info">è¡çªæƒ…å ±</param>
 	void OnCollision(const CollisionInfo& info) override;
 
-	// “G‚Ì¶‘¶ó‹µ‚ğæ“¾
+	// æ•µã®ç”Ÿå­˜çŠ¶æ³ã‚’å–å¾—
 	bool IsAlive()const { return isAlive_; }
 
-	// “–‚½‚è”»’èó‹µ‚ğæ“¾
+	// å½“ãŸã‚Šåˆ¤å®šçŠ¶æ³ã‚’å–å¾—
 	static bool IsOnCol() { return sIsPowerUp_; }
 
-private: // “G‹@‚Ìƒƒ“ƒo•Ï”
-	// “G‹@ƒ‚ƒfƒ‹, “G‹@ƒIƒuƒWƒFƒNƒg
+private: // æ•µæ©Ÿã®ãƒ¡ãƒ³ãƒå¤‰æ•°
+	// æ•µæ©Ÿãƒ¢ãƒ‡ãƒ«, æ•µæ©Ÿã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
 	OBJModel enemyModel_;
 
-	// “G‚Ì‹O“¹
+	// æ•µã®è»Œé“
 	SplineCurve trajectory_ = {};
 
 	uint8_t enemyKind_ = 0;
 
-	// ¶‘¶ƒtƒ‰ƒO
+	// ç”Ÿå­˜ãƒ•ãƒ©ã‚°
 	bool isAlive_ = true;
-	// ‹­‰»‰Â”\ƒtƒ‰ƒO
+	// å¼·åŒ–å¯èƒ½ãƒ•ãƒ©ã‚°
 	static bool sIsPowerUp_;
 };

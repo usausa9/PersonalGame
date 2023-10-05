@@ -1,4 +1,4 @@
-﻿#include "FBXLoader.h"
+#include "FBXLoader.h"
 
 /// <summary>
 /// 静的メンバ変数の実体
@@ -86,7 +86,7 @@ FBXModel* FBXLoader::LoadModelFromFile(const string& modelName)
 
 	// ルートノードから順に解析してモデルに流し込む
 	ParseNodeRecursive(model, fbxScene->GetRootNode());
-	
+
 	// FBXシーン解放
 	model->fbxScene = fbxScene;
 
@@ -155,7 +155,7 @@ void FBXLoader::ParseNodeRecursive(FBXModel* model, FbxNode* fbxNode, Node* pare
 		// 親の変形を乗算
 		node.globalTransform *= parent->globalTransform;
 	}
-	
+
 	// FBSノードのメッシュ情報を解析
 	FbxNodeAttribute* fbxNodeAttribute = fbxNode->GetNodeAttribute();
 
@@ -325,9 +325,9 @@ void FBXLoader::ParseMaterial(FBXModel* model, FbxNode* fbxNode)
 				model->diffuse.z = (float)diffuse.Get()[2];
 
 				// ディフューズテクスチャを取り出す
-				const FbxProperty diffuseProperty = 
+				const FbxProperty diffuseProperty =
 					material->FindProperty(FbxSurfaceMaterial::sDiffuse);
-				
+
 				if (diffuseProperty.IsValid())
 				{
 					const FbxFileTexture* texture = diffuseProperty.GetSrcObject<FbxFileTexture>();
@@ -379,7 +379,7 @@ void FBXLoader::LoadTexture(FBXModel* model, const string& fullpath)
 void FBXLoader::ParseSkin(FBXModel* model, FbxMesh* fbxMesh)
 {
 	// スキニング情報
-	FbxSkin* fbxSkin = static_cast<FbxSkin*>(fbxMesh->GetDeformer(0,FbxDeformer::eSkin));
+	FbxSkin* fbxSkin = static_cast<FbxSkin*>(fbxMesh->GetDeformer(0, FbxDeformer::eSkin));
 	// スキニング情報がなければ終了
 	if (fbxSkin == nullptr)
 	{
@@ -404,7 +404,7 @@ void FBXLoader::ParseSkin(FBXModel* model, FbxMesh* fbxMesh)
 
 		// 新しくボーンを追加し、追加したボーンの参照を得る
 		bones.emplace_back(FBXModel::Bone(boneName));
-		FBXModel::Bone&bone = bones.back();
+		FBXModel::Bone& bone = bones.back();
 		// 自作ボーンとFBXのボーンを紐づける
 		bone.fbxCluster = fbxCluster;
 
@@ -420,7 +420,7 @@ void FBXLoader::ParseSkin(FBXModel* model, FbxMesh* fbxMesh)
 		bone.invInitialPose = Matrix4::Inverse(initialPose);
 
 		// ボーン番号とスキンウェイトのペア
-		struct WeightSet 
+		struct WeightSet
 		{
 			UINT index;
 			float weight;
@@ -429,11 +429,11 @@ void FBXLoader::ParseSkin(FBXModel* model, FbxMesh* fbxMesh)
 		// 二次元配列(ジャグ配列)
 		// list:頂点が影響を受けるボーンの全リスト
 		// vector:それを前頂点分
-		std::vector<std::list<WeightSet>> 
-		weightLists(model->vertices.size());
+		std::vector<std::list<WeightSet>>
+			weightLists(model->vertices.size());
 
 		// すべてのボーンについて
-		for (int i = 0; i < clusterCount; i++) 
+		for (int i = 0; i < clusterCount; i++)
 		{
 			// FBXボーン情報
 			FbxCluster* fbxCluster = fbxSkin->GetCluster(i);
@@ -444,7 +444,7 @@ void FBXLoader::ParseSkin(FBXModel* model, FbxMesh* fbxMesh)
 			double* controlPointWeights = fbxCluster->GetControlPointWeights();
 
 			// 影響を受ける全頂点について
-			for (int j = 0; j < controlPointIndicesCount; j++) 
+			for (int j = 0; j < controlPointIndicesCount; j++)
 			{
 				// 頂点番号
 				int vertIndex = controlPointIndices[j];
@@ -464,7 +464,7 @@ void FBXLoader::ParseSkin(FBXModel* model, FbxMesh* fbxMesh)
 			auto& weightList = weightLists[i];
 			// 大小比較用のラムダ式を指定して降順にソート
 			weightList.sort(
-				[](auto const& lhs, auto const& rhs) 
+				[](auto const& lhs, auto const& rhs)
 				{
 					// 左の要素の方が大きければtrue そうでなければfalseを返す
 					return lhs.weight > rhs.weight;
@@ -472,7 +472,7 @@ void FBXLoader::ParseSkin(FBXModel* model, FbxMesh* fbxMesh)
 
 			int weightArrayIndex = 0;
 			//降順ソート済みのウェイトリストから
-			for (auto& weightSet : weightList) 
+			for (auto& weightSet : weightList)
 			{
 				// 頂点データに書き込み
 				vertices[i].boneIndex[weightArrayIndex] = weightSet.index;

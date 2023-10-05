@@ -9,29 +9,29 @@ using namespace Input;
 
 void GameScene::Initialize()
 {
-	// “–‚½‚è”»’è
+	// å½“ãŸã‚Šåˆ¤å®š
 	collisionManager_ = CollisionManager::GetInstance();
 
-	// ƒp[ƒeƒBƒNƒ‹—p‚ÌƒpƒCƒvƒ‰ƒCƒ“EInit
+	// ãƒ‘ãƒ¼ãƒ†ã‚£ã‚¯ãƒ«ç”¨ã®ãƒ‘ã‚¤ãƒ—ãƒ©ã‚¤ãƒ³ãƒ»Init
 	ParticleManager::CreatePipeline();
 
-	// ƒJƒƒ‰‰Šú‰»
+	// ã‚«ãƒ¡ãƒ©åˆæœŸåŒ–
 	camera_ = new Camera;
 	camera_->Initialize();
 
-	// ƒŒ[ƒ‹ƒJƒƒ‰‰Šú‰»
+	// ãƒ¬ãƒ¼ãƒ«ã‚«ãƒ¡ãƒ©åˆæœŸåŒ–
 	railCamera_ = new RailCamera();
 	railCamera_->Initialize({ 0, 0, -20.0f }, { 0, 0, 0 });
 
-	// ƒvƒŒƒCƒ„[‰Šú‰»
+	// ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼åˆæœŸåŒ–
 	player_ = make_unique<Player>();
 	player_.get()->Initialize(camera_);
 
-	// “V‹…‰Šú‰»
+	// å¤©çƒåˆæœŸåŒ–
 	skydome_ = make_unique<Skydome>();
 	skydome_.get()->Initialize();
 
-	// “Gƒf[ƒ^“Ç‚İ‚İ
+	// æ•µãƒ‡ãƒ¼ã‚¿èª­ã¿è¾¼ã¿
 	LoadCsvFile();
 }
 
@@ -42,36 +42,36 @@ void GameScene::Finalize()
 
 void GameScene::Update()
 {
-	// DirectX–ˆƒtƒŒ[ƒ€ˆ—(XVˆ—) ‚±‚±‚©‚ç
+	// DirectXæ¯ãƒ•ãƒ¬ãƒ¼ãƒ å‡¦ç†(æ›´æ–°å‡¦ç†) ã“ã“ã‹ã‚‰
 	railCamera_->Update();
 
 	waitTimer_.Update();
 
-	// “G‚ÌXV
+	// æ•µã®æ›´æ–°
 	UpdateEnemyData();
 
-	// ƒvƒŒƒCƒ„[‚ÌXV
+	// ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®æ›´æ–°
 	player_->SetParent(railCamera_->GetObject3d());
 	player_->Update();
 
-	// ƒGƒlƒ~[‚ÌXV
+	// ã‚¨ãƒãƒŸãƒ¼ã®æ›´æ–°
 	for (std::unique_ptr<Enemy>& enemy : enemys_)
 	{
 		enemy->Update(railCamera_->GetObject3d()->matWorld_);
 	}
 
-	// €‚ñ‚Å‚é“G‚ğÁ‚·
+	// æ­»ã‚“ã§ã‚‹æ•µã‚’æ¶ˆã™
 	enemys_.remove_if([](std::unique_ptr<Enemy>& enemy)
-	{
-		if (!enemy->IsAlive()) 
 		{
-			return true;
-		}
+			if (!enemy->IsAlive())
+			{
+				return true;
+			}
 
-		return false; 
-	});
+			return false;
+		});
 
-	if (Key::Trigger(DIK_Y)) 
+	if (Key::Trigger(DIK_Y))
 	{
 		EnemySpawn(uint8_t(EnemyKinds::NORMAL), uint8_t(TrajectoryKinds::LEFT_2_RIGHT));
 	}
@@ -80,29 +80,29 @@ void GameScene::Update()
 		EnemySpawn(uint8_t(EnemyKinds::POWER), uint8_t(TrajectoryKinds::RIGHT_2_LEFT));
 	}
 
-	// “V‹…‚Ìs—ñXV
+	// å¤©çƒã®è¡Œåˆ—æ›´æ–°
 	skydome_->Update();
-	
-	// ƒJƒƒ‰‚ğƒŒ[ƒ‹ƒJƒƒ‰‚Ì‚à‚Ì‚Ö
+
+	// ã‚«ãƒ¡ãƒ©ã‚’ãƒ¬ãƒ¼ãƒ«ã‚«ãƒ¡ãƒ©ã®ã‚‚ã®ã¸
 	camera_ = railCamera_->GetCamera();
 	camera_->Update();
 
-	// ‘S‚Ä‚ÌÕ“Ë‚ğƒ`ƒFƒbƒN (XV‚ÌÅŒã)
+	// å…¨ã¦ã®è¡çªã‚’ãƒã‚§ãƒƒã‚¯ (æ›´æ–°ã®æœ€å¾Œ)
 	collisionManager_->CheckAllCollisions();
 }
 
 void GameScene::Draw3D()
 {
-	// ƒJƒƒ‰ƒZƒbƒg
+	// ã‚«ãƒ¡ãƒ©ã‚»ãƒƒãƒˆ
 	camera_->Set();
 
-	// “V‹…•`‰æ
+	// å¤©çƒæç”»
 	skydome_->Draw();
 
-	// ƒvƒŒƒCƒ„[•`‰æ
+	// ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼æç”»
 	player_->Draw();
 
-	// “G•`‰æ
+	// æ•µæç”»
 	for (std::unique_ptr<Enemy>& enemy : enemys_)
 	{
 		enemy->Draw();
@@ -111,10 +111,10 @@ void GameScene::Draw3D()
 
 void GameScene::DrawParticle()
 {
-	// ƒJƒƒ‰ƒZƒbƒg
+	// ã‚«ãƒ¡ãƒ©ã‚»ãƒƒãƒˆ
 	camera_->Set();
 
-	// ƒp[ƒeƒBƒNƒ‹ƒIƒuƒWƒF•`‰æ
+	// ãƒ‘ãƒ¼ãƒ†ã‚£ã‚¯ãƒ«ã‚ªãƒ–ã‚¸ã‚§æç”»
 }
 
 void GameScene::Draw2D()
@@ -126,25 +126,25 @@ void GameScene::EnemySpawn(uint8_t enemyKind, uint8_t trajectoryKind)
 {
 	std::vector<Vector3> enemyMovePoints = TrajectoryKind(trajectoryKind);
 
-	// “G‚Ì¶¬‚Æ‰Šú‰»
+	// æ•µã®ç”Ÿæˆã¨åˆæœŸåŒ–
 	std::unique_ptr<Enemy> newEnemy = std::make_unique<Enemy>();
 	newEnemy->Initialize(enemyMovePoints, enemyKind);
 	newEnemy->Spawn();
-	// ƒŠƒXƒg‚É“o˜^
+	// ãƒªã‚¹ãƒˆã«ç™»éŒ²
 	enemys_.push_back(std::move(newEnemy));
 }
 
 void GameScene::LoadCsvFile()
 {
-	// ƒtƒ@ƒCƒ‹‚ğŠJ‚­
+	// ãƒ•ã‚¡ã‚¤ãƒ«ã‚’é–‹ã
 	std::ifstream file;
 	file.open("Resources/Data/csv/enemyPop.csv");
 	assert(file.is_open());
 
-	// ƒtƒ@ƒCƒ‹‚Ì“à—e‚ğ•¶šƒXƒgƒŠ[ƒ€‚ÉƒRƒs[
+	// ãƒ•ã‚¡ã‚¤ãƒ«ã®å†…å®¹ã‚’æ–‡å­—ã‚¹ãƒˆãƒªãƒ¼ãƒ ã«ã‚³ãƒ”ãƒ¼
 	enemyData_ << file.rdbuf();
 
-	// ƒtƒ@ƒCƒ‹‚ğ•Â‚¶‚é
+	// ãƒ•ã‚¡ã‚¤ãƒ«ã‚’é–‰ã˜ã‚‹
 	file.close();
 }
 
@@ -152,13 +152,13 @@ std::vector<Vector3> GameScene::TrajectoryKind(uint8_t trajectoryKind)
 {
 	if (trajectoryKind == uint8_t(TrajectoryKinds::LEFT_2_RIGHT))
 	{
-		// ƒXƒvƒ‰ƒCƒ“§Œä“_
+		// ã‚¹ãƒ—ãƒ©ã‚¤ãƒ³åˆ¶å¾¡ç‚¹
 		float z = 40.0f;
 		Vector3 start = { -20,  0, z };
-		Vector3 p1 =	{ -10, 10, z };
-		Vector3 p2 =    {	0,  0, z };
-		Vector3 p3 =	{  10,-10, z };
-		Vector3 end =	{  20,  0, z };
+		Vector3 p1 = { -10, 10, z };
+		Vector3 p2 = { 0,  0, z };
+		Vector3 p3 = { 10,-10, z };
+		Vector3 end = { 20,  0, z };
 
 		std::vector<Vector3> movePoints = { start, p1, p2, p3, end };
 
@@ -166,13 +166,13 @@ std::vector<Vector3> GameScene::TrajectoryKind(uint8_t trajectoryKind)
 	}
 	else if (trajectoryKind == uint8_t(TrajectoryKinds::RIGHT_2_LEFT))
 	{
-		// ƒXƒvƒ‰ƒCƒ“§Œä“_
+		// ã‚¹ãƒ—ãƒ©ã‚¤ãƒ³åˆ¶å¾¡ç‚¹
 		float z = 40.0f;
-		Vector3 start =	{  20,  0, z };
-		Vector3 p1 =	{  10,-10, z };
-		Vector3 p2 =	{   0,  0, z };
-		Vector3 p3 =	{ -10, 10, z };
-		Vector3 end =	{ -20,  0, z };
+		Vector3 start = { 20,  0, z };
+		Vector3 p1 = { 10,-10, z };
+		Vector3 p2 = { 0,  0, z };
+		Vector3 p3 = { -10, 10, z };
+		Vector3 end = { -20,  0, z };
 
 		std::vector<Vector3> movePoints = { start, p1, p2, p3, end };
 
@@ -180,13 +180,13 @@ std::vector<Vector3> GameScene::TrajectoryKind(uint8_t trajectoryKind)
 	}
 	else
 	{
-		// ƒXƒvƒ‰ƒCƒ“§Œä“_
+		// ã‚¹ãƒ—ãƒ©ã‚¤ãƒ³åˆ¶å¾¡ç‚¹
 		float z = 40.0f;
 		Vector3 start = { 0, 0, z };
-		Vector3 p1 =	{ 0, 0, z };
-		Vector3 p2 =	{ 0, 0, z };
-		Vector3 p3 =	{ 0, 0, z };
-		Vector3 end =	{ 0, 0, z };
+		Vector3 p1 = { 0, 0, z };
+		Vector3 p2 = { 0, 0, z };
+		Vector3 p3 = { 0, 0, z };
+		Vector3 end = { 0, 0, z };
 
 		std::vector<Vector3> movePoints = { start, p1, p2, p3, end };
 
@@ -196,63 +196,63 @@ std::vector<Vector3> GameScene::TrajectoryKind(uint8_t trajectoryKind)
 
 void GameScene::UpdateEnemyData()
 {
-	// ‘Ò‹@ˆ—
+	// å¾…æ©Ÿå‡¦ç†
 	if (isStandBy_)
 	{
 		if (waitTimer_.GetActive() == false)
 		{
-			// ‘Ò‹@I—¹
+			// å¾…æ©Ÿçµ‚äº†
 			isStandBy_ = false;
 		}
 		return;
 	}
 
-	// 1s•ª‚Ì•¶š—ñ‚ğ“ü‚ê‚é•Ï”
+	// 1è¡Œåˆ†ã®æ–‡å­—åˆ—ã‚’å…¥ã‚Œã‚‹å¤‰æ•°
 	std::string line;
 
-	// ƒRƒ}ƒ“ƒhÀsƒ‹[ƒv
+	// ã‚³ãƒãƒ³ãƒ‰å®Ÿè¡Œãƒ«ãƒ¼ãƒ—
 	while (getline(enemyData_, line))
 	{
-		// 1s•ª‚Ì•¶š”‚ğƒXƒgƒŠ[ƒ€‚É•ÏŠ·‚µ‚Ä‰ğÍ‚µ‚â‚·‚­‚·‚é
+		// 1è¡Œåˆ†ã®æ–‡å­—æ•°ã‚’ã‚¹ãƒˆãƒªãƒ¼ãƒ ã«å¤‰æ›ã—ã¦è§£æã—ã‚„ã™ãã™ã‚‹
 		std::istringstream line_stream(line);
 
 		std::string word;
-		// ƒJƒ“ƒ}‹æØ‚è‚Ås‚Ìæ“ª•¶š—ñ‚ğæ“¾
+		// ã‚«ãƒ³ãƒåŒºåˆ‡ã‚Šã§è¡Œã®å…ˆé ­æ–‡å­—åˆ—ã‚’å–å¾—
 		getline(line_stream, word, ',');
 
-		// ƒRƒƒ“ƒgƒAƒEƒg
+		// ã‚³ãƒ¡ãƒ³ãƒˆã‚¢ã‚¦ãƒˆ
 		if (word.find("//") == 0)
 		{
-			// s‚ğ”ò‚Î‚·
+			// è¡Œã‚’é£›ã°ã™
 			continue;
 		}
 
 		// POP
 		if (word.find("POP") == 0)
 		{
-			// “G‚Ìí—Ş
+			// æ•µã®ç¨®é¡
 			getline(line_stream, word, ',');
 			uint8_t kind = static_cast<uint8_t>(std::atoi(word.c_str()));
 
-			// “G‚Ì‹O“¹
+			// æ•µã®è»Œé“
 			getline(line_stream, word, ',');
 			uint8_t trajectory = static_cast<uint8_t>(std::atoi(word.c_str()));
 
 			EnemySpawn(kind, trajectory);
 		}
-		// WAITƒRƒ}ƒ“ƒh
+		// WAITã‚³ãƒãƒ³ãƒ‰
 		else if (word.find("WAIT") == 0)
 		{
 			getline(line_stream, word, ',');
 
-			// ‘Ò‚¿ŠÔ
+			// å¾…ã¡æ™‚é–“
 			float waitTimeData = float(std::atoi(word.c_str()));
 
-			// ‘Ò‹@ŠJn
+			// å¾…æ©Ÿé–‹å§‹
 			isStandBy_ = true;
 			waitTimer_.Start(waitTimeData);
 
-			// ƒRƒ}ƒ“ƒhƒ‹[ƒv‚ğ”²‚¯‚é
+			// ã‚³ãƒãƒ³ãƒ‰ãƒ«ãƒ¼ãƒ—ã‚’æŠœã‘ã‚‹
 			break;
 		}
 	}

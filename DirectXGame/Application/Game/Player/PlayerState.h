@@ -12,36 +12,36 @@ class PlayerState
 public:
 	enum class SelectState : uint8_t
 	{
-		NONE,		// ‘I‚Î‚ê‚Ä‚¢‚È‚¢
-		SELECT,		// ‘I‚Î‚ê‚Ä‚¢‚é
-		USED,		// g—pÏ‚İ‚Å‚ ‚è‘I‚Î‚ê‚Ä‚È‚¢
-		USEDSELECT,	// g—pÏ‚İ‚Å‚ ‚è‘I‚Î‚ê‚Ä‚¢‚é
+		NONE,		// é¸ã°ã‚Œã¦ã„ãªã„
+		SELECT,		// é¸ã°ã‚Œã¦ã„ã‚‹
+		USED,		// ä½¿ç”¨æ¸ˆã¿ã§ã‚ã‚Šé¸ã°ã‚Œã¦ãªã„
+		USEDSELECT,	// ä½¿ç”¨æ¸ˆã¿ã§ã‚ã‚Šé¸ã°ã‚Œã¦ã„ã‚‹
 	};
 
 	enum class State : uint8_t
 	{
-		SPEEDUP,	// ‰Á‘¬
-		EXPAND,		// ƒŒƒeƒBƒNƒ‹‚ª‘å‚«‚­‚È‚é
-		LASER,		// ƒŒ[ƒU[‰»
-		OPTION,		// ƒvƒŒƒnƒu‚ª‘‚¦‚é
-		BARRIER,	// ‚T‰ñ‚Ü‚Åƒ_ƒ[ƒW‚ğó‚¯‚ç‚ê‚éƒoƒŠƒA
-		NONESTATE,		// ‚Ç‚ê‚à‘I‚Î‚ê‚Ä‚¢‚È‚¢
+		SPEEDUP,	// åŠ é€Ÿ
+		EXPAND,		// ãƒ¬ãƒ†ã‚£ã‚¯ãƒ«ãŒå¤§ãããªã‚‹
+		LASER,		// ãƒ¬ãƒ¼ã‚¶ãƒ¼åŒ–
+		OPTION,		// ãƒ—ãƒ¬ãƒãƒ–ãŒå¢—ãˆã‚‹
+		BARRIER,	// ï¼•å›ã¾ã§ãƒ€ãƒ¡ãƒ¼ã‚¸ã‚’å—ã‘ã‚‰ã‚Œã‚‹ãƒãƒªã‚¢
+		NONESTATE,		// ã©ã‚Œã‚‚é¸ã°ã‚Œã¦ã„ãªã„
 	};
 
 public:
-	// ‰æ‘œ“Ç‚İ‚İ + •R‚Ã‚¯
+	// ç”»åƒèª­ã¿è¾¼ã¿ + ç´ã¥ã‘
 	void SetTexture();
 
-	// ‰Šú‰»ˆ—
+	// åˆæœŸåŒ–å‡¦ç†
 	void Initialize();
 
-	// XVˆ—
+	// æ›´æ–°å‡¦ç†
 	void Update();
 
-	// •`‰æˆ—
+	// æç”»å‡¦ç†
 	void DrawUI();
 
-	// ‹­‰»ó‹µ‚ğæ“¾
+	// å¼·åŒ–çŠ¶æ³ã‚’å–å¾—
 	uint8_t SpeedUpNum() const { return powerUpStatus_[0]; }
 	uint8_t ExpandNum()  const { return powerUpStatus_[1]; }
 	uint8_t LaserNum()   const { return powerUpStatus_[2]; }
@@ -49,28 +49,28 @@ public:
 	uint8_t BarrierNum() const { return powerUpStatus_[4]; }
 
 private:
-	// ƒpƒ[ƒAƒbƒvƒAƒCƒeƒ€ŠÖ˜A
-	array<uint8_t, 5> powerUpSelect_ = { 0, 0, 0, 0, 0 };	// Œ»İ‚Ì‘I‘ğ“™•`‰æ—p
-	array<uint8_t, 5> powerUpStatus_ = { 0, 0, 0, 0, 0 };	// ƒvƒŒƒCƒ„[‚Ì‹­‰»ó‘Ô
+	// ãƒ‘ãƒ¯ãƒ¼ã‚¢ãƒƒãƒ—ã‚¢ã‚¤ãƒ†ãƒ é–¢é€£
+	array<uint8_t, 5> powerUpSelect_ = { 0, 0, 0, 0, 0 };	// ç¾åœ¨ã®é¸æŠç­‰æç”»ç”¨
+	array<uint8_t, 5> powerUpStatus_ = { 0, 0, 0, 0, 0 };	// ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®å¼·åŒ–çŠ¶æ…‹
 	uint8_t nowSelect_ = uint8_t(State::NONESTATE);
-	
+
 	const uint8_t MAX_SPEEDUP_NUM_ = 5;
 	const uint8_t MAX_EXPAND_NUM_ = 1;
 	const uint8_t MAX_LASER_NUM_ = 1;
 	const uint8_t MAX_OPTION_NUM_ = 2;
 	const uint8_t MAX_BARRIER_NUM_ = 1;
 
-private:// •`‰æ—p
-	// ƒeƒNƒXƒ`ƒƒŠÖ˜A
+private:// æç”»ç”¨
+	// ãƒ†ã‚¯ã‚¹ãƒãƒ£é–¢é€£
 	static const uint8_t POWER_UP_NUM_ = 5;
 	static const uint8_t TEX_NUM_ = 12;
 	static const uint8_t SPRITE_NUM_ = 20;
 
 	array<TextureIndex, TEX_NUM_> stateSelectTex_ = {};
 	array<unique_ptr<Sprite>, SPRITE_NUM_> stateSprite_ = {
-		nullptr, nullptr, nullptr, nullptr, nullptr, 
-		nullptr, nullptr, nullptr, nullptr, nullptr, 
-		nullptr, nullptr, nullptr, nullptr, nullptr, 
+		nullptr, nullptr, nullptr, nullptr, nullptr,
+		nullptr, nullptr, nullptr, nullptr, nullptr,
+		nullptr, nullptr, nullptr, nullptr, nullptr,
 		nullptr, nullptr, nullptr, nullptr, nullptr, };
 
 	const float SCALE_TEX_UI_ = 1.5f;

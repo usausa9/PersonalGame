@@ -1,39 +1,39 @@
 #pragma once
 #include "AbstractSceneFactory.h"
 
-// ƒV[ƒ“ŠÇ—
+// ã‚·ãƒ¼ãƒ³ç®¡ç†
 class SceneManager
 {
 public:
-	// ƒVƒ“ƒOƒ‹ƒgƒ“ƒCƒ“ƒXƒ^ƒ“ƒX‚ğæ“¾
+	// ã‚·ãƒ³ã‚°ãƒ«ãƒˆãƒ³ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ã‚’å–å¾—
 	static SceneManager* GetInstance();
 
-	// ŸƒV[ƒ“‚Ì—\–ñ
+	// æ¬¡ã‚·ãƒ¼ãƒ³ã®äºˆç´„
 	void ChangeScene(const std::string& sceneName);
 
-	// ƒV[ƒ“ƒtƒ@ƒNƒgƒŠ[‚ÌƒZƒbƒ^[
+	// ã‚·ãƒ¼ãƒ³ãƒ•ã‚¡ã‚¯ãƒˆãƒªãƒ¼ã®ã‚»ãƒƒã‚¿ãƒ¼
 	void SetSceneFactory(AbstractSceneFactory* sceneFactory) { sceneFactory_ = sceneFactory; }
 private:
-	// Œ»İ‚ÌƒV[ƒ“
+	// ç¾åœ¨ã®ã‚·ãƒ¼ãƒ³
 	IScene* currentScene_ = nullptr;
 	IScene* nextScene_ = nullptr;
 
-	// ƒV[ƒ“Hê (Ø‚è‚à‚Ì)
+	// ã‚·ãƒ¼ãƒ³å·¥å ´ (å€Ÿã‚Šã‚‚ã®)
 	AbstractSceneFactory* sceneFactory_ = nullptr;
 
-public: // ƒƒ“ƒoŠÖ”
-	// XVˆ—
+public: // ãƒ¡ãƒ³ãƒé–¢æ•°
+	// æ›´æ–°å‡¦ç†
 	void Update();
 
-	// 3D•`‰æ
+	// 3Dæç”»
 	void Draw3D();
 
-	// ƒp[ƒeƒBƒNƒ‹•`‰æ
+	// ãƒ‘ãƒ¼ãƒ†ã‚£ã‚¯ãƒ«æç”»
 	void DrawParticle();
 
-	// 2D•`‰æ
+	// 2Dæç”»
 	void Draw2D();
-	
-	// ƒfƒXƒgƒ‰ƒNƒ^
+
+	// ãƒ‡ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 	~SceneManager();
 };

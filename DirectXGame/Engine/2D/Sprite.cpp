@@ -4,16 +4,16 @@
 
 #include "WinAPI.h"
 
-// ’¸“_ƒf[ƒ^\‘¢‘Ì
+// é ‚ç‚¹ãƒ‡ãƒ¼ã‚¿æ§‹é€ ä½“
 struct Vertex
 {
-	Vector3 pos;	// xyzÀ•W
-	Vector2 uv;	// uvÀ•W
+	Vector3 pos;	// xyzåº§æ¨™
+	Vector2 uv;	// uvåº§æ¨™
 };
 
 Sprite::Sprite()
 {
-	
+
 }
 
 Sprite::Sprite(TextureIndex tex) : tIndex_(tex)
@@ -23,85 +23,85 @@ Sprite::Sprite(TextureIndex tex) : tIndex_(tex)
 
 Sprite::~Sprite()
 {
-	constBuffMaterial_->Unmap(0, nullptr);	//  ƒƒ‚ƒŠƒŠ[ƒN‚Íß
+	constBuffMaterial_->Unmap(0, nullptr);	//  ãƒ¡ãƒ¢ãƒªãƒªãƒ¼ã‚¯ã¯ç½ª
 }
 
 void Sprite::Init()
 {
-#pragma region ’¸“_ƒoƒbƒtƒ@
+#pragma region é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡
 	HRESULT pResult;
 
 	float w = TextureManager::GetData(tIndex_)->metadata.width / 2.f;
 	float h = TextureManager::GetData(tIndex_)->metadata.height / 2.f;
 
-	// ’¸“_ƒf[ƒ^
+	// é ‚ç‚¹ãƒ‡ãƒ¼ã‚¿
 	Vertex vertices[] =
 	{
 		// X  Y   Z        U     V
-		{{-w,-h, 0.0f },  {0.0f, 0.0f}},	// ¶‰º
-		{{-w, h, 0.0f },  {0.0f, 1.0f}},	// ¶ã
-		{{ w,-h, 0.0f },  {1.0f, 0.0f}},	// ‰E‰º
-		{{ w, h, 0.0f },  {1.0f, 1.0f}},	// ‰Eã
+		{{-w,-h, 0.0f },  {0.0f, 0.0f}},	// å·¦ä¸‹
+		{{-w, h, 0.0f },  {0.0f, 1.0f}},	// å·¦ä¸Š
+		{{ w,-h, 0.0f },  {1.0f, 0.0f}},	// å³ä¸‹
+		{{ w, h, 0.0f },  {1.0f, 1.0f}},	// å³ä¸Š
 	};
 
-	// ’¸“_ƒf[ƒ^‘S‘Ì‚ÌƒTƒCƒY = ’¸“_ƒf[ƒ^ˆê‚Â•ª‚ÌƒTƒCƒY * ’¸“_ƒf[ƒ^‚Ì—v‘f”
+	// é ‚ç‚¹ãƒ‡ãƒ¼ã‚¿å…¨ä½“ã®ã‚µã‚¤ã‚º = é ‚ç‚¹ãƒ‡ãƒ¼ã‚¿ä¸€ã¤åˆ†ã®ã‚µã‚¤ã‚º * é ‚ç‚¹ãƒ‡ãƒ¼ã‚¿ã®è¦ç´ æ•°
 	UINT sizeVB = static_cast<UINT>(sizeof(vertices[0]) * _countof(vertices));
 
-	// ’¸“_ƒoƒbƒtƒ@‚Ìİ’è
-	D3D12_HEAP_PROPERTIES heapProp{}; // ƒq[ƒvİ’è
-	heapProp.Type = D3D12_HEAP_TYPE_UPLOAD; // GPU‚Ö‚Ì“]‘——p
+	// é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã®è¨­å®š
+	D3D12_HEAP_PROPERTIES heapProp{}; // ãƒ’ãƒ¼ãƒ—è¨­å®š
+	heapProp.Type = D3D12_HEAP_TYPE_UPLOAD; // GPUã¸ã®è»¢é€ç”¨
 
-	// ƒŠƒ\[ƒXİ’è
+	// ãƒªã‚½ãƒ¼ã‚¹è¨­å®š
 	D3D12_RESOURCE_DESC resDesc{};
 	resDesc.Dimension = D3D12_RESOURCE_DIMENSION_BUFFER;
-	resDesc.Width = sizeVB; // ’¸“_ƒf[ƒ^‘S‘Ì‚ÌƒTƒCƒY
+	resDesc.Width = sizeVB; // é ‚ç‚¹ãƒ‡ãƒ¼ã‚¿å…¨ä½“ã®ã‚µã‚¤ã‚º
 	resDesc.Height = 1;
 	resDesc.DepthOrArraySize = 1;
 	resDesc.MipLevels = 1;
 	resDesc.SampleDesc.Count = 1;
 	resDesc.Layout = D3D12_TEXTURE_LAYOUT_ROW_MAJOR;
 
-	// ’¸“_ƒoƒbƒtƒ@‚Ì¶¬
+	// é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã®ç”Ÿæˆ
 	pResult = DirectXBase::GetInstance()->device_->CreateCommittedResource(
-		&heapProp, // ƒq[ƒvİ’è
+		&heapProp, // ãƒ’ãƒ¼ãƒ—è¨­å®š
 		D3D12_HEAP_FLAG_NONE,
-		&resDesc, // ƒŠƒ\[ƒXİ’è
+		&resDesc, // ãƒªã‚½ãƒ¼ã‚¹è¨­å®š
 		D3D12_RESOURCE_STATE_GENERIC_READ,
 		nullptr,
 		IID_PPV_ARGS(&vertBuff_));
 	assert(SUCCEEDED(pResult));
 
-	// GPUã‚Ìƒoƒbƒtƒ@‚É‘Î‰‚µ‚½‰¼‘zƒƒ‚ƒŠ(ƒƒCƒ“ƒƒ‚ƒŠã)‚ğæ“¾
+	// GPUä¸Šã®ãƒãƒƒãƒ•ã‚¡ã«å¯¾å¿œã—ãŸä»®æƒ³ãƒ¡ãƒ¢ãƒª(ãƒ¡ã‚¤ãƒ³ãƒ¡ãƒ¢ãƒªä¸Š)ã‚’å–å¾—
 	Vertex* vertMap = nullptr;
 	pResult = vertBuff_->Map(0, nullptr, (void**)&vertMap);
 	assert(SUCCEEDED(pResult));
 
-	// ‘S’¸“_‚É‘Î‚µ‚Ä
+	// å…¨é ‚ç‚¹ã«å¯¾ã—ã¦
 	for (int i = 0; i < _countof(vertices); i++)
 	{
-		vertMap[i] = vertices[i]; // À•W‚ğƒRƒs[
+		vertMap[i] = vertices[i]; // åº§æ¨™ã‚’ã‚³ãƒ”ãƒ¼
 	}
 
-	// Œq‚ª‚è‚ğ‰ğœ
+	// ç¹‹ãŒã‚Šã‚’è§£é™¤
 	vertBuff_->Unmap(0, nullptr);
-	
-	// GPU‰¼‘zƒAƒhƒŒƒX
+
+	// GPUä»®æƒ³ã‚¢ãƒ‰ãƒ¬ã‚¹
 	vbView_.BufferLocation = vertBuff_->GetGPUVirtualAddress();
-	// ’¸“_ƒoƒbƒtƒ@‚ÌƒTƒCƒY
+	// é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã®ã‚µã‚¤ã‚º
 	vbView_.SizeInBytes = sizeVB;
-	// ’¸“_1‚Â•ª‚Ìƒf[ƒ^ƒTƒCƒY
+	// é ‚ç‚¹1ã¤åˆ†ã®ãƒ‡ãƒ¼ã‚¿ã‚µã‚¤ã‚º
 	vbView_.StrideInBytes = sizeof(vertices[0]);
 #pragma endregion
 
-#pragma region ’è”ƒoƒbƒtƒ@
-	// ƒq[ƒvİ’è
+#pragma region å®šæ•°ãƒãƒƒãƒ•ã‚¡
+	// ãƒ’ãƒ¼ãƒ—è¨­å®š
 	D3D12_HEAP_PROPERTIES cbHeapProp{};
-	cbHeapProp.Type = D3D12_HEAP_TYPE_UPLOAD; // GPU‚Ì“]‘——p
+	cbHeapProp.Type = D3D12_HEAP_TYPE_UPLOAD; // GPUã®è»¢é€ç”¨
 
-	// ƒŠƒ\[ƒXİ’è
+	// ãƒªã‚½ãƒ¼ã‚¹è¨­å®š
 	D3D12_RESOURCE_DESC cbResourceDesc{};
 	cbResourceDesc.Dimension = D3D12_RESOURCE_DIMENSION_BUFFER;
-	cbResourceDesc.Width = (sizeof(SpriteConstBufferDataMaterial) + 0xff) & ~0xff; // 256ƒoƒCƒgƒAƒ‰ƒCƒ“ƒƒ“ƒg
+	cbResourceDesc.Width = (sizeof(SpriteConstBufferDataMaterial) + 0xff) & ~0xff; // 256ãƒã‚¤ãƒˆã‚¢ãƒ©ã‚¤ãƒ³ãƒ¡ãƒ³ãƒˆ
 	cbResourceDesc.Height = 1;
 	cbResourceDesc.DepthOrArraySize = 1;
 	cbResourceDesc.MipLevels = 1;
@@ -110,34 +110,34 @@ void Sprite::Init()
 
 	HRESULT vResult;
 
-	// ’è”ƒoƒbƒtƒ@‚Ì¶¬
+	// å®šæ•°ãƒãƒƒãƒ•ã‚¡ã®ç”Ÿæˆ
 	vResult = DirectXBase::GetInstance()->device_->CreateCommittedResource(
-		&cbHeapProp,	// ƒq[ƒvİ’è
+		&cbHeapProp,	// ãƒ’ãƒ¼ãƒ—è¨­å®š
 		D3D12_HEAP_FLAG_NONE,
-		&cbResourceDesc,// ƒŠƒ\[ƒXİ’è
+		&cbResourceDesc,// ãƒªã‚½ãƒ¼ã‚¹è¨­å®š
 		D3D12_RESOURCE_STATE_GENERIC_READ,
 		nullptr,
 		IID_PPV_ARGS(&constBuffMaterial_));
 	assert(SUCCEEDED(vResult));
 
-	// ’è”ƒoƒbƒtƒ@‚Ìƒ}ƒbƒsƒ“ƒO
-	vResult = constBuffMaterial_->Map(0, nullptr, (void**)&constMapMaterial_); // ƒ}ƒbƒsƒ“ƒO
+	// å®šæ•°ãƒãƒƒãƒ•ã‚¡ã®ãƒãƒƒãƒ”ãƒ³ã‚°
+	vResult = constBuffMaterial_->Map(0, nullptr, (void**)&constMapMaterial_); // ãƒãƒƒãƒ”ãƒ³ã‚°
 	assert(SUCCEEDED(vResult));
 
-	// ’l‚ğ‘‚«‚Ş‚Æ©“®“I‚É“]‘—‚³‚ê‚é
-	constMapMaterial_->color = Vector4{1.f, 0.f, 1.f, 1.f}; // RGBA‚Å”¼“§–¾‚ÌÔ
-	
+	// å€¤ã‚’æ›¸ãè¾¼ã‚€ã¨è‡ªå‹•çš„ã«è»¢é€ã•ã‚Œã‚‹
+	constMapMaterial_->color = Vector4{ 1.f, 0.f, 1.f, 1.f }; // RGBAã§åŠé€æ˜ã®èµ¤
+
 	Matrix4 matWorld;
 	matWorld = matWorld.Scale({ scale_.x, scale_.y, 1 });
 	matWorld *= matWorld.RotateZ(rotation_);
 	matWorld *= matWorld.Translate({ position_.x, position_.y, 0 });
 
 	constMapMaterial_->mat = matWorld * SpriteManager::sSpriteProjection_;
-	
+
 #pragma endregion
 }
 
-void Sprite::Update() 
+void Sprite::Update()
 {
 	Matrix4 matWorld;
 	matWorld = matWorld.Scale({ scale_.x, scale_.y, 1 });
@@ -151,13 +151,13 @@ void Sprite::Draw()
 {
 	ID3D12GraphicsCommandList* commandList = DirectXBase::GetInstance()->commandList_.Get();
 
-	// ’¸“_ƒoƒbƒtƒ@ƒrƒ…[‚Ìİ’èƒRƒ}ƒ“ƒh
+	// é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ãƒ“ãƒ¥ãƒ¼ã®è¨­å®šã‚³ãƒãƒ³ãƒ‰
 	commandList->IASetVertexBuffers(0, 1, &vbView_);
 
-	// CBV‚Ìİ’èƒRƒ}ƒ“ƒh
+	// CBVã®è¨­å®šã‚³ãƒãƒ³ãƒ‰
 	commandList->SetGraphicsRootConstantBufferView(0, constBuffMaterial_->GetGPUVirtualAddress());
 	commandList->SetGraphicsRootDescriptorTable(1, TextureManager::GetData(tIndex_)->gpuHandle);
 
-	// •`‰æƒRƒ}ƒ“ƒh
-	commandList->DrawInstanced(4, 1, 0, 0); // ‘S‚Ä‚Ì’¸“_‚ğg‚Á‚Ä•`‰æ
+	// æç”»ã‚³ãƒãƒ³ãƒ‰
+	commandList->DrawInstanced(4, 1, 0, 0); // å…¨ã¦ã®é ‚ç‚¹ã‚’ä½¿ã£ã¦æç”»
 }

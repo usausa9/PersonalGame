@@ -6,41 +6,41 @@
 
 class SplineCurve
 {
-private: // ƒƒ“ƒo•Ï”
-	// §Œä“_‚Ì”z—ñ
+private: // ãƒ¡ãƒ³ãƒå¤‰æ•°
+	// åˆ¶å¾¡ç‚¹ã®é…åˆ—
 	std::vector<Vector3> controllPoints_ = {};
 
-	// Œ»İ’n“_
+	// ç¾åœ¨åœ°ç‚¹
 	Vector3 currentPosition_ = {};
-	// ƒXƒvƒ‰ƒCƒ“•âŠÔ—p‚Ìn“_I“_—p‚Ì§Œä“_2‚Â
+	// ã‚¹ãƒ—ãƒ©ã‚¤ãƒ³è£œé–“ç”¨ã®å§‹ç‚¹çµ‚ç‚¹ç”¨ã®åˆ¶å¾¡ç‚¹2ã¤
 	Vector3 dummyPoints_[2] = {};
 
-	// ƒ^ƒCƒ}[ƒf[ƒ^
+	// ã‚¿ã‚¤ãƒãƒ¼ãƒ‡ãƒ¼ã‚¿
 	TimeData tData_ = {};
 
-	// 1‹æŠÔ‚ ‚½‚è‚Ì•âŠÔŠÔ
+	// 1åŒºé–“ã‚ãŸã‚Šã®è£œé–“æ™‚é–“
 	float segmentTime_ = 0;
 
-	// •âŠÔŠJn“_
+	// è£œé–“é–‹å§‹ç‚¹
 	int16_t startIndex_ = 0;
 
-	// I“_‚Æn“_‚ğ•âŠÔ‚µ‚ÄzŠÂ‚³‚¹‚é‚©‚Ç‚¤‚©
+	// çµ‚ç‚¹ã¨å§‹ç‚¹ã‚’è£œé–“ã—ã¦å¾ªç’°ã•ã›ã‚‹ã‹ã©ã†ã‹
 	bool isLoop_ = false;
 
-public:	// ƒƒ“ƒoŠÖ”
+public:	// ãƒ¡ãƒ³ãƒé–¢æ•°
 	/// <summary>
-	/// ƒXƒvƒ‰ƒCƒ“•âŠÔ—p‚ÌŠÖ”
+	/// ã‚¹ãƒ—ãƒ©ã‚¤ãƒ³è£œé–“ç”¨ã®é–¢æ•°
 	/// </summary>
-	/// <param name="allTime">•âŠÔ‚Ì‡ŒvŠÔ(zŠÂ‚³‚¹‚éê‡‚Íˆêü‚ ‚½‚è‚ÌŠÔ)</param>
-	/// <param name="isLoop">zŠÂ‚³‚¹‚é‚©‚Ç‚¤‚©</param>
+	/// <param name="allTime">è£œé–“ã®åˆè¨ˆæ™‚é–“(å¾ªç’°ã•ã›ã‚‹å ´åˆã¯ä¸€å‘¨ã‚ãŸã‚Šã®æ™‚é–“)</param>
+	/// <param name="isLoop">å¾ªç’°ã•ã›ã‚‹ã‹ã©ã†ã‹</param>
 	void MoveStart(float allTime, bool isLoop);
 
-	// XVˆ—
+	// æ›´æ–°å‡¦ç†
 	void Update();
 
-	// §Œä“_ƒZƒbƒg
+	// åˆ¶å¾¡ç‚¹ã‚»ãƒƒãƒˆ
 	void SetPositions(std::vector<Vector3> points) { this->controllPoints_ = points; }
-	
-	// Œ»İˆÊ’uæ“¾
+
+	// ç¾åœ¨ä½ç½®å–å¾—
 	Vector3 GetNowPosition() const { return currentPosition_; }
 };

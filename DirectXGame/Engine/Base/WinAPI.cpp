@@ -1,4 +1,4 @@
-﻿#include "WinAPI.h"
+#include "WinAPI.h"
 #include <imgui_impl_win32.h>
 
 #pragma comment(lib, "winmm.lib")
@@ -72,7 +72,7 @@ bool WinAPI::ProcessMessage()
 	{
 		return true;
 	}
-	
+
 	return false;
 }
 

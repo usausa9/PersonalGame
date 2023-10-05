@@ -5,52 +5,52 @@
 class WinAPI
 {
 public:
-	// ƒEƒBƒ“ƒhƒEƒTƒCƒY
+	// ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã‚µã‚¤ã‚º
 	uint16_t width_ = 1280;
 	uint16_t height_ = 720;
-	
-	// ƒEƒBƒ“ƒhƒEƒNƒ‰ƒX‚ÌÝ’è
+
+	// ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã‚¯ãƒ©ã‚¹ã®è¨­å®š
 	WNDCLASSEX w_{};
-	// ƒEƒBƒ“ƒhƒEƒnƒ“ƒhƒ‹‚Ì¶¬
+	// ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ãƒãƒ³ãƒ‰ãƒ«ã®ç”Ÿæˆ
 	HWND hwnd_{};
-	// ƒEƒBƒ“ƒhƒEƒTƒCƒY—p‚Ì’·•ûŒ`‚Ì¶¬
+	// ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã‚µã‚¤ã‚ºç”¨ã®é•·æ–¹å½¢ã®ç”Ÿæˆ
 	RECT wrc_{};
-	// ƒƒbƒZ[ƒWî•ñ\‘¢‘Ì‚Ì¶¬
+	// ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸æƒ…å ±æ§‹é€ ä½“ã®ç”Ÿæˆ
 	MSG msg_{};
 
 public:
-	// ƒVƒ“ƒOƒ‹ƒgƒ“ƒCƒ“ƒXƒ^ƒ“ƒX
+	// ã‚·ãƒ³ã‚°ãƒ«ãƒˆãƒ³ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹
 	static WinAPI* GetInstance();
 
-	// ƒEƒBƒ“ƒhƒEƒvƒƒV[ƒWƒƒ
+	// ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ãƒ—ãƒ­ã‚·ãƒ¼ã‚¸ãƒ£
 	static LRESULT WindowProc(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam);
 
-	// WindowƒNƒ‰ƒX‚ÌÝ’è
+	// Windowã‚¯ãƒ©ã‚¹ã®è¨­å®š
 	void Init();
 
-	// I—¹ˆ—
+	// çµ‚äº†å‡¦ç†
 	static void Finalize();
 
-	// XVˆ—
+	// æ›´æ–°å‡¦ç†
 	bool ProcessMessage();
 
-	// ƒRƒ“ƒ\[ƒ‹‚Ö‚Ì•¶Žšo—Í
+	// ã‚³ãƒ³ã‚½ãƒ¼ãƒ«ã¸ã®æ–‡å­—å‡ºåŠ›
 	void DebugText(LPCSTR text);
 
-	// ƒEƒBƒ“ƒhƒEƒIƒuƒWƒFƒNƒg‚Ì¶¬
+	// ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®ç”Ÿæˆ
 	void CreateWindowObj(LPCWSTR title, uint16_t windowWidth, uint16_t windowHeight);
 
-	// ƒEƒBƒ“ƒhƒE•\Ž¦
+	// ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦è¡¨ç¤º
 	void Show();
 
-	// ƒEƒBƒ“ƒhƒEƒIƒuƒWƒF‚­ƒgŽæ“¾
+	// ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã‚ªãƒ–ã‚¸ã‚§ããƒˆå–å¾—
 	HWND GetHwnd() const { return hwnd_; }
 
 public:
 	static WinAPI* sCurrentWindow_;
 
 private:
-	// ƒVƒ“ƒOƒ‹ƒgƒ“‚È‚Ì‚Åƒvƒ‰ƒCƒx[ƒg‚É‹Lq
+	// ã‚·ãƒ³ã‚°ãƒ«ãƒˆãƒ³ãªã®ã§ãƒ—ãƒ©ã‚¤ãƒ™ãƒ¼ãƒˆã«è¨˜è¿°
 	WinAPI();
 	~WinAPI();
 	WinAPI(const WinAPI&);

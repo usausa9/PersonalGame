@@ -4,10 +4,10 @@
 
 void MyGame::Initialize()
 {
-	// Šî’êƒNƒ‰ƒX‚Ì‰Šú‰»ˆ—
+	// åŸºåº•ã‚¯ãƒ©ã‚¹ã®åˆæœŸåŒ–å‡¦ç†
 	UsaFramework::Initialize();
 
-	// ƒV[ƒ“ƒtƒ@ƒNƒgƒŠ[‚ð¶¬‚µƒ}ƒl[ƒWƒƒ‚ÉƒZƒbƒg
+	// ã‚·ãƒ¼ãƒ³ãƒ•ã‚¡ã‚¯ãƒˆãƒªãƒ¼ã‚’ç”Ÿæˆã—ãƒžãƒãƒ¼ã‚¸ãƒ£ã«ã‚»ãƒƒãƒˆ
 	sceneFactory_ = new SceneFactory();
 	SceneManager::GetInstance()->SetSceneFactory(sceneFactory_);
 	SceneManager::GetInstance()->ChangeScene("TITLE");
@@ -15,18 +15,18 @@ void MyGame::Initialize()
 
 void MyGame::Finalize()
 {
-	// Šî’êƒNƒ‰ƒX‚ÌI—¹ˆ—
+	// åŸºåº•ã‚¯ãƒ©ã‚¹ã®çµ‚äº†å‡¦ç†
 	UsaFramework::Finalize();
 }
 
 void MyGame::Update()
 {
-	// Šî’êƒNƒ‰ƒX‚ÌXVˆ—
+	// åŸºåº•ã‚¯ãƒ©ã‚¹ã®æ›´æ–°å‡¦ç†
 	UsaFramework::Update();
 }
 
 void MyGame::Draw()
 {
-	// Šî’êƒNƒ‰ƒX‚Ì•`‰æˆ—
+	// åŸºåº•ã‚¯ãƒ©ã‚¹ã®æç”»å‡¦ç†
 	UsaFramework::Draw();
 }

@@ -5,75 +5,75 @@ using namespace Input;
 
 void PlayerState::SetTexture()
 {
-	// ƒŒƒeƒBƒNƒ‹ƒXƒvƒ‰ƒCƒgŠ„‚è“–‚Ä
-	stateSelectTex_[0]  = TextureManager::Load(L"Resources/Sprites/StateName/StateName1a.png");
-	stateSelectTex_[1]  = TextureManager::Load(L"Resources/Sprites/StateName/StateName1b.png");
-	stateSelectTex_[2]  = TextureManager::Load(L"Resources/Sprites/StateName/StateName2a.png");
-	stateSelectTex_[3]  = TextureManager::Load(L"Resources/Sprites/StateName/StateName2b.png");
-	stateSelectTex_[4]  = TextureManager::Load(L"Resources/Sprites/StateName/StateName3a.png");
-	stateSelectTex_[5]  = TextureManager::Load(L"Resources/Sprites/StateName/StateName3b.png");
-	stateSelectTex_[6]  = TextureManager::Load(L"Resources/Sprites/StateName/StateName4a.png");
-	stateSelectTex_[7]  = TextureManager::Load(L"Resources/Sprites/StateName/StateName4b.png");
-	stateSelectTex_[8]  = TextureManager::Load(L"Resources/Sprites/StateName/StateName5a.png");
-	stateSelectTex_[9]  = TextureManager::Load(L"Resources/Sprites/StateName/StateName5b.png");
-	
+	// ãƒ¬ãƒ†ã‚£ã‚¯ãƒ«ã‚¹ãƒ—ãƒ©ã‚¤ãƒˆå‰²ã‚Šå½“ã¦
+	stateSelectTex_[0] = TextureManager::Load(L"Resources/Sprites/StateName/StateName1a.png");
+	stateSelectTex_[1] = TextureManager::Load(L"Resources/Sprites/StateName/StateName1b.png");
+	stateSelectTex_[2] = TextureManager::Load(L"Resources/Sprites/StateName/StateName2a.png");
+	stateSelectTex_[3] = TextureManager::Load(L"Resources/Sprites/StateName/StateName2b.png");
+	stateSelectTex_[4] = TextureManager::Load(L"Resources/Sprites/StateName/StateName3a.png");
+	stateSelectTex_[5] = TextureManager::Load(L"Resources/Sprites/StateName/StateName3b.png");
+	stateSelectTex_[6] = TextureManager::Load(L"Resources/Sprites/StateName/StateName4a.png");
+	stateSelectTex_[7] = TextureManager::Load(L"Resources/Sprites/StateName/StateName4b.png");
+	stateSelectTex_[8] = TextureManager::Load(L"Resources/Sprites/StateName/StateName5a.png");
+	stateSelectTex_[9] = TextureManager::Load(L"Resources/Sprites/StateName/StateName5b.png");
+
 	stateSelectTex_[10] = TextureManager::Load(L"Resources/Sprites/StateName/StateName6a.png");
 	stateSelectTex_[11] = TextureManager::Load(L"Resources/Sprites/StateName/StateName6b.png");
-	
-	// 0-9–‡–Ú‚Ü‚ÅƒXƒvƒ‰ƒCƒg‚É•R‚Ã‚¯
+
+	// 0-9æšç›®ã¾ã§ã‚¹ãƒ—ãƒ©ã‚¤ãƒˆã«ç´ã¥ã‘
 	for (uint8_t i = 0; i < SPRITE_NUM_ / 2; i++)
 	{
 		stateSprite_[i] = make_unique<Sprite>(stateSelectTex_[i]);
- 	}
+	}
 
-	// 10-14–‡–Ú‚Ü‚ÅƒXƒvƒ‰ƒCƒg‚É•R‚Ã‚¯
+	// 10-14æšç›®ã¾ã§ã‚¹ãƒ—ãƒ©ã‚¤ãƒˆã«ç´ã¥ã‘
 	for (uint8_t i = SPRITE_NUM_ / 2; i < SPRITE_NUM_ - POWER_UP_NUM_; i++)
 	{
 		stateSprite_[i] = make_unique<Sprite>(stateSelectTex_[10]);
 	}
 
-	// 14-19–‡–Ú‚Ü‚ÅƒXƒvƒ‰ƒCƒg‚É•R‚Ã‚¯
+	// 14-19æšç›®ã¾ã§ã‚¹ãƒ—ãƒ©ã‚¤ãƒˆã«ç´ã¥ã‘
 	for (uint8_t i = (SPRITE_NUM_ / 2) + POWER_UP_NUM_; i < SPRITE_NUM_; i++)
 	{
 		stateSprite_[i] = make_unique<Sprite>(stateSelectTex_[11]);
 	}
 
-	// ƒTƒCƒYİ’è
+	// ã‚µã‚¤ã‚ºè¨­å®š
 	for (uint8_t i = 0; i < SPRITE_NUM_; i++)
 	{
 		stateSprite_[i]->scale_ = { SCALE_TEX_UI_, SCALE_TEX_UI_ };
 	}
 
-	// ˆÊ’uˆÚ“®
-	stateSprite_[0] ->position_ = SPRITE_BASE_POS_;
-	stateSprite_[1] ->position_ = SPRITE_BASE_POS_;
+	// ä½ç½®ç§»å‹•
+	stateSprite_[0]->position_ = SPRITE_BASE_POS_;
+	stateSprite_[1]->position_ = SPRITE_BASE_POS_;
 	stateSprite_[10]->position_ = SPRITE_BASE_POS_;
 	stateSprite_[15]->position_ = SPRITE_BASE_POS_;
-			   							   
-	stateSprite_[2]-> position_ = SPRITE_BASE_POS_ + Vector2(s_SPRITE_SIZE_, 0);
-	stateSprite_[3]-> position_ = SPRITE_BASE_POS_ + Vector2(s_SPRITE_SIZE_, 0);
+
+	stateSprite_[2]->position_ = SPRITE_BASE_POS_ + Vector2(s_SPRITE_SIZE_, 0);
+	stateSprite_[3]->position_ = SPRITE_BASE_POS_ + Vector2(s_SPRITE_SIZE_, 0);
 	stateSprite_[11]->position_ = SPRITE_BASE_POS_ + Vector2(s_SPRITE_SIZE_, 0);
 	stateSprite_[16]->position_ = SPRITE_BASE_POS_ + Vector2(s_SPRITE_SIZE_, 0);
-			   													
-	stateSprite_[4] ->position_ = SPRITE_BASE_POS_ + Vector2(s_SPRITE_SIZE_ * 2, 0);
-	stateSprite_[5] ->position_ = SPRITE_BASE_POS_ + Vector2(s_SPRITE_SIZE_ * 2, 0);
+
+	stateSprite_[4]->position_ = SPRITE_BASE_POS_ + Vector2(s_SPRITE_SIZE_ * 2, 0);
+	stateSprite_[5]->position_ = SPRITE_BASE_POS_ + Vector2(s_SPRITE_SIZE_ * 2, 0);
 	stateSprite_[12]->position_ = SPRITE_BASE_POS_ + Vector2(s_SPRITE_SIZE_ * 2, 0);
 	stateSprite_[17]->position_ = SPRITE_BASE_POS_ + Vector2(s_SPRITE_SIZE_ * 2, 0);
-			   							 						
-	stateSprite_[6]-> position_ = SPRITE_BASE_POS_ + Vector2(s_SPRITE_SIZE_ * 3, 0);
-	stateSprite_[7]-> position_ = SPRITE_BASE_POS_ + Vector2(s_SPRITE_SIZE_ * 3, 0);
+
+	stateSprite_[6]->position_ = SPRITE_BASE_POS_ + Vector2(s_SPRITE_SIZE_ * 3, 0);
+	stateSprite_[7]->position_ = SPRITE_BASE_POS_ + Vector2(s_SPRITE_SIZE_ * 3, 0);
 	stateSprite_[13]->position_ = SPRITE_BASE_POS_ + Vector2(s_SPRITE_SIZE_ * 3, 0);
 	stateSprite_[18]->position_ = SPRITE_BASE_POS_ + Vector2(s_SPRITE_SIZE_ * 3, 0);
 
-	stateSprite_[8]-> position_ = SPRITE_BASE_POS_ + Vector2(s_SPRITE_SIZE_ * 4, 0);
-	stateSprite_[9]-> position_ = SPRITE_BASE_POS_ + Vector2(s_SPRITE_SIZE_ * 4, 0);
+	stateSprite_[8]->position_ = SPRITE_BASE_POS_ + Vector2(s_SPRITE_SIZE_ * 4, 0);
+	stateSprite_[9]->position_ = SPRITE_BASE_POS_ + Vector2(s_SPRITE_SIZE_ * 4, 0);
 	stateSprite_[14]->position_ = SPRITE_BASE_POS_ + Vector2(s_SPRITE_SIZE_ * 4, 0);
 	stateSprite_[19]->position_ = SPRITE_BASE_POS_ + Vector2(s_SPRITE_SIZE_ * 4, 0);
 }
 
 void PlayerState::Initialize()
-{	
-	// ‰æ‘œ•R‚Ã‚¯
+{
+	// ç”»åƒç´ã¥ã‘
 	SetTexture();
 
 	for (uint8_t i = 0; i < uint8_t(State::BARRIER); i++)
@@ -86,7 +86,7 @@ void PlayerState::Initialize()
 }
 
 void PlayerState::Update()
-{	
+{
 	if (nowSelect_ == uint8_t(State::SPEEDUP))
 	{
 		if (powerUpSelect_[uint8_t(State::SPEEDUP)] == uint8_t(SelectState::NONE))
@@ -178,7 +178,7 @@ void PlayerState::Update()
 			powerUpSelect_[uint8_t(State::OPTION)] = uint8_t(SelectState::USED);
 		}
 	}
-	else 
+	else
 	{
 		if (powerUpSelect_[uint8_t(State::BARRIER)] == uint8_t(SelectState::SELECT))
 		{
@@ -211,7 +211,7 @@ void PlayerState::Update()
 		{
 			powerUpStatus_[1]++;
 			nowSelect_ = uint8_t(State::NONESTATE);
-			
+
 			if (powerUpStatus_[1] == MAX_EXPAND_NUM_)
 			{
 				powerUpSelect_[uint8_t(State::EXPAND)] = uint8_t(SelectState::USED);
@@ -280,7 +280,7 @@ void PlayerState::Update()
 		}
 	}
 
-	// ƒTƒCƒYİ’è
+	// ã‚µã‚¤ã‚ºè¨­å®š
 	for (uint8_t i = 0; i < SPRITE_NUM_; i++)
 	{
 		stateSprite_[i]->Update();
@@ -289,7 +289,7 @@ void PlayerState::Update()
 
 void PlayerState::DrawUI()
 {
-	// SPEEDUP •`‰æ
+	// SPEEDUP æç”»
 	if (powerUpSelect_[uint8_t(State::SPEEDUP)] == uint8_t(SelectState::NONE))
 	{
 		stateSprite_[0]->Draw();
@@ -307,7 +307,7 @@ void PlayerState::DrawUI()
 		stateSprite_[15]->Draw();
 	}
 
-	// EXPAND •`‰æ
+	// EXPAND æç”»
 	if (powerUpSelect_[uint8_t(State::EXPAND)] == uint8_t(SelectState::NONE))
 	{
 		stateSprite_[2]->Draw();
@@ -325,7 +325,7 @@ void PlayerState::DrawUI()
 		stateSprite_[16]->Draw();
 	}
 
-	// LASER •`‰æ
+	// LASER æç”»
 	if (powerUpSelect_[uint8_t(State::LASER)] == uint8_t(SelectState::NONE))
 	{
 		stateSprite_[4]->Draw();
@@ -343,7 +343,7 @@ void PlayerState::DrawUI()
 		stateSprite_[17]->Draw();
 	}
 
-	// OPTION •`‰æ
+	// OPTION æç”»
 	if (powerUpSelect_[uint8_t(State::OPTION)] == uint8_t(SelectState::NONE))
 	{
 		stateSprite_[6]->Draw();
@@ -361,7 +361,7 @@ void PlayerState::DrawUI()
 		stateSprite_[18]->Draw();
 	}
 
-	// BARRIER •`‰æ
+	// BARRIER æç”»
 	if (powerUpSelect_[uint8_t(State::BARRIER)] == uint8_t(SelectState::NONE))
 	{
 		stateSprite_[8]->Draw();

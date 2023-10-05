@@ -4,7 +4,7 @@
 #pragma comment(lib,"dinput8.lib")
 #pragma comment(lib,"dxguid.lib")
 
-//// DirectInput‚Ì‰Šú‰»
+//// DirectInputã®åˆæœŸåŒ–
 //static ComPtr<IDirectInput8> directInput = nullptr;
 //static ComPtr<IDirectInputDevice8> keyboard = nullptr;
 
@@ -15,62 +15,62 @@ Microsoft::WRL::ComPtr<IDirectInputDevice8> Key::sKeyboard_ = nullptr;
 XINPUT_STATE Pad::sPadState_;
 XINPUT_STATE Pad::sLastPadState_;
 
-// ‘SƒL[‚Ì“ü—Íó‘Ô‚ğæ“¾‚·‚é
+// å…¨ã‚­ãƒ¼ã®å…¥åŠ›çŠ¶æ…‹ã‚’å–å¾—ã™ã‚‹
 static BYTE keys[256] = {};
 
-// ‘SƒL[‚Ì1F‘O‚Ì“ü—Íó‘Ô‚ğæ“¾‚·‚é
+// å…¨ã‚­ãƒ¼ã®1Få‰ã®å…¥åŠ›çŠ¶æ…‹ã‚’å–å¾—ã™ã‚‹
 static BYTE prevKeys[256] = {};
 
 void Key::Init(HINSTANCE hInstance, HWND hwnd)
 {
 	HRESULT result = S_FALSE;
 
-	// DirectInput‚Ì‰Šú‰»
+	// DirectInputã®åˆæœŸåŒ–
 	ComPtr<IDirectInput8> directInput = nullptr;
 	result = DirectInput8Create(
 		hInstance, DIRECTINPUT_VERSION, IID_IDirectInput8,
 		(void**)&directInput, nullptr);
 	assert(SUCCEEDED(result));
 
-	// ƒL[ƒ{[ƒhƒfƒoƒCƒX‚Ì¶¬
+	// ã‚­ãƒ¼ãƒœãƒ¼ãƒ‰ãƒ‡ãƒã‚¤ã‚¹ã®ç”Ÿæˆ
 	result = directInput->CreateDevice(GUID_SysKeyboard, &sKeyboard_, NULL);
 	assert(SUCCEEDED(result));
 
-	// “ü—Íƒf[ƒ^Œ`®‚ÌƒZƒbƒg
-	result = sKeyboard_->SetDataFormat(&c_dfDIKeyboard); // •W€Œ`®
+	// å…¥åŠ›ãƒ‡ãƒ¼ã‚¿å½¢å¼ã®ã‚»ãƒƒãƒˆ
+	result = sKeyboard_->SetDataFormat(&c_dfDIKeyboard); // æ¨™æº–å½¢å¼
 	assert(SUCCEEDED(result));
 
-	// ”r‘¼§ŒäƒŒƒxƒ‹‚ÌƒZƒbƒg
+	// æ’ä»–åˆ¶å¾¡ãƒ¬ãƒ™ãƒ«ã®ã‚»ãƒƒãƒˆ
 	result = sKeyboard_->SetCooperativeLevel(hwnd, DISCL_FOREGROUND | DISCL_NONEXCLUSIVE | DISCL_NOWINKEY);
 	assert(SUCCEEDED(result));
 }
 
 void Key::Update()
 {
-	// ‘OŒãXV
+	// å‰å¾Œæ›´æ–°
 	for (int i = 0; i < 256; ++i)
 	{
 		prevKeys[i] = keys[i];
 	}
 
-	// ƒL[ƒ{[ƒhî•ñ‚Ìæ“¾ŠJn
+	// ã‚­ãƒ¼ãƒœãƒ¼ãƒ‰æƒ…å ±ã®å–å¾—é–‹å§‹
 	sKeyboard_->Acquire();
 	sKeyboard_->GetDeviceState(sizeof(keys), keys);
 }
 
-// ‰Ÿ‚µ‚Á‚Ï‚È‚µ
+// æŠ¼ã—ã£ã±ãªã—
 bool Key::Down(UINT8 keyNum)
 {
 	return keys[keyNum];
 }
 
-// ‰Ÿ‚µ‚½uŠÔ
+// æŠ¼ã—ãŸç¬é–“
 bool Key::Trigger(UINT8 keyNum)
 {
 	return keys[keyNum] && !prevKeys[keyNum];
 }
 
-// —£‚µ‚½uŠÔ
+// é›¢ã—ãŸç¬é–“
 bool Key::Released(UINT8 keyNum)
 {
 	return !keys[keyNum] && !prevKeys[keyNum];

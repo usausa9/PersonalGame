@@ -18,55 +18,55 @@ public:
 	SceneManager* sceneManager_ = nullptr;
 
 public:
-	// ‰Šú‰»
+	// åˆæœŸåŒ–
 	virtual void Initialize();
 
-	// I—¹
+	// çµ‚äº†
 	virtual void Finalize();
 
-	// XVˆ—
+	// æ›´æ–°å‡¦ç†
 	virtual void Update();
 
-	// XVŒãˆ—
+	// æ›´æ–°å¾Œå‡¦ç†
 	void PostUpdate();
 
-	// •`‰æ‘Oˆ—
+	// æç”»å‰å‡¦ç†
 	void PreDraw();
 
-	// ƒp[ƒeƒBƒNƒ‹•`‰æ‘Oˆ—
+	// ãƒ‘ãƒ¼ãƒ†ã‚£ã‚¯ãƒ«æç”»å‰å‡¦ç†
 	void PreDrawParticle();
 
-	// •`‰æ
-	// ƒˆ‰¼‘zŠÖ”‚É‚·‚é‚±‚Æ‚ÅƒI[ƒo[ƒ‰ƒCƒh‚ğ•K{‚É
-	virtual void Draw(); 
+	// æç”»
+	// ç´”ç²‹ä»®æƒ³é–¢æ•°ã«ã™ã‚‹ã“ã¨ã§ã‚ªãƒ¼ãƒãƒ¼ãƒ©ã‚¤ãƒ‰ã‚’å¿…é ˆã«
+	virtual void Draw();
 
-	// •`‰æŒãˆ—
+	// æç”»å¾Œå‡¦ç†
 	void PostDraw();
 
-	// I—¹ƒ`ƒFƒbƒN
+	// çµ‚äº†ãƒã‚§ãƒƒã‚¯
 	virtual bool IsEndRequest() { return endRequest_; }
 
-	// ‰¼‘zƒfƒXƒgƒ‰ƒNƒ^
+	// ä»®æƒ³ãƒ‡ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 	virtual ~UsaFramework() = default;
 
 public:
-	// Às
+	// å®Ÿè¡Œ
 	void Run();
 
-protected: // ƒƒ“ƒo•Ï”
-	// ƒV[ƒ“Hê
+protected: // ãƒ¡ãƒ³ãƒå¤‰æ•°
+	// ã‚·ãƒ¼ãƒ³å·¥å ´
 	AbstractSceneFactory* sceneFactory_ = nullptr;
 
-	// ƒXƒvƒ‰ƒCƒgƒ}ƒl[ƒWƒƒ
+	// ã‚¹ãƒ—ãƒ©ã‚¤ãƒˆãƒãƒãƒ¼ã‚¸ãƒ£
 	unique_ptr<SpriteManager> spriteManager_ = nullptr;
 
-	// I—¹ƒtƒ‰ƒO
+	// çµ‚äº†ãƒ•ãƒ©ã‚°
 	bool endRequest_ = false;
-	// ƒpƒCƒvƒ‰ƒCƒ“ƒXƒe[ƒg
+	// ãƒ‘ã‚¤ãƒ—ãƒ©ã‚¤ãƒ³ã‚¹ãƒ†ãƒ¼ãƒˆ
 	ComPtr<ID3D12PipelineState> pipelineState_ = nullptr;
-	// ƒ‹[ƒgƒVƒOƒlƒ`ƒƒ
+	// ãƒ«ãƒ¼ãƒˆã‚·ã‚°ãƒãƒãƒ£
 	ComPtr<ID3D12RootSignature> rootSignature_ = nullptr;
 
-	// WindowsAPI‰Šú‰»
+	// WindowsAPIåˆæœŸåŒ–
 	WinAPI& window_ = *WinAPI::GetInstance();
 };

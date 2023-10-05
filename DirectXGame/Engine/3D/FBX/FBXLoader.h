@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 #include "fbxsdk.h"
 #include "Common.h"
 
@@ -13,7 +13,7 @@ class FBXLoader
 {
 public: // 定数
 	// モデル格納ルートパス
-	static const string baseDirectory; 
+	static const string baseDirectory;
 
 	// テクスチャがない場合の標準テクスチャファイル名
 	static const string defaultTextureFilename;
