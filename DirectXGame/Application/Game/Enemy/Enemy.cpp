@@ -78,7 +78,7 @@ void Enemy::Spawn()
 	trajectory_.MoveStart(600, true);
 }
 
-void Enemy::OnCollision(const CollisionInfo& info)
+void Enemy::OnCollision([[maybe_unused]] const CollisionInfo& info)
 {
 	if (enemyKind_ == uint8_t(EnemyKinds::POWER))
 	{

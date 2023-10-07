@@ -5,7 +5,9 @@
 #include "Common.h"
 #include "DirectXBase.h"
 
+#pragma warning(push,0)
 #include <Windows.h>
+#pragma warning(pop)
 
 class FBXObject3D
 {
@@ -15,21 +17,21 @@ protected:	// エイリアス
 
 public: // 定数
 	// ボーンの最大数
-	static const int MAX_BONES = 32;
+	static const int MAX_BONES_ = 32;
 
 public:	// サブクラス
 	// 定数バッファ用データ構造体 (座標変換行列用)
 	struct ConstBufferDataTransform
 	{
-		Matrix4 viewProjection;	// ビュープロジェクション行列
-		Matrix4 worldTransform;	// ワールド行列
-		Vector3 cameraPosition;	// カメラ座標
+		Matrix4 viewProjection_;	// ビュープロジェクション行列
+		Matrix4 worldTransform_;	// ワールド行列
+		Vector3 cameraPosition_;	// カメラ座標
 	};
 
 	// 定数バッファ用データ構造体 (スキニング)
 	struct ConstBufferDataSkin
 	{
-		Matrix4 bones[MAX_BONES];
+		Matrix4 bones_[MAX_BONES_];
 	};
 
 public:	// メンバ関数
@@ -47,25 +49,25 @@ public:	// メンバ関数
 	/// モデルのセット
 	/// </summary>
 	/// <param name="model"> モデル </param>
-	void SetModel(FBXModel* model) { this->model = model; }
+	void SetModel(FBXModel* model) { this->model_ = model; }
 
 	/// <summary>
 	/// 位置のセッター
 	/// </summary>
 	/// <param name=" 位置 "></param>
-	void SetPosition(Vector3 position) { this->position = position; }
+	void SetPosition(Vector3 position) { this->position_ = position; }
 
 	/// <summary>
 	/// 大きさのセッター
 	/// </summary>
 	/// <param name=" 大きさ "></param>
-	void SetScale(Vector3 scale) { this->scale = scale; }
+	void SetScale(Vector3 scale) { this->scale_ = scale; }
 
 	/// <summary>
 	/// 角度のセッター
 	/// </summary>
 	/// <param name=" 回転 "></param>
-	void SetRotation(Vector3 rotation) { this->rotation = rotation * (UsaMath::PI_ / 180); }
+	void SetRotation(Vector3 rotation) { this->rotation_ = rotation * (UsaMath::PI_ / 180); }
 
 	/// <summary>
 	/// 描画
@@ -80,44 +82,44 @@ public:	// メンバ関数
 
 protected:	// メンバ変数
 	// 定数バッファ
-	ComPtr<ID3D12Resource> constBuffTransform;
+	ComPtr<ID3D12Resource> constBuffTransform_;
 	// 定数バッファ (スキン)
-	ComPtr<ID3D12Resource> constBuffSkin;
+	ComPtr<ID3D12Resource> constBuffSkin_;
 
 	// ローカルスケール
-	Vector3 scale = { 1,1,1 };
+	Vector3 scale_ = { 1,1,1 };
 	// X,Y,Z軸周りのローカル回転角
-	Vector3 rotation = { 0,0,0 };
+	Vector3 rotation_ = { 0,0,0 };
 	// ローカル座標
-	Vector3 position = { 0,0,0 };
+	Vector3 position_ = { 0,0,0 };
 	// ローカルワールド変換行列
-	Matrix4 matWorld = {};
+	Matrix4 matWorld_ = {};
 	// モデル
-	FBXModel* model = nullptr;
+	FBXModel* model_ = nullptr;
 
 public:
 	// 1フレームの時間
-	FbxTime frameTime;
+	FbxTime frameTime_;
 	// アニメーション開始時間
-	FbxTime startTime;
+	FbxTime startTime_;
 	// アニメーション終了時間
-	FbxTime endTime;
+	FbxTime endTime_;
 	// 現在時間 (アニメーション)
-	FbxTime currentTime;
+	FbxTime currentTime_;
 	// アニメーション再生中
-	bool isPlay = false;
+	bool isPlay_ = false;
 
 public:	// 静的メンバ関数
 	// setter
 	static void SetDevice(ID3D12Device* device) { DirectXBase::GetInstance()->device_ = device; }
-	static void SetCamera(Camera* camera) { FBXObject3D::camera = camera; }
-	static void SetCommandList(ID3D12GraphicsCommandList* commandList) { FBXObject3D::commandList = commandList; }
+	static void SetCamera(Camera* camera) { FBXObject3D::camera_ = camera; }
+	static void SetCommandList(ID3D12GraphicsCommandList* commandList) { FBXObject3D::commandList_ = commandList; }
 	static void CreateGraphicsPipeline();	// パイプラインの生成
 
 private: // 静的メンバ変数
-	static ID3D12GraphicsCommandList* commandList;	//コマンドリスト
-	static Camera* camera;			// カメラ
-	static ComPtr<ID3D12RootSignature> rootSigunature;
-	static ComPtr<ID3D12PipelineState> pipelineState;
+	static ID3D12GraphicsCommandList* commandList_;	//コマンドリスト
+	static Camera* camera_;			// カメラ
+	static ComPtr<ID3D12RootSignature> rootSigunature_;
+	static ComPtr<ID3D12PipelineState> pipelineState_;
 };
 

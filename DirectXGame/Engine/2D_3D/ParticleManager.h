@@ -33,8 +33,8 @@ struct Particle
 
 	void Update()
 	{
-		float t = (float)frame / num_frame;
-		float t2 = 1 - t;
+		//float t = (float)frame / num_frame;
+		//float t2 = 1 - t;
 
 		//color = { t2,0,t,t2 };
 	};
@@ -61,7 +61,7 @@ public:
 	Vector3 position_ = { 0,0,0 };
 
 public:
-	static ComPtr<ID3D12RootSignature> sRootSignature_; 	// ルートシグネチャ
+	static ComPtr<ID3D12RootSignature> sRootSignature_;	// ルートシグネチャ
 	static ComPtr<ID3D12PipelineState> sPipelineState_;	// パイプライン
 
 	// パイプライン作成
@@ -77,7 +77,7 @@ public:
 	void DrawParticle(TextureIndex index);
 
 	// コンテナに追加するもの
-	void Add(int life, Vector3 position, Vector3 velocity, Vector3 accel, float start_scale, float end_scale);
+	void Add(uint32_t life, Vector3 position, Vector3 velocity, Vector3 accel, float start_scale, float end_scale);
 
 private:
 	uint16_t activeCount_ = 0;

@@ -8,21 +8,21 @@
 struct Node
 {
 	// 名前
-	string name;
+	string name_;
 
 	// ローカルスケール
-	Vector4 scaling = { 1,1,1,0 };
+	Vector4 scaling_ = { 1,1,1,0 };
 	// ローカル回転角
-	Vector4 rotation = { 0,0,0,0 };
+	Vector4 rotation_ = { 0,0,0,0 };
 	// ローカル移動
-	Vector4 translation = { 0,0,0,1 };
+	Vector4 translation_ = { 0,0,0,1 };
 	// ローカル変形行列
-	Matrix4 transform;
+	Matrix4 transform_;
 	// グローバル変形行列
-	Matrix4 globalTransform;
+	Matrix4 globalTransform_;
 
 	// 親ノード
-	Node* parent = nullptr;
+	Node* parent_ = nullptr;
 };
 
 class FBXModel
@@ -33,7 +33,7 @@ private:
 
 public: // 定数
 	// ボーンインデックスの最大数
-	static const int MAX_BONE_INDICES = 4;
+	static const int sMAX_BONE_INDICES_ = 4;
 
 public:
 	// フレンドクラス
@@ -43,15 +43,15 @@ public:
 	struct Bone
 	{
 		// 名前
-		std::string name;
+		std::string name_;
 		// 初期姿勢の逆行列
-		Matrix4 invInitialPose;
+		Matrix4 invInitialPose_;
 		// クラスター (FBX側のボーン情報)
-		FbxCluster* fbxCluster;
+		FbxCluster* fbxCluster_;
 		// コンストラクタ
 		Bone(const std::string& name)
 		{
-			this->name = name;
+			this->name_ = name;
 		}
 	};
 
@@ -61,45 +61,45 @@ public:
 		Vector3 pos;		// xyz座標
 		Vector3 normal;	// 法線ベクトル 
 		Vector2 uv;		// uv座標
-		UINT boneIndex[MAX_BONE_INDICES];
-		float boneWeight[MAX_BONE_INDICES];
+		UINT boneIndex[sMAX_BONE_INDICES_];
+		float boneWeight[sMAX_BONE_INDICES_];
 	};
 
 private:
 	// モデル名
-	string name;
+	string name_;
 	// ノード配列
-	vector<Node> nodes;
+	vector<Node> nodes_;
 	// メッシュを持つノード
-	Node* meshNode = nullptr;
+	Node* meshNode_ = nullptr;
 	// 頂点データ配列
-	vector<VertexPosNormalUvSkin> vertices;
+	vector<VertexPosNormalUvSkin> vertices_;
 	// 頂点インデックス配列
-	vector<unsigned short> indices;
+	vector<unsigned short> indices_;
 	// アンビエント係数
-	Vector3 ambient = { 1,1,1 };
+	Vector3 ambient_ = { 1,1,1 };
 	// ディフューズ係数
-	Vector3 diffuse = { 1,1,1 };
+	Vector3 diffuse_ = { 1,1,1 };
 	// テクスチャメタデータ
-	TexMetadata metadata = {};
+	TexMetadata metadata_ = {};
 	// スクラッチイメージ
-	ScratchImage scratchImg = {};
+	ScratchImage scratchImg_ = {};
 	// 頂点バッファ
-	ComPtr<ID3D12Resource> vertBuff = nullptr;
+	ComPtr<ID3D12Resource> vertBuff_ = nullptr;
 	// インデックスバッファ
-	ComPtr<ID3D12Resource> indexBuff = nullptr;
+	ComPtr<ID3D12Resource> indexBuff_ = nullptr;
 	// テクスチャバッファ
-	ComPtr<ID3D12Resource> texBuff = nullptr;
+	ComPtr<ID3D12Resource> texBuff_ = nullptr;
 	// 頂点バッファビュー
-	D3D12_VERTEX_BUFFER_VIEW vbView{};
+	D3D12_VERTEX_BUFFER_VIEW vbView_{};
 	// インデックスバッファビュー
-	D3D12_INDEX_BUFFER_VIEW ibView{};
+	D3D12_INDEX_BUFFER_VIEW ibView_{};
 	// SRV用デスクリプタヒープ
-	ComPtr<ID3D12DescriptorHeap> descHeapSRV = nullptr;
+	ComPtr<ID3D12DescriptorHeap> descHeapSRV_ = nullptr;
 	// ボーン配列
-	std::vector<Bone> bones;
+	std::vector<Bone> bones_;
 	// FBXシーン
-	FbxScene* fbxScene = nullptr;
+	FbxScene* fbxScene_ = nullptr;
 
 public:
 	// デストラクタ
@@ -112,11 +112,11 @@ public:
 	void Draw(ID3D12GraphicsCommandList* commandList);
 
 	// モデルの変形行列取得
-	const Matrix4& GetModelTransform() { return meshNode->globalTransform; }
+	const Matrix4& GetModelTransform() { return meshNode_->globalTransform_; }
 
 	// getter
-	std::vector<Bone>& GetBones() { return bones; }
+	std::vector<Bone>& GetBones() { return bones_; }
 
 	// getter
-	FbxScene* GetFbxScene() { return fbxScene; }
+	FbxScene* GetFbxScene() { return fbxScene_; }
 };

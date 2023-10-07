@@ -377,7 +377,7 @@ void ParticleManager::DrawParticle(TextureIndex index)
 		DrawInstanced((UINT)activeCount_, 1, 0, 0);
 }
 
-void ParticleManager::Add(int life, Vector3 position, Vector3 velocity, Vector3 accel, float start_scale, float end_scale)
+void ParticleManager::Add(uint32_t life, Vector3 position, Vector3 velocity, Vector3 accel, float start_scale, float end_scale)
 {
 	// リストに要素追加
 	particles_.emplace_front();

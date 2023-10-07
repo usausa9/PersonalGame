@@ -11,7 +11,7 @@ struct Sphere
 	Vector3 position = { 0,0,0 };
 
 	// 半径
-	float radius = 1.0f;
+	float radius_ = 1.0f;
 };
 
 /// <summary>

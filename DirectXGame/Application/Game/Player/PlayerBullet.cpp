@@ -62,7 +62,7 @@ void PlayerBullet::Draw()
 	DrawObject3D();
 }
 
-void PlayerBullet::OnCollision(const CollisionInfo& info)
+void PlayerBullet::OnCollision([[maybe_unused]] const CollisionInfo& info)
 {
 	isDrawSp_ = true;
 }

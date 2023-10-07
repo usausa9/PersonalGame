@@ -16,7 +16,7 @@ public:
 	Matrix4 ScalarProduct(Matrix4 matrix, Vector3 scalar);
 
 	// 行列同士の掛け算
-	Matrix4 Matrix4Product(Matrix4 matrix, Matrix4 matrix2);
+	Matrix4 Matrix4Product(Matrix4 matrix);
 
 	// 拡大縮小行列
 	Matrix4 Scale(const Vector3& s);

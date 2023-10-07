@@ -62,4 +62,4 @@ public:
 
 	// カメラ座標取得
 	Vector3 GetEye()const { return position_; }
-};
+}; 

@@ -22,7 +22,7 @@ public:
 		Vector3 specular;
 		float alpha;
 
-		TextureIndex index = -1;
+		TextureIndex index = static_cast<TextureIndex>(-1);
 
 		Material()
 		{

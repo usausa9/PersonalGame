@@ -10,5 +10,5 @@ void SphereCollider::Update()
 	Sphere::position.y = matWorld.m[3][1];
 	Sphere::position.z = matWorld.m[3][2];
 	Sphere::position + offset_;
-	Sphere::radius = radius_;
+	Sphere::radius_ = radius_;
 }

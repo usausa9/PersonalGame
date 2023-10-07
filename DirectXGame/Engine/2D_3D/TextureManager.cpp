@@ -41,7 +41,7 @@ TextureIndex TextureManager::Load(std::wstring filepath)
 	{
 		OutputDebugString(L"over maxTextureNum");
 
-		return -1; // GG
+		return static_cast<TextureIndex>(-1); // GG
 	}
 
 	ScratchImage scratchImg{};

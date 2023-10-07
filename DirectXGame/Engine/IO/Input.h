@@ -5,7 +5,11 @@
 #endif
 
 #include <dinput.h>
+
+#pragma warning(push,0)
 #include <Windows.h>
+#pragma warning(pop)
+
 #include <Xinput.h>
 
 #pragma comment(lib, "xinput.lib")

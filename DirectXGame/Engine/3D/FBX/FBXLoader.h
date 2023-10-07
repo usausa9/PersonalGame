@@ -13,10 +13,10 @@ class FBXLoader
 {
 public: // 定数
 	// モデル格納ルートパス
-	static const string baseDirectory;
+	static const string sBASE_DIRECTORY_;
 
 	// テクスチャがない場合の標準テクスチャファイル名
-	static const string defaultTextureFilename;
+	static const string sDEFAULT_TEXTURE_FILENAME_;
 
 private:
 	// コピー代入演算子を禁止（シングルトンパターン）
@@ -36,13 +36,13 @@ private:
 
 private:
 	// D3D12デバイス
-	ID3D12Device* device = nullptr;
+	ID3D12Device* device_ = nullptr;
 
 	// FBXマネージャ
-	FbxManager* fbxManager = nullptr;
+	FbxManager* fbxManager_ = nullptr;
 
 	// FBXインポータ
-	FbxImporter* fbxImporter = nullptr;
+	FbxImporter* fbxImporter_ = nullptr;
 
 public:
 	/// <summary>

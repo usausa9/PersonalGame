@@ -1,5 +1,9 @@
 #pragma once
-#include <windows.h>
+
+#pragma warning(push,0)
+#include <Windows.h>
+#pragma warning(pop)
+
 #include <string>
 
 class WinAPI

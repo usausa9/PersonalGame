@@ -58,7 +58,7 @@ Matrix4 Matrix4::ScalarProduct(Matrix4 matrix, Vector3 scalar)
 }
 
 // 行列同士の掛け算
-Matrix4 Matrix4::Matrix4Product(Matrix4 matrix, Matrix4 matrix2)
+Matrix4 Matrix4::Matrix4Product(Matrix4 matrix)
 {
 	Matrix4 matResult = {};
 	for (int i = 0; i < 4; i++)

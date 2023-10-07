@@ -10,8 +10,8 @@ bool Collision::Col_SphereToSphere(const Sphere& s1, const Sphere& s2, float* di
 
 	p1 = s1.position;
 	p2 = s2.position;
-	r1 = s1.radius;
-	r2 = s2.radius;
+	r1 = s1.radius_;
+	r2 = s2.radius_;
 
 	float dis = (p2.x - p1.x) * (p2.x - p1.x) + (p2.y - p1.y) * (p2.y - p1.y) + (p2.z - p1.z) * (p2.z - p1.z);
 	float rr = (r1 + r2) * (r1 + r2);
@@ -44,7 +44,7 @@ bool Collision::Col_SphereToPlane(const Sphere& sphere, const Plane& plane, Vect
 	float dist = distV - plane.distance;
 
 	// 距離の絶対値が半径より大きければあたっていない
-	if (fabsf(dist) > sphere.radius) return false;
+	if (fabsf(dist) > sphere.radius_) return false;
 
 	// 疑似交点を算出
 	if (inter)
@@ -145,7 +145,7 @@ bool Collision::Col_SphereToTriangle(const Sphere& sphere, const Triangle& trian
 	float len = v.Dot(v);
 
 	// 球と三角形の距離が半径以下ならあたっていない
-	if (len > sphere.radius * sphere.radius) return false;
+	if (len > sphere.radius_ * sphere.radius_) return false;
 	// 疑似交点を計算
 	if (inter)
 	{
@@ -239,7 +239,7 @@ bool Collision::Col_RayToSphere(const Ray& ray, const Sphere& sphere, float* dis
 {
 	Vector3 m = ray.start - sphere.position;
 	float b = m.Dot(ray.dir);
-	float c = m.Dot(m) - sphere.radius * sphere.radius;
+	float c = m.Dot(m) - sphere.radius_ * sphere.radius_;
 	// rayの始点がsphereの外側にあり(c>0)、rayがsphereから離れていく方向を指している場合(b>0)当たらない
 	if (c > 0.0f && b > 0.0f) { return false; }
 

@@ -929,9 +929,15 @@ CODE
 #define NOMINMAX
 #endif
 #ifndef __MINGW32__
-#include <Windows.h>        // _wfopen, OpenClipboard
+#pragma warning(push,0)
+#include <Windows.h>
+#pragma warning(pop)
+      // _wfopen, OpenClipboard
 #else
-#include <windows.h>
+#pragma warning(push,0)
+#include <Windows.h>
+#pragma warning(pop)
+
 #endif
 #if defined(WINAPI_FAMILY) && (WINAPI_FAMILY == WINAPI_FAMILY_APP) // UWP doesn't have all Win32 functions
 #define IMGUI_DISABLE_WIN32_DEFAULT_CLIPBOARD_FUNCTIONS

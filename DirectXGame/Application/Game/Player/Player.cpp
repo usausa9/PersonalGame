@@ -6,7 +6,7 @@
 using namespace Input;
 
 // 初期化
-void Player::Initialize(Camera* camera)
+void Player::Initialize()
 {
 	// 自機モデル読み込み
 	playerModel_ = OBJModel::LoadFromOBJ("vicviper");
@@ -16,11 +16,6 @@ void Player::Initialize(Camera* camera)
 	reticleTex_ = TextureManager::Load(L"Resources/Sprites/reticle.png");
 	reticleSp_ = make_unique<Sprite>(reticleTex_);
 	reticleSp_->position_ = reticlePos_;
-
-	// 当たり判定デバッグ用スプライト
-	aTex_ = TextureManager::Load(L"Resources/Sprites/texture.png");
-	aSp_ = make_unique<Sprite>(aTex_);
-	aSp_->position_ = { 100, 100 };
 
 	// 自機の行列初期化
 	rotation_ = { 0, 0, 0 };
@@ -89,7 +84,7 @@ void Player::Draw()
 	}
 }
 
-void Player::OnCollision(const CollisionInfo& info)
+void Player::OnCollision([[maybe_unused]] const CollisionInfo& info)
 {
 
 }
@@ -214,8 +209,8 @@ void Player::Move()
 
 	// WASD入力での移動
 	move_ += {
-		(Key::Down(DIK_D) - Key::Down(DIK_A))* velocity_,
-			(Key::Down(DIK_W) - Key::Down(DIK_S))* velocity_* kY_MOVE_,
+		float(Key::Down(DIK_D) - Key::Down(DIK_A))* velocity_,
+		float(Key::Down(DIK_W) - Key::Down(DIK_S))* velocity_* kY_MOVE_,
 			0 };
 
 	/*rev = {

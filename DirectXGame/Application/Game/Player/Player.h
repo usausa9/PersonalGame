@@ -16,7 +16,7 @@ private:
 
 public:	// メンバ関数
 	// 初期化処理
-	void Initialize(Camera* camera);
+	void Initialize();
 
 	// 更新処理
 	void Update();
@@ -54,9 +54,6 @@ private: // 自機のメンバ変数
 	Object3D reticleObj_;
 	TextureIndex reticleTex_;
 	unique_ptr<Sprite> reticleSp_ = nullptr;
-
-	TextureIndex aTex_;
-	unique_ptr<Sprite> aSp_ = nullptr;
 
 	PlayerState state_;
 

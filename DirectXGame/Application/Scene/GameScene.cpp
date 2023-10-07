@@ -25,7 +25,7 @@ void GameScene::Initialize()
 
 	// プレイヤー初期化
 	player_ = make_unique<Player>();
-	player_.get()->Initialize(camera_);
+	player_.get()->Initialize();
 
 	// 天球初期化
 	skydome_ = make_unique<Skydome>();
