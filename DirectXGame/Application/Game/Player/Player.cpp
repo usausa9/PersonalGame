@@ -3,6 +3,8 @@
 #include "WinAPI.h"
 #include "CollisionAttribute.h"
 
+#include "SceneManager.h"
+
 using namespace Input;
 
 // 初期化
@@ -53,8 +55,12 @@ void Player::Update()
 			return bullet->IsDead();
 		});
 
-	// 入力からの移動処理
-	Move();
+	if (SceneManager::GetInstance()->GetCurrentSceneName() == "GAME")
+	{
+		// 入力からの移動処理
+		Move();
+	}
+
 
 	// 行列更新 必ず呼び出す
 	UpdateObject3D();
@@ -62,11 +68,14 @@ void Player::Update()
 	// レティクルの更新
 	reticleUpdate();
 
-	// 弾発射 + 更新
-	Shot();
-	for (unique_ptr<PlayerBullet>& bullet : bullets_)
+	if (SceneManager::GetInstance()->GetCurrentSceneName() == "GAME")
 	{
-		bullet->Update();
+		// 弾発射 + 更新
+		Shot();
+		for (unique_ptr<PlayerBullet>& bullet : bullets_)
+		{
+			bullet->Update();
+		}
 	}
 }
 
@@ -75,7 +84,7 @@ void Player::Draw()
 {
 	// オブジェ描画
 	DrawObject3D();
-	reticleObj_.DrawObject3D();
+	//reticleObj_.DrawObject3D();
 
 	// 弾描画
 	for (unique_ptr<PlayerBullet>& bullet : bullets_)

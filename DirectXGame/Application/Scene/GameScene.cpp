@@ -1,6 +1,6 @@
 #include "GameScene.h"
 #include "CollisionManager.h"
-
+#include "SceneManager.h"
 #include "ImGuiManager.h"
 
 #include <fstream>
@@ -58,6 +58,13 @@ void GameScene::Update()
 	for (std::unique_ptr<Enemy>& enemy : enemys_)
 	{
 		enemy->Update(railCamera_->GetObject3d()->matWorld_);
+	}
+
+	// ESCでタイトルに戻る
+	// シーン切り替え依頼
+	if (Key::Trigger(DIK_ESCAPE))
+	{
+		SceneManager::GetInstance()->ChangeScene("TITLE");
 	}
 
 	// 死んでる敵を消す

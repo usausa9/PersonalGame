@@ -14,6 +14,8 @@ void SceneManager::ChangeScene(const std::string& sceneName)
 
 	// 次シーンを生成
 	nextScene_ = sceneFactory_->CreateScene(sceneName);
+
+	currentSceneName_ = sceneName;
 }
 
 void SceneManager::Update()

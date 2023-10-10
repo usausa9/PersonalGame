@@ -13,10 +13,15 @@ public:
 
 	// シーンファクトリーのセッター
 	void SetSceneFactory(AbstractSceneFactory* sceneFactory) { sceneFactory_ = sceneFactory; }
+
+	// 現在のシーンを取得
+	std::string GetCurrentSceneName() const { return currentSceneName_; }
+		
 private:
 	// 現在のシーン
 	IScene* currentScene_ = nullptr;
 	IScene* nextScene_ = nullptr;
+	std::string currentSceneName_ = "TITLE";
 
 	// シーン工場 (借りもの)
 	AbstractSceneFactory* sceneFactory_ = nullptr;
