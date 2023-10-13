@@ -25,7 +25,7 @@
 
 class CollisionManager;
 
-enum class Phase : uint8_t
+enum class TitlePhase : uint8_t
 {
 	IDLE = 0x0000,
 	MOB = 0x0001,

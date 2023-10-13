@@ -21,6 +21,12 @@
 
 class CollisionManager;
 
+enum class Phase : uint8_t
+{
+	STRAIGHT = 0x0001,
+	UP = 0x0002,
+};
+
 class TitleScene : public IScene
 {
 public:
