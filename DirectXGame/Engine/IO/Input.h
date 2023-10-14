@@ -62,15 +62,15 @@ namespace Input
 	class Pad
 	{
 	public:
-		static void Init();
-		static void Update();
+		static void Init(); // 初期化
+		static void Update(); // 更新
 
 		static bool Down(Button button);		// 押しっぱなし
 		static bool Trigger(Button button);		// 押した瞬間
 		static bool Released(Button button);	// 離した瞬間
 
-		static Vector2 GetLStick();
-		static Vector2 GetRStick();
+		static Vector2 GetLStick(); // Lスティック入力取得
+		static Vector2 GetRStick(); // Rスティック入力朱っとく
 
 	private:
 		static XINPUT_STATE sPadState_;

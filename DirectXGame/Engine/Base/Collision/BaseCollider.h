@@ -12,14 +12,17 @@ public:
 	friend class CollisionManager;
 
 public:
+	// コンストラクタ/デストラクタ
 	BaseCollider() = default;
 	virtual ~BaseCollider() = default;
 
+	// オブジェのセッター
 	inline void SetObject(Object3D* object)
 	{
 		this->object3d_ = object;
 	}
 
+	// オブジェのゲッター
 	inline Object3D* GetObject3d()
 	{
 		return object3d_;
@@ -30,6 +33,7 @@ public:
 	/// </summary>
 	virtual void Update() = 0;
 
+	// ゲッター
 	inline CollisionShapeType GetShapeType() { return shapeType_; }
 
 	/// <summary>
@@ -41,6 +45,7 @@ public:
 		object3d_->OnCollision(info);
 	}
 
+	// アトリビュートのSet,Add,Remove
 	inline void SetAttribute(unsigned short attribute) { this->attribute_ = attribute; }
 	inline void AddAttribute(unsigned short attribute) { this->attribute_ |= attribute; }
 	inline void RemoveAttribute(unsigned short attribute) { this->attribute_ &= !attribute; }

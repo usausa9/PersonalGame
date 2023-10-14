@@ -114,7 +114,9 @@ public:	// 静的メンバ関数
 	static void SetDevice(ID3D12Device* device) { DirectXBase::GetInstance()->device_ = device; }
 	static void SetCamera(Camera* camera) { FBXObject3D::camera_ = camera; }
 	static void SetCommandList(ID3D12GraphicsCommandList* commandList) { FBXObject3D::commandList_ = commandList; }
-	static void CreateGraphicsPipeline();	// パイプラインの生成
+	
+	// パイプラインの生成
+	static void CreateGraphicsPipeline();	
 
 private: // 静的メンバ変数
 	static ID3D12GraphicsCommandList* commandList_;	//コマンドリスト

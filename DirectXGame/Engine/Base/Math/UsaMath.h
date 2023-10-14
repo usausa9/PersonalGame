@@ -14,11 +14,13 @@ namespace UsaMath
 	const float PI_ = 3.141593f;
 	const float RADIANS_PI_ = 180.000000f;
 
+	// Degreeをラジアンに
 	inline float DegreesToRadians(float Degrees)
 	{
 		return Degrees * (PI_ / RADIANS_PI_);
 	}
-
+	
+	// ラジアンがらDegreeに
 	inline float RadiansToDegrees(float Radians)
 	{
 		return Radians * (RADIANS_PI_ / PI_);

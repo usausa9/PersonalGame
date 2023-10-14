@@ -10,6 +10,7 @@
 class SphereCollider : public BaseCollider, public Sphere
 {
 public:
+	// コンストラクタ
 	SphereCollider(Vector3 offset = { 0,0,0 }, float radius = 1.0f) :
 		offset_(offset),
 		radius_(radius)
@@ -23,6 +24,7 @@ public:
 	/// </summary>
 	void Update() override;
 
+	// 半径のセッター
 	inline void SetRadius(float radius) { this->radius_ = radius; }
 
 private:

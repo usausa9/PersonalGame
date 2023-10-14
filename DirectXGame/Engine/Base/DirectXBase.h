@@ -43,9 +43,11 @@ public:
 
 	ComPtr<IDXGIFactory7> dxgiFactory_ = nullptr; // 統合]
 
+	// デバイス/コマンドリストを取得
 	inline ID3D12Device* GetDevice() const { return device_.Get(); }
 	inline ID3D12GraphicsCommandList* GetCommandList()const { return commandList_.Get(); }
 
+	// バッファカウントを取得
 	size_t GetBackBufferCount() const { return backBuffers_.size(); }
 public:
 	// シングルトンインスタンスを取得

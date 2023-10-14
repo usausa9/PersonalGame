@@ -6,5 +6,6 @@
 class SceneFactory : public AbstractSceneFactory
 {
 public:
+	// シーンを作る関数
 	IScene* CreateScene(const std::string& sceneName) override;
 };

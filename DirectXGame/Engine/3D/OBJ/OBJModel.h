@@ -51,19 +51,22 @@ public:
 	Material material_;
 
 public:
+	// コンストラクタ
 	OBJModel();
 
 public:
 	ConstBufferDataMaterial* constMapMaterial_ = nullptr;
 	// OBJファイルから３Dモデル読み込み
 	static OBJModel LoadFromOBJ(const std::string& modelName);
-
+	// material読み込み
 	void LoadMaterial(const std::string& directoryPath, const std::string& filename);
+	// バッファ生成
 	void CreateBuffers();
-
+	// 描画処理
 	void Draw();
 
 private:
+	// OBJ読み込み
 	void LoadFromOBJInternal(const std::string& modelName);
 
 private:

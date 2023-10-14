@@ -5,8 +5,13 @@
 class Sprite
 {
 public:
+	// スプライトのコンストラクタ
 	Sprite();
+
+	// テクスチャを指定したInitの呼び出し
 	Sprite(TextureIndex tex);
+
+	// スプライトのデストラクタ
 	~Sprite();
 
 private:
@@ -14,7 +19,10 @@ private:
 	void Init();
 
 public:
+	// 更新処理
 	void Update();
+
+	// 描画処理
 	void Draw();
 
 public: // メンバ変数

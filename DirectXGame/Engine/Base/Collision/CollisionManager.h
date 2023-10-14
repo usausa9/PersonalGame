@@ -33,6 +33,7 @@ public:	// メンバ関数
 	void CheckAllCollisions();
 
 private:
+	// コンストラクタ/デストラクタ
 	CollisionManager() = default;
 	CollisionManager(const CollisionManager&) = delete;
 	~CollisionManager() = default;

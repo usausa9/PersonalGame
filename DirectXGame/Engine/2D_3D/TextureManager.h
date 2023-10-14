@@ -19,12 +19,16 @@ class TextureManager
 public:
 	// 初期化
 	static void Init();
+
+	// テクスチャロード
 	static TextureIndex Load(std::wstring filepath);
 	static TextureIndex Load(std::string filepath);
 
+	// データ取得
 	static TextureData* GetData(TextureIndex index);
+	// バッファ取得
 	static ID3D12Resource* GetBuff(TextureIndex index);
-
+	// リリース
 	static void Release();
 
 private:

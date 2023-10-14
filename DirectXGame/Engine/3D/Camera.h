@@ -42,8 +42,10 @@ public:
 	// 今使用しているカメラからのポインタ、カメラへのポインタ
 	static Camera* sCurrentCamera;
 
+	// 現在のカメラセット
 	static void SetCurrentCamera(Camera* current);
 
+	// 現在のカメラ取得
 	static Camera* GetCurrentCamera();
 
 public:
