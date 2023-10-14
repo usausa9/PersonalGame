@@ -1,3 +1,8 @@
+/**
+ * @file	FBXObject3D.cpp
+ * @brief	FBXモデルのオブジェクトを初期化/更新/描画
+**/
+
 #include "FBXObject3D.h"
 
 Camera* FBXObject3D::camera_ = nullptr;

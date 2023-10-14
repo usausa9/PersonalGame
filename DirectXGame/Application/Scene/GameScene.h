@@ -1,4 +1,10 @@
 #pragma once
+
+/**
+ * @file	GameScene.h
+ * @brief	ゲームシーン全体のデータ保持や初期化/更新/描画を行うもの
+**/
+
 #include "IScene.h"
 
 #include "Input.h"

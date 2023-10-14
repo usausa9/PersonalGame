@@ -1,11 +1,14 @@
 #pragma once
+
+/**
+ * @file	BaseCollider.h
+ * @brief	コライダーの基底処理
+**/
+
 #include "CollisionTypes.h"
 #include "CollisionInfo.h"
 #include "Object3d.h"
 
-/// <summary>
-/// コライダー基底クラス
-/// </summary>
 class BaseCollider
 {
 public:

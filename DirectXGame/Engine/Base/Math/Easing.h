@@ -1,4 +1,10 @@
 #pragma once
+
+/**
+ * @file	Easing.h
+ * @brief	イージング処理
+**/
+
 #include "UsaMath.h"
 
 // イージング用

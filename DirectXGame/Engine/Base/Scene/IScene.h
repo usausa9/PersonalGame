@@ -1,5 +1,10 @@
 #pragma once
 
+/**
+ * @file	IScene.h
+ * @brief	仮想シーン
+**/
+
 // 前方宣言
 class SceneManager;
 
@@ -27,6 +32,7 @@ public:
 public: // メンバ関数
 	virtual ~IScene() = default;
 
+	// シーンマネージャーのセット
 	virtual void SetSceneManager(SceneManager* sceneManager) { sceneManager_ = sceneManager; }
 
 protected:

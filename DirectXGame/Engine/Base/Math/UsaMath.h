@@ -1,4 +1,10 @@
 #pragma once
+
+/**
+ * @file	UsaMath.h
+ * @brief	自作数学関数を全て読み込めるもの/雑多処理
+**/
+
 #include "Vector2.h"
 #include "Vector3.h"
 #include "Vector4.h"

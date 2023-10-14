@@ -1,3 +1,8 @@
+/**
+ * @file	SceneManager.cpp
+ * @brief	シーンのマネージャー
+**/
+
 #include "SceneManager.h"
 #include <cassert>
 

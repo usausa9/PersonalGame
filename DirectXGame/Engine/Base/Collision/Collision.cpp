@@ -1,3 +1,8 @@
+/**
+ * @file	Collision.cpp
+ * @brief	当たり判定のヘルパークラス
+**/
+
 #include "Collision.h"
 
 #include <algorithm>

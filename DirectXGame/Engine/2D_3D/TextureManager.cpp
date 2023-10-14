@@ -1,3 +1,8 @@
+/**
+ * @file	TextureManager.cpp
+ * @brief	テクスチャのマネージャー
+**/
+
 #include "TextureManager.h"
 #include "DirectXBase.h"
 

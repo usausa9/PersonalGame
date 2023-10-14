@@ -1,3 +1,8 @@
+/**
+ * @file	Camera.cpp
+ * @brief	カメラの初期化/更新/描画等の処理
+**/
+
 #include "Camera.h"
 #include "WinAPI.h"
 #include "DirectXBase.h"

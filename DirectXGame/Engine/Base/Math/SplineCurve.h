@@ -1,4 +1,10 @@
 #pragma once
+
+/**
+ * @file	SplineCurve.h
+ * @brief	スプライン曲線の処理
+**/
+
 #include "UsaMath.h"
 #include "TimeData.h"
 

@@ -1,4 +1,10 @@
 #pragma once
+
+/**
+ * @file	TextureManager.h
+ * @brief	テクスチャのマネージャー
+**/
+
 #include "Common.h"
 #include <DirectXTex.h>
 

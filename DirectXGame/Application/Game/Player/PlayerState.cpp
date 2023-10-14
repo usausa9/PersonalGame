@@ -1,3 +1,8 @@
+/**
+ * @file	PlayerState.cpp
+ * @brief	プレイヤー強化状態のデータ保持や初期化/更新/描画を行うもの
+**/
+
 #include "PlayerState.h"
 #include "Enemy.h"
 

@@ -1,3 +1,8 @@
+/**
+ * @file	Matrix4.cpp
+ * @brief	4×4行列
+**/
+
 #include "Matrix4.h"
 
 #include <cmath>

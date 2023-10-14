@@ -1,7 +1,11 @@
+/**
+ * @file	main.cpp
+ * @brief	Windowsアプリでのエントリーポイント
+**/
+
 #include "MyGame.h"
 #include "UsaFramework.h"
 
-// Windowsアプリでのエントリーポイント (main関数)
 int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 {
 	// ゲームインスタンス生成

@@ -1,3 +1,8 @@
+/**
+ * @file	FBXLoader.cpp
+ * @brief	FBXのローダー
+**/
+
 #include "FBXLoader.h"
 
 /// <summary>

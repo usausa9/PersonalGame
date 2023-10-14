@@ -1,4 +1,10 @@
 #pragma once
+
+/**
+ * @file	SpriteManager.h
+ * @brief	スプライトのマネージャー
+**/
+
 #include "Common.h"
 #include "TextureManager.h"
 

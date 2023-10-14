@@ -1,3 +1,8 @@
+/**
+ * @file	Input.cpp
+ * @brief	外部I/Oを受け取り、変換するもの
+**/
+
 #include "Input.h"
 #include <cassert>
 

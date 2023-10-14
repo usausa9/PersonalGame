@@ -1,8 +1,13 @@
 #pragma once
+
+/**
+ * @file	AbstractSceneFactory.h
+ * @brief	シーン工場 (概念)
+**/
+
 #include "IScene.h"
 #include <string>
 
-// シーン工場 (概念)
 class AbstractSceneFactory
 {
 public:

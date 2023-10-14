@@ -1,4 +1,10 @@
 #pragma once
+
+/**
+ * @file	FBXLoader.h
+ * @brief	FBXのローダー
+**/
+
 #include "fbxsdk.h"
 #include "Common.h"
 

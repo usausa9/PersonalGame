@@ -1,4 +1,10 @@
 #pragma once
+
+/**
+ * @file	PlayerBullet.h
+ * @brief	プレイヤー弾のデータ保持や初期化/更新/描画を行うもの
+**/
+
 #include "OBJModel.h"
 #include "Object3D.h"
 #include "Sprite.h"

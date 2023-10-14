@@ -1,4 +1,10 @@
 #pragma once
+
+/**
+ * @file	ParticleManager.h
+ * @brief	パーティクルのマネージャー
+**/
+
 #include "Common.h"
 #include "Vector3.h"
 #include "OBJModel.h"

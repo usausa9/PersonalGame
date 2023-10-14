@@ -1,4 +1,10 @@
 #pragma once
+
+/**
+ * @file	Object3D.h
+ * @brief	OBJモデルのオブジェクトを初期化/更新/描画
+**/
+
 #include "Common.h"
 #include "UsaMath.h"
 #include "OBJModel.h"

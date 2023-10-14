@@ -1,3 +1,9 @@
+/**
+ * @file	Vector2.cpp
+ * @brief	自作のVector2つ分関連の処理
+**/
+
+
 #include "Vector2.h"
 #include <cmath>    // sqrt
 

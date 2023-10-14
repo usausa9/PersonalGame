@@ -1,12 +1,15 @@
 #pragma once
+
+/**
+ * @file	CollisionInfo.h
+ * @brief	衝突情報受け取り
+**/
+
 #include "Vector3.h"
 
 class Object3D;
 class BaseCollider;
 
-/// <summary>
-/// 衝突情報
-/// </summary>
 struct CollisionInfo
 {
 public:

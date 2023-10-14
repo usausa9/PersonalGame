@@ -1,4 +1,10 @@
 #pragma once
+
+/**
+ * @file	FBXModel.h
+ * @brief	FBXモデルの描画やバッファ生成を行うもの
+**/
+
 #include "TextureManager.h"
 #include "Common.h"
 

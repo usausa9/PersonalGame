@@ -1,3 +1,8 @@
+/**
+ * @file	CollisionPrimitive.cpp
+ * @brief	当たり判定の形を定めるもの
+**/
+
 #include "CollisionPrimitive.h"
 
 void Triangle::ComputeNormal()

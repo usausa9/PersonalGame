@@ -1,3 +1,9 @@
+/**
+ * @file	RailCamera.cpp
+ * @brief	レールカメラのデータ保持や初期化/更新/描画を行うもの
+**/
+
+
 #include "RailCamera.h"
 #include "Input.h"
 

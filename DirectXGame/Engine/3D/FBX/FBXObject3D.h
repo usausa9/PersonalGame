@@ -1,4 +1,10 @@
 #pragma once
+
+/**
+ * @file	FBXObject3D.h
+ * @brief	FBXモデルのオブジェクトを初期化/更新/描画
+**/
+
 #include "FBXModel.h"
 #include "FbxLoader.h"
 #include "Camera.h"

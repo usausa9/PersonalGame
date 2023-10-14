@@ -1,3 +1,8 @@
+/**
+ * @file	Skydome.cpp
+ * @brief	天球
+**/
+
 #include "Skydome.h"
 
 void Skydome::Initialize()

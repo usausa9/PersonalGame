@@ -1,4 +1,10 @@
 #pragma once
+
+/**
+ * @file	UsaFramework.h
+ * @brief	フレームワーク
+**/
+
 #include "Common.h"
 
 #include "IScene.h"

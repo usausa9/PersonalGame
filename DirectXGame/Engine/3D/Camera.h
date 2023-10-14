@@ -1,4 +1,10 @@
 #pragma once
+
+/**
+ * @file	Camera.h
+ * @brief	カメラの初期化/更新/描画等の処理
+**/
+
 #include "Common.h"
 
 // 定数バッファ用データ構造体 (3D変換行列)

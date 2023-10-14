@@ -1,3 +1,8 @@
+/**
+ * @file	Vector3.cpp
+ * @brief	自作のVector3つ分関連の処理
+**/
+
 #include "Vector3.h"
 #include <cmath>	// sqrt
 

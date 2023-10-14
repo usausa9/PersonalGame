@@ -1,3 +1,8 @@
+/**
+ * @file	OBJModel.cpp
+ * @brief	OBJモデルのローダー/描画の役割
+**/
+
 #include "OBJModel.h"
 
 #include "DirectXBase.h"

@@ -1,5 +1,10 @@
 #pragma once
 
+/**
+ * @file	CollisionPrimitive.h
+ * @brief	当たり判定の形を定めるもの
+**/
+
 #include "UsaMath.h"
 
 /// <summary>

@@ -1,3 +1,8 @@
+/**
+ * @file	Object3D.cpp
+ * @brief	OBJモデルのオブジェクトを初期化/更新/描画
+**/
+
 #include "Object3D.h"
 
 #include "DirectXBase.h"

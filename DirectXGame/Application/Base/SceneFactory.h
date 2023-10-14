@@ -1,8 +1,12 @@
 #pragma once
 
+/**
+ * @file	SceneFactory.h
+ * @brief	ゲームのシーン工場
+**/
+
 #include "AbstractSceneFactory.h"
 
-// このゲーム用のシーン工場
 class SceneFactory : public AbstractSceneFactory
 {
 public:

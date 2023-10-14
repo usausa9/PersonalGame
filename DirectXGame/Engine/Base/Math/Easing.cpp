@@ -1,3 +1,8 @@
+/**
+ * @file	Easing.cpp
+ * @brief	イージング処理
+**/
+
 #include "Easing.h"
 
 Vector2 Easing::Out(Vector2 start, Vector2 end, float t, float exp)

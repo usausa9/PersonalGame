@@ -1,12 +1,15 @@
 #pragma once
+
+/**
+ * @file	SphereCollider.h
+ * @brief	球衝突判定オブジェクト
+**/
+
 #include "BaseCollider.h"
 #include "CollisionPrimitive.h"
 
 #include "Vector3.h"
 
-/// <summary>
-/// 球衝突判定オブジェクト
-/// </summary>
 class SphereCollider : public BaseCollider, public Sphere
 {
 public:

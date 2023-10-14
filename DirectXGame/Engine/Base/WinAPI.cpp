@@ -1,3 +1,8 @@
+/**
+ * @file	WinAPI.cpp
+ * @brief	ウィンドウの生成や更新
+**/
+
 #include "WinAPI.h"
 #include <imgui_impl_win32.h>
 

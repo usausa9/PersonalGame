@@ -1,3 +1,8 @@
+/**
+ * @file	FBXModel.cpp
+ * @brief	FBXモデルの描画やバッファ生成を行うもの
+**/
+
 #include "FBXModel.h"
 
 using namespace std;

@@ -1,3 +1,8 @@
+/**
+ * @file	SplineCurve.cpp
+ * @brief	スプライン曲線の処理
+**/
+
 #include "SplineCurve.h"
 
 void SplineCurve::MoveStart(float allTime, bool isLoop)

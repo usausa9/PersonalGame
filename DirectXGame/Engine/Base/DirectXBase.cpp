@@ -1,3 +1,8 @@
+/**
+ * @file	DirectXBase.cpp
+ * @brief	DirectXの基盤処理
+**/
+
 #include "DirectXBase.h"
 #include "WinAPI.h"
 

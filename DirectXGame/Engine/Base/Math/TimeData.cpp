@@ -1,3 +1,8 @@
+/**
+ * @file	TimeData.cpp
+ * @brief	時間管理やアニメーション用
+**/
+
 #include "TimeData.h"
 
 #include <cassert>

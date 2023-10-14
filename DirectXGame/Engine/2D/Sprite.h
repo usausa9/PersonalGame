@@ -1,4 +1,10 @@
 #pragma once
+
+/**
+ * @file	Sprite.h
+ * @brief	スプライトのデータ保持/初期化/更新/描画等を行うもの
+**/
+
 #include "Common.h"
 #include "SpriteManager.h"
 

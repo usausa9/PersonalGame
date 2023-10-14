@@ -1,4 +1,10 @@
 #pragma once
+
+/**
+ * @file	TimeData.h
+ * @brief	時間管理やアニメーション用
+**/
+
 #include "Common.h"
 
 class TimeData

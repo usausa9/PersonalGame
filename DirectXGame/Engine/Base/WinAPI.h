@@ -1,5 +1,10 @@
 #pragma once
 
+/**
+ * @file	WinAPI.h
+ * @brief	ウィンドウの生成や更新
+**/
+
 #pragma warning(push,0)
 #include <Windows.h>
 #pragma warning(pop)
@@ -47,7 +52,7 @@ public:
 	// ウィンドウ表示
 	void Show();
 
-	// ウィンドウオブジェくト取得
+	// ウィンドウオブジェクト取得
 	HWND GetHwnd() const { return hwnd_; }
 
 public:

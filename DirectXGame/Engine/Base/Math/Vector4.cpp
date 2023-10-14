@@ -1,3 +1,8 @@
+/**
+ * @file	Vector4.cpp
+ * @brief	自作のVector4つ分関連の処理
+**/
+
 #include "Vector4.h"
 #include <cmath>	// sqrt
 

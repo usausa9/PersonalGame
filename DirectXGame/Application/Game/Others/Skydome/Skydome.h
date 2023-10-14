@@ -1,4 +1,10 @@
 #pragma once
+
+/**
+ * @file	Skydome.h
+ * @brief	天球
+**/
+
 #include "Object3d.h"
 
 class Skydome

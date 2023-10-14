@@ -1,3 +1,8 @@
+/**
+ * @file	Sprite.cpp
+ * @brief	スプライトのデータ保持/初期化/更新/描画等を行うもの
+**/
+
 #include "Sprite.h"
 #include "DirectXBase.h"
 #include "SpriteManager.h"

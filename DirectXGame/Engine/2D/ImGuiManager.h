@@ -1,4 +1,10 @@
 #pragma once
+
+/**
+ * @file	ImGuiManager.h
+ * @brief	ImGuiのマネージャー
+**/
+
 #include "WinAPI.h"
 #include "DirectXBase.h"
 

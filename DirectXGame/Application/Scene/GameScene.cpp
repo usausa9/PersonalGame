@@ -1,3 +1,8 @@
+/**
+ * @file	GameScene.cpp
+ * @brief	ゲームシーン全体のデータ保持や初期化/更新/描画を行うもの
+**/
+
 #include "GameScene.h"
 #include "CollisionManager.h"
 #include "SceneManager.h"

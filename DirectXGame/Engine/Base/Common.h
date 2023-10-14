@@ -1,5 +1,10 @@
 #pragma once
 
+/**
+ * @file	Common.h
+ * @brief	雑多な.hの読み込み等
+**/
+
 // ComPtr
 #include <wrl.h>
 using namespace Microsoft::WRL;

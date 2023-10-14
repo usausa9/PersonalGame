@@ -1,4 +1,10 @@
 #pragma once
+
+/**
+ * @file	OBJModel.h
+ * @brief	OBJモデルのローダー/描画の役割
+**/
+
 #include "TextureManager.h"
 #include "Common.h"
 

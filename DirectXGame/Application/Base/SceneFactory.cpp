@@ -1,3 +1,8 @@
+/**
+ * @file	SceneFactory.cpp
+ * @brief	ゲームのシーン工場
+**/
+
 #include "SceneFactory.h"
 
 #include "TitleScene.h"

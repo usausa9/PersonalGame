@@ -1,3 +1,8 @@
+/**
+ * @file	MyGame.cpp
+ * @brief	Scene処理の枠組み
+**/
+
 #include "MyGame.h"
 #include "UsaFramework.h"
 #include "SceneFactory.h"

@@ -1,3 +1,8 @@
+/**
+ * @file	PlayerBullet.cpp
+ * @brief	プレイヤー弾のデータ保持や初期化/更新/描画を行うもの
+**/
+
 #include "PlayerBullet.h"
 #include "SphereCollider.h"
 #include "CollisionAttribute.h"

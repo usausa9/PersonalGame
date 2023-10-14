@@ -1,3 +1,8 @@
+/**
+ * @file	UsaFramework.cpp
+ * @brief	フレームワーク
+**/
+
 #include "UsaFramework.h"
 #include "FbxLoader.h"
 

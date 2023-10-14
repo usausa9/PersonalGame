@@ -1,3 +1,8 @@
+/**
+ * @file	SpriteManager.cpp
+ * @brief	スプライトのマネージャー
+**/
+
 #include "SpriteManager.h"
 #include "DirectXBase.h"
 

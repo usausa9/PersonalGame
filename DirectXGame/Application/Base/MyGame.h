@@ -1,4 +1,10 @@
 #pragma once
+
+/**
+ * @file	MyGame.h
+ * @brief	Scene処理の枠組み
+**/
+
 #include "UsaFramework.h"
 
 class MyGame : public UsaFramework

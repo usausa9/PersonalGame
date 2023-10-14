@@ -1,3 +1,8 @@
+/**
+ * @file	Player.cpp
+ * @brief	プレイヤーのデータ保持や初期化/更新/描画を行うもの (Managerに近しい)
+**/
+
 #include "Player.h"
 #include "SphereCollider.h"
 #include "WinAPI.h"

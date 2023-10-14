@@ -1,3 +1,8 @@
+/**
+ * @file	TitleScene.cpp
+ * @brief	タイトルシーン全体のデータ保持や初期化/更新/描画を行うもの
+**/
+
 #include "TitleScene.h"
 #include "SceneManager.h"
 

@@ -1,4 +1,10 @@
 #pragma once
+
+/**
+ * @file	CollisionManager.h
+ * @brief	当たり判定のマネージャー
+**/
+
 #include <forward_list>
 
 class BaseCollider;

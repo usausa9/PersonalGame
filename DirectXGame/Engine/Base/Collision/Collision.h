@@ -1,5 +1,10 @@
 #pragma once
 
+/**
+ * @file	Collision.h
+ * @brief	当たり判定のヘルパークラス
+**/
+
 #include "CollisionPrimitive.h"
 
 /// <summary>

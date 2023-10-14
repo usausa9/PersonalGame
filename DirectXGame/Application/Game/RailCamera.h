@@ -1,4 +1,10 @@
 #pragma once
+
+/**
+ * @file	RailCamera.h
+ * @brief	レールカメラのデータ保持や初期化/更新/描画を行うもの
+**/
+
 #include "Camera.h"
 #include "Object3D.h"
 #include "Common.h"

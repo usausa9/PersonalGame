@@ -1,3 +1,8 @@
+/**
+ * @file	CollisionManager.cpp
+ * @brief	当たり判定のマネージャー
+**/
+
 #include "CollisionManager.h"
 
 #include "BaseCollider.h"

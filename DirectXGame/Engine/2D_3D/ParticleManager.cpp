@@ -1,3 +1,8 @@
+/**
+ * @file	ParticleManager.cpp
+ * @brief	パーティクルのマネージャー
+**/
+
 #include "ParticleManager.h"
 #include "DirectXBase.h"
 

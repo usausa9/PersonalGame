@@ -1,5 +1,10 @@
 #pragma once
 
+/**
+ * @file	Vector4.h
+ * @brief	自作のVector4つ分関連の処理
+**/
+
 class Vector4
 {
 public:

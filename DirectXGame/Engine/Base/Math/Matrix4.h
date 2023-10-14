@@ -1,7 +1,12 @@
 #pragma once
+
+/**
+ * @file	Matrix4.h
+ * @brief	4×4行列
+**/
+
 #include "UsaMath.h"
 
-// 行列
 class Matrix4
 {
 public:

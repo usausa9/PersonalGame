@@ -1,5 +1,10 @@
 #pragma once
 
+/**
+ * @file	Input.h
+ * @brief	外部I/Oを受け取り、変換するもの
+**/
+
 #ifndef DIRECTINPUT_VERSION
 #define DIRECTINPUT_VERSION 0x0800
 #endif
