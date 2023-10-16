@@ -144,8 +144,19 @@
     <ClInclude Include="DirectXGame\Application\Base\SceneFactory.h" />
     <ClInclude Include="DirectXGame\Application\Game\Others\Score\Score.h" />
     <ClInclude Include="DirectXGame\Engine\Base\Math\Easing.h" />
+    <ClInclude Include="External\imgui\imconfig.h" />
+    <ClInclude Include="External\imgui\imgui.h" />
+    <ClInclude Include="External\imgui\imgui_impl_dx12.h" />
+    <ClInclude Include="External\imgui\imgui_impl_win32.h" />
+    <ClInclude Include="External\imgui\imgui_internal.h" />
+    <ClInclude Include="External\imgui\imstb_rectpack.h" />
+    <ClInclude Include="External\imgui\imstb_textedit.h" />
+    <ClInclude Include="External\imgui\imstb_truetype.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="External\imgui\imgui.vcxproj" />
+    <None Include="External\imgui\imgui.vcxproj.filters" />
+    <None Include="External\imgui\imgui.vcxproj.user" />
     <None Include="Resources\shaders\Basic.hlsli" />
     <None Include="Resources\shaders\FBX.hlsli" />
     <None Include="Resources\shaders\Particle.hlsli" />
@@ -248,6 +259,13 @@
     <ClCompile Include="DirectXGame\Engine\Base\Scene\UsaFramework.cpp" />
     <ClCompile Include="DirectXGame\Application\Game\Others\Score\Score.cpp" />
     <ClCompile Include="DirectXGame\Engine\Base\Math\Easing.cpp" />
+    <ClCompile Include="External\imgui\imgui.cpp" />
+    <ClCompile Include="External\imgui\imgui_demo.cpp" />
+    <ClCompile Include="External\imgui\imgui_draw.cpp" />
+    <ClCompile Include="External\imgui\imgui_impl_dx12.cpp" />
+    <ClCompile Include="External\imgui\imgui_impl_win32.cpp" />
+    <ClCompile Include="External\imgui\imgui_tables.cpp" />
+    <ClCompile Include="External\imgui\imgui_widgets.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="External\DirectXTex\DirectXTex_Desktop_2022_Win10.vcxproj">
@@ -256,6 +274,9 @@
     <ProjectReference Include="imgui\imgui.vcxproj">
       <Project>{4b946c52-3ac9-4f39-b429-38559ed61920}</Project>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="External\imgui\LICENSE.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
