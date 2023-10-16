@@ -58,6 +58,23 @@ private:
 	// 天球
 	unique_ptr<Skydome> skydome_ = nullptr;
 
+	// スプライト
+	TextureIndex purpleGroundTex_ = {};
+	TextureIndex nowLoadingTex_ = {};
+
+	unique_ptr<Sprite> purpleGroundSprite_[2] = { nullptr, nullptr };
+	unique_ptr<Sprite> nowLoadingSprite_ = nullptr;
+
+	const Vector2 BASE_POS_ = { 640, 360 };
+	const float TRANSITION_MOVE_POS_ = 1800.f;
+
+	TimeData groundAnimeTimer_;
+	TimeData loadingAnimeTimer_;
+	const float MAX_GROUND_ANIME_TIME_ = 60.f;
+	const float MAX_LOADING_ANIME_TIME_ = 30.f;
+
+	bool isEndTransition = false;
+
 public:
 	// 初期化
 	void Initialize() override;

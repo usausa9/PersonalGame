@@ -66,7 +66,6 @@ void Player::Update()
 		Move();
 	}
 
-
 	// 行列更新 必ず呼び出す
 	UpdateObject3D();
 

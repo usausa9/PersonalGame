@@ -36,6 +36,16 @@ void GameScene::Initialize()
 	skydome_ = make_unique<Skydome>();
 	skydome_.get()->Initialize();
 
+	// シーン遷移後の残り
+	purpleGroundTex_ = TextureManager::Load(L"Resources/Sprites/purple_ground.png");
+	purpleGroundSprite_[0] = make_unique<Sprite>(purpleGroundTex_);
+	purpleGroundSprite_[1] = make_unique<Sprite>(purpleGroundTex_);
+	purpleGroundSprite_[0]->position_ = BASE_POS_;
+	purpleGroundSprite_[1]->position_ = BASE_POS_;
+	nowLoadingTex_ = TextureManager::Load(L"Resources/Sprites/now_loading.png");
+	nowLoadingSprite_ = make_unique<Sprite>(nowLoadingTex_);
+	nowLoadingSprite_->position_ = BASE_POS_;
+
 	// 敵データ読み込み
 	LoadCsvFile();
 }
@@ -47,13 +57,61 @@ void GameScene::Finalize()
 
 void GameScene::Update()
 {
+	if (!isEndTransition)
+	{
+		if (!groundAnimeTimer_.GetActive())
+		{
+			groundAnimeTimer_.Start(MAX_GROUND_ANIME_TIME_);
+			loadingAnimeTimer_.Start(MAX_LOADING_ANIME_TIME_);
+		}
+
+		purpleGroundSprite_[0]->position_.x = BASE_POS_.x - (TRANSITION_MOVE_POS_ * Easing::In(groundAnimeTimer_.GetTimeRate(), 2.2f));
+		purpleGroundSprite_[1]->position_.x = BASE_POS_.x + (TRANSITION_MOVE_POS_ * Easing::In(groundAnimeTimer_.GetTimeRate(), 2.2f));
+		nowLoadingSprite_->position_.y = BASE_POS_.y - ((TRANSITION_MOVE_POS_ / 2) * Easing::In(groundAnimeTimer_.GetTimeRate(), 2.2f));
+
+		groundAnimeTimer_.Update();
+		loadingAnimeTimer_.Update();
+
+		if (!loadingAnimeTimer_.GetActive())
+		{
+			if (!groundAnimeTimer_.GetActive())
+			{
+				isEndTransition = true;
+			}
+		}
+
+		purpleGroundSprite_[0]->Update();
+		purpleGroundSprite_[1]->Update();
+		nowLoadingSprite_->Update();
+	}
+	else
+	{
+		waitTimer_.Update();
+
+		// 敵の更新
+		UpdateEnemyData();
+		
+		
+
+		// ESCでタイトルに戻る
+		// シーン切り替え依頼
+		if (Key::Trigger(DIK_ESCAPE))
+		{
+			SceneManager::GetInstance()->ChangeScene("TITLE");
+		}
+
+
+		if (Key::Trigger(DIK_Y))
+		{
+			EnemySpawn(uint8_t(EnemyKinds::NORMAL), uint8_t(TrajectoryKinds::LEFT_2_RIGHT));
+		}
+		else if (Key::Trigger(DIK_U))
+		{
+			EnemySpawn(uint8_t(EnemyKinds::POWER), uint8_t(TrajectoryKinds::RIGHT_2_LEFT));
+		}
+	}
 	// DirectX毎フレーム処理(更新処理) ここから
 	railCamera_->Update();
-
-	waitTimer_.Update();
-
-	// 敵の更新
-	UpdateEnemyData();
 
 	// プレイヤーの更新
 	player_->SetParent(railCamera_->GetObject3d());
@@ -65,13 +123,6 @@ void GameScene::Update()
 		enemy->Update(railCamera_->GetObject3d()->matWorld_);
 	}
 
-	// ESCでタイトルに戻る
-	// シーン切り替え依頼
-	if (Key::Trigger(DIK_ESCAPE))
-	{
-		SceneManager::GetInstance()->ChangeScene("TITLE");
-	}
-
 	// 死んでる敵を消す
 	enemys_.remove_if([](std::unique_ptr<Enemy>& enemy)
 		{
@@ -79,18 +130,8 @@ void GameScene::Update()
 			{
 				return true;
 			}
-
 			return false;
 		});
-
-	if (Key::Trigger(DIK_Y))
-	{
-		EnemySpawn(uint8_t(EnemyKinds::NORMAL), uint8_t(TrajectoryKinds::LEFT_2_RIGHT));
-	}
-	else if (Key::Trigger(DIK_U))
-	{
-		EnemySpawn(uint8_t(EnemyKinds::POWER), uint8_t(TrajectoryKinds::RIGHT_2_LEFT));
-	}
 
 	// 天球の行列更新
 	skydome_->Update();
@@ -100,7 +141,7 @@ void GameScene::Update()
 	camera_->Update();
 
 	// 全ての衝突をチェック (更新の最後)
-	collisionManager_->CheckAllCollisions();
+	collisionManager_ -> CheckAllCollisions();
 }
 
 void GameScene::Draw3D()
@@ -132,6 +173,10 @@ void GameScene::DrawParticle()
 void GameScene::Draw2D()
 {
 	player_->DrawUI();
+
+	purpleGroundSprite_[0]->Draw();
+	purpleGroundSprite_[1]->Draw();
+	nowLoadingSprite_->Draw();
 }
 
 void GameScene::EnemySpawn(uint8_t enemyKind, uint8_t trajectoryKind)
