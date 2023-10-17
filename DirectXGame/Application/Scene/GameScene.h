@@ -40,10 +40,13 @@ private:
 	// カメラ
 	Camera* camera_ = nullptr;
 	RailCamera* railCamera_ = nullptr;
+	const Vector3 INIT_CAMERA_POSITION_ = { 0, 0, 20.f };
+	const Vector3 INIT_CAMERA_ROTATION_ = { 0, 0, 0 };
 
 	// プレイヤー,敵
 	unique_ptr<Player> player_ = nullptr;
 	std::list<std::unique_ptr<Enemy>> enemys_;
+	const Vector3 INIT_PLAYER_POSITION_ = { 0, 0, -15 };
 
 	// 敵機モデル
 	OBJModel enemyModel_[2];
@@ -60,6 +63,8 @@ private:
 
 	const Vector2 BASE_POS_ = { 640, 360 };
 	const float TRANSITION_MOVE_POS_ = 1800.f;
+
+	const uint8_t PURPLE_BG_NUM_ = 2;
 
 	TimeData groundAnimeTimer_;
 	TimeData loadingAnimeTimer_;

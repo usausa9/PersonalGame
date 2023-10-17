@@ -26,12 +26,12 @@ void GameScene::Initialize()
 
 	// レールカメラ初期化
 	railCamera_ = new RailCamera();
-	railCamera_->Initialize({ 0, 0, -20.0f }, { 0, 0, 0 });
+	railCamera_->Initialize(INIT_CAMERA_POSITION_, INIT_CAMERA_ROTATION_);
 
 	// プレイヤー初期化
 	player_ = make_unique<Player>();
 	player_->Initialize();
-    player_->position_ = { 0, 0, -15 };
+    player_->position_ = INIT_PLAYER_POSITION_;
 
 	// 天球初期化
 	skydome_ = make_unique<Skydome>();
@@ -39,11 +39,13 @@ void GameScene::Initialize()
 
 	// シーン遷移後の残り
 	purpleGroundTex_ = TextureManager::Load(L"Resources/Sprites/purple_ground.png");
-	purpleGroundSprite_[0] = make_unique<Sprite>(purpleGroundTex_);
-	purpleGroundSprite_[1] = make_unique<Sprite>(purpleGroundTex_);
-	purpleGroundSprite_[0]->position_ = BASE_POS_;
-	purpleGroundSprite_[1]->position_ = BASE_POS_;
 
+	for (uint8_t i = 0; i < PURPLE_BG_NUM_; i++)
+	{
+		purpleGroundSprite_[i] = make_unique<Sprite>(purpleGroundTex_);
+		purpleGroundSprite_[i]->position_ = BASE_POS_;
+	}
+	
 	nowLoadingTex_ = TextureManager::Load(L"Resources/Sprites/now_loading.png");
 	nowLoadingSprite_ = make_unique<Sprite>(nowLoadingTex_);
 	nowLoadingSprite_->position_ = BASE_POS_;
@@ -62,29 +64,8 @@ void GameScene::Update()
 	// トランジション
 	InTransition();
 
-	if (!isEndStartAnimation_ && isEndTransition_)
-	{
-		// アニメーション用タイマーの更新
-		playerStartAnimeTimer_.Update();
-		uiAppearAnimeTimer_.Update();
-		
-		player_->position_ = 
-		PLAYER_BEFORE_ANIME_POS_ + PLAYER_ANIME_MOVE_ * Easing::Out(playerStartAnimeTimer_.GetTimeRate());
-
-		if (!playerStartAnimeTimer_.GetActive() && isUiAnimation_ == false)
-		{
-			isUiAnimation_ = true;
-			uiAppearAnimeTimer_.Start(UI_APPEAR_ANIME_MAX_TIME_);
-		}
-
-		if (!playerStartAnimeTimer_.GetActive() && !uiAppearAnimeTimer_.GetActive() && isUiAnimation_ == true)
-		{
-			isEndStartAnimation_ = true;
-		}
-
-		playerStateUiPosY_ = 
-		PLAYER_STATE_UI_BEFORE_POS_Y_ - PLAYER_STATE_UI_MOVE_Y_ * Easing::Out(uiAppearAnimeTimer_.GetTimeRate());
-	}
+	// START演出
+	BeforeStartAnimation();
 	
 	if (isEndTransition_ && isEndStartAnimation_)
 	{
@@ -169,14 +150,41 @@ void GameScene::InTransition()
 				playerStartAnimeTimer_.Start(PLAYER_START_ANIME_MAX_TIME_);
 			}
 		}
-		purpleGroundSprite_[0]->Update();
-		purpleGroundSprite_[1]->Update();
+		
+		for (uint8_t i = 0; i < PURPLE_BG_NUM_; i++)
+		{
+			purpleGroundSprite_[i]->Update();
+		}
+		
 		nowLoadingSprite_->Update();
 	}
 }
 
 void GameScene::BeforeStartAnimation()
 {
+	if (!isEndStartAnimation_ && isEndTransition_)
+	{
+		// アニメーション用タイマーの更新
+		playerStartAnimeTimer_.Update();
+		uiAppearAnimeTimer_.Update();
+
+		player_->position_ =
+			PLAYER_BEFORE_ANIME_POS_ + PLAYER_ANIME_MOVE_ * Easing::Out(playerStartAnimeTimer_.GetTimeRate());
+
+		if (!playerStartAnimeTimer_.GetActive() && isUiAnimation_ == false)
+		{
+			isUiAnimation_ = true;
+			uiAppearAnimeTimer_.Start(UI_APPEAR_ANIME_MAX_TIME_);
+		}
+
+		if (!playerStartAnimeTimer_.GetActive() && !uiAppearAnimeTimer_.GetActive() && isUiAnimation_ == true)
+		{
+			isEndStartAnimation_ = true;
+		}
+
+		playerStateUiPosY_ =
+			PLAYER_STATE_UI_BEFORE_POS_Y_ - PLAYER_STATE_UI_MOVE_Y_ * Easing::Out(uiAppearAnimeTimer_.GetTimeRate());
+	}
 }
 
 void GameScene::Draw3D()
@@ -209,8 +217,11 @@ void GameScene::Draw2D()
 {
 	player_->DrawUI(playerStateUiPosY_);
 
-	purpleGroundSprite_[0]->Draw();
-	purpleGroundSprite_[1]->Draw();
+	for (uint8_t i = 0; i < PURPLE_BG_NUM_; i++)
+	{
+		purpleGroundSprite_[i]->Draw();
+	}
+	
 	nowLoadingSprite_->Draw();
 }
 
