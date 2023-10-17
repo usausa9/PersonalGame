@@ -201,7 +201,7 @@ void Player::reticleUpdate()
 	reticleSp_->Update();
 }
 
-void Player::DrawUI()
+void Player::DrawUI(float statePosY)
 {
 	reticleSp_->Draw();
 
@@ -215,7 +215,7 @@ void Player::DrawUI()
 	}
 
 	// 自機状態の描画
-	state_.DrawUI();
+	state_.DrawUI(statePosY);
 }
 
 // 入力受け付け + 移動

@@ -30,11 +30,12 @@ void GameScene::Initialize()
 
 	// プレイヤー初期化
 	player_ = make_unique<Player>();
-	player_.get()->Initialize();
+	player_->Initialize();
+    player_->position_ = { 0, 0, -15 };
 
 	// 天球初期化
 	skydome_ = make_unique<Skydome>();
-	skydome_.get()->Initialize();
+	skydome_->Initialize();
 
 	// シーン遷移後の残り
 	purpleGroundTex_ = TextureManager::Load(L"Resources/Sprites/purple_ground.png");
@@ -46,7 +47,7 @@ void GameScene::Initialize()
 	nowLoadingTex_ = TextureManager::Load(L"Resources/Sprites/now_loading.png");
 	nowLoadingSprite_ = make_unique<Sprite>(nowLoadingTex_);
 	nowLoadingSprite_->position_ = BASE_POS_;
-
+	
 	// 敵データ読み込み
 	LoadCsvFile();
 }
@@ -58,35 +59,34 @@ void GameScene::Finalize()
 
 void GameScene::Update()
 {
-	if (!isEndTransition)
+	// トランジション
+	InTransition();
+
+	if (!isEndStartAnimation_ && isEndTransition_)
 	{
-		if (!groundAnimeTimer_.GetActive())
+		// アニメーション用タイマーの更新
+		playerStartAnimeTimer_.Update();
+		uiAppearAnimeTimer_.Update();
+		
+		player_->position_ = 
+		PLAYER_BEFORE_ANIME_POS_ + PLAYER_ANIME_MOVE_ * Easing::Out(playerStartAnimeTimer_.GetTimeRate());
+
+		if (!playerStartAnimeTimer_.GetActive() && isUiAnimation_ == false)
 		{
-			groundAnimeTimer_.Start(MAX_GROUND_ANIME_TIME_);
-			loadingAnimeTimer_.Start(MAX_LOADING_ANIME_TIME_);
+			isUiAnimation_ = true;
+			uiAppearAnimeTimer_.Start(UI_APPEAR_ANIME_MAX_TIME_);
 		}
 
-		purpleGroundSprite_[0]->position_.x = BASE_POS_.x - (TRANSITION_MOVE_POS_ * Easing::In(groundAnimeTimer_.GetTimeRate(), 2.2f));
-		purpleGroundSprite_[1]->position_.x = BASE_POS_.x + (TRANSITION_MOVE_POS_ * Easing::In(groundAnimeTimer_.GetTimeRate(), 2.2f));
-		nowLoadingSprite_->position_.y = BASE_POS_.y - ((TRANSITION_MOVE_POS_ / 2) * Easing::In(groundAnimeTimer_.GetTimeRate(), 2.2f));
-
-		groundAnimeTimer_.Update();
-		loadingAnimeTimer_.Update();
-
-		if (!loadingAnimeTimer_.GetActive())
+		if (!playerStartAnimeTimer_.GetActive() && !uiAppearAnimeTimer_.GetActive() && isUiAnimation_ == true)
 		{
-			if (!groundAnimeTimer_.GetActive())
-			{
-				isEndTransition = true;
-			}
+			isEndStartAnimation_ = true;
 		}
 
-		purpleGroundSprite_[0]->Update();
-		purpleGroundSprite_[1]->Update();
-		nowLoadingSprite_->Update();
+		playerStateUiPosY_ = 
+		PLAYER_STATE_UI_BEFORE_POS_Y_ - PLAYER_STATE_UI_MOVE_Y_ * Easing::Out(uiAppearAnimeTimer_.GetTimeRate());
 	}
 	
-	if (isEndTransition && isEndStartAnimation)
+	if (isEndTransition_ && isEndStartAnimation_)
 	{
 		waitTimer_.Update();
 
@@ -114,7 +114,7 @@ void GameScene::Update()
 
 	// プレイヤーの更新
 	player_->SetParent(railCamera_->GetObject3d());
-	player_->Update(isEndStartAnimation);
+	player_->Update(isEndStartAnimation_);
 
 	// エネミーの更新
 	for (std::unique_ptr<Enemy>& enemy : enemys_)
@@ -141,6 +141,42 @@ void GameScene::Update()
 
 	// 全ての衝突をチェック (更新の最後)
 	collisionManager_ -> CheckAllCollisions();
+}
+
+void GameScene::InTransition()
+{
+	if (!isEndTransition_)
+	{
+		if (!groundAnimeTimer_.GetActive())
+		{
+			groundAnimeTimer_.Start(GROUND_ANIME_MAX_TIME_);
+			loadingAnimeTimer_.Start(LOADING_ANIME_MAX_TIME_);
+		}
+
+		purpleGroundSprite_[0]->position_.x = BASE_POS_.x - (TRANSITION_MOVE_POS_ * Easing::In(groundAnimeTimer_.GetTimeRate(), 2.2f));
+		purpleGroundSprite_[1]->position_.x = BASE_POS_.x + (TRANSITION_MOVE_POS_ * Easing::In(groundAnimeTimer_.GetTimeRate(), 2.2f));
+		nowLoadingSprite_->position_.y = BASE_POS_.y - ((TRANSITION_MOVE_POS_ / 2) * Easing::In(groundAnimeTimer_.GetTimeRate(), 2.2f));
+
+		// アニメーション用タイマーの更新
+		groundAnimeTimer_.Update();
+		loadingAnimeTimer_.Update();
+
+		if (!loadingAnimeTimer_.GetActive())
+		{
+			if (!groundAnimeTimer_.GetActive())
+			{
+				isEndTransition_ = true;
+				playerStartAnimeTimer_.Start(PLAYER_START_ANIME_MAX_TIME_);
+			}
+		}
+		purpleGroundSprite_[0]->Update();
+		purpleGroundSprite_[1]->Update();
+		nowLoadingSprite_->Update();
+	}
+}
+
+void GameScene::BeforeStartAnimation()
+{
 }
 
 void GameScene::Draw3D()
@@ -171,7 +207,7 @@ void GameScene::DrawParticle()
 
 void GameScene::Draw2D()
 {
-	player_->DrawUI();
+	player_->DrawUI(playerStateUiPosY_);
 
 	purpleGroundSprite_[0]->Draw();
 	purpleGroundSprite_[1]->Draw();

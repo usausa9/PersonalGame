@@ -31,13 +31,6 @@
 
 class CollisionManager;
 
-enum class TitlePhase : uint8_t
-{
-	IDLE = 0x0000,
-	MOB = 0x0001,
-	BOSS = 0x0002,
-};
-
 class GameScene : public IScene
 {
 private:
@@ -70,11 +63,22 @@ private:
 
 	TimeData groundAnimeTimer_;
 	TimeData loadingAnimeTimer_;
-	const float MAX_GROUND_ANIME_TIME_ = 60.f;
-	const float MAX_LOADING_ANIME_TIME_ = 30.f;
+	TimeData playerStartAnimeTimer_;
+	TimeData uiAppearAnimeTimer_;
+	const float GROUND_ANIME_MAX_TIME_ = 60.f;
+	const float LOADING_ANIME_MAX_TIME_ = 30.f;
+	const float PLAYER_START_ANIME_MAX_TIME_ = 120.f;
+	const float UI_APPEAR_ANIME_MAX_TIME_ = 30.f;
 
-	bool isEndTransition = false;
-	bool isEndStartAnimation = false;
+	const Vector3 PLAYER_BEFORE_ANIME_POS_ = { 0, 0, -15 };
+	const Vector3 PLAYER_ANIME_MOVE_ = { 0, 0, 37 };
+	float playerStateUiPosY_ = 900.f;
+	const float PLAYER_STATE_UI_BEFORE_POS_Y_ = 900.f;
+	const float PLAYER_STATE_UI_MOVE_Y_ = PLAYER_STATE_UI_BEFORE_POS_Y_ - 667.f;
+
+	bool isEndTransition_ = false;
+	bool isEndStartAnimation_ = false;
+	bool isUiAnimation_ = false;
 
 public:
 	// 初期化
@@ -85,6 +89,12 @@ public:
 
 	// 毎フレーム更新
 	void Update() override;
+
+	// 入りのトランジションの処理
+	void InTransition();
+
+	// ゲーム前の開始演出
+	void BeforeStartAnimation();
 
 	// 3D描画
 	void Draw3D() override;

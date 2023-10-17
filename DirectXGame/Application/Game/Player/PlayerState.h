@@ -44,7 +44,7 @@ public:
 	void Update();
 
 	// 描画処理
-	void DrawUI();
+	void DrawUI(float statePosY);
 
 	// 強化状況を取得
 	uint8_t SpeedUpNum() const { return powerUpStatus_[0]; }

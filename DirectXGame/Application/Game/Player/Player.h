@@ -31,7 +31,7 @@ public:	// メンバ関数
 	void Draw();
 
 	// (現状は)レティクルのドロー
-	void DrawUI();
+	void DrawUI(float statePosY);
 
 	// 親子付けのセッター
 	void SetParent(Object3D* object) { parent_ = object; }

@@ -292,8 +292,13 @@ void PlayerState::Update()
 	}
 }
 
-void PlayerState::DrawUI()
+void PlayerState::DrawUI(float statePosY)
 {
+	for (uint8_t i = 0; i < SPRITE_NUM_; i++)
+	{
+		stateSprite_[i]->position_.y = statePosY;
+	}
+
 	// SPEEDUP 描画
 	if (powerUpSelect_[uint8_t(State::SPEEDUP)] == uint8_t(SelectState::NONE))
 	{
