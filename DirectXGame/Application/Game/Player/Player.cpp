@@ -23,6 +23,7 @@ void Player::Initialize()
 	reticleTex_ = TextureManager::Load(L"Resources/Sprites/reticle.png");
 	reticleSp_ = make_unique<Sprite>(reticleTex_);
 	reticleSp_->position_ = reticlePos_;
+	reticleSp_->Update();
 
 	// 自機の行列初期化
 	rotation_ = { 0, 0, 0 };
@@ -49,7 +50,7 @@ void Player::Initialize()
 }
 
 // 更新
-void Player::Update()
+void Player::Update(bool isMove)
 {
 	// プレイヤー状態の更新
 	state_.Update();
@@ -62,23 +63,29 @@ void Player::Update()
 
 	if (SceneManager::GetInstance()->GetCurrentSceneName() == "GAME")
 	{
-		// 入力からの移動処理
-		Move();
+		if (isMove)
+		{
+			// 入力からの移動処理
+			Move();
+		}
 	}
 
 	// 行列更新 必ず呼び出す
 	UpdateObject3D();
 
-	// レティクルの更新
-	reticleUpdate();
-
-	if (SceneManager::GetInstance()->GetCurrentSceneName() == "GAME")
+	if (isMove)
 	{
-		// 弾発射 + 更新
-		Shot();
-		for (unique_ptr<PlayerBullet>& bullet : bullets_)
+		// レティクルの更新
+		reticleUpdate();
+	
+		if (SceneManager::GetInstance()->GetCurrentSceneName() == "GAME")
 		{
-			bullet->Update();
+			// 弾発射 + 更新
+			Shot();
+			for (unique_ptr<PlayerBullet>& bullet : bullets_)
+			{
+				bullet->Update();
+			}
 		}
 	}
 }

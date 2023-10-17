@@ -141,6 +141,11 @@ TextureIndex TextureManager::Load(std::wstring filepath)
 
 	sSrvIndex_++;
 
+	if (sSrvIndex_ >= 1022)
+	{
+		sSrvIndex_ = 1;
+	}
+
 	return sSrvIndex_ - 1;
 }
 

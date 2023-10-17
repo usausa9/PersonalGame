@@ -74,6 +74,7 @@ private:
 	const float MAX_LOADING_ANIME_TIME_ = 30.f;
 
 	bool isEndTransition = false;
+	bool isEndStartAnimation = false;
 
 public:
 	// 初期化

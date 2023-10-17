@@ -42,6 +42,7 @@ void GameScene::Initialize()
 	purpleGroundSprite_[1] = make_unique<Sprite>(purpleGroundTex_);
 	purpleGroundSprite_[0]->position_ = BASE_POS_;
 	purpleGroundSprite_[1]->position_ = BASE_POS_;
+
 	nowLoadingTex_ = TextureManager::Load(L"Resources/Sprites/now_loading.png");
 	nowLoadingSprite_ = make_unique<Sprite>(nowLoadingTex_);
 	nowLoadingSprite_->position_ = BASE_POS_;
@@ -84,22 +85,20 @@ void GameScene::Update()
 		purpleGroundSprite_[1]->Update();
 		nowLoadingSprite_->Update();
 	}
-	else
+	
+	if (isEndTransition && isEndStartAnimation)
 	{
 		waitTimer_.Update();
 
 		// 敵の更新
 		UpdateEnemyData();
 		
-		
-
 		// ESCでタイトルに戻る
 		// シーン切り替え依頼
 		if (Key::Trigger(DIK_ESCAPE))
 		{
 			SceneManager::GetInstance()->ChangeScene("TITLE");
 		}
-
 
 		if (Key::Trigger(DIK_Y))
 		{
@@ -115,7 +114,7 @@ void GameScene::Update()
 
 	// プレイヤーの更新
 	player_->SetParent(railCamera_->GetObject3d());
-	player_->Update();
+	player_->Update(isEndStartAnimation);
 
 	// エネミーの更新
 	for (std::unique_ptr<Enemy>& enemy : enemys_)
@@ -125,13 +124,13 @@ void GameScene::Update()
 
 	// 死んでる敵を消す
 	enemys_.remove_if([](std::unique_ptr<Enemy>& enemy)
+	{
+		if (!enemy->IsAlive())
 		{
-			if (!enemy->IsAlive())
-			{
-				return true;
-			}
-			return false;
-		});
+			return true;
+		}
+		return false;
+	});
 
 	// 天球の行列更新
 	skydome_->Update();

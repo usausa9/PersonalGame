@@ -138,7 +138,7 @@ void TitleScene::Update()
 		}
 
 		player_->SetParent(railCamera_->GetObject3d());
-		player_->Update();
+		player_->Update(false);
 	}
 
 	// カメラをレールカメラのものへ
