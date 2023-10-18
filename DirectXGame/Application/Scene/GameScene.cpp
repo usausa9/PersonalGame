@@ -31,7 +31,6 @@ void GameScene::Initialize()
 	// プレイヤー初期化
 	player_ = make_unique<Player>();
 	player_->Initialize();
-    player_->position_ = INIT_PLAYER_POSITION_;
 
 	// 天球初期化
 	skydome_ = make_unique<Skydome>();
@@ -49,6 +48,21 @@ void GameScene::Initialize()
 	nowLoadingTex_ = TextureManager::Load(L"Resources/Sprites/now_loading.png");
 	nowLoadingSprite_ = make_unique<Sprite>(nowLoadingTex_);
 	nowLoadingSprite_->position_ = BASE_POS_;
+
+	reticleTex_ = TextureManager::Load(L"Resources/Sprites/reticle.png");
+	for (uint8_t i = 0; i < RETICLE_NUM_; i++)
+	{
+		reticleSprite_[i] = make_unique<Sprite>(reticleTex_);
+		reticleSprite_[i]->position_ = RETICLE_BEFORE_ANIME_POS_[i];
+		reticleSprite_[i]->scale_ = RETICLE_SIZE_;
+		reticleSprite_[i]->Update();
+	}
+
+	// 変数初期化
+	playerStateUiPosY_ = PLAYER_STATE_UI_BEFORE_POS_Y_;
+	isEndTransition_ = false;
+	isEndStartAnimation_ = false;
+	isUiAnimation_ = false;
 	
 	// 敵データ読み込み
 	LoadCsvFile();
@@ -95,8 +109,20 @@ void GameScene::Update()
 
 	// プレイヤーの更新
 	player_->SetParent(railCamera_->GetObject3d());
-	player_->Update(isEndStartAnimation_);
 
+	if (isEndTransition_ && isEndStartAnimation_)
+	{
+		player_->Update(isEndStartAnimation_, true, { 0, 0 });
+	}
+	else
+	{
+		for (uint8_t i = 0; i < RETICLE_NUM_; i++)
+		{
+			reticleSprite_[i]->Update();
+		}
+		player_->Update(isEndStartAnimation_, false, inGameReticlePos_);
+	}
+	 
 	// エネミーの更新
 	for (std::unique_ptr<Enemy>& enemy : enemys_)
 	{
@@ -182,6 +208,16 @@ void GameScene::BeforeStartAnimation()
 			isEndStartAnimation_ = true;
 		}
 
+		for (uint8_t i = 0; i < RETICLE_NUM_; i++)
+		{
+			reticlePos_[i] =
+				RETICLE_BEFORE_ANIME_POS_[i] + RETICLE_ANIME_MOVE_[i] * Easing::Out(uiAppearAnimeTimer_.GetTimeRate());
+			reticleSprite_[i]->position_ = reticlePos_[i];
+		}
+
+		inGameReticlePos_.y = 
+			INGAME_RETICLE_BEFORE_ANIME_POS_Y_ + INGAME_RETICLE_ANIME_MOVE_Y_ * Easing::Out(uiAppearAnimeTimer_.GetTimeRate() , 2.f);
+
 		playerStateUiPosY_ =
 			PLAYER_STATE_UI_BEFORE_POS_Y_ - PLAYER_STATE_UI_MOVE_Y_ * Easing::Out(uiAppearAnimeTimer_.GetTimeRate());
 	}
@@ -220,6 +256,14 @@ void GameScene::Draw2D()
 	for (uint8_t i = 0; i < PURPLE_BG_NUM_; i++)
 	{
 		purpleGroundSprite_[i]->Draw();
+	}
+
+	if (!isEndStartAnimation_)
+	{
+		for (uint8_t i = 0; i < RETICLE_NUM_; i++)
+		{
+			reticleSprite_[i]->Draw();
+		}
 	}
 	
 	nowLoadingSprite_->Draw();

@@ -1,5 +1,4 @@
 #pragma once
-
 /**
  * @file	GameScene.h
  * @brief	ゲームシーン全体のデータ保持や初期化/更新/描画を行うもの
@@ -46,7 +45,6 @@ private:
 	// プレイヤー,敵
 	unique_ptr<Player> player_ = nullptr;
 	std::list<std::unique_ptr<Enemy>> enemys_;
-	const Vector3 INIT_PLAYER_POSITION_ = { 0, 0, -15 };
 
 	// 敵機モデル
 	OBJModel enemyModel_[2];
@@ -57,7 +55,10 @@ private:
 	// スプライト
 	TextureIndex purpleGroundTex_ = {};
 	TextureIndex nowLoadingTex_ = {};
+	TextureIndex reticleTex_ = {};
 
+	const uint8_t RETICLE_NUM_ = 3;
+	unique_ptr<Sprite> reticleSprite_[3] = { nullptr, nullptr, nullptr };
 	unique_ptr<Sprite> purpleGroundSprite_[2] = { nullptr, nullptr };
 	unique_ptr<Sprite> nowLoadingSprite_ = nullptr;
 
@@ -77,9 +78,18 @@ private:
 
 	const Vector3 PLAYER_BEFORE_ANIME_POS_ = { 0, 0, -15 };
 	const Vector3 PLAYER_ANIME_MOVE_ = { 0, 0, 37 };
-	float playerStateUiPosY_ = 900.f;
 	const float PLAYER_STATE_UI_BEFORE_POS_Y_ = 900.f;
+	float playerStateUiPosY_ = PLAYER_STATE_UI_BEFORE_POS_Y_;
 	const float PLAYER_STATE_UI_MOVE_Y_ = PLAYER_STATE_UI_BEFORE_POS_Y_ - 667.f;
+
+	const Vector2 RETICLE_BEFORE_ANIME_POS_[3] = { {640, 770}, {-50 ,360}, {1330,360} };
+	const Vector2 RETICLE_ANIME_MOVE_[3] = { {0, -410}, {690, 0}, {-690, 0} };
+	Vector2 reticlePos_[3] = { {640, 770}, {-50, 360}, {1330, 360} };
+	const Vector2 RETICLE_SIZE_ = {0.9f,0.9f};
+
+	const float INGAME_RETICLE_BEFORE_ANIME_POS_Y_ = -50.f;
+	const float INGAME_RETICLE_ANIME_MOVE_Y_ = 360.f - INGAME_RETICLE_BEFORE_ANIME_POS_Y_;
+	Vector2 inGameReticlePos_ = { 640, INGAME_RETICLE_BEFORE_ANIME_POS_Y_};
 
 	bool isEndTransition_ = false;
 	bool isEndStartAnimation_ = false;

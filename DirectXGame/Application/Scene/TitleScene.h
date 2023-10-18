@@ -1,5 +1,4 @@
 #pragma once
-
 /**
  * @file	TitleScene.h
  * @brief	タイトルシーン全体のデータ保持や初期化/更新/描画を行うもの
@@ -75,7 +74,6 @@ private:
 	bool endAnimation_ = false;
 
 	// タイトルスプライト
-	TextureIndex titleTex_ = {};
 	TextureIndex titleSceneTex_ = {};
 	TextureIndex pressKeyTex_ = {};
 	TextureIndex purpleCircleTex_ = {};
@@ -83,7 +81,6 @@ private:
 	TextureIndex nowLoadingTex_ = {};
 
 	unique_ptr<Sprite> purpleCircleSprite_[28];
-	unique_ptr<Sprite> titleSprite_ = nullptr;
 	unique_ptr<Sprite> titleSceneSprite_ = nullptr;
 	unique_ptr<Sprite> pressKeySprite_ = nullptr;
 	unique_ptr<Sprite> purpleGroundSprite_ = nullptr;
@@ -105,6 +102,7 @@ private:
 	const float PRESS_KEY_HOME_SIZE_ = 0.8f;
 
 	// アニメーション用
+	const uint8_t PRESS_ANIME_TIMER_NUM_ = 2;
 	uint8_t nowActiveTimer_ = 0;
 	TimeData pressAnimeTimer_[2];
 	TimeData playerRotateTimer_;
@@ -123,14 +121,17 @@ private:
 
 	Vector3 needRotation_ = { 0, 0, 0 };
 	Vector3 reciprocalNeedRotation_ = { 0, 0, 0 };
+	const Vector3 TRANSITION_PLAYER_MOVE_ = { 0, 0, 0.25f };
 	const Vector3 BEFORE_TRANSITION_PLAYER_MOVE_ = { 0, 0, 5 };
 	const float TRANSITION_CHANGE_PLAYER_POS_Z_ = 200.0f;
 
 	// トランジション用
 	const float CIRCLE_CHANGE_ANIME_MAX_TIME_ = 25.f;
+	const float CIRCLE_CHANGE_DELAY_TIME_ = 5.f;
 	const float CIRCLE_CHANGE_ANIME_ALL_TIME_ = 66.f;
 	uint8_t timerCounts_ = 0;
 	TimeData circleScaleChangeAllTimer_;
+	const uint8_t CIRCLE_SCALE_CHANGE_TIMER_NUM_ = 7;
 	TimeData circleScaleChangeTimer_[7];
 	
 	bool isDrawLoading_ = false;

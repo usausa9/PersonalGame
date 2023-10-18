@@ -1,5 +1,4 @@
 #pragma once
-
 /**
  * @file	Player.h
  * @brief	プレイヤーのデータ保持や初期化/更新/描画を行うもの (Managerに近しい)
@@ -25,7 +24,7 @@ public:	// メンバ関数
 	void Initialize();
 
 	// 更新処理
-	void Update(bool isMove);
+	void Update(bool isMove, bool isReticleFollow, Vector2 position);
 
 	// 描画処理
 	void Draw();
@@ -44,7 +43,7 @@ public:	// メンバ関数
 
 private: // メンバ関数
 	// レティクルのアップデート
-	void reticleUpdate();
+	void reticleUpdate(bool isFollow, Vector2 position);
 
 	// 入力受け付け + 移動
 	void Move();
@@ -67,6 +66,9 @@ private: // 自機のメンバ変数
 	Vector3 move_ = { 0,0,0 };
 	Vector3 rev_ = { 0,0,0 };
 
+	// 自機の初期位置
+	const Vector3 INIT_PLAYER_POSITION_ = { 0, 0, -15 };
+
 	// 自機の移動スピード 
 	float velocity_ = 0.5f;
 	const float FORMERLY_SPEED_ = 0.5f;
@@ -88,6 +90,9 @@ private: // 自機のメンバ変数
 	float reticleSpd_ = 6.0f;
 	const float kY_MOVE_RETICLE_ = 0.7f;
 	const float RETICLE_MOVE_LIMIT_ = 340.f;
+	const Vector3 INIT_RETICLE_POSITION_ = { 0, 0, 50 };
+	const Vector2 RETICLE_SMALL_ = { 0.9f, 0.9f };
+	const Vector2 RETICLE_BIG_ = { 1.1f, 1.1f };
 
 	float kReticleSpd_ = 6.0f / 0.65f;
 

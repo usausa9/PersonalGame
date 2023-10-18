@@ -36,10 +36,6 @@ void TitleScene::Initialize()
 	player_ = make_unique<Player>();
 	player_.get()->Initialize();
 	player_->position_ = { PLAYER_HOME_POSITION_ };
-	// タイトルスプライト
-	titleTex_ = TextureManager::Load(L"Resources/Sprites/title.png");
-	titleSprite_ = make_unique<Sprite>(titleTex_);
-	titleSprite_->position_ = TITLE_BASE_POS_;
 
 	purpleGroundTex_ = TextureManager::Load(L"Resources/Sprites/purple_ground.png");
 	purpleGroundSprite_ = make_unique<Sprite>(purpleGroundTex_);
@@ -75,6 +71,8 @@ void TitleScene::Initialize()
 			spriteCount_++;
 		}
 	}
+
+	// 変数初期化
 	kPressKeySpriteSize_ = { 1.f, 1.f };
 
 	isBeforeTransition_ = false;
@@ -138,7 +136,7 @@ void TitleScene::Update()
 		}
 
 		player_->SetParent(railCamera_->GetObject3d());
-		player_->Update(false);
+		player_->Update(false, true, {0, 0});
 	}
 
 	// カメラをレールカメラのものへ
@@ -165,8 +163,11 @@ void TitleScene::Update()
 				 UsaMath::DegreesToRadians(playerRotateTimer_.GetTime()), 0 };
 
 			playerRotateTimer_.Update();
-			pressAnimeTimer_[0].Update();
-			pressAnimeTimer_[1].Update();
+
+			for (uint8_t i = 0; i < PRESS_ANIME_TIMER_NUM_; i++)
+			{
+				pressAnimeTimer_[i].Update();
+			}
 		}
 	}
 
@@ -186,7 +187,6 @@ void TitleScene::Update()
 	pressKeySprite_->scale_ = { kPressKeySpriteSize_ };
 
 	// タイトルスプライト更新
-	titleSprite_->Update();
 	titleSceneSprite_->Update();
 	pressKeySprite_->Update();
 	for (uint8_t i = 0; i < TRANSITION_CIRCLE_NUM_; i++)
@@ -220,7 +220,6 @@ void TitleScene::DrawParticle()
 
 void TitleScene::Draw2D()
 {
-	//titleSprite_->Draw();
 	titleSceneSprite_->Draw();
 	pressKeySprite_->Draw();
 
@@ -240,7 +239,7 @@ void TitleScene::BeforeTransition()
 {
 	if (player2TransHomePositionTimer_.GetActive() == true)
 	{
-		player_->position_ -= { 0, 0, 0.25f };
+		player_->position_ -= TRANSITION_PLAYER_MOVE_;
 	}
 	else
 	{
@@ -291,18 +290,18 @@ void TitleScene::Transition()
 		endAnimation_ = true;
 	}
 
-	for (uint8_t i = 0; i < TRANSITION_CIRCLE_XY_NUM_.x; i++)
+	for (uint8_t i = 0; i < CIRCLE_SCALE_CHANGE_TIMER_NUM_; i++)
 	{
 		if (circleScaleChangeTimer_[i].GetActive())
 		{
 			timerCounts_ = i;
 		}
 
-		if (circleScaleChangeTimer_[i].GetTime() == 5.f)
+		if (circleScaleChangeTimer_[i].GetTime() == CIRCLE_CHANGE_DELAY_TIME_)
 		{
 			if (timerCounts_ == i)
 			{
-				if (!circleScaleChangeTimer_[6].GetActive())
+				if (!circleScaleChangeTimer_[CIRCLE_SCALE_CHANGE_TIMER_NUM_ - 1].GetActive())
 				{
 					circleScaleChangeTimer_[i + 1].Start(CIRCLE_CHANGE_ANIME_MAX_TIME_);
 				}

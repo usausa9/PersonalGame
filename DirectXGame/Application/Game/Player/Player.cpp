@@ -23,17 +23,17 @@ void Player::Initialize()
 	reticleTex_ = TextureManager::Load(L"Resources/Sprites/reticle.png");
 	reticleSp_ = make_unique<Sprite>(reticleTex_);
 	reticleSp_->position_ = reticlePos_;
+	reticleSp_->scale_ = RETICLE_SMALL_;
 	reticleSp_->Update();
 
 	// 自機の行列初期化
-	rotation_ = { 0, 0, 0 };
-	position_ = { 0, 0, 22 };
+	position_ = INIT_PLAYER_POSITION_;
 	InitializeObject3D();
 
 	// 自機モデルと自機オブジェクトを紐づけ
 	objModel_ = &playerModel_;
 	reticleObj_.objModel_ = &reticleModel_;
-	reticleObj_.position_ = { 0, 0, 50 };
+	reticleObj_.position_ = INIT_RETICLE_POSITION_;
 	reticleObj_.InitializeObject3D();
 
 	// プレイヤー状態の初期化
@@ -50,7 +50,7 @@ void Player::Initialize()
 }
 
 // 更新
-void Player::Update(bool isMove)
+void Player::Update(bool isMove, bool isReticleFollow = true, Vector2 position = {0, 0})
 {
 	// プレイヤー状態の更新
 	state_.Update();
@@ -73,11 +73,11 @@ void Player::Update(bool isMove)
 	// 行列更新 必ず呼び出す
 	UpdateObject3D();
 
+	// レティクルの更新
+	reticleUpdate(isReticleFollow, position);
+
 	if (isMove)
 	{
-		// レティクルの更新
-		reticleUpdate();
-	
 		if (SceneManager::GetInstance()->GetCurrentSceneName() == "GAME")
 		{
 			// 弾発射 + 更新
@@ -109,93 +109,100 @@ void Player::OnCollision([[maybe_unused]] const CollisionInfo& info)
 
 }
 
-void Player::reticleUpdate()
+void Player::reticleUpdate(bool isFollow = true, Vector2 position = {0, 0})
 {
-	// ビューポート行列
-	Matrix4 matViewPort = Matrix4::Identity();
-	matViewPort.m[0][0] = WinAPI::GetInstance()->width_ / 2.0f;
-	matViewPort.m[1][1] = -(WinAPI::GetInstance()->height_ / 2.0f);
-	matViewPort.m[3][0] = WinAPI::GetInstance()->width_ / 2.0f;
-	matViewPort.m[3][1] = WinAPI::GetInstance()->height_ / 2.0f;
-
-	// カメラ行列との合成
-	Matrix4 matViewProjectionViewPort =
-		Camera::GetCurrentCamera()->GetViewProjection() * matViewPort;
-
-	// 画面上のレティクル座標を動かす
-	Vector2 reticleMoveVel = { 0, 0 };
-
-	if (state_.ExpandNum() == false)
+	if (isFollow == true)
 	{
-		reticleSp_->scale_ = { 0.9f, 0.9f };
+		// ビューポート行列
+		Matrix4 matViewPort = Matrix4::Identity();
+		matViewPort.m[0][0] = WinAPI::GetInstance()->width_ / 2.0f;
+		matViewPort.m[1][1] = -(WinAPI::GetInstance()->height_ / 2.0f);
+		matViewPort.m[3][0] = WinAPI::GetInstance()->width_ / 2.0f;
+		matViewPort.m[3][1] = WinAPI::GetInstance()->height_ / 2.0f;
+
+		// カメラ行列との合成
+		Matrix4 matViewProjectionViewPort =
+			Camera::GetCurrentCamera()->GetViewProjection() * matViewPort;
+
+		// 画面上のレティクル座標を動かす
+		Vector2 reticleMoveVel = { 0, 0 };
+
+		if (state_.ExpandNum() == false)
+		{
+			reticleSp_->scale_ = RETICLE_SMALL_;
+		}
+		else
+		{
+			reticleSp_->scale_ = RETICLE_BIG_;
+		}
+
+		// 自機の速さとレティクルのスピード調整
+		reticleSpd_ = kReticleSpd_ * velocity_;
+
+		if (Key::Down(DIK_A) && Key::Down(DIK_D))
+		{
+
+		}
+		else if (Key::Down(DIK_A))
+		{
+			reticleMoveVel.x = -reticleSpd_;
+		}
+		else if (Key::Down(DIK_D))
+		{
+			reticleMoveVel.x = reticleSpd_;
+		}
+
+		if (Key::Down(DIK_W) && Key::Down(DIK_S))
+		{
+
+		}
+		else if (Key::Down(DIK_W))
+		{
+			reticleMoveVel.y = -reticleSpd_ * kY_MOVE_RETICLE_;
+		}
+		else if (Key::Down(DIK_S))
+		{
+			reticleMoveVel.y = reticleSpd_ * kY_MOVE_RETICLE_;
+		}
+
+		reticlePos_ += reticleMoveVel;
+
+		// レティクル座標の移動制限
+		Vector2 reticlePosMin = { RETICLE_MOVE_LIMIT_, RETICLE_MOVE_LIMIT_ * 0.6f };
+		Vector2 reticlePosMax = { WinAPI::GetInstance()->width_ - RETICLE_MOVE_LIMIT_,
+								  WinAPI::GetInstance()->height_ - RETICLE_MOVE_LIMIT_ * 0.6f };
+
+		reticlePos_.x = max(reticlePos_.x, reticlePosMin.x);
+		reticlePos_.y = max(reticlePos_.y, reticlePosMin.y);
+		reticlePos_.x = min(reticlePos_.x, reticlePosMax.x);
+		reticlePos_.y = min(reticlePos_.y, reticlePosMax.y);
+
+		// 座標をスプライトにセット
+		reticleSp_->position_ = reticlePos_;
+
+		// 合成行列の生成
+		Matrix4 matInverseVBV = matViewProjectionViewPort;
+		matInverseVBV = Matrix4::Inverse(matInverseVBV);
+
+		// スクリーン座標
+		Vector3 posNear = { reticlePos_.x, reticlePos_.y, 0 };
+		Vector3 posFar = { reticlePos_.x, reticlePos_.y, 1 };
+
+		// スクリーン座標系からワールド座標系へ
+		posNear = Matrix4::TransformDivW(posNear, matInverseVBV);
+		posFar = Matrix4::TransformDivW(posFar, matInverseVBV);
+
+		// レイの方向
+		Vector3 direction = posFar - posNear;
+		direction.Normalize();
+
+		// カメラからレティクルの距離
+		reticleObj_.position_ = posNear + direction * DISTANCE_RETICLE_;
 	}
 	else
 	{
-		reticleSp_->scale_ = { 1.1f, 1.1f };
+		reticleSp_->position_ = position;
 	}
-
-	// 自機の速さとレティクルのスピード調整
-	reticleSpd_ = kReticleSpd_ * velocity_;
-
-	if (Key::Down(DIK_A) && Key::Down(DIK_D))
-	{
-
-	}
-	else if (Key::Down(DIK_A))
-	{
-		reticleMoveVel.x = -reticleSpd_;
-	}
-	else if (Key::Down(DIK_D))
-	{
-		reticleMoveVel.x = reticleSpd_;
-	}
-
-	if (Key::Down(DIK_W) && Key::Down(DIK_S))
-	{
-
-	}
-	else if (Key::Down(DIK_W))
-	{
-		reticleMoveVel.y = -reticleSpd_ * kY_MOVE_RETICLE_;
-	}
-	else if (Key::Down(DIK_S))
-	{
-		reticleMoveVel.y = reticleSpd_ * kY_MOVE_RETICLE_;
-	}
-
-	reticlePos_ += reticleMoveVel;
-
-	// レティクル座標の移動制限
-	Vector2 reticlePosMin = { RETICLE_MOVE_LIMIT_, RETICLE_MOVE_LIMIT_ * 0.6f };
-	Vector2 reticlePosMax = { WinAPI::GetInstance()->width_ - RETICLE_MOVE_LIMIT_,
-							  WinAPI::GetInstance()->height_ - RETICLE_MOVE_LIMIT_ * 0.6f };
-
-	reticlePos_.x = max(reticlePos_.x, reticlePosMin.x);
-	reticlePos_.y = max(reticlePos_.y, reticlePosMin.y);
-	reticlePos_.x = min(reticlePos_.x, reticlePosMax.x);
-	reticlePos_.y = min(reticlePos_.y, reticlePosMax.y);
-
-	// 座標をスプライトにセット
-	reticleSp_->position_ = reticlePos_;
-
-	// 合成行列の生成
-	Matrix4 matInverseVBV = matViewProjectionViewPort;
-	matInverseVBV = Matrix4::Inverse(matInverseVBV);
-
-	// スクリーン座標
-	Vector3 posNear = { reticlePos_.x, reticlePos_.y, 0 };
-	Vector3 posFar = { reticlePos_.x, reticlePos_.y, 1 };
-
-	// スクリーン座標系からワールド座標系へ
-	posNear = Matrix4::TransformDivW(posNear, matInverseVBV);
-	posFar = Matrix4::TransformDivW(posFar, matInverseVBV);
-
-	// レイの方向
-	Vector3 direction = posFar - posNear;
-	direction.Normalize();
-
-	// カメラからレティクルの距離
-	reticleObj_.position_ = posNear + direction * DISTANCE_RETICLE_;
 
 	reticleObj_.UpdateObject3D();
 	reticleSp_->Update();
