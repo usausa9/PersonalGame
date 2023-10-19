@@ -21,10 +21,10 @@ void Player::Initialize()
 
 	// レティクルスプライト割り当て
 	reticleTex_ = TextureManager::Load(L"Resources/Sprites/reticle.png");
-	reticleSp_ = make_unique<Sprite>(reticleTex_);
-	reticleSp_->position_ = reticlePos_;
-	reticleSp_->scale_ = RETICLE_SMALL_;
-	reticleSp_->Update();
+	reticleSprite_ = make_unique<Sprite>(reticleTex_);
+	reticleSprite_->position_ = reticlePos_;
+	reticleSprite_->scale_ = RETICLE_SMALL_;
+	reticleSprite_->Update();
 
 	// 自機の行列初期化
 	position_ = INIT_PLAYER_POSITION_;
@@ -129,11 +129,11 @@ void Player::reticleUpdate(bool isFollow = true, Vector2 position = {0, 0})
 
 		if (state_.ExpandNum() == false)
 		{
-			reticleSp_->scale_ = RETICLE_SMALL_;
+			reticleSprite_->scale_ = RETICLE_SMALL_;
 		}
 		else
 		{
-			reticleSp_->scale_ = RETICLE_BIG_;
+			reticleSprite_->scale_ = RETICLE_BIG_;
 		}
 
 		// 自機の速さとレティクルのスピード調整
@@ -178,7 +178,7 @@ void Player::reticleUpdate(bool isFollow = true, Vector2 position = {0, 0})
 		reticlePos_.y = min(reticlePos_.y, reticlePosMax.y);
 
 		// 座標をスプライトにセット
-		reticleSp_->position_ = reticlePos_;
+		reticleSprite_->position_ = reticlePos_;
 
 		// 合成行列の生成
 		Matrix4 matInverseVBV = matViewProjectionViewPort;
@@ -201,16 +201,16 @@ void Player::reticleUpdate(bool isFollow = true, Vector2 position = {0, 0})
 	}
 	else
 	{
-		reticleSp_->position_ = position;
+		reticleSprite_->position_ = position;
 	}
 
 	reticleObj_.UpdateObject3D();
-	reticleSp_->Update();
+	reticleSprite_->Update();
 }
 
 void Player::DrawUI(float statePosY)
 {
-	reticleSp_->Draw();
+	reticleSprite_->Draw();
 
 	// 判定時描画
 	for (unique_ptr<PlayerBullet>& bullet : bullets_)

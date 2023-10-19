@@ -58,7 +58,7 @@ private: // 自機のメンバ変数
 	OBJModel reticleModel_;
 	Object3D reticleObj_;
 	TextureIndex reticleTex_;
-	unique_ptr<Sprite> reticleSp_ = nullptr;
+	unique_ptr<Sprite> reticleSprite_ = nullptr;
 
 	PlayerState state_;
 

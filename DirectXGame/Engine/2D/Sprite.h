@@ -39,7 +39,7 @@ public: // メンバ変数
 	SpriteConstBufferDataMaterial* constMapMaterial_ = nullptr;// マップの割り当て
 
 public:
-	TextureIndex tIndex_ = 0;	// 描画するものを入れられるようにする
+	TextureIndex texIndex_ = 0;	// 描画するものを入れられるようにする
 
 	Vector2 position_ = { 100,100 };
 	Vector2 scale_ = { 1,1 };

@@ -21,7 +21,7 @@ Sprite::Sprite()
 
 }
 
-Sprite::Sprite(TextureIndex tex) : tIndex_(tex)
+Sprite::Sprite(TextureIndex tex) : texIndex_(tex)
 {
 	Init();
 }
@@ -36,8 +36,8 @@ void Sprite::Init()
 #pragma region 頂点バッファ
 	HRESULT pResult;
 
-	float w = TextureManager::GetData(tIndex_)->metadata.width / 2.f;
-	float h = TextureManager::GetData(tIndex_)->metadata.height / 2.f;
+	float w = TextureManager::GetData(texIndex_)->metadata.width / 2.f;
+	float h = TextureManager::GetData(texIndex_)->metadata.height / 2.f;
 
 	// 頂点データ
 	Vertex vertices[] =
@@ -161,7 +161,7 @@ void Sprite::Draw()
 
 	// CBVの設定コマンド
 	commandList->SetGraphicsRootConstantBufferView(0, constBuffMaterial_->GetGPUVirtualAddress());
-	commandList->SetGraphicsRootDescriptorTable(1, TextureManager::GetData(tIndex_)->gpuHandle);
+	commandList->SetGraphicsRootDescriptorTable(1, TextureManager::GetData(texIndex_)->gpuHandle);
 
 	// 描画コマンド
 	commandList->DrawInstanced(4, 1, 0, 0); // 全ての頂点を使って描画

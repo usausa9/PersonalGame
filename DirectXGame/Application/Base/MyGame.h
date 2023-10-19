@@ -1,5 +1,4 @@
 #pragma once
-
 /**
  * @file	MyGame.h
  * @brief	Scene処理の枠組み
