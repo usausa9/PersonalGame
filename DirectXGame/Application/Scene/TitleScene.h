@@ -53,6 +53,7 @@ public:
 	// 2D描画
 	void Draw2D() override;
 
+private: // メンバ関数 (クラス内でのみ使用するもの)
 	// シーン遷移演出
 	void BeforeTransition();
 	void Transition();
@@ -60,7 +61,7 @@ public:
 	// ゲームシーンへ
 	void PossibleStartGame();
 
-private:
+private: 
 	// カメラ
 	Camera* camera_ = nullptr;
 	RailCamera* railCamera_ = nullptr;
