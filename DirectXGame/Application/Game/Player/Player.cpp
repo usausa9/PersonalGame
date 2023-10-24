@@ -39,10 +39,8 @@ void Player::Initialize()
 	// プレイヤー状態の初期化
 	state_.Initialize();
 
-	// コライダーの追加
-	float radius = 0.6f;
 	// 半径分だけ足元から浮いた座標を球の中心にする
-	SetCollider(new SphereCollider(Vector3({ 0, radius, 0 }), radius));
+	SetCollider(new SphereCollider(Vector3({ 0, RADIUS_, 0 }), RADIUS_));
 	collider_->SetAttribute(COLLISION_ATTR_ALLIES);
 
 	// 自機弾モデル読み込み
@@ -115,10 +113,10 @@ void Player::reticleUpdate(bool isFollow = true, Vector2 position = {0, 0})
 	{
 		// ビューポート行列
 		Matrix4 matViewPort = Matrix4::Identity();
-		matViewPort.m[0][0] = WinAPI::GetInstance()->width_ / 2.0f;
-		matViewPort.m[1][1] = -(WinAPI::GetInstance()->height_ / 2.0f);
-		matViewPort.m[3][0] = WinAPI::GetInstance()->width_ / 2.0f;
-		matViewPort.m[3][1] = WinAPI::GetInstance()->height_ / 2.0f;
+		matViewPort.m[0][0] = WinAPI::GetInstance()->width_ * kHALF_;
+		matViewPort.m[1][1] = -(WinAPI::GetInstance()->height_ * kHALF_);
+		matViewPort.m[3][0] = WinAPI::GetInstance()->width_ * kHALF_;
+		matViewPort.m[3][1] = WinAPI::GetInstance()->height_ * kHALF_;
 
 		// カメラ行列との合成
 		Matrix4 matViewProjectionViewPort =
@@ -168,9 +166,9 @@ void Player::reticleUpdate(bool isFollow = true, Vector2 position = {0, 0})
 		reticlePos_ += reticleMoveVel;
 
 		// レティクル座標の移動制限
-		Vector2 reticlePosMin = { RETICLE_MOVE_LIMIT_, RETICLE_MOVE_LIMIT_ * 0.6f };
+		Vector2 reticlePosMin = { RETICLE_MOVE_LIMIT_, RETICLE_MOVE_LIMIT_ * kY_MOVE_LIMIT_ };
 		Vector2 reticlePosMax = { WinAPI::GetInstance()->width_ - RETICLE_MOVE_LIMIT_,
-								  WinAPI::GetInstance()->height_ - RETICLE_MOVE_LIMIT_ * 0.6f };
+								  WinAPI::GetInstance()->height_ - RETICLE_MOVE_LIMIT_ * kY_MOVE_LIMIT_ };
 
 		reticlePos_.x = max(reticlePos_.x, reticlePosMin.x);
 		reticlePos_.y = max(reticlePos_.y, reticlePosMin.y);
@@ -248,7 +246,7 @@ void Player::Move()
 		// GamePadでの移動
 	move_ += {
 		Pad::GetLStick().x* velocity_,
-			Pad::GetLStick().y* velocity_* kY_MOVE_,
+		Pad::GetLStick().y* velocity_ * kY_MOVE_,
 			0 };
 
 	// 移動量の加算
@@ -293,18 +291,13 @@ void Player::Shot()
 			velocity.Normalize();
 			velocity *= kBULLET_SPEED_;
 
-			// 自機弾の自機からみたローカル発射位置
-			Vector3 delayPos = { 0, 0.2f, 7.1f };
-
 			// 速度ベクトルを自機の向きに合わせて回転
 			velocity = Matrix4::Transform(velocity, matWorld_);
 			//velocity = velocity * matWorld;
-			delayPos = delayPos * matWorld_;
+			delayPos = DELAY_POS_ * matWorld_;
 
 			// 自機弾を生成、初期化
 			bullets_.push_back(std::move(make_unique<PlayerBullet>()));
-
-
 			bullets_.back()->Initialize(state_.ExpandNum(), &bulletModel_, GetWorldPosition() + delayPos, velocity);
 		}
 	}

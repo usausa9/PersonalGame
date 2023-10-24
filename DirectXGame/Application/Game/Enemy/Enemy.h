@@ -68,4 +68,9 @@ private: // 敵機のメンバ変数
 	bool isAlive_ = true;
 	// 強化可能フラグ
 	static bool sIsPowerUp_;
+
+	// 敵の大きさ指定
+	const float RADIUS_ = 1.3f;
+	// 敵の軌道タイマー用
+	const uint16_t ENEMY_MOVE_TIME_ = 600;
 };

@@ -57,6 +57,7 @@ private:
 	TextureIndex nowLoadingTex_ = {};
 	TextureIndex reticleTex_ = {};
 
+	// スタート演出用
 	const uint8_t RETICLE_NUM_ = 3;
 	unique_ptr<Sprite> reticleSprite_[3] = { nullptr, nullptr, nullptr };
 	unique_ptr<Sprite> purpleGroundSprite_[2] = { nullptr, nullptr };
@@ -110,6 +111,9 @@ public:
 
 	// ゲーム前の開始演出
 	void BeforeStartAnimation();
+
+	// ゲームオーバー演出
+	void GameOver();
 
 	// 3D描画
 	void Draw3D() override;

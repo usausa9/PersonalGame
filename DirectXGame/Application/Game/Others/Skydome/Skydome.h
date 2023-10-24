@@ -1,5 +1,4 @@
 #pragma once
-
 /**
  * @file	Skydome.h
  * @brief	天球
@@ -23,4 +22,6 @@ private:
 	// 天球モデル, 天球オブジェクト
 	OBJModel skydomeModel_;
 	Object3D skydomeObj_;
+
+	const Vector3 SKYDOME_SCALE_ = { 1000, 1000, 1000} ;
 };

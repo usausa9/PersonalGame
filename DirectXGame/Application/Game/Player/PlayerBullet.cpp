@@ -30,17 +30,17 @@ void PlayerBullet::Initialize(bool bulletState, OBJModel* model, const Vector3& 
 	velocity_ = vel;
 
 	// コライダーの追加 (強化ステートによりけり弾の大きさを変更)
-	float radius = 0.f;
+	
 	if (bulletState == true)
 	{
-		radius = EXPAND_COLLIDER_SIZE_;
+		radius_ = EXPAND_COLLIDER_SIZE_;
 	}
 	else
 	{
-		radius = SMALL_COLLIDER_SIZE_;
+		radius_ = SMALL_COLLIDER_SIZE_;
 	}
 	// 半径分だけ足元から浮いた座標を球の中心にする
-	SetCollider(new SphereCollider(Vector3({ 0, radius, 0 }), radius));
+	SetCollider(new SphereCollider(Vector3({ 0, radius_, 0 }), radius_));
 	collider_->SetAttribute(COLLISION_ATTR_ALLIES);
 }
 

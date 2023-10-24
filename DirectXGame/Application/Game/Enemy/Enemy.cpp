@@ -41,10 +41,8 @@ void Enemy::Initialize(std::vector<Vector3>& points, uint8_t enemyKind)
 	// 軌道制御点の設定
 	trajectory_.SetPositions(points);
 
-	// コライダーの追加
-	float radius = 1.3f;
 	// 半径分だけ足元から浮いた座標を球の中心にする
-	SetCollider(new SphereCollider(Vector3({ 0, radius, 0 }), radius));
+	SetCollider(new SphereCollider(Vector3({ 0, RADIUS_, 0 }), RADIUS_));
 	collider_->SetAttribute(COLLISION_ATTR_ENEMYS);
 }
 
@@ -80,7 +78,7 @@ void Enemy::Draw()
 void Enemy::Spawn()
 {
 	// 敵発生
-	trajectory_.MoveStart(600, true);
+	trajectory_.MoveStart(ENEMY_MOVE_TIME_, true);
 }
 
 void Enemy::OnCollision([[maybe_unused]] const CollisionInfo& info)

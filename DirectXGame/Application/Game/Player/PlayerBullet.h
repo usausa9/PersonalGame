@@ -47,6 +47,9 @@ private:
 	// デバッグ用
 	static bool isDrawSp_;
 
+	// 当たり判定用
+	float radius_ = 0.f;
+
 	// 自機強化に応じたサイズパラメータ
 	const float SMALL_SIZE_ = 1.5f;
 	const float EXPAND_SIZE_ = 2.2f;

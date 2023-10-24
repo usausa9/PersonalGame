@@ -74,6 +74,13 @@ private: // 自機のメンバ変数
 	const float FORMERLY_SPEED_ = 0.5f;
 	const float SPEED_UP_RATE_ = 0.06f;
 
+	// 自機から見た弾の発射地点
+	const Vector3 DELAY_POS_ = { 0, 0.2f, 7.1f };
+	Vector3 delayPos = { 0, 0, 0 };
+
+	// 自機の当たり判定用
+	const float RADIUS_ = 0.6f;
+
 	// 自機のXに対してのYスピード
 	const float kY_MOVE_ = 0.7f;
 	// 自機の移動範囲制限用
@@ -89,10 +96,14 @@ private: // 自機のメンバ変数
 	// レティクル関連
 	float reticleSpd_ = 6.0f;
 	const float kY_MOVE_RETICLE_ = 0.7f;
+	const float kY_MOVE_LIMIT_ = 0.6f;
 	const float RETICLE_MOVE_LIMIT_ = 340.f;
 	const Vector3 INIT_RETICLE_POSITION_ = { 0, 0, 50 };
 	const Vector2 RETICLE_SMALL_ = { 0.9f, 0.9f };
 	const Vector2 RETICLE_BIG_ = { 1.1f, 1.1f };
+
+	// ビューポート用
+	const float kHALF_ = 0.500000f;
 
 	float kReticleSpd_ = 6.0f / 0.65f;
 

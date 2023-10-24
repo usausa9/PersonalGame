@@ -223,6 +223,10 @@ void GameScene::BeforeStartAnimation()
 	}
 }
 
+void GameScene::GameOver()
+{
+}
+
 void GameScene::Draw3D()
 {
 	// カメラセット

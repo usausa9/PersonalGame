@@ -11,7 +11,7 @@ void Skydome::Initialize()
 	skydomeModel_ = OBJModel::LoadFromOBJ("skydome");
 
 	// 自機の行列初期化
-	skydomeObj_.scale_ = { 1000,1000,1000 };
+	skydomeObj_.scale_ = SKYDOME_SCALE_;
 	skydomeObj_.rotation_ = { 0, 0, 0 };
 	skydomeObj_.position_ = { 0, 0, 0 };
 	skydomeObj_.InitializeObject3D();
