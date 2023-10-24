@@ -1,5 +1,4 @@
 #pragma once
-
 /**
  * @file	Enemy.h
  * @brief	敵のデータ保持や初期化/更新/描画を行うもの (Managerに近しい)

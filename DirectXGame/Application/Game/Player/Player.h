@@ -26,6 +26,9 @@ public:	// メンバ関数
 	// 更新処理
 	void Update(bool isMove, bool isReticleFollow, Vector2 position);
 
+	// ゲームオーバー
+	void GameOver();
+
 	// 描画処理
 	void Draw();
 
