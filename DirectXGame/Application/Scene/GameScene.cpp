@@ -42,12 +42,12 @@ void GameScene::Initialize()
 	for (uint8_t i = 0; i < PURPLE_BG_NUM_; i++)
 	{
 		purpleGroundSprite_[i] = make_unique<Sprite>(purpleGroundTex_);
-		purpleGroundSprite_[i]->position_ = BASE_POS_;
+		purpleGroundSprite_[i]->position_ = GROUND_BASE_POS_;
 	}
 	
 	nowLoadingTex_ = TextureManager::Load(L"Resources/Sprites/now_loading.png");
 	nowLoadingSprite_ = make_unique<Sprite>(nowLoadingTex_);
-	nowLoadingSprite_->position_ = BASE_POS_;
+	nowLoadingSprite_->position_ = GROUND_BASE_POS_;
 
 	reticleTex_ = TextureManager::Load(L"Resources/Sprites/reticle.png");
 	for (uint8_t i = 0; i < RETICLE_NUM_; i++)
@@ -63,6 +63,20 @@ void GameScene::Initialize()
 	isEndTransition_ = false;
 	isEndStartAnimation_ = false;
 	isUiAnimation_ = false;
+	isGameOverAnimation_ = false;
+
+	isEndGame_ = false;
+
+	// スプライン制御点
+	Vector3 start = { 0, 0, 0 };
+	Vector3 p1 = { -10, -5, 0 };
+	Vector3 p2 = { 20,  -20, 0 };
+	Vector3 p3 = { -10, -45, 0 };
+	Vector3 end = { -20, -90, 0 };
+
+	std::vector<Vector3> movePoints = { start, p1, p2, p3, end };
+
+	deadTrajectory_.SetPositions(movePoints);
 	
 	// 敵データ読み込み
 	LoadCsvFile();
@@ -85,8 +99,11 @@ void GameScene::Update()
 	{
 		waitTimer_.Update();
 
-		// 敵の更新
-		UpdateEnemyData();
+		if (!isEndGame_)
+		{
+			// 敵の更新
+			UpdateEnemyData();
+		}
 		
 		// ESCでタイトルに戻る
 		// シーン切り替え依頼
@@ -104,15 +121,44 @@ void GameScene::Update()
 			EnemySpawn(uint8_t(EnemyKinds::POWER), uint8_t(TrajectoryKinds::RIGHT_2_LEFT));
 		}
 	}
-	// DirectX毎フレーム処理(更新処理) ここから
-	railCamera_->Update();
 
-	// プレイヤーの更新
-	player_->SetParent(railCamera_->GetObject3d());
+	// ゲームオーバーではないときのみ
+	if (!isEndGame_)
+	{
+		// DirectX毎フレーム処理(更新処理) ここから
+		railCamera_->Update();
+	}
+
+	// ゲームオーバーの時の処理
+	GameOver();
 
 	if (isEndTransition_ && isEndStartAnimation_)
 	{
-		player_->Update(isEndStartAnimation_, true, { 0, 0 });
+		// ゲームオーバーフラグ
+		if (Key::Trigger(DIK_E) && isGameOverAnimation_ == false)
+		{
+			playerDeadPoint_ = player_->position_;
+			isEndGame_ = true;
+			isGameOverAnimation_ = true;
+
+			deadTrajectory_.MoveStart(PLAYER_DEAD_MOVE_TIME_, false);
+			
+			for (uint8_t i = 0; i < PURPLE_BG_NUM_; i++)
+			{
+				purpleGroundSprite_[i]->position_ = TRANSITION_BASE_POS_[i];
+			}
+
+			gameOverTimer_.Start(TRANSITION_WAIT_TIMER_);
+		}
+
+		if (isEndGame_)
+		{
+			player_->Update(false, true, { 0, 0 });
+		}
+		else
+		{
+			player_->Update(isEndStartAnimation_, true, { 0, 0 });
+		}
 	}
 	else
 	{
@@ -122,13 +168,20 @@ void GameScene::Update()
 		}
 		player_->Update(isEndStartAnimation_, false, inGameReticlePos_);
 	}
-	 
-	// エネミーの更新
-	for (std::unique_ptr<Enemy>& enemy : enemys_)
-	{
-		enemy->Update(railCamera_->GetObject3d()->matWorld_);
-	}
 
+	// プレイヤーの更新
+	player_->SetParent(railCamera_->GetObject3d());
+	
+	// ゲームオーバーではないときのみ
+	if (!isEndGame_)
+	{
+		// エネミーの更新
+		for (std::unique_ptr<Enemy>& enemy : enemys_)
+		{
+			enemy->Update(railCamera_->GetObject3d()->matWorld_);
+		}
+	}
+	
 	// 死んでる敵を消す
 	enemys_.remove_if([](std::unique_ptr<Enemy>& enemy)
 	{
@@ -138,7 +191,6 @@ void GameScene::Update()
 		}
 		return false;
 	});
-
 	// 天球の行列更新
 	skydome_->Update();
 
@@ -160,9 +212,9 @@ void GameScene::InTransition()
 			loadingAnimeTimer_.Start(LOADING_ANIME_MAX_TIME_);
 		}
 
-		purpleGroundSprite_[0]->position_.x = BASE_POS_.x - (TRANSITION_MOVE_POS_ * Easing::In(groundAnimeTimer_.GetTimeRate(), 2.2f));
-		purpleGroundSprite_[1]->position_.x = BASE_POS_.x + (TRANSITION_MOVE_POS_ * Easing::In(groundAnimeTimer_.GetTimeRate(), 2.2f));
-		nowLoadingSprite_->position_.y = BASE_POS_.y - ((TRANSITION_MOVE_POS_ / 2) * Easing::In(groundAnimeTimer_.GetTimeRate(), 2.2f));
+		purpleGroundSprite_[0]->position_.x = GROUND_BASE_POS_.x - (TRANSITION_MOVE_POS_ * Easing::In(groundAnimeTimer_.GetTimeRate(), 2.2f));
+		purpleGroundSprite_[1]->position_.x = GROUND_BASE_POS_.x + (TRANSITION_MOVE_POS_ * Easing::In(groundAnimeTimer_.GetTimeRate(), 2.2f));
+		nowLoadingSprite_->position_.y = GROUND_BASE_POS_.y - ((TRANSITION_MOVE_POS_ / 2) * Easing::In(groundAnimeTimer_.GetTimeRate(), 2.2f));
 
 		// アニメーション用タイマーの更新
 		groundAnimeTimer_.Update();
@@ -225,6 +277,30 @@ void GameScene::BeforeStartAnimation()
 
 void GameScene::GameOver()
 {
+	// ゲームオーバー演出
+	if (isEndGame_)
+	{
+		deadTrajectory_.Update();
+		gameOverTimer_.Update();
+		gameOverTransitionTimer_.Update();
+
+		if (gameOverTimer_.GetTimeRate() == 0.9f)
+		{
+			gameOverTransitionTimer_.Start(GROUND_ANIME_MAX_TIME_);
+		}
+
+		player_->GameOver();
+
+		purpleGroundSprite_[0]->position_.x = TRANSITION_BASE_POS_[0].x + (TRANSITION_MOVE_POS_ * Easing::Out(gameOverTransitionTimer_.GetTimeRate(), 2.2f));
+		purpleGroundSprite_[1]->position_.x = TRANSITION_BASE_POS_[1].x - (TRANSITION_MOVE_POS_ * Easing::Out(gameOverTransitionTimer_.GetTimeRate(), 2.2f));
+
+		player_->position_ = playerDeadPoint_ + deadTrajectory_.GetNowPosition();
+	}
+
+	for (uint8_t i = 0; i < PURPLE_BG_NUM_; i++)
+	{
+		purpleGroundSprite_[i]->Update();
+	}
 }
 
 void GameScene::Draw3D()

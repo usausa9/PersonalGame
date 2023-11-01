@@ -65,6 +65,12 @@ private: // 自機のメンバ変数
 
 	PlayerState state_;
 
+	float deadReticlePosY_ = 0.f;
+	TimeData deadTimer_;
+	const float RETICLE_DEAD_MOVE_TIMER_ = 90.f;
+	float reticleAnimeMove_;
+	const float RETICLE_END_POS_Y_ = -80.f;
+
 	// 自機の移動用
 	Vector3 move_ = { 0,0,0 };
 	Vector3 rev_ = { 0,0,0 };
@@ -109,6 +115,9 @@ private: // 自機のメンバ変数
 	const float kHALF_ = 0.500000f;
 
 	float kReticleSpd_ = 6.0f / 0.65f;
+
+	// ゲームオーバー用
+	bool isGameOver_ = false;
 
 private: // 自機弾のメンバ変数
 	// レティクルの座標データ

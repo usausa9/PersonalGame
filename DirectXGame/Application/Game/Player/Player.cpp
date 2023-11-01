@@ -72,7 +72,10 @@ void Player::Update(bool isMove, bool isReticleFollow = true, Vector2 position =
 	UpdateObject3D();
 
 	// レティクルの更新
-	reticleUpdate(isReticleFollow, position);
+	if (isGameOver_ == false)
+	{
+		reticleUpdate(isReticleFollow, position);
+	}
 
 	if (isMove)
 	{
@@ -86,6 +89,25 @@ void Player::Update(bool isMove, bool isReticleFollow = true, Vector2 position =
 			}
 		}
 	}
+}
+
+void Player::GameOver()
+{
+	if (isGameOver_ == false)
+	{
+		deadTimer_.Start(RETICLE_DEAD_MOVE_TIMER_);
+		deadReticlePosY_ = reticleSprite_->position_.y;
+		reticleAnimeMove_ = deadReticlePosY_ - RETICLE_END_POS_Y_;
+	}
+
+	deadTimer_.Update();
+	
+	reticleSprite_->position_.y = deadReticlePosY_
+	- reticleAnimeMove_ * Easing::In(deadTimer_.GetTimeRate());
+
+	isGameOver_ = true;
+
+	reticleSprite_->Update();
 }
 
 // 描画

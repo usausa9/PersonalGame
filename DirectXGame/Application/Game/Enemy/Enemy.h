@@ -59,7 +59,7 @@ private: // 敵機のメンバ変数
 	OBJModel enemyModel_;
 
 	// 敵の軌道
-	SplineCurve trajectory_ = {};
+	SplineCurve trajectory_;
 
 	uint8_t enemyKind_ = 0;
 

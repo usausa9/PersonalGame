@@ -63,7 +63,8 @@ private:
 	unique_ptr<Sprite> purpleGroundSprite_[2] = { nullptr, nullptr };
 	unique_ptr<Sprite> nowLoadingSprite_ = nullptr;
 
-	const Vector2 BASE_POS_ = { 640, 360 };
+	const Vector2 GROUND_BASE_POS_ = { 640, 360 };
+	const Vector2 TRANSITION_BASE_POS_[2] = {{ -1800, 360 },{ 3080, 360 }};
 	const float TRANSITION_MOVE_POS_ = 1800.f;
 
 	const uint8_t PURPLE_BG_NUM_ = 2;
@@ -86,7 +87,7 @@ private:
 	const Vector2 RETICLE_BEFORE_ANIME_POS_[3] = { {640, 770}, {-50 ,360}, {1330,360} };
 	const Vector2 RETICLE_ANIME_MOVE_[3] = { {0, -410}, {690, 0}, {-690, 0} };
 	Vector2 reticlePos_[3] = { {640, 770}, {-50, 360}, {1330, 360} };
-	const Vector2 RETICLE_SIZE_ = {0.9f,0.9f};
+	const Vector2 RETICLE_SIZE_ = { 0.9f, 0.9f };
 
 	const float INGAME_RETICLE_BEFORE_ANIME_POS_Y_ = -50.f;
 	const float INGAME_RETICLE_ANIME_MOVE_Y_ = 360.f - INGAME_RETICLE_BEFORE_ANIME_POS_Y_;
@@ -95,6 +96,18 @@ private:
 	bool isEndTransition_ = false;
 	bool isEndStartAnimation_ = false;
 	bool isUiAnimation_ = false;
+	bool isGameOverAnimation_ = false;
+
+	// ゲームオーバー関連
+	bool isEndGame_ = false;
+	TimeData gameOverTimer_;
+	TimeData gameOverTransitionTimer_;
+	Vector3 playerDeadPoint_;
+
+	SplineCurve deadTrajectory_;
+	// 自機の死亡タイマー用
+	const uint8_t PLAYER_DEAD_MOVE_TIME_ = 150;
+	const uint8_t TRANSITION_WAIT_TIMER_ = 160;
 
 public:
 	// 初期化
