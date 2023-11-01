@@ -64,19 +64,29 @@ void GameScene::Initialize()
 	isEndStartAnimation_ = false;
 	isUiAnimation_ = false;
 	isGameOverAnimation_ = false;
-
-	isEndGame_ = false;
+	isGameClearAnimation_ = false;
+	isGameOver_ = false;
+	isGameClear_ = false;
 
 	// スプライン制御点
-	Vector3 start = { 0, 0, 0 };
-	Vector3 p1 = { -10, -5, 0 };
-	Vector3 p2 = { 20,  -20, 0 };
-	Vector3 p3 = { -10, -45, 0 };
-	Vector3 end = { -20, -90, 0 };
+	Vector3 dStart = { 0, 0, 0 };
+	Vector3 dP1 = { -10, -5, 0 };
+	Vector3 dP2 = { 20,  -20, 0 };
+	Vector3 dP3 = { -10, -45, 0 };
+	Vector3 dEnd = { -20, -90, 0 };
 
-	std::vector<Vector3> movePoints = { start, p1, p2, p3, end };
+	// スプライン制御点
+	Vector3 cStart = { 0, 0, 0 };
+	Vector3 cP1 = { 0, 2, -3 };
+	Vector3 cP2 = { 0,  5, 200 };
+	Vector3 cP3 = { 0, 10, 500 };
+	Vector3 cEnd = { 0, 20, 1200 };
 
-	deadTrajectory_.SetPositions(movePoints);
+	std::vector<Vector3> deadMovePoints = { dStart, dP1, dP2, dP3, dEnd };
+	std::vector<Vector3> clearMovePoints = { cStart, cP1, cP2, cP3, cEnd };
+
+	deadTrajectory_.SetPositions(deadMovePoints);
+	clearTrajectory_.SetPositions(clearMovePoints);
 	
 	// 敵データ読み込み
 	LoadCsvFile();
@@ -99,7 +109,8 @@ void GameScene::Update()
 	{
 		waitTimer_.Update();
 
-		if (!isEndGame_)
+		// ゲーム中のみ
+		if (InGame())
 		{
 			// 敵の更新
 			UpdateEnemyData();
@@ -122,23 +133,23 @@ void GameScene::Update()
 		}
 	}
 
-	// ゲームオーバーではないときのみ
-	if (!isEndGame_)
+	// ゲーム中のみ
+	if (InGame())
 	{
 		// DirectX毎フレーム処理(更新処理) ここから
 		railCamera_->Update();
 	}
 
 	// ゲームオーバーの時の処理
-	GameOver();
+	GameEnd();
 
 	if (isEndTransition_ && isEndStartAnimation_)
 	{
 		// ゲームオーバーフラグ
-		if (Key::Trigger(DIK_E) && isGameOverAnimation_ == false)
+		if (Key::Trigger(DIK_E) && isGameOverAnimation_ == false && isGameClear_ == false)
 		{
 			playerDeadPoint_ = player_->position_;
-			isEndGame_ = true;
+			isGameOver_ = true;
 			isGameOverAnimation_ = true;
 
 			deadTrajectory_.MoveStart(PLAYER_DEAD_MOVE_TIME_, false);
@@ -149,9 +160,26 @@ void GameScene::Update()
 			}
 
 			gameOverTimer_.Start(TRANSITION_WAIT_TIMER_);
+		
+		}
+		// ゲームクリアフラグ
+		if (Key::Trigger(DIK_R) && isGameClearAnimation_ == false && isGameOver_ == false)
+		{
+			playerClearPoint_ = player_->position_;
+			isGameClear_ = true;
+			isGameClearAnimation_ = true;
+
+			clearTrajectory_.MoveStart(PLAYER_CLEAR_MOVE_TIME_, false);
+
+			for (uint8_t i = 0; i < PURPLE_BG_NUM_; i++)
+			{
+				purpleGroundSprite_[i]->position_ = TRANSITION_BASE_POS_[i];
+			}
+
+			gameClearTimer_.Start(TRANSITION_WAIT_TIMER_);
 		}
 
-		if (isEndGame_)
+		if (isGameOver_)
 		{
 			player_->Update(false, true, { 0, 0 });
 		}
@@ -172,8 +200,8 @@ void GameScene::Update()
 	// プレイヤーの更新
 	player_->SetParent(railCamera_->GetObject3d());
 	
-	// ゲームオーバーではないときのみ
-	if (!isEndGame_)
+	// ゲーム中のみ
+	if (InGame())
 	{
 		// エネミーの更新
 		for (std::unique_ptr<Enemy>& enemy : enemys_)
@@ -275,10 +303,10 @@ void GameScene::BeforeStartAnimation()
 	}
 }
 
-void GameScene::GameOver()
+void GameScene::GameEnd()
 {
 	// ゲームオーバー演出
-	if (isEndGame_)
+	if (isGameOver_)
 	{
 		deadTrajectory_.Update();
 		gameOverTimer_.Update();
@@ -295,6 +323,26 @@ void GameScene::GameOver()
 		purpleGroundSprite_[1]->position_.x = TRANSITION_BASE_POS_[1].x - (TRANSITION_MOVE_POS_ * Easing::Out(gameOverTransitionTimer_.GetTimeRate(), 2.2f));
 
 		player_->position_ = playerDeadPoint_ + deadTrajectory_.GetNowPosition();
+	}
+	
+	if (isGameClear_)
+	{
+		clearTrajectory_.Update();
+		gameClearTimer_.Update();
+		gameClearTransitionTimer_.Update();
+
+		if (gameClearTimer_.GetTimeRate() == 0.9f)
+		{
+			gameClearTransitionTimer_.Start(GROUND_ANIME_MAX_TIME_);
+		}
+
+		player_->GameOver();
+
+		purpleGroundSprite_[0]->position_.x = TRANSITION_BASE_POS_[0].x + (TRANSITION_MOVE_POS_ * Easing::Out(gameClearTransitionTimer_.GetTimeRate(), 2.2f));
+		purpleGroundSprite_[1]->position_.x = TRANSITION_BASE_POS_[1].x - (TRANSITION_MOVE_POS_ * Easing::Out(gameClearTransitionTimer_.GetTimeRate(), 2.2f));
+
+		player_->position_ = playerClearPoint_ + clearTrajectory_.GetNowPosition();
+
 	}
 
 	for (uint8_t i = 0; i < PURPLE_BG_NUM_; i++)
@@ -347,6 +395,18 @@ void GameScene::Draw2D()
 	}
 	
 	nowLoadingSprite_->Draw();
+}
+
+bool GameScene::InGame()
+{
+	if (isGameOver_ || isGameClear_)
+	{
+		return false;
+	}
+	else
+	{
+		return true;
+	}
 }
 
 void GameScene::EnemySpawn(uint8_t enemyKind, uint8_t trajectoryKind)

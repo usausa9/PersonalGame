@@ -97,16 +97,25 @@ private:
 	bool isEndStartAnimation_ = false;
 	bool isUiAnimation_ = false;
 	bool isGameOverAnimation_ = false;
+	bool isGameClearAnimation_ = false;
 
 	// ゲームオーバー関連
-	bool isEndGame_ = false;
+	bool isGameOver_ = false;
 	TimeData gameOverTimer_;
 	TimeData gameOverTransitionTimer_;
 	Vector3 playerDeadPoint_;
-
 	SplineCurve deadTrajectory_;
+
+	// ゲームクリア関連
+	bool isGameClear_ = false;
+	TimeData gameClearTimer_;
+	TimeData gameClearTransitionTimer_;
+	Vector3 playerClearPoint_;
+	SplineCurve clearTrajectory_;
+
 	// 自機の死亡タイマー用
 	const uint8_t PLAYER_DEAD_MOVE_TIME_ = 150;
+	const uint8_t PLAYER_CLEAR_MOVE_TIME_ = 150;
 	const uint8_t TRANSITION_WAIT_TIMER_ = 160;
 
 public:
@@ -126,7 +135,7 @@ public:
 	void BeforeStartAnimation();
 
 	// ゲームオーバー演出
-	void GameOver();
+	void GameEnd();
 
 	// 3D描画
 	void Draw3D() override;
@@ -136,6 +145,9 @@ public:
 
 	// 2D描画
 	void Draw2D() override;
+
+	// ゲーム中か否かを返す
+	bool InGame();
 
 public:
 	// 敵
