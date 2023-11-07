@@ -30,10 +30,10 @@ void RailCamera::Initialize(const Vector3& pos, const Vector3& rot)
 	camera_->Initialize();
 
 	// スプライン曲線の制御点
-	Vector3 start{ 0,0,0 };
-	Vector3 p1{ 100,250,150 };
-	Vector3 p2{ 0,0,200 };
-	Vector3 end{ 100,250,350 };
+	Vector3 start = SPLINE_START_;
+	Vector3 p1 = SPLINE_P1_;
+	Vector3 p2 = SPLINE_P2_;
+	Vector3 end = SPLINE_END_;
 
 	std::vector<Vector3> points{ start,p1,p2,end };
 
@@ -47,7 +47,7 @@ void RailCamera::Update()
 	// スプライン曲線によって動かす
 	if (isMove_ == false)
 	{
-		spline_.MoveStart(2800.0f, true);
+		spline_.MoveStart(CAMERA_LOOP_TIME_, true);
 		isMove_ = true;
 	}
 
@@ -57,9 +57,6 @@ void RailCamera::Update()
 	// ワールド行列の座標の数値を加算
 	// スプライン曲線に沿って移動
 	worldTransform_->position_ = spline_.GetNowPosition();
-
-	// ワールド行列の回転の数値を加算
-	worldTransform_->rotation_ += { 0, 0, 0 };
 
 	// ワールド行列の行列再計算
 	worldTransform_->UpdateObject3D();

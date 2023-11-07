@@ -1,5 +1,4 @@
 #pragma once
-
 /**
  * @file	RailCamera.h
  * @brief	レールカメラのデータ保持や初期化/更新/描画を行うもの
@@ -13,6 +12,16 @@
 
 class RailCamera
 {
+private: // パラメーター
+	// レールカメラの1周の時間
+	const float CAMERA_LOOP_TIME_ = 2800.f;
+
+	// レールカメラの制御点
+	const Vector3 SPLINE_START_ = { 0,0,0 };
+	const Vector3 SPLINE_P1_ = { 100,250,150 };
+	const Vector3 SPLINE_P2_ = { 0,0,200 };
+	const Vector3 SPLINE_END_ = { 100,250,350 };
+
 public:	// メンバ関数
 	// デストラクタ
 	~RailCamera();

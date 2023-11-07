@@ -60,20 +60,20 @@ void PlayerState::SetTexture()
 	stateSprite_[11]->position_ = SPRITE_BASE_POS_ + Vector2(s_SPRITE_SIZE_, 0);
 	stateSprite_[16]->position_ = SPRITE_BASE_POS_ + Vector2(s_SPRITE_SIZE_, 0);
 
-	stateSprite_[4]->position_ = SPRITE_BASE_POS_ + Vector2(s_SPRITE_SIZE_ * 2, 0);
-	stateSprite_[5]->position_ = SPRITE_BASE_POS_ + Vector2(s_SPRITE_SIZE_ * 2, 0);
-	stateSprite_[12]->position_ = SPRITE_BASE_POS_ + Vector2(s_SPRITE_SIZE_ * 2, 0);
-	stateSprite_[17]->position_ = SPRITE_BASE_POS_ + Vector2(s_SPRITE_SIZE_ * 2, 0);
+	stateSprite_[4]->position_ = SPRITE_BASE_POS_ + Vector2(s_SPRITE_SIZE_ * uint8_t(State::LASER), 0);	// 2はずらす幅のスカラー
+	stateSprite_[5]->position_ = SPRITE_BASE_POS_ + Vector2(s_SPRITE_SIZE_ * uint8_t(State::LASER), 0);
+	stateSprite_[12]->position_ = SPRITE_BASE_POS_ + Vector2(s_SPRITE_SIZE_ * uint8_t(State::LASER), 0);
+	stateSprite_[17]->position_ = SPRITE_BASE_POS_ + Vector2(s_SPRITE_SIZE_ * uint8_t(State::LASER), 0);
 
-	stateSprite_[6]->position_ = SPRITE_BASE_POS_ + Vector2(s_SPRITE_SIZE_ * 3, 0);
-	stateSprite_[7]->position_ = SPRITE_BASE_POS_ + Vector2(s_SPRITE_SIZE_ * 3, 0);
-	stateSprite_[13]->position_ = SPRITE_BASE_POS_ + Vector2(s_SPRITE_SIZE_ * 3, 0);
-	stateSprite_[18]->position_ = SPRITE_BASE_POS_ + Vector2(s_SPRITE_SIZE_ * 3, 0);
+	stateSprite_[6]->position_ = SPRITE_BASE_POS_ + Vector2(s_SPRITE_SIZE_ * uint8_t(State::OPTION), 0);	// 3はずらす幅のスカラー
+	stateSprite_[7]->position_ = SPRITE_BASE_POS_ + Vector2(s_SPRITE_SIZE_ * uint8_t(State::OPTION), 0);
+	stateSprite_[13]->position_ = SPRITE_BASE_POS_ + Vector2(s_SPRITE_SIZE_ * uint8_t(State::OPTION), 0);
+	stateSprite_[18]->position_ = SPRITE_BASE_POS_ + Vector2(s_SPRITE_SIZE_ * uint8_t(State::OPTION), 0);
 
-	stateSprite_[8]->position_ = SPRITE_BASE_POS_ + Vector2(s_SPRITE_SIZE_ * 4, 0);
-	stateSprite_[9]->position_ = SPRITE_BASE_POS_ + Vector2(s_SPRITE_SIZE_ * 4, 0);
-	stateSprite_[14]->position_ = SPRITE_BASE_POS_ + Vector2(s_SPRITE_SIZE_ * 4, 0);
-	stateSprite_[19]->position_ = SPRITE_BASE_POS_ + Vector2(s_SPRITE_SIZE_ * 4, 0);
+	stateSprite_[8]->position_ = SPRITE_BASE_POS_ + Vector2(s_SPRITE_SIZE_ * uint8_t(State::BARRIER), 0);	// 4はずらす幅のスカラー
+	stateSprite_[9]->position_ = SPRITE_BASE_POS_ + Vector2(s_SPRITE_SIZE_ * uint8_t(State::BARRIER), 0);
+	stateSprite_[14]->position_ = SPRITE_BASE_POS_ + Vector2(s_SPRITE_SIZE_ * uint8_t(State::BARRIER), 0);
+	stateSprite_[19]->position_ = SPRITE_BASE_POS_ + Vector2(s_SPRITE_SIZE_ * uint8_t(State::BARRIER), 0);
 }
 
 void PlayerState::Initialize()
