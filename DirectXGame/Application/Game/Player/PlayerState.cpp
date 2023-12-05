@@ -195,7 +195,7 @@ void PlayerState::Update()
 		}
 	}
 
-	if (Key::Trigger(DIK_M))
+	if (Key::Trigger(DIK_M) || Pad::Trigger(Button::X))
 	{
 		if (powerUpSelect_[uint8_t(State::SPEEDUP)] == uint8_t(SelectState::SELECT))
 		{

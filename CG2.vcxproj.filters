@@ -252,7 +252,7 @@
     <ClInclude Include="DirectXGame\Application\Game\Others\Score\Score.h">
       <Filter>2.ヘッダー ファイル\Application\Game\Others</Filter>
     </ClInclude>
-    <ClInclude Include="DirectXGame\Application\Game\Enemy\Boss.h">
+    <ClInclude Include="DirectXGame\Application\Game\Enemy\Boss\Boss.h">
       <Filter>2.ヘッダー ファイル\Application\Game\Enemy</Filter>
     </ClInclude>
     <ClInclude Include="DirectXGame\Engine\Base\Scene\AbstractSceneFactory.h">
@@ -450,7 +450,7 @@
     <ClCompile Include="DirectXGame\Application\Game\Others\Skydome\Skydome.cpp">
       <Filter>1.ソース ファイル\Application\Game\Others</Filter>
     </ClCompile>
-    <ClCompile Include="DirectXGame\Application\Game\Enemy\Boss.cpp">
+    <ClCompile Include="DirectXGame\Application\Game\Enemy\Boss\Boss.cpp">
       <Filter>1.ソース ファイル\Application\Game\Enemy</Filter>
     </ClCompile>
     <ClCompile Include="DirectXGame\Engine\Base\Scene\SceneManager.cpp">

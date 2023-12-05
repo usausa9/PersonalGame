@@ -60,7 +60,7 @@
       <PreprocessorDefinitions>_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <TreatWarningAsError>true</TreatWarningAsError>
-      <AdditionalIncludeDirectories>$(ProjectDir)DirectXGame\Application\Game\Enemy\Boss;$(ProjectDir)DirectXGame\Application\Game\Enemy;$(ProjectDir)DirectXGame\Application\Game\Others\Skydome;$(ProjectDir)DirectXGame\Application\Game\Others\Score;$(ProjectDir)DirectXGame\Application\Game;$(ProjectDir)DirectXGame\Application\Game\Player;$(ProjectDir)DirectXGame\Application\Base;$(ProjectDir)DirectXGame\Application\Scene;$(ProjectDir)DirectXGame\Engine\2D;$(ProjectDir)DirectXGame\Engine\2D_3D;$(ProjectDir)DirectXGame\Engine\3D;$(ProjectDir)DirectXGame\Engine\Audio;$(ProjectDir)DirectXGame\Engine\Base\Collision;$(ProjectDir)DirectXGame\Engine\Base;$(ProjectDir)DirectXGame\Engine\Base\Math;$(ProjectDir)DirectXGame\Engine\IO;$(ProjectDir)DirectXGame\Engine;$(ProjectDir)DirectXGame\Application;$(ProjectDir)DirectXGame\Engine\3D\FBX;$(ProjectDir)DirectXGame\Engine\3D\OBJ;$(ProjectDir)DirectXGame\Engine\Base\Scene;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)DirectXGame\Application\Game\Enemy\Boss;$(ProjectDir)DirectXGame\Application\Game\Enemy;$(ProjectDir)DirectXGame\Application\Game\Others\Score;$(ProjectDir)DirectXGame\Application\Game\Others\Skydome;$(ProjectDir)DirectXGame\Application\Game;$(ProjectDir)DirectXGame\Application\Game\Player;$(ProjectDir)DirectXGame\Application\Base;$(ProjectDir)DirectXGame\Application\Scene;$(ProjectDir)DirectXGame\Engine\2D;$(ProjectDir)DirectXGame\Engine\2D_3D;$(ProjectDir)DirectXGame\Engine\3D;$(ProjectDir)DirectXGame\Engine\Audio;$(ProjectDir)DirectXGame\Engine\Base\Collision;$(ProjectDir)DirectXGame\Engine\Base;$(ProjectDir)DirectXGame\Engine\Base\Math;$(ProjectDir)DirectXGame\Engine\IO;$(ProjectDir)DirectXGame\Engine;$(ProjectDir)DirectXGame\Application;$(ProjectDir)DirectXGame\Engine\3D\FBX;$(ProjectDir)DirectXGame\Engine\3D\OBJ;$(ProjectDir)DirectXGame\Engine\Base\Scene;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <AdditionalOptions>/utf-8 %(AdditionalOptions)</AdditionalOptions>
@@ -97,7 +97,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="DirectXGame\Application\Game\Enemy\Boss.h" />
+    <ClInclude Include="DirectXGame\Application\Game\Enemy\Boss\Boss.h" />
     <ClInclude Include="DirectXGame\Engine\Base\Scene\AbstractSceneFactory.h" />
     <ClInclude Include="DirectXGame\Engine\Base\Collision\CollisionAttribute.h" />
     <ClInclude Include="DirectXGame\Engine\Base\Collision\CollisionPrimitive.h" />
@@ -219,7 +219,7 @@
     </FxCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="DirectXGame\Application\Game\Enemy\Boss.cpp" />
+    <ClCompile Include="DirectXGame\Application\Game\Enemy\Boss\Boss.cpp" />
     <ClCompile Include="DirectXGame\Engine\Base\Collision\CollisionPrimitive.cpp" />
     <ClCompile Include="DirectXGame\Engine\Base\Collision\CollisionManager.cpp" />
     <ClCompile Include="DirectXGame\Engine\3D\Camera.cpp" />
