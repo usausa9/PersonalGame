@@ -108,6 +108,30 @@ bool Pad::Released(Button button)
 	return sLastPadState_.Gamepad.wButtons & (UINT)button && !(sPadState_.Gamepad.wButtons & (UINT)button);
 }
 
+bool Pad::TiltLStick()
+{
+	if (GetLStick().x == 0 || GetLStick().y == 0)
+	{
+		return false;
+	}
+	else
+	{
+		return true;
+	}
+}
+
+bool Pad::TiltRStick()
+{
+	if (GetRStick().x == 0 || GetRStick().y == 0)
+	{
+		return false;
+	}
+	else
+	{
+		return true;
+	}
+}
+
 Vector2 Pad::GetLStick()
 {
 	float x = sPadState_.Gamepad.sThumbLX;

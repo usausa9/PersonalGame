@@ -172,6 +172,7 @@ void Player::reticleUpdate(bool isFollow = true, Vector2 position = {0, 0})
 			reticleMoveVel.x = reticleSpd_;
 		}
 
+
 		if (Key::Down(DIK_W) && Key::Down(DIK_S))
 		{
 
@@ -184,6 +185,9 @@ void Player::reticleUpdate(bool isFollow = true, Vector2 position = {0, 0})
 		{
 			reticleMoveVel.y = reticleSpd_ * kY_MOVE_RETICLE_;
 		}
+
+		reticleMoveVel.x = Pad::GetLStick().x * reticleSpd_;
+		reticleMoveVel.y = Pad::GetLStick().y * reticleSpd_ * kY_MOVE_RETICLE_ * -1;
 
 		reticlePos_ += reticleMoveVel;
 
@@ -267,9 +271,9 @@ void Player::Move()
 
 		// GamePadでの移動
 	move_ += {
-		Pad::GetLStick().x* velocity_,
-		Pad::GetLStick().y* velocity_ * kY_MOVE_,
-			0 };
+		Pad::GetLStick().x * velocity_,
+		Pad::GetLStick().y * velocity_ * kY_MOVE_,
+		0 };
 
 	// 移動量の加算
 	position_ += move_;

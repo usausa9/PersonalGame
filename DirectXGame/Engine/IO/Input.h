@@ -73,9 +73,11 @@ namespace Input
 		static bool Down(Button button);		// 押しっぱなし
 		static bool Trigger(Button button);		// 押した瞬間
 		static bool Released(Button button);	// 離した瞬間
+		static bool TiltLStick();	// Lスティック倒してるかどうか
+		static bool TiltRStick();	// Rスティック倒してるかどうか
 
-		static Vector2 GetLStick(); // Lスティック入力取得
-		static Vector2 GetRStick(); // Rスティック入力朱っとく
+		static Vector2 GetLStick(); // Lスティック入力取得 0-1
+		static Vector2 GetRStick(); // Rスティック入力取得 0-1
 
 	private:
 		static XINPUT_STATE sPadState_;

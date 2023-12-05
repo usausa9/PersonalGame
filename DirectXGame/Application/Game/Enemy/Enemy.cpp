@@ -31,8 +31,6 @@ void Enemy::Initialize(std::vector<Vector3>& points, uint8_t enemyKind)
 	enemyKind_ = enemyKind;
 
 	// 自機の行列初期化
-	rotation_ = { 0, 0, 0 };
-	position_ = { 0, 0, 0 };
 	InitializeObject3D();
 
 	// 自機モデルと自機オブジェクトを紐づけ
