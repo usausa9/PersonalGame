@@ -26,16 +26,16 @@ void Enemy::Initialize(std::vector<Vector3>& points, uint8_t enemyKind, OBJModel
 	//	// 自機モデル読み込み
 	//	enemyModel_ = OBJModel::LoadFromOBJ("ICO");
 	//}
-
+	// 敵機モデル読み込み
 	enemyModel_ = model;
 
 	// 敵の種類指定
 	enemyKind_ = enemyKind;
 
-	// 自機の行列初期化
+	// 敵機の行列初期化
 	InitializeObject3D();
 
-	// 自機モデルと自機オブジェクトを紐づけ
+	// 敵機モデルと敵機オブジェクトを紐づけ
 	objModel_ = &enemyModel_;
 
 	// 軌道制御点の設定
