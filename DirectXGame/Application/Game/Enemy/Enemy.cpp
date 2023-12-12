@@ -14,18 +14,20 @@
 bool Enemy::sIsPowerUp_ = false;
 
 // 初期化
-void Enemy::Initialize(std::vector<Vector3>& points, uint8_t enemyKind)
+void Enemy::Initialize(std::vector<Vector3>& points, uint8_t enemyKind, OBJModel model)
 {
-	if (enemyKind == uint8_t(EnemyKinds::NORMAL))
-	{
-		// 自機モデル読み込み
-		enemyModel_ = OBJModel::LoadFromOBJ("Cube");
-	}
-	else if (enemyKind == uint8_t(EnemyKinds::POWER))
-	{
-		// 自機モデル読み込み
-		enemyModel_ = OBJModel::LoadFromOBJ("ICO");
-	}
+	//if (enemyKind == uint8_t(EnemyKinds::NORMAL))
+	//{
+	//	// 自機モデル読み込み
+	//	enemyModel_ = OBJModel::LoadFromOBJ("Cube");
+	//}
+	//else if (enemyKind == uint8_t(EnemyKinds::POWER))
+	//{
+	//	// 自機モデル読み込み
+	//	enemyModel_ = OBJModel::LoadFromOBJ("ICO");
+	//}
+
+	enemyModel_ = model;
 
 	// 敵の種類指定
 	enemyKind_ = enemyKind;

@@ -31,7 +31,7 @@ class Enemy : public Object3D
 {
 public:	// メンバ関数
 	// 初期化処理
-	void Initialize(std::vector<Vector3>& points, uint8_t enemyKind);
+	void Initialize(std::vector<Vector3>& points, uint8_t enemyKind, OBJModel model);
 
 	// 更新処理
 	void Update(const Matrix4& cameraMatrix);

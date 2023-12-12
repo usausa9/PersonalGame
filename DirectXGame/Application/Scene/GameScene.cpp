@@ -36,6 +36,9 @@ void GameScene::Initialize()
 	skydome_ = make_unique<Skydome>();
 	skydome_->Initialize();
 
+	enemyModel_[0] = OBJModel::LoadFromOBJ("Cube"); 
+	enemyModel_[1] = OBJModel::LoadFromOBJ("ICO");
+
 	// シーン遷移後の残り
 	purpleGroundTex_ = TextureManager::Load(L"Resources/Sprites/purple_ground.png");
 
@@ -431,7 +434,14 @@ void GameScene::EnemySpawn(uint8_t enemyKind, uint8_t trajectoryKind)
 
 	// 敵の生成と初期化
 	std::unique_ptr<Enemy> newEnemy = std::make_unique<Enemy>();
-	newEnemy->Initialize(enemyMovePoints, enemyKind);
+	if (enemyKind == uint8_t(EnemyKinds::NORMAL))
+	{
+		newEnemy->Initialize(enemyMovePoints, enemyKind, enemyModel_[0]);
+	}
+	if (enemyKind == uint8_t(EnemyKinds::POWER))
+	{
+		newEnemy->Initialize(enemyMovePoints, enemyKind, enemyModel_[1]);
+	}
 	newEnemy->Spawn();
 	// リストに登録
 	enemys_.push_back(std::move(newEnemy));
