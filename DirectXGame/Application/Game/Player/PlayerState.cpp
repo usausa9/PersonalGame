@@ -207,6 +207,7 @@ void PlayerState::Update()
 				powerUpSelect_[uint8_t(State::SPEEDUP)] = uint8_t(SelectState::USED);
 			}
 			else
+
 			{
 				powerUpSelect_[uint8_t(State::SPEEDUP)] = uint8_t(SelectState::NONE);
 			}

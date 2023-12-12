@@ -159,7 +159,7 @@ void Player::reticleUpdate(bool isFollow = true, Vector2 position = {0, 0})
 		// 自機の速さとレティクルのスピード調整
 		reticleSpd_ = kReticleSpd_ * velocity_;
 
-		/*if (Key::Down(DIK_A) && Key::Down(DIK_D))
+		if (Key::Down(DIK_A) && Key::Down(DIK_D))
 		{
 
 		}
@@ -184,10 +184,10 @@ void Player::reticleUpdate(bool isFollow = true, Vector2 position = {0, 0})
 		else if (Key::Down(DIK_S))
 		{
 			reticleMoveVel.y = reticleSpd_ * kY_MOVE_RETICLE_;
-		}*/
+		}
 
-		reticleMoveVel.x = Pad::GetLStick().x * reticleSpd_;
-		reticleMoveVel.y = Pad::GetLStick().y * reticleSpd_ * kY_MOVE_RETICLE_ * -1;
+		/*reticleMoveVel.x = Pad::GetLStick().x * reticleSpd_;
+		reticleMoveVel.y = Pad::GetLStick().y * reticleSpd_ * kY_MOVE_RETICLE_ * -1;*/
 
 		reticlePos_ += reticleMoveVel;
 
@@ -258,11 +258,11 @@ void Player::Move()
 	// 強化に応じてスピード変化
 	velocity_ = FORMERLY_SPEED_ + (SPEED_UP_RATE_ * state_.SpeedUpNum());
 
-	//// WASD入力での移動
-	//move_ += {
-	//	float(Key::Down(DIK_D) - Key::Down(DIK_A))* velocity_,
-	//	float(Key::Down(DIK_W) - Key::Down(DIK_S))* velocity_* kY_MOVE_,
-	//		0 };
+	// WASD入力での移動
+	move_ += {
+		float(Key::Down(DIK_D) - Key::Down(DIK_A))* velocity_,
+		float(Key::Down(DIK_W) - Key::Down(DIK_S))* velocity_* kY_MOVE_,
+			0 };
 
 	/*rev = {
 		(Key::Down(DIK_S) - Key::Down(DIK_W)) * rotateRev,
