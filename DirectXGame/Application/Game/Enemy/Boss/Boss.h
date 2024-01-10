@@ -14,10 +14,10 @@ class Boss : public Object3D
 {
 public:	// メンバ関数
 	// 初期化処理
-	void Initialize(Vector3 pos);
+	void Initialize();
 
 	// 更新処理
-	void Update(const Matrix4& cameraMatrix);
+	void Update();
 
 	// 描画処理
 	void Draw();
@@ -28,8 +28,13 @@ public:	// メンバ関数
 	/// <param name="info">衝突情報</param>
 	void OnCollision(const CollisionInfo& info) override;
 
+	void Spawn();
+
 	// 敵の生存状況を取得
 	bool IsAlive()const { return isAlive_; }
+
+	// 親子付けのセッター
+	void SetParent(Object3D* object) { parent_ = object; }
 
 	//// 当たり判定状況を取得
 	//static bool IsOnCol() { return sIsPowerUp_; }
@@ -39,15 +44,19 @@ private: // 敵機のメンバ変数
 	OBJModel bossModel_;
 
 	// HP
-	uint8_t hitPoints_ = 20;
+	uint8_t hitPoints_ = 15;
+	uint8_t deadHP_ = 0;
 
 	// 生存フラグ
 	bool isAlive_ = true;
 	// 強化可能フラグ
 	static bool sIsPowerUp_;
 
+	const Vector3 INIT_BOSS_POSITION_ = {0, 5, 40};
+	const Vector3 BOSS_DEAD_POSITION_ = { 10000, 0, -100 };
+
 	// 敵の大きさ指定
-	const float RADIUS_ = 1.3f;
+	const float RADIUS_ = 5.2f;
 	// 敵の軌道タイマー用
 	const uint16_t ENEMY_MOVE_TIME_ = 600;
 };

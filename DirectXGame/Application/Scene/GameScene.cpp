@@ -32,6 +32,10 @@ void GameScene::Initialize()
 	player_ = make_unique<Player>();
 	player_->Initialize();
 
+	// ボス初期化
+	boss_ = make_unique<Boss>();
+	boss_->Initialize();
+
 	// 天球初期化
 	skydome_ = make_unique<Skydome>();
 	skydome_->Initialize();
@@ -73,7 +77,8 @@ void GameScene::Initialize()
 	isGameOverAnimation_ = false;
 	isGameClearAnimation_ = false;
 	isGameOver_ = false;
-	isGameClear_ = false;
+	isGameClear_ = false; 
+	isGameTimer_ = false;
 
 	// ゲームオーバー演出スプライン制御点
 	Vector3 dStart = DEAD_START_;
@@ -111,6 +116,19 @@ void GameScene::Update()
 
 	// START演出
 	BeforeStartAnimation();
+
+	if (isGameTimer_ == false)
+	{
+		gameTimer_.Start(GAME_TIME_);
+		isGameTimer_ = true;
+	}
+
+	if (gameTimer_.GetTimeRate() == BOSS_SPAWN_RATE_)
+	{
+		boss_.get()->Spawn();
+	}
+	
+	gameTimer_.Update();
 
 	if (isEndTransition_ && isEndStartAnimation_)
 	{
@@ -185,6 +203,22 @@ void GameScene::Update()
 			gameClearTimer_.Start(TRANSITION_WAIT_TIMER_);
 		}
 
+		if (boss_.get()->IsAlive() == false && isGameClearAnimation_ == false && isGameOver_ == false)
+		{
+			playerClearPoint_ = player_->position_;
+			isGameClear_ = true;
+			isGameClearAnimation_ = true;
+
+			clearTrajectory_.MoveStart(PLAYER_CLEAR_MOVE_TIME_, false);
+
+			for (uint8_t i = 0; i < PURPLE_BG_NUM_; i++)
+			{
+				purpleGroundSprite_[i]->position_ = TRANSITION_BASE_POS_[i];
+			}
+
+			gameClearTimer_.Start(TRANSITION_WAIT_TIMER_);
+		}
+
 		if (isGameOver_ || isGameClear_)
 		{
 			player_->Update(false, true, STANDARD_PLATER_POS_);
@@ -203,8 +237,11 @@ void GameScene::Update()
 		player_->Update(isEndStartAnimation_, false, inGameReticlePos_);
 	}
 
+	boss_->Update();
+
 	// プレイヤーの更新
 	player_->SetParent(railCamera_->GetObject3d());
+	boss_->SetParent(railCamera_->GetObject3d());
 	
 	// ゲーム中のみ
 	if (InGame())
@@ -383,6 +420,7 @@ void GameScene::Draw3D()
 	{
 		enemy->Draw();
 	}
+	boss_->Draw();
 }
 
 void GameScene::DrawParticle()

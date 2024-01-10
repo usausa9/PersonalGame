@@ -70,4 +70,5 @@ void PlayerBullet::Draw()
 void PlayerBullet::OnCollision([[maybe_unused]] const CollisionInfo& info)
 {
 	isDrawSp_ = true;
+	isDead_ = true;
 }

@@ -13,6 +13,7 @@
 
 #include "Player.h"
 #include "Enemy.h"
+#include "Boss.h"
 
 #include "Object3D.h"
 #include "FBXObject3D.h"
@@ -50,6 +51,7 @@ private:
 
 	// プレイヤー,敵
 	unique_ptr<Player> player_ = nullptr;
+	unique_ptr<Boss> boss_ = nullptr;
 	std::list<std::unique_ptr<Enemy>> enemys_;
 
 	// 敵機モデル
@@ -102,6 +104,13 @@ private:
 	const uint8_t TRANSITION_WAIT_TIMER_ = 170;
 
 	const float CLEAR_START_RATE_ = 0.9f;
+
+	// ゲームタイマー
+	TimeData gameTimer_;
+	const uint16_t GAME_TIME_ = 1800;
+
+	bool isGameTimer_ = false;
+	const float BOSS_SPAWN_RATE_ = 0.9f;
 
 	// クリア表示用
 	const Vector2 CLEAR_UI_BASE_POS_ = { 640, -140.f };
